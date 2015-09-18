@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-
+#import <Stripe/Stripe.h>
 @interface AppDelegate ()
 
 @end
@@ -16,8 +16,139 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    
+    //DEV KEYS
+    
+    //parse
+    [Parse setApplicationId:@"EcHepDGBmNvZhRx8D1vMFLzMPgqAXqfIjpiIJuIe"
+                  clientKey:@"C0f7frNwhubdUjZplLyowAbEw4CUnmls6lubcs0M"];
+    //stripe key
+    [Stripe setDefaultPublishableKey:STRIPE_TOKEN];
+    
+    /*
+     Branch *branch = [Branch getInstance:@"144975538040099258"];
+     
+     [branch initSessionWithLaunchOptions:launchOptions andRegisterDeepLinkHandler:^(NSDictionary *params, NSError *error) {
+     // params are the deep linked params associated with the link that the user clicked before showing up.
+     NSLog(@"deep link data: %@", [params description]);
+     }];
+     
+     //CRASH REPORTING
+     [Fabric with:@[CrashlyticsKit]];
+     
+     
+     
+     //Mixpanel
+     [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
+     
+     //PARSE
+     [Parse setApplicationId:@"KjqhJkgvtVSsPA9SVHxq1Euad73fWhLWfVS4LNxO"
+     clientKey:@"EnXbaltwwCtiRrruc9ibpx0XWculRyWmiy3KrRzb"];
+     [PFUser enableRevocableSessionInBackground];
+     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
+     
+     //MAILCHIMP
+     [[ChimpKit sharedKit] setApiKey:MAILCHIMP_TOKEN];
+     
+     
+     //mixpanel
+     
+     if([PFUser currentUser]){
+     // We're logged in, we can register the user with Intercom
+     PFUser *currentUser =  [PFUser currentUser];
+     
+     //Mixpanel
+     Mixpanel *mixpanel = [Mixpanel sharedInstance];
+     [mixpanel identify:currentUser.objectId];
+     
+     
+     }else{
+     //no user
+     
+     }
+     */
+    
+    UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
+                                                    UIUserNotificationTypeBadge |
+                                                    UIUserNotificationTypeSound);
+    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes
+                                                                             categories:nil];
+    [application registerUserNotificationSettings:settings];
+    [application registerForRemoteNotifications];
+    
+    
+    //global nav bar
+    [[UINavigationBar appearance] setBarTintColor:[UIColor whiteColor]]; //background of bar
+    
+    //style the page controller dots...
+    UIPageControl *pageControl = [UIPageControl appearance];
+    pageControl.pageIndicatorTintColor = [UIColor lightGrayColor];
+    pageControl.currentPageIndicatorTintColor = [UIColor blackColor];
+    pageControl.backgroundColor = [UIColor whiteColor];
+    
     return YES;
+}
+
+#pragma mark - Push
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    // Store the deviceToken in the current installation and save it to Parse.
+    NSLog(@"You made it bro");
+    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+    [currentInstallation setDeviceTokenFromData:deviceToken];
+    currentInstallation.channels = @[ @"global" ];
+    [currentInstallation saveInBackground];
+    
+    //register for mixpanel push
+    PFUser *currentUser = [PFUser currentUser];
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel identify:currentUser.objectId];
+    [mixpanel.people addPushDeviceToken:deviceToken];
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    
+    if( [[userInfo objectForKey:@"type"] isEqualToString:@"goal"]){
+        //the notification was sent b/c a coach changed their client's goal
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Woah look at you go!" message:@"Your coach changed your goal for the week :)" delegate:self cancelButtonTitle:@"Awesome!" otherButtonTitles: nil];
+        [alert show];
+        
+        //send local notification so we can update the goal on user view
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"updateGoal" object:nil];
+        
+    }else if ([[userInfo objectForKey:@"type"] isEqualToString:@"message"] ){
+        //the notification was sent b/c a messages was sent
+        
+        if(![UIApplication sharedApplication].applicationState == UIApplicationStateActive){
+            //when the app is NOT active then do normal push handling
+            [PFPush handlePush:userInfo];
+            //set local notification
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"updateBarButtonBadge" object:nil];
+            
+        }else{
+            //when the app IS active...we want sound and vibration and badge...but no alert view
+            
+            //vibrate
+            //AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
+            
+            //sets the badge on the app icon on the phones home screen
+            [application setApplicationIconBadgeNumber:1];
+            
+            //sends out a local notification...the logmeals view is listening for this and will update the bar button item
+            //when the notificaiton is received
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"updateBarButtonBadge" object:nil];
+        }
+        
+        
+    }else if ([[userInfo objectForKey:@"type"] isEqualToString:@"nom"]){
+        
+        //when the app is NOT active then do normal push handling
+        [PFPush handlePush:userInfo];
+        //set local notification
+        
+    }else{
+        [PFPush handlePush:userInfo];
+    }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

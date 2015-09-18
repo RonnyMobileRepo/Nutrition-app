@@ -1,0 +1,36 @@
+//
+//  PrefixHeader.pch
+//  Nomful-App
+//
+//  Created by Sean Crowe on 9/18/15.
+//  Copyright © 2015 Nomful, inc. All rights reserved.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import <Parse/Parse.h>
+#import <ParseUI.h>
+#import <Mixpanel.h>
+#import <Intercom.h>
+#import <ChimpKit.h>
+#import "Reachability.h"
+#import "ParseErrorHandlingController.h"
+#import <Firebase/Firebase.h>
+#import <Stripe/Stripe.h>
+
+
+//constants
+#define MIXPANEL_TOKEN @"50a2e49f239ebf848d4097c31987ba4a" //nomful in mixpanel
+#define MAILCHIMP_TOKEN @"458779a92e35ef155beeb58b445fd2ee-us10" //NOMFUL MAILCHIMP
+#define kFontFamilyName @"MuseoSansRounded-300" //font group
+#define STRIPE_TOKEN @"pk_test_JQ0bC9TcrUXB06bKoMjYjw3l" //live: pk_live_a7plqC3BMb74TAFBiefltyaf test: pk_test_JQ0bC9TcrUXB06bKoMjYjw3l
+#define FIREBASE @""
+
+
+#endif /* PrefixHeader_pch */
