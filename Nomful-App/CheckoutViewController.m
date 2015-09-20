@@ -30,8 +30,9 @@ NSString *const kBOOTCAMPAMOUNT = @"199.00";
         
         _applePaybutton = [self makeApplePayButton];
         [self.paymentButtonsView addSubview:_applePaybutton];
+        
     
-        //constrainsts
+        //constrainstss
         
         NSDictionary *views = @{@"applePay": _applePaybutton};
         
