@@ -228,6 +228,7 @@
 		2137D8971BACA04600310545 /* straws.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = straws.jpg; sourceTree = "<group>"; };
 		2137D8981BACA04600310545 /* thomas.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = thomas.JPG; sourceTree = "<group>"; };
 		2137D8991BACA04600310545 /* white-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "white-button.png"; sourceTree = "<group>"; };
+		21C6FC4F1BAF20EE004599E8 /* Nomful-App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Nomful-App.entitlements"; sourceTree = "<group>"; };
 		21C88A221BAC95CF00792E9C /* Nomful-App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Nomful-App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		21C88A261BAC95CF00792E9C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		21C88A281BAC95CF00792E9C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -432,6 +433,7 @@
 		21C88A241BAC95CF00792E9C /* Nomful-App */ = {
 			isa = PBXGroup;
 			children = (
+				21C6FC4F1BAF20EE004599E8 /* Nomful-App.entitlements */,
 				2137D8851BACA03900310545 /* images */,
 				2137D8811BAC9E8D00310545 /* LaunchScreen.xib */,
 				2137D8821BAC9E8D00310545 /* Main.storyboard */,
@@ -563,6 +565,14 @@
 					21C88A211BAC95CF00792E9C = {
 						CreatedOnToolsVersion = 7.0;
 						DevelopmentTeam = 7N7P237XEB;
+						SystemCapabilities = {
+							com.apple.OMC = {
+								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					21C88A3D1BAC95CF00792E9C = {
 						CreatedOnToolsVersion = 7.0;
@@ -868,7 +878,9 @@
 			baseConfigurationReference = E7AFC07723092381382DA4CB /* Pods-Nomful-App.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_ENTITLEMENTS = "Nomful-App/Nomful-App.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = "Nomful-App/PrefixHeader.pch";
 				INFOPLIST_FILE = "Nomful-App/Info.plist";
@@ -876,7 +888,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Nomful;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "6c2c2ad3-225b-4a6b-9ee5-f62dc76cd8e1";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -885,7 +897,9 @@
 			baseConfigurationReference = 62890AF4F1A893706C1A3067 /* Pods-Nomful-App.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_ENTITLEMENTS = "Nomful-App/Nomful-App.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = "Nomful-App/PrefixHeader.pch";
 				INFOPLIST_FILE = "Nomful-App/Info.plist";
@@ -893,7 +907,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Nomful;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "6c2c2ad3-225b-4a6b-9ee5-f62dc76cd8e1";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

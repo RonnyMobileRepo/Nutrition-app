@@ -16,7 +16,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *epirationDateLabel;
-@property (weak, nonatomic) IBOutlet UIButton *applePaybutton;
+@property (weak, nonatomic) UIButton *applePaybutton;
 @property (weak, nonatomic) IBOutlet UIButton *payWithCardButton;
 @property (weak, nonatomic) PFUser *coachUser;
 @property (weak, nonatomic) PFUser *trainerUser;

@@ -22,6 +22,64 @@ NSString *const kBOOTCAMPAMOUNT = @"199.00";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    // Conditionally show Apple Pay button based on device availability
+    if ([PKPaymentAuthorizationViewController canMakePaymentsUsingNetworks:@[PKPaymentNetworkVisa]]) {
+        //you are here b/c the device supports apple pay
+        ///so go make the apple pay button!!!!
+        
+        _applePaybutton = [self makeApplePayButton];
+        [self.paymentButtonsView addSubview:_applePaybutton];
+    
+        //constrainsts
+        
+        NSDictionary *views = @{@"applePay": _applePaybutton};
+        
+        
+        //profile image is 8 pts from top and 100 pts tall
+        [self.paymentButtonsView addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(30)-[applePay]"
+                                                                           options:0
+                                                                           metrics:nil
+                                                                             views:views]];
+        
+        [self.paymentButtonsView addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"V:[applePay(50)]"
+                                                                           options:0
+                                                                           metrics:nil
+                                                                             views:views]];
+        
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.paymentButtonsView
+                                                              attribute:NSLayoutAttributeCenterY
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:_applePaybutton
+                                                              attribute:NSLayoutAttributeCenterY
+                                                             multiplier:1.0f constant:0.0f]];
+    }else{
+        //apple pay not set up or not supported on device
+        //just show pay with card button
+        
+        NSDictionary *views = @{@"payWithCard": _payWithCardButton};
+        
+        
+        //profile image is 8 pts from top and 100 pts tall
+        [self.paymentButtonsView addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(30)-[payWithCard]-(30)-|"
+                                                                                         options:0
+                                                                                         metrics:nil
+                                                                                           views:views]];
+        
+        [self.paymentButtonsView addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"V:[payWithCard(50)]"
+                                                                                         options:0
+                                                                                         metrics:nil
+                                                                                           views:views]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.paymentButtonsView
+                                                              attribute:NSLayoutAttributeCenterY
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:_payWithCardButton
+                                                              attribute:NSLayoutAttributeCenterY
+                                                             multiplier:1.0f constant:0.0f]];
+        
+    }
+    
+    //constraints for initial layout
     [self initialLayout];
 
     //get and load coach image in background
@@ -57,7 +115,6 @@ NSString *const kBOOTCAMPAMOUNT = @"199.00";
     // add the effect view to the image view
     [self.backgroundImage addSubview:effectView];
     
-
     
 }
 
@@ -682,6 +739,21 @@ NSString *const kBOOTCAMPAMOUNT = @"199.00";
                          [self.view layoutIfNeeded]; // Called on parent view
                      }];
 
+}
+
+- (UIButton *)makeApplePayButton {
+    UIButton *button;
+    
+    if ([PKPaymentButton class]) { // Available in iOS 8.3+
+        button = [PKPaymentButton buttonWithType:PKPaymentButtonTypeBuy style:PKPaymentButtonStyleWhiteOutline];
+    } else {
+        // TODO: Create and return your own apple pay button
+        [button setBackgroundImage:[UIImage imageNamed:@"ApplePayBTN_64pt__whiteLine_textLogo_"] forState:UIControlStateNormal];
+    }
+    
+   [button addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    button.translatesAutoresizingMaskIntoConstraints = false;
+    return button;
 }
 @end
 
