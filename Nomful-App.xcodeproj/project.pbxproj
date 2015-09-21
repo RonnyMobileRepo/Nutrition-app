@@ -884,7 +884,7 @@
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = "Nomful-App/PrefixHeader.pch";
 				INFOPLIST_FILE = "Nomful-App/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Nomful;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -903,7 +903,7 @@
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = "Nomful-App/PrefixHeader.pch";
 				INFOPLIST_FILE = "Nomful-App/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Nomful;
 				PRODUCT_NAME = "$(TARGET_NAME)";
