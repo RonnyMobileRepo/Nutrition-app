@@ -17,7 +17,7 @@
                BlueprintIdentifier = "21C88A211BAC95CF00792E9C"
                BuildableName = "Nomful-App.app"
                BlueprintName = "Nomful-App"
-               ReferencedContainer = "container:Nomful-App.xcodeproj">
+               ReferencedContainer = "container:Nomful.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -35,7 +35,7 @@
                BlueprintIdentifier = "21C88A3D1BAC95CF00792E9C"
                BuildableName = "Nomful-AppTests.xctest"
                BlueprintName = "Nomful-AppTests"
-               ReferencedContainer = "container:Nomful-App.xcodeproj">
+               ReferencedContainer = "container:Nomful.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -45,7 +45,7 @@
                BlueprintIdentifier = "21C88A481BAC95CF00792E9C"
                BuildableName = "Nomful-AppUITests.xctest"
                BlueprintName = "Nomful-AppUITests"
-               ReferencedContainer = "container:Nomful-App.xcodeproj">
+               ReferencedContainer = "container:Nomful.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,7 +55,7 @@
             BlueprintIdentifier = "21C88A211BAC95CF00792E9C"
             BuildableName = "Nomful-App.app"
             BlueprintName = "Nomful-App"
-            ReferencedContainer = "container:Nomful-App.xcodeproj">
+            ReferencedContainer = "container:Nomful.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -78,7 +78,7 @@
             BlueprintIdentifier = "21C88A211BAC95CF00792E9C"
             BuildableName = "Nomful-App.app"
             BlueprintName = "Nomful-App"
-            ReferencedContainer = "container:Nomful-App.xcodeproj">
+            ReferencedContainer = "container:Nomful.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -97,7 +97,7 @@
             BlueprintIdentifier = "21C88A211BAC95CF00792E9C"
             BuildableName = "Nomful-App.app"
             BlueprintName = "Nomful-App"
-            ReferencedContainer = "container:Nomful-App.xcodeproj">
+            ReferencedContainer = "container:Nomful.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
