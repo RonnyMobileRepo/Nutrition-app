@@ -28,14 +28,11 @@
         [self addSubview:self.nameLabel];
         
         // configure  image
-        _trainerProfileImageView = [[UIImageView alloc] initWithFrame:CGRectMake(15,10,30,30)];
-        _trainerProfileImageView.translatesAutoresizingMaskIntoConstraints = NO;
-        _trainerProfileImageView.image = [UIImage imageNamed:@"Sean.jpeg"];
+        _profileImage = [[PFImageView alloc] initWithFrame:CGRectMake(15,10,30,30)];
+        _profileImage.translatesAutoresizingMaskIntoConstraints = NO;
+        _profileImage.image = [UIImage imageNamed:@"Sean.jpeg"];
         
-       
-        
-        
-        [self addSubview:_trainerProfileImageView];
+        [self addSubview:_profileImage];
         
     }
 
@@ -52,7 +49,7 @@
     
     //dictionary for views to be constrained
     NSDictionary *views = @{@"nameLabel"       :   _nameLabel,
-                            @"trainerImage"     :  _trainerProfileImageView
+                            @"trainerImage"     :  _profileImage
                             };
     
     //trainer image
@@ -77,14 +74,14 @@
     
     //aspect ratio 1:1
     NSLayoutConstraint *constraint =[NSLayoutConstraint
-                                     constraintWithItem:_trainerProfileImageView
+                                     constraintWithItem:_profileImage
                                      attribute:NSLayoutAttributeWidth
                                      relatedBy:NSLayoutRelationEqual
-                                     toItem:_trainerProfileImageView
+                                     toItem:_profileImage
                                      attribute:NSLayoutAttributeHeight
                                      multiplier:1.0/1.0 //Aspect ratio: 4*height = 3*width
                                      constant:0.0f];
-    [_trainerProfileImageView addConstraint:constraint];
+    [_profileImage addConstraint:constraint];
 
 }
 

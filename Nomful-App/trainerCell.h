@@ -12,7 +12,6 @@
 
 @property (nonatomic, strong) UILabel *nameLabel;
 @property (nonatomic, strong) UILabel *cityLabel;
-@property (nonatomic, strong) UIImageView *trainerProfileImageView;
-
+@property (strong, nonatomic) PFImageView *profileImage;
 
 @end

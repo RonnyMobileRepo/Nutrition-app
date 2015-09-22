@@ -56,7 +56,7 @@
 
 @property (strong, nonatomic) NSArray *constraints;
 @property (strong, nonatomic) NSArray *constraints2;
-@property (weak, nonatomic) IBOutlet PFImageView *coachUserImage;
+
 
 @property bool hasTrainer;
 @property bool cancelButtonPressed;
@@ -84,16 +84,16 @@
 
 typedef void(^findCoachCompleted)(BOOL);
 @property (weak, nonatomic) IBOutlet UIView *coachBioView;
+@property (strong, nonatomic) IBOutlet PFImageView *newestCoachImage;
 
 @property (weak, nonatomic) IBOutlet UIButton *notlistedbutton;
 @property (weak, nonatomic) IBOutlet UIButton *closeButton;
 
 - (IBAction)inputButtonPressed:(UIButton *)sender;
+@property (weak, nonatomic) IBOutlet UITextView *coachBioTextView;
 
 - (IBAction)cancelButtonPressed:(id)sender;
 - (IBAction)noTrainerButtonPressed:(id)sender;
-@property (weak, nonatomic) IBOutlet UITextView *coachSpecialtiesTextView;
-@property (weak, nonatomic) IBOutlet UITextView *coachBioTextView;
 
 
 @end

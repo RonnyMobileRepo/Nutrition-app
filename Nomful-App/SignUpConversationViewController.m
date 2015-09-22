@@ -895,14 +895,15 @@ CGFloat const ktypeInterval = 0.02;
             
                 [self findCoach:^(BOOL finished) {
                     if(finished){
-                        NSLog(@"success");
+                        NSLog(@"success coach user is: %@", _coachUser);
+                        
                         
                         //get and load coach image in background
                         PFFile *coachImage = _coachUser[@"photo"];
-                        _coachUserImage.file = coachImage;
-                        [_coachUserImage loadInBackground];
-                        _coachUserImage.layer.cornerRadius = _coachUserImage.frame.size.width / 2;
-                        _coachUserImage.clipsToBounds = YES;
+                        _newestCoachImage.file = coachImage;
+                        [_newestCoachImage loadInBackground];
+                        _newestCoachImage.layer.cornerRadius = _newestCoachImage.frame.size.width / 2;
+                        _newestCoachImage.clipsToBounds = YES;
 
                         //set coach bio info
                         _coachBioTextView.text = _coachUser[@"bio"];
@@ -1386,8 +1387,8 @@ CGFloat const ktypeInterval = 0.02;
     [cell updateConstraintsIfNeeded];
     
     //format after constraints set
-    cell.trainerProfileImageView.layer.cornerRadius = cell.trainerProfileImageView.frame.size.width / 2;
-    cell.trainerProfileImageView.clipsToBounds = YES;
+    cell.profileImage.layer.cornerRadius = cell.profileImage.frame.size.width / 2;
+    cell.profileImage.clipsToBounds = YES;
     
     
     if(_getGymInstead){
@@ -1395,13 +1396,16 @@ CGFloat const ktypeInterval = 0.02;
         //show gym objects instead
         PFObject *gym = [_trainersArray objectAtIndex:indexPath.row];
         cell.nameLabel.text = gym[@"businessName"];
-        cell.trainerProfileImageView.image = [UIImage imageNamed:@"Sean.jpeg"];
     }else{
         //trainers
         //show gym objects instead
         PFUser *trainer = [_trainersArray objectAtIndex:indexPath.row];
-        cell.nameLabel.text = trainer[@"firstName"];
-        cell.trainerProfileImageView.image = [UIImage imageNamed:@"Sean.jpeg"];
+        [trainer fetchIfNeeded];
+        NSString *fullName = [NSString stringWithFormat:@"%@%@",trainer[@"firstName"], trainer[@"lastName"]];
+        cell.nameLabel.text = fullName;
+        PFFile *imageFile = trainer[@"photo"];
+        cell.profileImage.file = imageFile;
+        [cell.profileImage loadInBackground];
     }
     
     // cell.cityLabel.text =
