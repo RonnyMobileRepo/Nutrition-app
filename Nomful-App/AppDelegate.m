@@ -18,26 +18,26 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
     //DEV KEYS changed
-    
+    /*
     //parse
     [Parse setApplicationId:@"EcHepDGBmNvZhRx8D1vMFLzMPgqAXqfIjpiIJuIe"
                   clientKey:@"C0f7frNwhubdUjZplLyowAbEw4CUnmls6lubcs0M"];
+     */
+    
     //stripe key
     [Stripe setDefaultPublishableKey:STRIPE_TOKEN];
     
-    /*
-     Branch *branch = [Branch getInstance:@"144975538040099258"];
+    // Branch *branch = [Branch getInstance:@"144975538040099258"];
      
-     [branch initSessionWithLaunchOptions:launchOptions andRegisterDeepLinkHandler:^(NSDictionary *params, NSError *error) {
-     // params are the deep linked params associated with the link that the user clicked before showing up.
-     NSLog(@"deep link data: %@", [params description]);
-     }];
+    // [branch initSessionWithLaunchOptions:launchOptions andRegisterDeepLinkHandler:^(NSDictionary *params, NSError *error) {
+    // params are the deep linked params associated with the link that the user clicked before showing up.
+    // NSLog(@"deep link data: %@", [params description]);
+    // }];
      
      //CRASH REPORTING
-     [Fabric with:@[CrashlyticsKit]];
+     //[Fabric with:@[CrashlyticsKit]];
      
-     
-     
+    
      //Mixpanel
      [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
      
@@ -66,7 +66,7 @@
      //no user
      
      }
-     */
+    
     
     UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
                                                     UIUserNotificationTypeBadge |
