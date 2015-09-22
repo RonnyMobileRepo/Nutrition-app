@@ -433,6 +433,7 @@
 		21C88A241BAC95CF00792E9C /* Nomful-App */ = {
 			isa = PBXGroup;
 			children = (
+				21F420831BB1DD650006B7F2 /* Firebase */,
 				21C6FC4F1BAF20EE004599E8 /* Nomful-App.entitlements */,
 				2137D8851BACA03900310545 /* images */,
 				2137D8811BAC9E8D00310545 /* LaunchScreen.xib */,
@@ -476,6 +477,13 @@
 				21C88A4F1BAC95CF00792E9C /* Info.plist */,
 			);
 			path = "Nomful-AppUITests";
+			sourceTree = "<group>";
+		};
+		21F420831BB1DD650006B7F2 /* Firebase */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Firebase;
 			sourceTree = "<group>";
 		};
 		467AA50CAD973200C0F7409A /* Pods */ = {

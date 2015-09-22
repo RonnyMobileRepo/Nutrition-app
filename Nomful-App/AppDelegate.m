@@ -18,15 +18,30 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
     //DEV KEYS changed
-    /*
+    
     //parse
     [Parse setApplicationId:@"EcHepDGBmNvZhRx8D1vMFLzMPgqAXqfIjpiIJuIe"
                   clientKey:@"C0f7frNwhubdUjZplLyowAbEw4CUnmls6lubcs0M"];
-     */
+    
     
     //stripe key
     [Stripe setDefaultPublishableKey:STRIPE_TOKEN];
     
+    
+    //firebase testing
+    
+    // Create a reference to a Firebase database URL
+    Firebase *myRootRef = [[Firebase alloc] initWithUrl:@"https://flickering-inferno-4041.firebaseio.com"];
+    // Write data to Firebase
+    [myRootRef setValue:@"Do you have data? You'll love Firebase."];
+    
+    
+    
+    
+    
+    
+    
+    /*
     // Branch *branch = [Branch getInstance:@"144975538040099258"];
      
     // [branch initSessionWithLaunchOptions:launchOptions andRegisterDeepLinkHandler:^(NSDictionary *params, NSError *error) {
@@ -67,6 +82,7 @@
      
      }
     
+    */
     
     UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
                                                     UIUserNotificationTypeBadge |
