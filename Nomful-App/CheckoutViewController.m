@@ -89,7 +89,7 @@ NSString *const kBOOTCAMPAMOUNT = @"199.00";
     //constraints for initial layout
     [self initialLayout];
     
-    [_coachUser fetchIfNeeded];
+    [_coachUser fetchIfNeeded]; //**need this! do not remove
     
     //get and load coach image in background
     PFFile *coachImage = _coachUser[@"photo"];
@@ -230,6 +230,7 @@ NSString *const kBOOTCAMPAMOUNT = @"199.00";
                                              completion:^(STPToken *token, NSError *error) {
                                                  if (error) {
                                                      completion(PKPaymentAuthorizationStatusFailure);
+                                                     NSLog(@"create token failure: %@", error);
                                                      return;
                                                  }
                                                  /*
@@ -273,9 +274,11 @@ NSString *const kBOOTCAMPAMOUNT = @"199.00";
                                                               [_ccActivityIndicator stopAnimating];
                                                 
                                                               if (_trialDidEnd) {
-                                                                  //dismiss view
+                                                                  //dismiss view if the person was a trial user
                                                                   [self dismissViewControllerAnimated:true completion:^{
-                                                                      //
+                                                                      //we need to clear out the trialdate
+                                                                      [[PFUser currentUser] removeObjectForKey:@"trialEndDate"];
+                                                                      [[PFUser currentUser]saveInBackground];
                                                                   }];
                                                                   
                                                               }else{
