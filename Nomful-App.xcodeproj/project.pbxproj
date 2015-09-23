@@ -86,6 +86,7 @@
 		21C88A381BAC95CF00792E9C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 21C88A361BAC95CF00792E9C /* LaunchScreen.storyboard */; };
 		21C88A431BAC95CF00792E9C /* Nomful_AppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 21C88A421BAC95CF00792E9C /* Nomful_AppTests.m */; };
 		21C88A4E1BAC95CF00792E9C /* Nomful_AppUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 21C88A4D1BAC95CF00792E9C /* Nomful_AppUITests.m */; };
+		21F420861BB1E91B0006B7F2 /* FirebaseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21F420851BB1E91B0006B7F2 /* FirebaseTableViewController.m */; settings = {ASSET_TAGS = (); }; };
 		5EDD67B4A8A9E0D710949A4F /* libPods-Nomful-App.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DE4DE3B1DF31D17CBF9E1A0C /* libPods-Nomful-App.a */; };
 /* End PBXBuildFile section */
 
@@ -245,6 +246,8 @@
 		21C88A491BAC95CF00792E9C /* Nomful-AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Nomful-AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		21C88A4D1BAC95CF00792E9C /* Nomful_AppUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Nomful_AppUITests.m; sourceTree = "<group>"; };
 		21C88A4F1BAC95CF00792E9C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		21F420841BB1E91B0006B7F2 /* FirebaseTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirebaseTableViewController.h; sourceTree = "<group>"; };
+		21F420851BB1E91B0006B7F2 /* FirebaseTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirebaseTableViewController.m; sourceTree = "<group>"; };
 		62890AF4F1A893706C1A3067 /* Pods-Nomful-App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nomful-App.release.xcconfig"; path = "Pods/Target Support Files/Pods-Nomful-App/Pods-Nomful-App.release.xcconfig"; sourceTree = "<group>"; };
 		DE4DE3B1DF31D17CBF9E1A0C /* libPods-Nomful-App.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Nomful-App.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7AFC07723092381382DA4CB /* Pods-Nomful-App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nomful-App.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Nomful-App/Pods-Nomful-App.debug.xcconfig"; sourceTree = "<group>"; };
@@ -482,6 +485,8 @@
 		21F420831BB1DD650006B7F2 /* Firebase */ = {
 			isa = PBXGroup;
 			children = (
+				21F420841BB1E91B0006B7F2 /* FirebaseTableViewController.h */,
+				21F420851BB1E91B0006B7F2 /* FirebaseTableViewController.m */,
 			);
 			name = Firebase;
 			sourceTree = "<group>";
@@ -515,6 +520,7 @@
 				21C88A1F1BAC95CF00792E9C /* Frameworks */,
 				21C88A201BAC95CF00792E9C /* Resources */,
 				DBB1189FBCF9E6E78E0B8F54 /* Copy Pods Resources */,
+				214C64491BB2E17600410C0A /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -661,6 +667,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		214C64491BB2E17600410C0A /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "
+";
+		};
 		D05AEBC21057EFF5C6B3ED80 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -728,6 +748,7 @@
 				2137D8041BAC974E00310545 /* editImageViewController.m in Sources */,
 				2137D8571BAC97E400310545 /* SignUpViewController.m in Sources */,
 				2137D8271BAC979700310545 /* MatchCoachViewController.m in Sources */,
+				21F420861BB1E91B0006B7F2 /* FirebaseTableViewController.m in Sources */,
 				2137D8721BAC980000310545 /* TrialViewController.m in Sources */,
 				21C88A2A1BAC95CF00792E9C /* AppDelegate.m in Sources */,
 				21C88A271BAC95CF00792E9C /* main.m in Sources */,

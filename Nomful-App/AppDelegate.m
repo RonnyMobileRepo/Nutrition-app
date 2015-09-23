@@ -33,9 +33,44 @@
     // Create a reference to a Firebase database URL
     Firebase *myRootRef = [[Firebase alloc] initWithUrl:@"https://flickering-inferno-4041.firebaseio.com"];
     // Write data to Firebase
-    [myRootRef setValue:@"Do you have data? You'll love Firebase."];
+    [myRootRef setValue:@"Do you have data? You'll love Firebase 2."];
     
     
+    // Read data and react to changes
+    [myRootRef observeEventType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
+        NSLog(@"%@ -> %@", snapshot.key, snapshot.value);
+    }];
+    
+    
+
+        
+        NSString *id1 = @"objectID1";
+        NSString *id2 = @"objectID2";
+    
+        NSString *groupId = ([id1 compare:id2] < 0) ? [NSString stringWithFormat:@"%@%@", id1, id2] : [NSString stringWithFormat:@"%@%@", id2, id1];
+    
+        NSArray *members = @[id1, id2];
+        
+
+      //  CreateRecentItem1(user1, groupId, members, user2[PF_USER_FULLNAME], user2);
+        
+       // CreateRecentItem1(user2, groupId, members, user1[PF_USER_FULLNAME], user1);
+        
+    Firebase *firebase = [[Firebase alloc] initWithUrl:[NSString stringWithFormat:@"%@/Recent", @"https://flickering-inferno-4041.firebaseio.com"]];
+    
+    FQuery *query = [[firebase queryOrderedByChild:@"groupId"] queryEqualToValue:groupId];
+    [query observeSingleEventOfType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot)
+     {
+         BOOL create = YES;
+         if (snapshot.value != [NSNull null])
+         {
+             for (NSDictionary *recent in [snapshot.value allValues])
+             {
+                 if ([recent[@"userId"] isEqualToString:@"objectID1"]) create = NO;
+             }
+         }
+         //if (create) CreateRecentItem2(user, groupId, members, description, profile);
+     }];
     
     
     
