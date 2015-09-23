@@ -11,6 +11,8 @@
 #import "MessagesViewController.h"
 #import <UIBarButtonItem+Badge.h>
 #import "UIImage+ResizeAdditions.h"
+#import "CheckoutViewController.h"
+
 
 @interface LogMealSinglePageViewController : UIViewController <UITextViewDelegate>
 

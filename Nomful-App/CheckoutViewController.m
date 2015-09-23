@@ -22,6 +22,10 @@ NSString *const kBOOTCAMPAMOUNT = @"199.00";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _coachUser = [[PFUser alloc] init];
+    _coachUser = _coachUserFromSegue;
+    NSLog(@"coach user is: %@", _coachUser);
+    
     
     // Conditionally show Apple Pay button based on device availability
     if ([PKPaymentAuthorizationViewController canMakePaymentsUsingNetworks:@[PKPaymentNetworkVisa, PKPaymentNetworkMasterCard]]) {
@@ -84,12 +88,14 @@ NSString *const kBOOTCAMPAMOUNT = @"199.00";
     
     //constraints for initial layout
     [self initialLayout];
-
+    
+    [_coachUser fetchIfNeeded];
+    
     //get and load coach image in background
     PFFile *coachImage = _coachUser[@"photo"];
+    _profileImageView.image = [UIImage imageNamed:@"profilePlaceholder.png"];
     _profileImageView.file = coachImage;
     [_profileImageView loadInBackground];
-    _profileImageView.image = [UIImage imageNamed:@"profilePlaceholder.png"];
     
     [self makeProfiilePictureACircle];
     

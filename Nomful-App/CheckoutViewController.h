@@ -10,6 +10,7 @@
 #import <Stripe.h>
 #import "PTKView.h"
 
+
 @interface CheckoutViewController : UIViewController <PKPaymentAuthorizationViewControllerDelegate, PTKViewDelegate>
 
 @property (strong, nonatomic) PKPaymentAuthorizationViewController *paymentController;
@@ -18,7 +19,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *epirationDateLabel;
 @property (strong, nonatomic) UIButton *applePaybutton;
 @property (weak, nonatomic) IBOutlet UIButton *payWithCardButton;
-@property (weak, nonatomic) PFUser *coachUser;
+@property (strong, nonatomic) PFUser *coachUser;
+@property (strong, nonatomic) PFUser *coachUserFromSegue;
+
 @property (weak, nonatomic) PFUser *trainerUser;
 @property (weak, nonatomic) IBOutlet UIButton *healthyStartButton;
 @property (weak, nonatomic) IBOutlet UIButton *bootCampButton;
@@ -55,3 +58,5 @@
 
 @property (strong, nonatomic) NSMutableArray *initialConstraints;
 @end
+
+

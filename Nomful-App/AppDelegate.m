@@ -18,11 +18,11 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
     //DEV KEYS changed
-    /*
+    
     //parse
     [Parse setApplicationId:@"EcHepDGBmNvZhRx8D1vMFLzMPgqAXqfIjpiIJuIe"
                   clientKey:@"C0f7frNwhubdUjZplLyowAbEw4CUnmls6lubcs0M"];
-     */
+    
     
     //stripe key
     [Stripe setDefaultPublishableKey:STRIPE_TOKEN];
@@ -37,7 +37,7 @@
      //CRASH REPORTING
      //[Fabric with:@[CrashlyticsKit]];
      
-    
+/*
      //Mixpanel
      [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
      
@@ -66,7 +66,7 @@
      //no user
      
      }
-    
+    */
     
     UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
                                                     UIUserNotificationTypeBadge |

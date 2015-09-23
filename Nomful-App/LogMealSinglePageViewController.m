@@ -7,7 +7,6 @@
 //
 
 #import "LogMealSinglePageViewController.h"
-#import "CheckoutViewController.h"
 
 @interface LogMealSinglePageViewController ()
 
@@ -1117,8 +1116,7 @@ bool keyboardIsShowing = false;
         //trial is up!
         CheckoutViewController *vc = [segue destinationViewController];
         vc.trialDidEnd = true;
-        vc.coachUser = _chatroom[@"dietitianUser"];
-        
+        vc.coachUserFromSegue = _chatroom[@"dietitianUser"];
     }
 }
 - (IBAction)captureButtonPressed:(id)sender {
@@ -1781,7 +1779,14 @@ bool keyboardIsShowing = false;
             
                 if([PFUser currentUser][@"trialEndDate"] && result==NSOrderedDescending){
                     //trial period is up!
-                    [self performSegueWithIdentifier:@"trialEnded" sender:self];
+                    
+                    //query for the current chatroom
+                    PFQuery *query = [[PFQuery alloc] initWithClassName:@"Chatrooms"];
+                    [query whereKey:@"clientUser" equalTo:[PFUser currentUser]];
+                    [query getFirstObjectInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+                        _chatroom = object;
+                        [self performSegueWithIdentifier:@"trialEnded" sender:self];
+                    }];
                     
                     UIAlertView *trialAlert = [[UIAlertView alloc] initWithTitle:@"Hey You!" message:@"Your trial has ended, please complete payment to continue workign with your coach" delegate:self cancelButtonTitle:@"Okay!" otherButtonTitles: nil];
                     
@@ -1807,13 +1812,4 @@ bool keyboardIsShowing = false;
 }
 
 
-- (BOOL) isToday:(NSDate *)aDate {
-    NSCalendar *cal = [NSCalendar currentCalendar];
-    NSDateComponents *components = [cal components:(NSCalendarUnitEra|NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay) fromDate:[NSDate date]];
-    NSDate *today = [cal dateFromComponents:components];
-    components = [cal components:(NSCalendarUnitEra|NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay) fromDate:aDate];
-    NSDate *otherDate = [cal dateFromComponents:components];
-    BOOL isToday = [today isEqualToDate:otherDate];
-    return isToday;
-}
 @end
