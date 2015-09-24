@@ -350,7 +350,7 @@ NSString *const kBOOTCAMPAMOUNT = @"199.00";
     [self dismissViewControllerAnimated:YES completion:nil];
     
     //if payment success then leave
-    if(_paymentProcessed){
+    if(_paymentProcessed && !_trialDidEnd){
         
         [self performSegueWithIdentifier:@"setExpectationSegue" sender:self];
         
@@ -359,6 +359,13 @@ NSString *const kBOOTCAMPAMOUNT = @"199.00";
         //try to log in, we can check to see if their phone exists before sending to payment
         [self makeMember];
         
+    }else{
+        [self dismissViewControllerAnimated:true completion:^{
+            //we need to clear out the trialdate
+            [[PFUser currentUser] removeObjectForKey:@"trialEndDate"];
+            [[PFUser currentUser]saveInBackground];
+        }];
+
     }
    
 
@@ -655,7 +662,7 @@ NSString *const kBOOTCAMPAMOUNT = @"199.00";
         //remove the constraint between healhty start and bootcamp since bootcamp doesnt exist anymore
         [self.view removeConstraints:_healthyStartBottomConstraint];
         
-        _healthyStartBottomConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(50)-[healthyStart]"
+        _healthyStartBottomConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(50)-[healthyStart(190)]"
                                                                                 options:0
                                                                                 metrics:nil
                                                                                   views:views];
