@@ -29,8 +29,11 @@
     // Initialize array that will store chat messages.
     self.chat = [[NSMutableArray alloc] init];
     
+    NSString *groupId = @"chatroomid113434";
+
+    
     // Initialize the root of our Firebase namespace.
-    self.firebase = [[Firebase alloc] initWithUrl:kFirechatNS]; //https://firechat-ios.firebaseio-demo.com/
+    _firebase = [[Firebase alloc] initWithUrl:[NSString stringWithFormat:@"%@/Message/%@", kFirechatNS, groupId]];
     
     // Pick a random number between 1-1000 for our username.
     self.name = [NSString stringWithFormat:@"Guest%d", arc4random() % 1000];
@@ -48,6 +51,7 @@
         // Add the chat message to the array.
         if (newMessagesOnTop) {
             [self.chat insertObject:snapshot.value atIndex:0];
+            NSLog(@"snapshot %@", self.chat);
         } else {
             [self.chat addObject:snapshot.value];
         }
@@ -66,30 +70,53 @@
         [self.tableView reloadData];
         initialAdds = NO;
     }];
+    
+    
+}
 
+-(void)buildMessage{
+    
+    NSString *text = @"this is the second message text";
     
     NSMutableDictionary *item = [[NSMutableDictionary alloc] init];
-    item[@"text"] = @"hey hey hey 3";
-    
+    //---------------------------------------------------------------------------------------------------------------------------------------------
+    item[@"userId"] = @"pfuserID";
+    item[@"name"] = @"pfuser name";
+    item[@"status"] = @"delivered";
+    //---------------------------------------------------------------------------------------------------------------------------------------------
+    item[@"video"] = item[@"thumbnail"] = item[@"picture"] = item[@"audio"] = item[@"latitude"] = item[@"longitude"] = @"";
+    item[@"video_duration"] = item[@"audio_duration"] = @0;
+    item[@"picture_width"] = item[@"picture_height"] = @0;
+    //---------------------------------------------------------------------------------------------------------------------------------------------
+    if (text != nil) [self sendTextMessage:item Text:text];
+
+}
+
+- (void)sendTextMessage:(NSMutableDictionary *)item Text:(NSString *)text
+//-------------------------------------------------------------------------------------------------------------------------------------------------
+{
+    item[@"text"] = text;
     [self sendMessage:item];
-    
-    //[[self.firebase childByAutoId] setValue:@{@"name" : self.name, @"text":@"heyo"}];
-    
 }
 
 - (void)sendMessage:(NSMutableDictionary *)item
 
 {
-    Firebase *firebase = [[Firebase alloc] initWithUrl:[NSString stringWithFormat:@"%@/Chatroom/%@", kFirechatNS, @"chatroomnumber1"]];
-    Firebase *reference = [firebase childByAutoId];
-    item[@"key"] = reference.key;
     
+    NSString *groupId = @"chatroomid113434";
+    
+    Firebase *firebase = [[Firebase alloc] initWithUrl:[NSString stringWithFormat:@"%@/Message/%@", kFirechatNS, groupId]];
+    Firebase *reference = [firebase childByAutoId];
+    item[@"messageId"] = reference.key;
+    //---------------------------------------------------------------------------------------------------------------------------------------------
     [reference setValue:item withCompletionBlock:^(NSError *error, Firebase *ref)
      {
          if (error != nil) NSLog(@"Outgoing sendMessage network error.");
      }];
    
 }
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
