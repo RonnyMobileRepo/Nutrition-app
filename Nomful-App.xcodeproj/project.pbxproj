@@ -87,6 +87,7 @@
 		21C88A431BAC95CF00792E9C /* Nomful_AppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 21C88A421BAC95CF00792E9C /* Nomful_AppTests.m */; };
 		21C88A4E1BAC95CF00792E9C /* Nomful_AppUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 21C88A4D1BAC95CF00792E9C /* Nomful_AppUITests.m */; };
 		5EDD67B4A8A9E0D710949A4F /* libPods-Nomful-App.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DE4DE3B1DF31D17CBF9E1A0C /* libPods-Nomful-App.a */; };
+		FBC51B5A644B4AEB5773239D /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83716DA2E1B570912D18C269 /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -246,6 +247,7 @@
 		21C88A4D1BAC95CF00792E9C /* Nomful_AppUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Nomful_AppUITests.m; sourceTree = "<group>"; };
 		21C88A4F1BAC95CF00792E9C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		62890AF4F1A893706C1A3067 /* Pods-Nomful-App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nomful-App.release.xcconfig"; path = "Pods/Target Support Files/Pods-Nomful-App/Pods-Nomful-App.release.xcconfig"; sourceTree = "<group>"; };
+		83716DA2E1B570912D18C269 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE4DE3B1DF31D17CBF9E1A0C /* libPods-Nomful-App.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Nomful-App.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7AFC07723092381382DA4CB /* Pods-Nomful-App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nomful-App.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Nomful-App/Pods-Nomful-App.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -256,6 +258,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5EDD67B4A8A9E0D710949A4F /* libPods-Nomful-App.a in Frameworks */,
+				FBC51B5A644B4AEB5773239D /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -491,6 +494,7 @@
 			isa = PBXGroup;
 			children = (
 				DE4DE3B1DF31D17CBF9E1A0C /* libPods-Nomful-App.a */,
+				83716DA2E1B570912D18C269 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -680,7 +684,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Nomful-App/Pods-Nomful-App-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
