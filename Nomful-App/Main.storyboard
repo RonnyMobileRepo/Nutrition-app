@@ -1164,12 +1164,12 @@
                     </view>
                     <navigationItem key="navigationItem" title="Nomful" id="Rmx-h4-VKB">
                         <barButtonItem key="backBarButtonItem" title=" " id="2nM-MG-BPH"/>
-                        <barButtonItem key="leftBarButtonItem" image="A5EE06AF-1B94-42A7-8C10-B8041C0FAF7B" id="aBW-t3-91S">
+                        <barButtonItem key="leftBarButtonItem" image="40F63165-714A-477B-814C-D27ECA5BBE13" id="aBW-t3-91S">
                             <connections>
                                 <action selector="accountBarButtonPressed:" destination="4T5-E7-lgP" id="hbg-E0-N9I"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="F36A1BDF-36B4-4C50-8EE2-0938D8AE7F3A" id="R3F-pf-UNh"/>
+                        <barButtonItem key="rightBarButtonItem" image="A5EF4A11-9343-44FE-A3F5-8079201E6D55" id="R3F-pf-UNh"/>
                     </navigationItem>
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
@@ -4368,12 +4368,12 @@
             <objects>
                 <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="5qD-vJ-36d" customClass="PageViewController" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" title="Nomful" id="94D-0r-3iR">
-                        <barButtonItem key="leftBarButtonItem" image="47D7F36B-D671-495B-94B2-AB6946EDC4AF" id="mxP-hp-SWL">
+                        <barButtonItem key="leftBarButtonItem" image="01F06386-0EDB-49AD-95E8-24A9FBF79F10" id="mxP-hp-SWL">
                             <connections>
                                 <action selector="goLeft:" destination="5qD-vJ-36d" id="pcz-9P-vUm"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="9853D321-0050-41A1-9CAD-2E6C4881BB55" id="8Kd-pT-lLY">
+                        <barButtonItem key="rightBarButtonItem" image="0E950AD0-007F-4B82-B73C-B78883F04939" id="8Kd-pT-lLY">
                             <connections>
                                 <action selector="goRight:" destination="5qD-vJ-36d" id="m7Z-AN-N6Y"/>
                             </connections>
@@ -4892,7 +4892,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="47D7F36B-D671-495B-94B2-AB6946EDC4AF" width="27" height="27">
+        <image name="01F06386-0EDB-49AD-95E8-24A9FBF79F10" width="27" height="27">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGOzxYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK0HCBEW
 GxwgISksLzU4VSRudWxs1AkKCwwNDg8QViRjbGFzc1xOU0ltYWdlRmxhZ3NWTlNSZXBzV05TQ29sb3KA
@@ -5074,7 +5074,7 @@ KGUoaihyKHUoeiiJKI0olCicKKkoriiwKLIotyi/KMIoxyjPKNIo5CjnKOwAAAAAAAACAQAAAAAAAAA/
 AAAAAAAAAAAAAAAAAAAo7g
 </mutableData>
         </image>
-        <image name="9853D321-0050-41A1-9CAD-2E6C4881BB55" width="27" height="27">
+        <image name="0E950AD0-007F-4B82-B73C-B78883F04939" width="27" height="27">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGOzxYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK0HCBEW
 GxwgISksLzU4VSRudWxs1AkKCwwNDg8QViRjbGFzc1xOU0ltYWdlRmxhZ3NWTlNSZXBzV05TQ29sb3KA
@@ -5256,7 +5256,7 @@ KGUoaihyKHUoeiiJKI0olCicKKkoriiwKLIotyi/KMIoxyjPKNIo5CjnKOwAAAAAAAACAQAAAAAAAAA/
 AAAAAAAAAAAAAAAAAAAo7g
 </mutableData>
         </image>
-        <image name="A5EE06AF-1B94-42A7-8C10-B8041C0FAF7B" width="25" height="25">
+        <image name="40F63165-714A-477B-814C-D27ECA5BBE13" width="25" height="25">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPj9YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQsLzI4O1UkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
@@ -5431,7 +5431,7 @@ twC5ALsAvQDCANkA2wDdJoMmiCaTJpwmryazJsYm0SbaJt8m5ybqJu8m/icCJwknESceJyMnJScnJywn
 NCc3JzwnRCdHJ1knXCdhAAAAAAAAAgEAAAAAAAAAQgAAAAAAAAAAAAAAAAAAJ2M
 </mutableData>
         </image>
-        <image name="F36A1BDF-36B4-4C50-8EE2-0938D8AE7F3A" width="25" height="25">
+        <image name="A5EF4A11-9343-44FE-A3F5-8079201E6D55" width="25" height="25">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPj9YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQsLzI4O1UkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
