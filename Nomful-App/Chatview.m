@@ -205,6 +205,7 @@
 
 {
     [self messageSend:text Video:nil Picture:nil Audio:nil];
+    [self sendPushNotifications];
 }
 
 
@@ -517,6 +518,44 @@
 
 {
     return ([message.senderId isEqualToString:self.senderId] == YES);
+}
+
+- (void)sendPushNotifications{
+    
+        PFQuery *query = [PFQuery queryWithClassName:@"Chatrooms"];
+        [query getObjectInBackgroundWithId:groupId block:^(PFObject * _Nullable object, NSError * _Nullable error) {
+
+            //we now have the chatroom object!
+            //maybe later we do init with chatroomobject instead of object id
+            PFQuery *pushQuery = [PFInstallation query];
+            NSDictionary *data = [[NSDictionary alloc] init];
+
+            if ([[PFUser currentUser][@"role"] isEqualToString:@"Client"]){
+                PFUser *coachUser = object[@"dietitianUser"];
+                [pushQuery whereKey:@"user" equalTo:coachUser];
+                
+                NSString *name = [NSString stringWithFormat:@"You have a new messages from %@", [PFUser currentUser][@"firstName"]];
+
+                data = [NSDictionary dictionaryWithObjectsAndKeys:
+                       name, @"alert",
+                       @1, @"badge",
+                       @"default", @"sound",
+                       @"message", @"type",
+                       nil];
+            
+                
+                PFPush *push = [[PFPush alloc] init];
+                [push setQuery:pushQuery];
+                [push setData:data];
+                [push sendPushInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                    //
+                    if(succeeded){
+                        NSLog(@"push sent successfully!");
+                    }
+                }];
+          
+             }
+        }];
 }
 
 
