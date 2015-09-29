@@ -55,7 +55,6 @@
     
     self.brandColor = [UIColor colorWithRed:126.0/255.0 green:202.0/255.0 blue:175.0/255.0 alpha:1.0];
     
-    
     //set left iten to account button
     self.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"profile"] style:UIBarButtonItemStylePlain target:self action:@selector(goLeft:)];
     self.navigationItem.leftBarButtonItem = self.leftBarButtonItem;

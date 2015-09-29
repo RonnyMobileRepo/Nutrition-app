@@ -163,7 +163,7 @@
     if (started[senderId] == nil) started[senderId] = @YES; else return;
 
     PFQuery *query = [PFUser query];
-    [query whereKey:[PFUser currentUser].objectId equalTo:senderId];
+    [query whereKey:@"objectId" equalTo:senderId];
     [query setCachePolicy:kPFCachePolicyCacheThenNetwork];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
