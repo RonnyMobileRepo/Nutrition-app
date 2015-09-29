@@ -68,8 +68,8 @@
     
     //set bubble colors
     JSQMessagesBubbleImageFactory *bubbleFactory = [[JSQMessagesBubbleImageFactory alloc] init];
-    bubbleImageOutgoing = [bubbleFactory outgoingMessagesBubbleImageWithColor:[UIColor blueColor]];
-    bubbleImageIncoming = [bubbleFactory incomingMessagesBubbleImageWithColor:[UIColor yellowColor]];
+    bubbleImageOutgoing = [bubbleFactory outgoingMessagesBubbleImageWithColor:[UIColor colorWithRed:126.0/255.0 green:202.0/255.0 blue:175.0/255.0 alpha:1.0]];
+    bubbleImageIncoming = [bubbleFactory incomingMessagesBubbleImageWithColor:[UIColor jsq_messageBubbleLightGrayColor]];
 
     //set the avatar image when chat is blank?
     avatarImageBlank = [JSQMessagesAvatarImageFactory avatarImageWithImage:[UIImage imageNamed:@"profilePlaceholder.png"] diameter:30.0];
@@ -93,6 +93,13 @@
 
     [self loadMessages];
   
+    
+    //if there is a badge count...reset it to zero in the background
+    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+    if (currentInstallation.badge != 0) {
+        currentInstallation.badge = 0;
+        [currentInstallation saveEventually];
+    }
     
 }
 
@@ -128,10 +135,13 @@
          NSLog(@"message: %@", snapshot.value);
          
          if (initialized)
-         { //you get here when a user recieves a new message?
+         {
+             //you get here when a user recieves a new message?
              BOOL incoming = [self addMessage:snapshot.value];
              if (incoming) [JSQSystemSoundPlayer jsq_playMessageReceivedSound];
              [self finishReceivingMessage];
+             
+             
          }else{
              [self addMessage:snapshot.value]; //** i added this so the messages load initially
          }
@@ -347,7 +357,6 @@
 }
 
 #pragma mark - JSQMessages collection view flow layout delegate
-
 
 - (CGFloat)collectionView:(JSQMessagesCollectionView *)collectionView
                    layout:(JSQMessagesCollectionViewFlowLayout *)collectionViewLayout heightForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath

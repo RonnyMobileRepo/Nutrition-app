@@ -7,6 +7,8 @@
 //
 
 #import "JSQMessages.h"
+#import "LogMealSinglePageViewController.h"
+
 
 
 
