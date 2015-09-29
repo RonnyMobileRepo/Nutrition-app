@@ -31,8 +31,6 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkforBadgeValue) name:@"updateBarButtonBadge" object:nil];
     
-    
-    
 }
 
 - (void)viewDidLoad {
@@ -43,12 +41,12 @@
     //alloc
     self.homeVCNav = [[UIViewController alloc] init];
     self.profileVC = [[UIViewController alloc] init];
-    self.chatVC = [[UIViewController alloc] init];
+    self.chatVC = [[Chatview alloc] init];
 
     //set to view controller
     self.homeVCNav = [self.storyboard instantiateViewControllerWithIdentifier:@"homeViewNav"];
     self.profileVC = [self.storyboard instantiateViewControllerWithIdentifier:@"profileView"];
-    self.chatVC = [self.storyboard instantiateViewControllerWithIdentifier:@"chatView"];
+    self.chatVC = [self.storyboard instantiateViewControllerWithIdentifier:@"chatView2"];
 
     
     NSMutableArray *homeVCArray = [[NSMutableArray alloc] initWithObjects:self.homeVCNav, nil];

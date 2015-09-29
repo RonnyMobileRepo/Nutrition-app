@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <UIBarButtonItem+Badge.h>
+#import "Chatview.h"
 
 
 @class PageViewController;
@@ -22,7 +23,7 @@
 
 @property (strong, nonatomic) UIViewController *homeVCNav;
 @property (strong, nonatomic) UIViewController *profileVC;
-@property (strong, nonatomic) UIViewController *chatVC;
+@property (strong, nonatomic) Chatview *chatVC;
 @property (strong, nonatomic) UIViewController *settingsVC;
 
 @property (strong, nonatomic) UIColor *brandColor;
