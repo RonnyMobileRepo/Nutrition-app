@@ -78,6 +78,9 @@
 		2137D8AB1BACA04600310545 /* straws.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2137D8971BACA04600310545 /* straws.jpg */; settings = {ASSET_TAGS = (); }; };
 		2137D8AC1BACA04600310545 /* thomas.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 2137D8981BACA04600310545 /* thomas.JPG */; settings = {ASSET_TAGS = (); }; };
 		2137D8AD1BACA04600310545 /* white-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 2137D8991BACA04600310545 /* white-button.png */; settings = {ASSET_TAGS = (); }; };
+		214C644E1BB985AE00410C0A /* Chatview.m in Sources */ = {isa = PBXBuildFile; fileRef = 214C644D1BB985AE00410C0A /* Chatview.m */; settings = {ASSET_TAGS = (); }; };
+		214C64521BB98B0300410C0A /* Incoming.m in Sources */ = {isa = PBXBuildFile; fileRef = 214C64511BB98B0300410C0A /* Incoming.m */; settings = {ASSET_TAGS = (); }; };
+		214C64551BB98D3700410C0A /* Outgoing.m in Sources */ = {isa = PBXBuildFile; fileRef = 214C64541BB98D3700410C0A /* Outgoing.m */; settings = {ASSET_TAGS = (); }; };
 		21C88A271BAC95CF00792E9C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 21C88A261BAC95CF00792E9C /* main.m */; };
 		21C88A2A1BAC95CF00792E9C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 21C88A291BAC95CF00792E9C /* AppDelegate.m */; };
 		21C88A2D1BAC95CF00792E9C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21C88A2C1BAC95CF00792E9C /* ViewController.m */; };
@@ -229,6 +232,12 @@
 		2137D8971BACA04600310545 /* straws.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = straws.jpg; sourceTree = "<group>"; };
 		2137D8981BACA04600310545 /* thomas.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = thomas.JPG; sourceTree = "<group>"; };
 		2137D8991BACA04600310545 /* white-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "white-button.png"; sourceTree = "<group>"; };
+		214C644C1BB985AE00410C0A /* Chatview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chatview.h; sourceTree = "<group>"; };
+		214C644D1BB985AE00410C0A /* Chatview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Chatview.m; sourceTree = "<group>"; };
+		214C64501BB98B0300410C0A /* Incoming.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Incoming.h; sourceTree = "<group>"; };
+		214C64511BB98B0300410C0A /* Incoming.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Incoming.m; sourceTree = "<group>"; };
+		214C64531BB98D3700410C0A /* Outgoing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Outgoing.h; sourceTree = "<group>"; };
+		214C64541BB98D3700410C0A /* Outgoing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Outgoing.m; sourceTree = "<group>"; };
 		21C6FC4F1BAF20EE004599E8 /* Nomful-App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Nomful-App.entitlements"; sourceTree = "<group>"; };
 		21C88A221BAC95CF00792E9C /* Nomful-App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Nomful-App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		21C88A261BAC95CF00792E9C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -411,6 +420,17 @@
 			name = images;
 			sourceTree = "<group>";
 		};
+		214C644F1BB98AF700410C0A /* Messages */ = {
+			isa = PBXGroup;
+			children = (
+				214C64531BB98D3700410C0A /* Outgoing.h */,
+				214C64541BB98D3700410C0A /* Outgoing.m */,
+				214C64501BB98B0300410C0A /* Incoming.h */,
+				214C64511BB98B0300410C0A /* Incoming.m */,
+			);
+			name = Messages;
+			sourceTree = "<group>";
+		};
 		21C88A191BAC95CF00792E9C = {
 			isa = PBXGroup;
 			children = (
@@ -485,8 +505,11 @@
 		21F420831BB1DD650006B7F2 /* Firebase */ = {
 			isa = PBXGroup;
 			children = (
+				214C644F1BB98AF700410C0A /* Messages */,
 				21F420841BB1E91B0006B7F2 /* FirebaseTableViewController.h */,
 				21F420851BB1E91B0006B7F2 /* FirebaseTableViewController.m */,
+				214C644C1BB985AE00410C0A /* Chatview.h */,
+				214C644D1BB985AE00410C0A /* Chatview.m */,
 			);
 			name = Firebase;
 			sourceTree = "<group>";
@@ -719,6 +742,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2137D7FF1BAC974E00310545 /* ChooseTrainerTableViewCell.m in Sources */,
+				214C64521BB98B0300410C0A /* Incoming.m in Sources */,
 				2137D8781BAC980000310545 /* UserAccountViewController.m in Sources */,
 				2137D87C1BAC980D00310545 /* WebViewViewController.m in Sources */,
 				21C88A331BAC95CF00792E9C /* Nomful_App.xcdatamodeld in Sources */,
@@ -745,6 +769,7 @@
 				2137D81C1BAC978600310545 /* LogMealSinglePageViewController.m in Sources */,
 				2137D84C1BAC97DB00310545 /* SettingsTableViewController.m in Sources */,
 				2137D8381BAC97AF00310545 /* PageItemController.m in Sources */,
+				214C64551BB98D3700410C0A /* Outgoing.m in Sources */,
 				2137D8041BAC974E00310545 /* editImageViewController.m in Sources */,
 				2137D8571BAC97E400310545 /* SignUpViewController.m in Sources */,
 				2137D8271BAC979700310545 /* MatchCoachViewController.m in Sources */,
@@ -756,6 +781,7 @@
 				2137D8281BAC979700310545 /* MessagesViewController.m in Sources */,
 				2137D8791BAC980000310545 /* VerificationCodeViewController.m in Sources */,
 				2137D7E51BAC973000310545 /* AccountViewController.m in Sources */,
+				214C644E1BB985AE00410C0A /* Chatview.m in Sources */,
 				2137D8461BAC97D200310545 /* RootViewController.m in Sources */,
 				2137D8741BAC980000310545 /* UIImage+AlphaAdditions.m in Sources */,
 				2137D8391BAC97AF00310545 /* PageViewController.m in Sources */,
@@ -857,7 +883,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "b282d234-69cc-49b4-a2a8-36a0184ebb13";
+				PROVISIONING_PROFILE = "6c2c2ad3-225b-4a6b-9ee5-f62dc76cd8e1";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -895,7 +921,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "b282d234-69cc-49b4-a2a8-36a0184ebb13";
+				PROVISIONING_PROFILE = "6c2c2ad3-225b-4a6b-9ee5-f62dc76cd8e1";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -917,7 +943,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Nomful;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "b282d234-69cc-49b4-a2a8-36a0184ebb13";
+				PROVISIONING_PROFILE = "6c2c2ad3-225b-4a6b-9ee5-f62dc76cd8e1";
 			};
 			name = Debug;
 		};
@@ -936,7 +962,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Nomful;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "b282d234-69cc-49b4-a2a8-36a0184ebb13";
+				PROVISIONING_PROFILE = "6c2c2ad3-225b-4a6b-9ee5-f62dc76cd8e1";
 			};
 			name = Release;
 		};

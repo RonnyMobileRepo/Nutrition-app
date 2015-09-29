@@ -71,12 +71,12 @@
         initialAdds = NO;
     }];
     
-    
+    [self buildMessage];
 }
 
 -(void)buildMessage{
     
-    NSString *text = @"this is the second message text";
+    NSString *text = @"test";
     
     NSMutableDictionary *item = [[NSMutableDictionary alloc] init];
     //---------------------------------------------------------------------------------------------------------------------------------------------
