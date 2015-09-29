@@ -36,15 +36,24 @@
     JSQMessagesBubbleImage *bubbleImageIncoming;
     JSQMessagesAvatarImage *avatarImageBlank;
     
-    
 }
 
 @end
 
 @implementation Chatview
 
+- (id)initWith:(NSString *)groupId_
+
+{
+    self = [super init];
+    groupId = groupId_;
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    NSLog(@"group id is: %@", groupId);
     
     //declare items for memory stuff i still don't get
     items = [[NSMutableArray alloc] init];
@@ -77,18 +86,13 @@
     
     //lets go get the chatroom id and upon comletion, load firebase and messages
     //we should make this an initializtion thing like it was before
-    PFQuery *query = [PFQuery queryWithClassName:@"Chatrooms"];
-    [query whereKey:@"clientUser" equalTo:[PFUser currentUser]];
-    [query getFirstObjectInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
-        groupId = object.objectId;
     
-        //delcare two firebase objects
-        firebase1 = [[Firebase alloc] initWithUrl:[NSString stringWithFormat:@"%@/Message/%@", kFirechatNS, groupId]];
-        firebase2 = [[Firebase alloc] initWithUrl:[NSString stringWithFormat:@"%@/Typing/%@", kFirechatNS, groupId]];
+    //delcare two firebase objects
+    firebase1 = [[Firebase alloc] initWithUrl:[NSString stringWithFormat:@"%@/Message/%@", kFirechatNS, groupId]];
+    firebase2 = [[Firebase alloc] initWithUrl:[NSString stringWithFormat:@"%@/Typing/%@", kFirechatNS, groupId]];
 
-        [self loadMessages];
-    }];
-    //load the messages
+    [self loadMessages];
+  
     
 }
 

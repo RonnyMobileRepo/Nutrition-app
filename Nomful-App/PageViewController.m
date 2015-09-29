@@ -41,12 +41,12 @@
     //alloc
     self.homeVCNav = [[UIViewController alloc] init];
     self.profileVC = [[UIViewController alloc] init];
-    self.chatVC = [[Chatview alloc] init];
+    
 
     //set to view controller
     self.homeVCNav = [self.storyboard instantiateViewControllerWithIdentifier:@"homeViewNav"];
     self.profileVC = [self.storyboard instantiateViewControllerWithIdentifier:@"profileView"];
-    self.chatVC = [self.storyboard instantiateViewControllerWithIdentifier:@"chatView2"];
+    [self initializeChatView];
 
     
     NSMutableArray *homeVCArray = [[NSMutableArray alloc] initWithObjects:self.homeVCNav, nil];
@@ -68,6 +68,15 @@
     
     [self.navigationController.navigationBar setBackgroundColor:[UIColor whiteColor]];
 
+}
+
+-(void)initializeChatView{
+    
+    PFQuery *query = [PFQuery queryWithClassName:@"Chatrooms"];
+    [query whereKey:@"clientUser" equalTo:[PFUser currentUser]];
+    [query getFirstObjectInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+        self.chatVC = [[Chatview alloc] initWith:object.objectId];
+    }];
 }
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController
