@@ -43,7 +43,6 @@
 
 @implementation Chatview
 
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -76,13 +75,21 @@
 //    UIMenuItem *menuItemSave = [[UIMenuItem alloc] initWithTitle:@"Save" action:@selector(actionSave:)];
 //    [UIMenuController sharedMenuController].menuItems = @[menuItemCopy, menuItemDelete, menuItemSave];
     
-    groupId = @"chatroomid1134657d55";
-    //delcare two firebase objects
-    firebase1 = [[Firebase alloc] initWithUrl:[NSString stringWithFormat:@"%@/Message/%@", kFirechatNS, groupId]];
-    firebase2 = [[Firebase alloc] initWithUrl:[NSString stringWithFormat:@"%@/Typing/%@", kFirechatNS, groupId]];
+    //lets go get the chatroom id and upon comletion, load firebase and messages
+    //we should make this an initializtion thing like it was before
+    PFQuery *query = [PFQuery queryWithClassName:@"Chatrooms"];
+    [query whereKey:@"clientUser" equalTo:[PFUser currentUser]];
+    [query getFirstObjectInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+        groupId = object.objectId;
+    
+        //delcare two firebase objects
+        firebase1 = [[Firebase alloc] initWithUrl:[NSString stringWithFormat:@"%@/Message/%@", kFirechatNS, groupId]];
+        firebase2 = [[Firebase alloc] initWithUrl:[NSString stringWithFormat:@"%@/Typing/%@", kFirechatNS, groupId]];
 
+        [self loadMessages];
+    }];
     //load the messages
-    [self loadMessages];
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated
