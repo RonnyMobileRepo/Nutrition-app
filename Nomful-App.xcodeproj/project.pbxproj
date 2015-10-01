@@ -90,7 +90,7 @@
 		21C88A431BAC95CF00792E9C /* Nomful_AppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 21C88A421BAC95CF00792E9C /* Nomful_AppTests.m */; };
 		21C88A4E1BAC95CF00792E9C /* Nomful_AppUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 21C88A4D1BAC95CF00792E9C /* Nomful_AppUITests.m */; };
 		21F420861BB1E91B0006B7F2 /* FirebaseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21F420851BB1E91B0006B7F2 /* FirebaseTableViewController.m */; settings = {ASSET_TAGS = (); }; };
-		5EDD67B4A8A9E0D710949A4F /* libPods-Nomful-App.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DE4DE3B1DF31D17CBF9E1A0C /* libPods-Nomful-App.a */; };
+		609113483CFFF579B76006FA /* libPods-Nomful-App.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DE4DE3B1DF31D17CBF9E1A0C /* libPods-Nomful-App.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -257,6 +257,7 @@
 		21C88A4F1BAC95CF00792E9C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		21F420841BB1E91B0006B7F2 /* FirebaseTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirebaseTableViewController.h; sourceTree = "<group>"; };
 		21F420851BB1E91B0006B7F2 /* FirebaseTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirebaseTableViewController.m; sourceTree = "<group>"; };
+		2E5E086D053796BBCF78832F /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		62890AF4F1A893706C1A3067 /* Pods-Nomful-App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nomful-App.release.xcconfig"; path = "Pods/Target Support Files/Pods-Nomful-App/Pods-Nomful-App.release.xcconfig"; sourceTree = "<group>"; };
 		DE4DE3B1DF31D17CBF9E1A0C /* libPods-Nomful-App.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Nomful-App.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7AFC07723092381382DA4CB /* Pods-Nomful-App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nomful-App.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Nomful-App/Pods-Nomful-App.debug.xcconfig"; sourceTree = "<group>"; };
@@ -267,7 +268,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5EDD67B4A8A9E0D710949A4F /* libPods-Nomful-App.a in Frameworks */,
+				609113483CFFF579B76006FA /* libPods-Nomful-App.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -527,6 +528,7 @@
 			isa = PBXGroup;
 			children = (
 				DE4DE3B1DF31D17CBF9E1A0C /* libPods-Nomful-App.a */,
+				2E5E086D053796BBCF78832F /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -538,7 +540,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 21C88A521BAC95CF00792E9C /* Build configuration list for PBXNativeTarget "Nomful-App" */;
 			buildPhases = (
-				D05AEBC21057EFF5C6B3ED80 /* Check Pods Manifest.lock */,
+				8EC3C230F13F8DFEA3C8A6CA /* Check Pods Manifest.lock */,
 				21C88A1E1BAC95CF00792E9C /* Sources */,
 				21C88A1F1BAC95CF00792E9C /* Frameworks */,
 				21C88A201BAC95CF00792E9C /* Resources */,
@@ -704,7 +706,7 @@
 			shellScript = "
 ";
 		};
-		D05AEBC21057EFF5C6B3ED80 /* Check Pods Manifest.lock */ = {
+		8EC3C230F13F8DFEA3C8A6CA /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -846,6 +848,7 @@
 /* Begin XCBuildConfiguration section */
 		21C88A501BAC95CF00792E9C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E7AFC07723092381382DA4CB /* Pods-Nomful-App.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -891,6 +894,7 @@
 		};
 		21C88A511BAC95CF00792E9C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 62890AF4F1A893706C1A3067 /* Pods-Nomful-App.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -932,10 +936,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E7AFC07723092381382DA4CB /* Pods-Nomful-App.debug.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				CODE_SIGN_ENTITLEMENTS = "Nomful-App/Nomful-App.entitlements";
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = "Nomful-App/PrefixHeader.pch";
 				INFOPLIST_FILE = "Nomful-App/Info.plist";
@@ -943,7 +946,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Nomful;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "6c2c2ad3-225b-4a6b-9ee5-f62dc76cd8e1";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -951,10 +954,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 62890AF4F1A893706C1A3067 /* Pods-Nomful-App.release.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				CODE_SIGN_ENTITLEMENTS = "Nomful-App/Nomful-App.entitlements";
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = "Nomful-App/PrefixHeader.pch";
 				INFOPLIST_FILE = "Nomful-App/Info.plist";
@@ -962,7 +964,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Nomful;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "6c2c2ad3-225b-4a6b-9ee5-f62dc76cd8e1";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
