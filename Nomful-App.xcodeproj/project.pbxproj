@@ -814,7 +814,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "6c2c2ad3-225b-4a6b-9ee5-f62dc76cd8e1";
+				PROVISIONING_PROFILE = "b282d234-69cc-49b4-a2a8-36a0184ebb13";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -852,7 +852,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "6c2c2ad3-225b-4a6b-9ee5-f62dc76cd8e1";
+				PROVISIONING_PROFILE = "b282d234-69cc-49b4-a2a8-36a0184ebb13";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -866,8 +866,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-2";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = "Nomful-App/Nomful-App.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = "Nomful-App/PrefixHeader.pch";
 				INFOPLIST_FILE = "Nomful-App/Info.plist";
@@ -875,7 +875,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Nomful;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "b282d234-69cc-49b4-a2a8-36a0184ebb13";
 			};
 			name = Debug;
 		};
@@ -886,8 +886,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-2";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = "Nomful-App/Nomful-App.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = "Nomful-App/PrefixHeader.pch";
 				INFOPLIST_FILE = "Nomful-App/Info.plist";
@@ -895,7 +895,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Nomful;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "b282d234-69cc-49b4-a2a8-36a0184ebb13";
 			};
 			name = Release;
 		};

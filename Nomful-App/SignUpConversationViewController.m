@@ -1639,6 +1639,16 @@ CGFloat const ktypeInterval = 0.02;
                                                     [PFUser currentUser][@"planType"] = @"perry";
                                                     [[PFUser currentUser] saveEventually];
                                                     
+                                                    //check to see if there is a user associated with the device for Push Notifications
+                                                    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+                                                    //if(!currentInstallation[@"user"]){
+                                                    //no user associated so make it!
+                                                    currentInstallation[@"user"] = user;
+                                                    [currentInstallation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                                                        NSLog(@"You just saved the client user on the installation in parse");
+                                                    }];
+
+                                                    
 
                                                 }else{
                                                     //basically what we're doing here is seeing if the user is supposed
