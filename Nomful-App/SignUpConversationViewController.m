@@ -1638,6 +1638,7 @@ CGFloat const ktypeInterval = 0.02;
                                                     
                                                     [PFUser currentUser][@"planType"] = @"perry";
                                                     [[PFUser currentUser] saveEventually];
+                                                    
 
                                                 }else{
                                                     //basically what we're doing here is seeing if the user is supposed

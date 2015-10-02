@@ -70,6 +70,7 @@
     //create chatroom
     [self buildChatroom];
     
+    [self activatePushNotification];
     
     if(_isTrial){
         NSLog(@"trainer user ttrial");
@@ -251,4 +252,15 @@
     
 }
 
+- (void)activatePushNotification{
+    //check to see if there is a user associated with the device for Push Notifications
+    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+    //if(!currentInstallation[@"user"]){
+    //no user associated so make it!
+    currentInstallation[@"user"] = [PFUser currentUser];
+    [currentInstallation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        NSLog(@"You just saved the client user on the installation in parse");
+    }];
+
+}
 @end
