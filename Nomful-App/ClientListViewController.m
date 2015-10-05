@@ -9,6 +9,7 @@
 #import "ClientListViewController.h"
 #import "AvailableClientTableViewCell.h"
 
+
 @interface ClientListViewController ()
 
 @end
@@ -229,13 +230,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     UIButton *senderButton = sender;
     
-    if([segue.identifier isEqualToString:@"listToChat"]){
-        NSLog(@"CHAT segue called. Sender tag is: %ld", (long)senderButton.tag);
-        
-        MessagesViewController *mvc = [segue destinationViewController];
-        mvc.chatroomObjectFromList = [self.objects objectAtIndex:senderButton.tag];
-        mvc.youAreDietitian = YES;
-    }else if([segue.identifier isEqualToString:@"listToDetailSegue"]){
+     if([segue.identifier isEqualToString:@"listToDetailSegue"]){
         NSLog(@"Meal segue called");
         ClientCollectionViewController *vc = [segue destinationViewController];
         vc.chatroomObject = [self.objects objectAtIndex:senderButton.tag];
@@ -249,7 +244,6 @@
 
 
 - (IBAction)chatButtonPressed:(UIButton*)button {
-    [self performSegueWithIdentifier:@"listToChat" sender:button];
 
 }
 

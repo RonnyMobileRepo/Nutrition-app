@@ -375,8 +375,6 @@
 				2137D7F41BAC974E00310545 /* ChooseTrainerTableViewController.m */,
 				2137D7F51BAC974E00310545 /* ClientCollectionViewController.h */,
 				2137D7F61BAC974E00310545 /* ClientCollectionViewController.m */,
-				2137D7F71BAC974E00310545 /* ClientListViewController.h */,
-				2137D7F81BAC974E00310545 /* ClientListViewController.m */,
 				2137D7F91BAC974E00310545 /* ClientMealsCollectionViewCell.h */,
 				2137D7FA1BAC974E00310545 /* ClientMealsCollectionViewCell.m */,
 				2137D7FB1BAC974E00310545 /* editImageViewController.h */,
@@ -443,6 +441,7 @@
 		21C88A241BAC95CF00792E9C /* Nomful-App */ = {
 			isa = PBXGroup;
 			children = (
+				21D4E2E41BC2F93300962C6B /* Coach View */,
 				21D4E2D91BC2F81400962C6B /* Firebase */,
 				21C6FC4F1BAF20EE004599E8 /* Nomful-App.entitlements */,
 				2137D8851BACA03900310545 /* images */,
@@ -508,6 +507,15 @@
 				21D4E2E11BC2F82800962C6B /* Outgoing.m */,
 			);
 			name = Messages;
+			sourceTree = "<group>";
+		};
+		21D4E2E41BC2F93300962C6B /* Coach View */ = {
+			isa = PBXGroup;
+			children = (
+				2137D7F71BAC974E00310545 /* ClientListViewController.h */,
+				2137D7F81BAC974E00310545 /* ClientListViewController.m */,
+			);
+			name = "Coach View";
 			sourceTree = "<group>";
 		};
 		467AA50CAD973200C0F7409A /* Pods */ = {
