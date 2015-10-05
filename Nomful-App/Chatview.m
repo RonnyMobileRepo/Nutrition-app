@@ -543,33 +543,38 @@
             //maybe later we do init with chatroomobject instead of object id
             PFQuery *pushQuery = [PFInstallation query];
             NSDictionary *data = [[NSDictionary alloc] init];
-
-            if ([[PFUser currentUser][@"role"] isEqualToString:@"Client"]){
-                PFUser *coachUser = object[@"dietitianUser"];
-                [pushQuery whereKey:@"user" equalTo:coachUser];
-                
-                NSString *name = [NSString stringWithFormat:@"You have a new messages from %@", [PFUser currentUser][@"firstName"]];
-
-                data = [NSDictionary dictionaryWithObjectsAndKeys:
-                       name, @"alert",
-                       @1, @"badge",
-                       @"default", @"sound",
-                       @"message", @"type",
-                       nil];
+            NSString *name = [[NSString alloc] init];
+            PFUser *sendPushToUser = [[PFUser alloc] init];
             
-                
-                PFPush *push = [[PFPush alloc] init];
-                [push setQuery:pushQuery];
-                [push setData:data];
-                [push sendPushInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-                    //
-                    if(succeeded){
-                        NSLog(@"push sent successfully!");
-                    }
-                }];
-          
-             }
-        }];
+            //figure out who is sending tha push so we know who to send it  to.
+            if ([[PFUser currentUser][@"role"] isEqualToString:@"Client"]){
+                sendPushToUser = object[@"dietitianUser"];
+             }else if ([[PFUser currentUser][@"role"] isEqualToString:@"RD"]){
+                sendPushToUser = object[@"clientUser"];
+            }//end if coach
+            
+            //set data and variables for push...send away!!
+            [pushQuery whereKey:@"user" equalTo:sendPushToUser];
+            name = [NSString stringWithFormat:@"You have a new messages from %@", [PFUser currentUser][@"firstName"]];
+            
+            data = [NSDictionary dictionaryWithObjectsAndKeys:
+                    name, @"alert",
+                    @1, @"badge",
+                    @"default", @"sound",
+                    @"message", @"type",
+                    nil];
+            
+            PFPush *push = [[PFPush alloc] init];
+            [push setQuery:pushQuery];
+            [push setData:data];
+            [push sendPushInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                //
+                if(succeeded){
+                    NSLog(@"push sent successfully!");
+                }
+            }];
+            
+        }];//end chatroom query
 }
 
 
