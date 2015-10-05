@@ -247,10 +247,14 @@
 }
 
 
-
 - (IBAction)chatButtonPressed:(UIButton*)button {
-    [self performSegueWithIdentifier:@"listToChat" sender:button];
+    //[self performSegueWithIdentifier:@"listToChat" sender:button];
 
+    PFObject *chatroom = [self.objects objectAtIndex:button.tag];
+    Chatview *chatview = [[Chatview alloc] initWith:chatroom.objectId];
+    
+    [self.navigationController pushViewController:chatview animated:YES];
+    
 }
 
 - (IBAction)mealsButtonPressed:(UIButton*)button

@@ -8,6 +8,7 @@
 
 #import "AvailableClientsTableViewController.h"
 #import "AvailableClientTableViewCell.h"
+#import "Chatview.h"
 
 @interface AvailableClientsTableViewController ()
 
@@ -140,8 +141,17 @@
 
 
 - (void)chatButtonPressed:(UIButton*)button{
+    NSLog(@"chat button pressed");
+    
+    PFObject *chatroom = [self.availableChatsArray objectAtIndex:button.tag];
+    Chatview *chatview = [[Chatview alloc] initWith:chatroom.objectId];
+    
+    [self presentViewController:chatview animated:YES completion:^{
+        //presentation successful
+    }];
 
-    [self performSegueWithIdentifier:@"listToChat" sender:button];
+    
+    //[self performSegueWithIdentifier:@"listToChat" sender:button];
     
 }
 
@@ -172,9 +182,14 @@
     if([segue.identifier isEqualToString:@"listToChat"]){
         NSLog(@"CHAT segue called. Sender tag is: %ld", (long)senderButton.tag);
         
-        MessagesViewController *mvc = [segue destinationViewController];
-        mvc.chatroomObjectFromList = [self.availableChatsArray objectAtIndex:senderButton.tag];
-        mvc.youAreDietitian = YES;
+//        PFObject *chatroom = [self.availableChatsArray objectAtIndex:senderButton.tag];
+//        Chatview *chatview = [[Chatview alloc] initWith:chatroom.objectId];
+//        
+//        [self presentViewController:chatview animated:YES completion:^{
+//            //presentation successful
+//        }];
+        
+        
     }else if([segue.identifier isEqualToString:@"listToDetailSegue"]){
         NSLog(@"Meal segue called");
         ClientCollectionViewController *vc = [segue destinationViewController];
@@ -186,6 +201,10 @@
     
 }
 
+- (IBAction)pushMyNewViewController
+{
+    
+}
 
 #pragma mark - Sean Added yay
 

@@ -378,16 +378,10 @@
 				2137D7F41BAC974E00310545 /* ChooseTrainerTableViewController.m */,
 				2137D7F51BAC974E00310545 /* ClientCollectionViewController.h */,
 				2137D7F61BAC974E00310545 /* ClientCollectionViewController.m */,
-				2137D7F71BAC974E00310545 /* ClientListViewController.h */,
-				2137D7F81BAC974E00310545 /* ClientListViewController.m */,
 				2137D7F91BAC974E00310545 /* ClientMealsCollectionViewCell.h */,
 				2137D7FA1BAC974E00310545 /* ClientMealsCollectionViewCell.m */,
 				2137D7FB1BAC974E00310545 /* editImageViewController.h */,
 				2137D7FC1BAC974E00310545 /* editImageViewController.m */,
-				2137D7E71BAC974200310545 /* AvailableClientsTableViewController.h */,
-				2137D7E81BAC974200310545 /* AvailableClientsTableViewController.m */,
-				2137D7E91BAC974200310545 /* AvailableClientTableViewCell.h */,
-				2137D7EA1BAC974200310545 /* AvailableClientTableViewCell.m */,
 				2137D7E41BAC973000310545 /* AccountViewController.m */,
 				2137D7E61BAC973600310545 /* AccountViewController.h */,
 			);
@@ -457,6 +451,7 @@
 		21C88A241BAC95CF00792E9C /* Nomful-App */ = {
 			isa = PBXGroup;
 			children = (
+				21D79D411BC2C39B003C0F22 /* Coach View */,
 				21F420831BB1DD650006B7F2 /* Firebase */,
 				21C6FC4F1BAF20EE004599E8 /* Nomful-App.entitlements */,
 				2137D8851BACA03900310545 /* images */,
@@ -501,6 +496,19 @@
 				21C88A4F1BAC95CF00792E9C /* Info.plist */,
 			);
 			path = "Nomful-AppUITests";
+			sourceTree = "<group>";
+		};
+		21D79D411BC2C39B003C0F22 /* Coach View */ = {
+			isa = PBXGroup;
+			children = (
+				2137D7F71BAC974E00310545 /* ClientListViewController.h */,
+				2137D7F81BAC974E00310545 /* ClientListViewController.m */,
+				2137D7E71BAC974200310545 /* AvailableClientsTableViewController.h */,
+				2137D7E81BAC974200310545 /* AvailableClientsTableViewController.m */,
+				2137D7E91BAC974200310545 /* AvailableClientTableViewCell.h */,
+				2137D7EA1BAC974200310545 /* AvailableClientTableViewCell.m */,
+			);
+			name = "Coach View";
 			sourceTree = "<group>";
 		};
 		21F420831BB1DD650006B7F2 /* Firebase */ = {
@@ -936,6 +944,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E7AFC07723092381382DA4CB /* Pods-Nomful-App.debug.xcconfig */;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = "Nomful-App/Nomful-App.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -954,6 +964,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 62890AF4F1A893706C1A3067 /* Pods-Nomful-App.release.xcconfig */;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = "Nomful-App/Nomful-App.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
