@@ -157,7 +157,7 @@
          [self finishReceivingMessage];
          [self scrollToBottomAnimated:NO];
          self.automaticallyScrollsToMostRecentMessage = YES;
-         self.showLoadEarlierMessagesHeader = YES;
+         self.showLoadEarlierMessagesHeader = NO;
          initialized	= YES;
      }];
 }
