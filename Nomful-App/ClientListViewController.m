@@ -8,7 +8,7 @@
 
 #import "ClientListViewController.h"
 #import "AvailableClientTableViewCell.h"
-
+#import "Chatview.h"
 
 @interface ClientListViewController ()
 
@@ -63,7 +63,7 @@
         
         // Whether the built-in pagination is enabled
         self.paginationEnabled = NO;
-
+        
     }
     return self;
 }
@@ -130,7 +130,7 @@
         //no pic
         NSLog(@"no pfoile picture found");
     }
-   
+    
     // Configure name label
     //get full name from client user
     NSString *fullName = [[NSString alloc] initWithFormat:@"%@ %@",clientUserObject[@"firstName"], clientUserObject[@"lastName"]];
@@ -180,22 +180,22 @@
             NSLog(@"ERROR!");
         }
     }];
-
-//    cell.membershipLabel.text = @"hey";
-//    PFQuery *sessionQuery = [PFQuery queryWithClassName:@"_Session"];
-//    [sessionQuery whereKey:@"user" equalTo:clientUserObject];
-//    [sessionQuery getFirstObjectInBackgroundWithBlock:^(PFObject *session, NSError *error){
-//        NSDate *lastSeen = session.updatedAt;
-//        
-//        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-//        [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
-//        [dateFormatter setTimeStyle:NSDateFormatterMediumStyle];
-//        NSString *formattedDateString = [dateFormatter stringFromDate:lastSeen];
-//        
-//        cell.lastSeenLabel.text = formattedDateString;
-//        NSLog(@"last seen at: %@", formattedDateString);
-//    }];
-//    
+    
+    //    cell.membershipLabel.text = @"hey";
+    //    PFQuery *sessionQuery = [PFQuery queryWithClassName:@"_Session"];
+    //    [sessionQuery whereKey:@"user" equalTo:clientUserObject];
+    //    [sessionQuery getFirstObjectInBackgroundWithBlock:^(PFObject *session, NSError *error){
+    //        NSDate *lastSeen = session.updatedAt;
+    //
+    //        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    //        [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+    //        [dateFormatter setTimeStyle:NSDateFormatterMediumStyle];
+    //        NSString *formattedDateString = [dateFormatter stringFromDate:lastSeen];
+    //
+    //        cell.lastSeenLabel.text = formattedDateString;
+    //        NSLog(@"last seen at: %@", formattedDateString);
+    //    }];
+    //
     
     //set the tag for button pressed
     //if you choose the first clients messages vs the fourth clients messages this is
@@ -203,7 +203,7 @@
     cell.chatButton.tag = indexPath.row;
     cell.mealButton.tag = indexPath.row;
     cell.accountButton.tag = indexPath.row;
-
+    
     //get the unread flag from parse as a number
     NSNumber *isUnreadNum = object[@"isUnread"];
     
@@ -220,7 +220,7 @@
         //there are no unread messages in this chatroom...make sure inidcator is gon
         cell.chatButton.badgeValue = @"";
     }
-
+    
     return cell;
 }
 
@@ -230,7 +230,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     UIButton *senderButton = sender;
     
-     if([segue.identifier isEqualToString:@"listToDetailSegue"]){
+    if([segue.identifier isEqualToString:@"listToDetailSegue"]){
         NSLog(@"Meal segue called");
         ClientCollectionViewController *vc = [segue destinationViewController];
         vc.chatroomObject = [self.objects objectAtIndex:senderButton.tag];
@@ -238,24 +238,29 @@
         UserAccountViewController *vc = [segue destinationViewController];
         vc.chatroomObject = [self.objects objectAtIndex:senderButton.tag];
     }
-
+    
 }
 
 
-
 - (IBAction)chatButtonPressed:(UIButton*)button {
-
+    
+    PFObject *chatroom = [self.objects objectAtIndex:button.tag];
+    Chatview *chatview = [[Chatview alloc] initWith:chatroom.objectId];
+    
+    
+    [self.navigationController pushViewController:chatview animated:YES];
+    
 }
 
 - (IBAction)mealsButtonPressed:(UIButton*)button
 {
     [self performSegueWithIdentifier:@"listToDetailSegue" sender:button];
-
+    
 }
 
 - (IBAction)accountButtonPressed:(UIButton*)button {
     [self performSegueWithIdentifier:@"showAccount" sender:button];
-
+    
 }
 
 - (NSInteger)daysBetweenDate:(NSDate*)fromDateTime andDate:(NSDate*)toDateTime
