@@ -101,6 +101,11 @@
         [currentInstallation saveEventually];
     }
     
+    if([[PFUser currentUser][@"role"] isEqualToString:@"RD"]){
+        UIBarButtonItem *rightPhone = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"phone-barbutton"] style:UIBarButtonItemStylePlain target:self action:@selector(callClient)];
+        
+        self.navigationItem.rightBarButtonItem = rightPhone;
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -568,5 +573,26 @@
 }
 
 
+- (void)callClient{
+    //only show if the user is an RD
+    
+    NSLog(@"You pressed the phone button! Woot woot!");
+    
+    PFQuery *query = [PFQuery queryWithClassName:@"Chatrooms"];
+    [query getObjectInBackgroundWithId:groupId block:^(PFObject * _Nullable object, NSError * _Nullable error) {
+        NSString *phoneNumber = object[@"twilioNumber"];
+        NSString *cleanedPhone = [[phoneNumber componentsSeparatedByCharactersInSet:[[NSCharacterSet characterSetWithCharactersInString:@"0123456789"] invertedSet]] componentsJoinedByString:@""];
+        
+        NSString *phoneNumbers = [@"tel://" stringByAppendingString:cleanedPhone];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumbers]];
+        
+        //mixpanel tracking
+        
+        Mixpanel *mixpanel = [Mixpanel sharedInstance];
+        [mixpanel timeEvent:@"Phone Call"];
+    }];
+    
+    
+}
 
 @end
