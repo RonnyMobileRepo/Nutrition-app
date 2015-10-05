@@ -20,8 +20,8 @@
     //DEV KEYS changed
     
     //parse
-   /* [Parse setApplicationId:@"EcHepDGBmNvZhRx8D1vMFLzMPgqAXqfIjpiIJuIe"
-                  clientKey:@"C0f7frNwhubdUjZplLyowAbEw4CUnmls6lubcs0M"];*/
+    [Parse setApplicationId:@"EcHepDGBmNvZhRx8D1vMFLzMPgqAXqfIjpiIJuIe"
+                  clientKey:@"C0f7frNwhubdUjZplLyowAbEw4CUnmls6lubcs0M"];
     
     
     //stripe key
@@ -37,7 +37,7 @@
      //CRASH REPORTING
      //[Fabric with:@[CrashlyticsKit]];
      
-
+/*
      //Mixpanel
      [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
      
@@ -67,6 +67,7 @@
      
      }
     
+    */
     
     UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
                                                     UIUserNotificationTypeBadge |
