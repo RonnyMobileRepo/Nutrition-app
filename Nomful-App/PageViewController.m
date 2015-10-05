@@ -21,7 +21,7 @@
     
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo-nav.png"]];
     self.navigationItem.titleView = imageView;
-
+    
     
     [[NSNotificationCenter defaultCenter]addObserver:self
                                             selector:@selector(checkforBadgeValue)
@@ -30,8 +30,6 @@
     
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkforBadgeValue) name:@"updateBarButtonBadge" object:nil];
-    
-    
     
 }
 
@@ -43,20 +41,19 @@
     //alloc
     self.homeVCNav = [[UIViewController alloc] init];
     self.profileVC = [[UIViewController alloc] init];
-    self.chatVC = [[UIViewController alloc] init];
-
+    
+    
     //set to view controller
     self.homeVCNav = [self.storyboard instantiateViewControllerWithIdentifier:@"homeViewNav"];
     self.profileVC = [self.storyboard instantiateViewControllerWithIdentifier:@"profileView"];
-    self.chatVC = [self.storyboard instantiateViewControllerWithIdentifier:@"chatView"];
-
+    [self initializeChatView];
+    
     
     NSMutableArray *homeVCArray = [[NSMutableArray alloc] initWithObjects:self.homeVCNav, nil];
     [self setViewControllers:homeVCArray direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
-  
+    
     
     self.brandColor = [UIColor colorWithRed:126.0/255.0 green:202.0/255.0 blue:175.0/255.0 alpha:1.0];
-    
     
     //set left iten to account button
     self.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"profile"] style:UIBarButtonItemStylePlain target:self action:@selector(goLeft:)];
@@ -69,7 +66,16 @@
     self.navigationItem.rightBarButtonItem.tintColor = [UIColor colorWithRed:126.0/255.0 green:202.0/255.0 blue:175.0/255.0 alpha:1.0];
     
     [self.navigationController.navigationBar setBackgroundColor:[UIColor whiteColor]];
+    
+}
 
+-(void)initializeChatView{
+    
+    PFQuery *query = [PFQuery queryWithClassName:@"Chatrooms"];
+    [query whereKey:@"clientUser" equalTo:[PFUser currentUser]];
+    [query getFirstObjectInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+        self.chatVC = [[Chatview alloc] initWith:object.objectId];
+    }];
 }
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController
@@ -83,12 +89,12 @@
         return nil;
     }
     
-  
+    
 }
 
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController
-      viewControllerAfterViewController:(UIViewController *)viewController{
+       viewControllerAfterViewController:(UIViewController *)viewController{
     
     if(viewController == self.profileVC){
         return self.homeVCNav;
@@ -110,7 +116,7 @@
     currentView = [self.viewControllers objectAtIndex:0];
     
     prevVC = [self pageViewController:self viewControllerBeforeViewController:currentView];
-
+    
     NSMutableArray  *prevVCArray = [[NSMutableArray alloc] init];
     [prevVCArray addObject:prevVC];
     
@@ -257,7 +263,7 @@
                      animations:^{
                          self.navigationItem.titleView.alpha = 1.0;
                      }];
-
+    
     
 }
 - (void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray *)pendingViewControllers{
@@ -292,7 +298,7 @@
     if(currentView == self.chatVC){
         
         [self chatNavBar];
-
+        
     }else if(currentView == self.homeVCNav){
         
         [self homeNavBar];
@@ -305,14 +311,14 @@
     
     
     
-//    UISwipeGestureRecognizer *oneFingerSwipeLeft = [[UISwipeGestureRecognizer alloc]
-//                                                    initWithTarget:self
-//                                                    action:@selector(doneEditing)] ;
-//    [oneFingerSwipeLeft setDirection:UISwipeGestureRecognizerDirectionDown];
-//    [[self view] addGestureRecognizer:oneFingerSwipeLeft];
-//    
+    //    UISwipeGestureRecognizer *oneFingerSwipeLeft = [[UISwipeGestureRecognizer alloc]
+    //                                                    initWithTarget:self
+    //                                                    action:@selector(doneEditing)] ;
+    //    [oneFingerSwipeLeft setDirection:UISwipeGestureRecognizerDirectionDown];
+    //    [[self view] addGestureRecognizer:oneFingerSwipeLeft];
+    //
     
-   }
+}
 
 - (void) checkforBadgeValue{
     PFInstallation *currentInstallation = [PFInstallation currentInstallation];

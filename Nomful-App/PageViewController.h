@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <UIBarButtonItem+Badge.h>
+#import "Chatview.h"
 
 
 @class PageViewController;
