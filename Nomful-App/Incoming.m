@@ -21,6 +21,9 @@
 //#import "JSQLocationMediaItem.h"
 
 #import "Incoming.h"
+#import "PhotoMediaItem.h"
+#import <SDWebImage/SDWebImageManager.h>
+
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 @interface Incoming()
@@ -127,10 +130,10 @@
 - (JSQMessage *)createPictureMessage:(NSDictionary *)item
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 {
-    /*
+    
 	NSString *name = item[@"name"];
 	NSString *userId = item[@"userId"];
-	NSDate *date = String2Date(item[@"date"]);
+	NSDate *date = [self String2Date:item[@"date"]];
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	PhotoMediaItem *mediaItem = [[PhotoMediaItem alloc] initWithImage:nil Width:item[@"picture_width"] Height:item[@"picture_height"]];
 	mediaItem.appliesMediaViewMaskAsOutgoing = [userId isEqualToString:senderId];
@@ -149,8 +152,8 @@
 	}];
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	return message;
-     */
-    return nil;
+    
+
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------

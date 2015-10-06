@@ -89,6 +89,7 @@
 		21D4E2DC1BC2F81D00962C6B /* Chatview.m in Sources */ = {isa = PBXBuildFile; fileRef = 21D4E2DB1BC2F81D00962C6B /* Chatview.m */; settings = {ASSET_TAGS = (); }; };
 		21D4E2E21BC2F82800962C6B /* Incoming.m in Sources */ = {isa = PBXBuildFile; fileRef = 21D4E2DF1BC2F82800962C6B /* Incoming.m */; settings = {ASSET_TAGS = (); }; };
 		21D4E2E31BC2F82800962C6B /* Outgoing.m in Sources */ = {isa = PBXBuildFile; fileRef = 21D4E2E11BC2F82800962C6B /* Outgoing.m */; settings = {ASSET_TAGS = (); }; };
+		21FECF141BC431E800C5FB8B /* PhotoMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 21FECF131BC431E800C5FB8B /* PhotoMediaItem.m */; settings = {ASSET_TAGS = (); }; };
 		5EDD67B4A8A9E0D710949A4F /* libPods-Nomful-App.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DE4DE3B1DF31D17CBF9E1A0C /* libPods-Nomful-App.a */; };
 /* End PBXBuildFile section */
 
@@ -254,6 +255,8 @@
 		21D4E2DF1BC2F82800962C6B /* Incoming.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Incoming.m; sourceTree = "<group>"; };
 		21D4E2E01BC2F82800962C6B /* Outgoing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Outgoing.h; sourceTree = "<group>"; };
 		21D4E2E11BC2F82800962C6B /* Outgoing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Outgoing.m; sourceTree = "<group>"; };
+		21FECF121BC431E800C5FB8B /* PhotoMediaItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoMediaItem.h; sourceTree = "<group>"; };
+		21FECF131BC431E800C5FB8B /* PhotoMediaItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoMediaItem.m; sourceTree = "<group>"; };
 		62890AF4F1A893706C1A3067 /* Pods-Nomful-App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nomful-App.release.xcconfig"; path = "Pods/Target Support Files/Pods-Nomful-App/Pods-Nomful-App.release.xcconfig"; sourceTree = "<group>"; };
 		83716DA2E1B570912D18C269 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE4DE3B1DF31D17CBF9E1A0C /* libPods-Nomful-App.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Nomful-App.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -491,6 +494,7 @@
 		21D4E2D91BC2F81400962C6B /* Firebase */ = {
 			isa = PBXGroup;
 			children = (
+				21FECF111BC431DD00C5FB8B /* MediaItems */,
 				21D4E2DD1BC2F82000962C6B /* Messages */,
 				21D4E2DA1BC2F81D00962C6B /* Chatview.h */,
 				21D4E2DB1BC2F81D00962C6B /* Chatview.m */,
@@ -516,6 +520,15 @@
 				2137D7F81BAC974E00310545 /* ClientListViewController.m */,
 			);
 			name = "Coach View";
+			sourceTree = "<group>";
+		};
+		21FECF111BC431DD00C5FB8B /* MediaItems */ = {
+			isa = PBXGroup;
+			children = (
+				21FECF121BC431E800C5FB8B /* PhotoMediaItem.h */,
+				21FECF131BC431E800C5FB8B /* PhotoMediaItem.m */,
+			);
+			name = MediaItems;
 			sourceTree = "<group>";
 		};
 		467AA50CAD973200C0F7409A /* Pods */ = {
@@ -723,6 +736,7 @@
 				2137D8031BAC974E00310545 /* ClientMealsCollectionViewCell.m in Sources */,
 				2137D83C1BAC97AF00310545 /* PaymentViewController.m in Sources */,
 				2137D8011BAC974E00310545 /* ClientCollectionViewController.m in Sources */,
+				21FECF141BC431E800C5FB8B /* PhotoMediaItem.m in Sources */,
 				2137D8421BAC97C000310545 /* ProgressViewController.m in Sources */,
 				21D4E2E31BC2F82800962C6B /* Outgoing.m in Sources */,
 				2137D83D1BAC97AF00310545 /* phoneLoginViewController.m in Sources */,

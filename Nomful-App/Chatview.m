@@ -164,9 +164,17 @@
 
 - (BOOL)addMessage:(NSDictionary *)item
 {
+    
     //using the incoming class that we made.
     //I commented out all the other message types like video/audio and all that
     Incoming *incoming = [[Incoming alloc] initWith:self.senderId CollectionView:self.collectionView];
+    
+    if ([item[@"type"] isEqualToString: @"picture"]) {
+        NSLog(@"photo incomming");
+  
+        
+    }
+    
     JSQMessage *message = [incoming create:item];
     [items addObject:item];
     [messages addObject:message];
@@ -219,7 +227,9 @@
 - (void)didPressSendButton:(UIButton *)button withMessageText:(NSString *)text senderId:(NSString *)senderId senderDisplayName:(NSString *)name date:(NSDate *)date
 
 {
-    [self messageSend:text Video:nil Picture:nil Audio:nil];
+    UIImage *image = [UIImage imageNamed:@"thomas.JPG"];
+    
+    [self messageSend:nil Video:nil Picture:image Audio:nil];
     [self sendPushNotifications];
 }
 
