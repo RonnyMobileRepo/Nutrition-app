@@ -227,9 +227,8 @@
 - (void)didPressSendButton:(UIButton *)button withMessageText:(NSString *)text senderId:(NSString *)senderId senderDisplayName:(NSString *)name date:(NSDate *)date
 
 {
-    UIImage *image = [UIImage imageNamed:@"thomas.JPG"];
     
-    [self messageSend:nil Video:nil Picture:image Audio:nil];
+    [self messageSend:text Video:nil Picture:nil Audio:nil];
     [self sendPushNotifications];
 }
 
@@ -480,7 +479,16 @@
 - (void)actionAttach
 
 {
-//    [self.view endEditing:YES];
+    //display library 
+    [self.view endEditing:YES];
+    
+    
+    self.imagePicker = [[UIImagePickerController alloc] init];
+    self.imagePicker.delegate = self;
+    self.imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    [self presentViewController:self.imagePicker animated:YES completion:nil];
+    
+    
 //    NSArray *menuItems = @[[[RNGridMenuItem alloc] initWithImage:[UIImage imageNamed:@"chat_camera"] title:@"Camera"],
 //                           [[RNGridMenuItem alloc] initWithImage:[UIImage imageNamed:@"chat_audio"] title:@"Audio"],
 //                           [[RNGridMenuItem alloc] initWithImage:[UIImage imageNamed:@"chat_pictures"] title:@"Pictures"],
@@ -520,10 +528,11 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 
 {
-    NSURL *video = info[UIImagePickerControllerMediaURL];
-    UIImage *picture = info[UIImagePickerControllerEditedImage];
+    //NSURL *video = info[UIImagePickerControllerMediaURL];
+    UIImage *picture = [info objectForKey:UIImagePickerControllerOriginalImage];
+    NSLog(@"picture is: %@", picture);
     
-    [self messageSend:nil Video:video Picture:picture Audio:nil];
+    [self messageSend:nil Video:nil Picture:picture Audio:nil];
     
     [picker dismissViewControllerAnimated:YES completion:nil];
 }

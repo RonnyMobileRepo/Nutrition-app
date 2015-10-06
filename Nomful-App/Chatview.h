@@ -12,7 +12,9 @@
 
 
 
-@interface Chatview : JSQMessagesViewController
+@interface Chatview : JSQMessagesViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+
+@property (nonatomic,strong) UIImagePickerController *imagePicker;
 
 - (id)initWith:(NSString *)groupId_;
 
