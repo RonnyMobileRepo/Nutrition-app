@@ -135,7 +135,14 @@
 	NSString *userId = item[@"userId"];
 	NSDate *date = [self String2Date:item[@"date"]];
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	PhotoMediaItem *mediaItem = [[PhotoMediaItem alloc] initWithImage:nil Width:item[@"picture_width"] Height:item[@"picture_height"]];
+    int width = [item[@"picture_width"] intValue];
+    int height = [item[@"picture_height"] intValue];
+    
+    NSNumber *picWidth = [NSNumber numberWithFloat:(width*.6)];
+    NSNumber *picHeight = [NSNumber numberWithFloat:(height*.6)];
+    
+    
+	PhotoMediaItem *mediaItem = [[PhotoMediaItem alloc] initWithImage:nil Width:picWidth Height:picHeight];
 	mediaItem.appliesMediaViewMaskAsOutgoing = [userId isEqualToString:senderId];
 	JSQMessage *message = [[JSQMessage alloc] initWithSenderId:userId senderDisplayName:name date:date media:mediaItem];
 	//---------------------------------------------------------------------------------------------------------------------------------------------
