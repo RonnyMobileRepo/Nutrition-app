@@ -9,6 +9,9 @@
 #import "Chatview.h"
 #import "Incoming.h"
 #import "Outgoing.h"
+#import "PhotoMediaItem.h"
+#import <IDMPhotoBrowser.h>
+
 
 @interface Chatview (){
     
@@ -443,7 +446,7 @@
 - (void)collectionView:(JSQMessagesCollectionView *)collectionView didTapMessageBubbleAtIndexPath:(NSIndexPath *)indexPath
 
 {
-    /*
+    
     JSQMessage *message = messages[indexPath.item];
     
     if (message.isMediaMessage)
@@ -453,17 +456,15 @@
             PhotoMediaItem *mediaItem = (PhotoMediaItem *)message.media;
             NSArray *photos = [IDMPhoto photosWithImages:@[mediaItem.image]];
             IDMPhotoBrowser *browser = [[IDMPhotoBrowser alloc] initWithPhotos:photos];
+            browser.displayDoneButton = YES;
+            browser.doneButtonImage = [UIImage imageNamed:@"IDMPhotoBrowser_customDoneButton.png"];
+            
             [self presentViewController:browser animated:YES completion:nil];
-        }
-        if ([message.media isKindOfClass:[VideoMediaItem class]])
-        {
-            VideoMediaItem *mediaItem = (VideoMediaItem *)message.media;
-            MPMoviePlayerViewController *moviePlayer = [[MPMoviePlayerViewController alloc] initWithContentURL:mediaItem.fileURL];
-            [self presentMoviePlayerViewControllerAnimated:moviePlayer];
-            [moviePlayer.moviePlayer play];
+            
+
         }
     }
-     */
+    
 }
 
 
