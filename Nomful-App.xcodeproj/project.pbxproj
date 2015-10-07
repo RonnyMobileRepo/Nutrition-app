@@ -300,8 +300,6 @@
 				2137D85D1BAC980000310545 /* trainerCell.m */,
 				2137D85E1BAC980000310545 /* TrialEndedViewController.h */,
 				2137D85F1BAC980000310545 /* TrialEndedViewController.m */,
-				2137D8601BAC980000310545 /* TrialViewController.h */,
-				2137D8611BAC980000310545 /* TrialViewController.m */,
 				2137D8621BAC980000310545 /* TwilioTestViewController.h */,
 				2137D8631BAC980000310545 /* TwilioTestViewController.m */,
 				2137D8641BAC980000310545 /* UIImage+AlphaAdditions.h */,
@@ -318,8 +316,6 @@
 				2137D86F1BAC980000310545 /* VerificationCodeViewController.m */,
 				2137D8591BAC97F000310545 /* stripeViewController.h */,
 				2137D85A1BAC97F000310545 /* stripeViewController.m */,
-				2137D84D1BAC97E400310545 /* SignUpConversationViewController.h */,
-				2137D84E1BAC97E400310545 /* SignUpConversationViewController.m */,
 				2137D84F1BAC97E400310545 /* SignUpLandingVideoViewController.h */,
 				2137D8501BAC97E400310545 /* SignUpLandingVideoViewController.m */,
 				2137D8511BAC97E400310545 /* SignUpViewController.h */,
@@ -419,6 +415,17 @@
 			name = images;
 			sourceTree = "<group>";
 		};
+		21643A4C1BC4BA270099E6FB /* Sign Up */ = {
+			isa = PBXGroup;
+			children = (
+				2137D84D1BAC97E400310545 /* SignUpConversationViewController.h */,
+				2137D84E1BAC97E400310545 /* SignUpConversationViewController.m */,
+				2137D8601BAC980000310545 /* TrialViewController.h */,
+				2137D8611BAC980000310545 /* TrialViewController.m */,
+			);
+			name = "Sign Up";
+			sourceTree = "<group>";
+		};
 		21C88A191BAC95CF00792E9C = {
 			isa = PBXGroup;
 			children = (
@@ -444,6 +451,7 @@
 		21C88A241BAC95CF00792E9C /* Nomful-App */ = {
 			isa = PBXGroup;
 			children = (
+				21643A4C1BC4BA270099E6FB /* Sign Up */,
 				21D4E2E41BC2F93300962C6B /* Coach View */,
 				21D4E2D91BC2F81400962C6B /* Firebase */,
 				21C6FC4F1BAF20EE004599E8 /* Nomful-App.entitlements */,

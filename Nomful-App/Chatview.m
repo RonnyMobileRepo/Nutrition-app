@@ -454,14 +454,16 @@
         if ([message.media isKindOfClass:[PhotoMediaItem class]])
         {
             PhotoMediaItem *mediaItem = (PhotoMediaItem *)message.media;
-            NSArray *photos = [IDMPhoto photosWithImages:@[mediaItem.image]];
-            IDMPhotoBrowser *browser = [[IDMPhotoBrowser alloc] initWithPhotos:photos];
-            browser.displayDoneButton = YES;
-            browser.doneButtonImage = [UIImage imageNamed:@"IDMPhotoBrowser_customDoneButton.png"];
             
-            [self presentViewController:browser animated:YES completion:nil];
-            
-
+            //check if the image is loaded yet...that way it don't crash
+            if(mediaItem.image){
+                NSArray *photos = [IDMPhoto photosWithImages:@[mediaItem.image]];
+                IDMPhotoBrowser *browser = [[IDMPhotoBrowser alloc] initWithPhotos:photos];
+                browser.displayDoneButton = YES;
+                browser.doneButtonImage = [UIImage imageNamed:@"IDMPhotoBrowser_customDoneButton.png"];
+                
+                [self presentViewController:browser animated:YES completion:nil];
+            }
         }
     }
     
