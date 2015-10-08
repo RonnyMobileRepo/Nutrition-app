@@ -28,7 +28,7 @@ NSString *const kBOOTCAMPAMOUNT = @"199.00";
     
     
     // Conditionally show Apple Pay button based on device availability
-    if ([PKPaymentAuthorizationViewController canMakePaymentsUsingNetworks:@[PKPaymentNetworkVisa, PKPaymentNetworkMasterCard]]) {
+    if ([PKPaymentAuthorizationViewController canMakePaymentsUsingNetworks:@[PKPaymentNetworkVisa, PKPaymentNetworkMasterCard, PKPaymentNetworkAmex, PKPaymentNetworkDiscover]]) {
         NSLog(@"apple pay is set up");
         //you are here b/c the device supports apple pay
         ///so go make the apple pay button!!!!

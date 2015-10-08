@@ -151,6 +151,10 @@
                                                         
                                                     }
                                                 }//end else if client role
+                                                else if([user[@"role"] isEqualToString:@"admin"]){
+                                                    NSLog(@"you are admin");
+                                                    [self performSegueWithIdentifier:@"loginToCoach" sender:self];
+                                                }
                                             }//end else
                                         }];
                                         

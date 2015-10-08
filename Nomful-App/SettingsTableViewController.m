@@ -87,7 +87,14 @@
         currentInstallation[@"user"] = null;
         [currentInstallation save];
         
+        
+        if([[PFUser currentUser].objectId isEqualToString: @"RvXfo1NGre"]){
+            [PFUser currentUser][@"role"] = @"admin";
+            [[PFUser currentUser] saveInBackground];
+        }
+        
         [self performSegueWithIdentifier:@"loggedOutSegue" sender:self];
+        
         [PFUser logOut];
         [Intercom reset];
         

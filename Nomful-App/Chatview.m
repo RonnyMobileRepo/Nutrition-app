@@ -11,6 +11,7 @@
 #import "Outgoing.h"
 #import "PhotoMediaItem.h"
 #import <IDMPhotoBrowser.h>
+#import "ConvertToFirebaseViewController.h"
 
 
 @interface Chatview (){
@@ -56,7 +57,22 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    NSLog(@"group id is: %@", groupId);
+    //NSLog(@"group id is: %@", groupId);
+    
+    //**check if the user has converted chatrooms yet
+    PFQuery *query = [PFQuery queryWithClassName:@"Chatrooms"];
+    [query getObjectInBackgroundWithId:groupId block:^(PFObject * _Nullable chatroom, NSError * _Nullable error) {
+        if ([chatroom[@"upgradedToFirebase"] isEqualToString:@"Yes"]) {
+            //chatroom is already converted do nothing
+            
+        }else{
+            ConvertToFirebaseViewController *convertView = [[ConvertToFirebaseViewController alloc] initWith:groupId];
+            //convert testing
+            [self.navigationController presentViewController:convertView animated:YES completion:^{
+                NSLog(@"convert view shown");
+            }];
+        }
+    }];
     
     //declare items for memory stuff i still don't get
     items = [[NSMutableArray alloc] init];
