@@ -1748,7 +1748,7 @@ CGFloat const ktypeInterval = 0.02;
     _coachBioView.hidden = YES;
     
     //nothing was entered show warning message
-    [_messagesArray replaceObjectAtIndex:_messageCount withObject:@"Are you sure you want to stop chatting? Your data will be lost in theeee cllloouuuuddd."];
+    [_messagesArray replaceObjectAtIndex:_messageCount withObject:@"Are you sure you want to stop chatting? If you quit now, you will have to start over."];
     
     //go type the message YO
     [self showNextMessage];
