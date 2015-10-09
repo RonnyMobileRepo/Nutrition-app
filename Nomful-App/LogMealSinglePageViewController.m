@@ -363,7 +363,7 @@ bool keyboardIsShowing = false;
     [self.lunchButton setTitle:@"#lunch" forState:UIControlStateNormal];
     [self.dinnerButton setTitle:@"#dinner" forState:UIControlStateNormal];
     [self.snackButton setTitle:@"#snack" forState:UIControlStateNormal];
-    [self.coffeeButton setTitle:@"#coffee" forState:UIControlStateNormal];
+    [self.coffeeButton setTitle:@"#fluid" forState:UIControlStateNormal];
     [self.makeYourOwnButton setTitle:@"#MakeYourOwn" forState:UIControlStateNormal];
     
     [self.breakfastButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
@@ -396,7 +396,7 @@ bool keyboardIsShowing = false;
     [self.lunchButton setTitle:@"#lunch" forState:UIControlStateNormal];
     [self.dinnerButton setTitle:@"#dinner" forState:UIControlStateNormal];
     [self.snackButton setTitle:@"#snack" forState:UIControlStateNormal];
-    [self.coffeeButton setTitle:@"#coffee" forState:UIControlStateNormal];
+    [self.coffeeButton setTitle:@"#fluid" forState:UIControlStateNormal];
     [self.makeYourOwnButton setTitle:@"#nomful" forState:UIControlStateNormal];
     
     //borders

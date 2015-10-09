@@ -295,6 +295,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		21333E581BC82FC40011D78C /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				21643A4D1BC56D470099E6FB /* ConvertToFirebaseViewController.h */,
+				21643A4E1BC56D470099E6FB /* ConvertToFirebaseViewController.m */,
+			);
+			name = Utilities;
+			sourceTree = "<group>";
+		};
+		21333E591BC82FD90011D78C /* Log Meal */ = {
+			isa = PBXGroup;
+			children = (
+				2137D8191BAC978600310545 /* LogMealSinglePageViewController.h */,
+				2137D81A1BAC978600310545 /* LogMealSinglePageViewController.m */,
+			);
+			name = "Log Meal";
+			sourceTree = "<group>";
+		};
+		21333E5A1BC82FE20011D78C /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				2137D8491BAC97DB00310545 /* SettingsTableViewController.h */,
+				2137D84A1BAC97DB00310545 /* SettingsTableViewController.m */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
 		2137D7E31BAC971400310545 /* files */ = {
 			isa = PBXGroup;
 			children = (
@@ -356,8 +383,6 @@
 				2137D8201BAC978F00310545 /* MarginLabel.m */,
 				2137D8171BAC978600310545 /* LoginViewController.h */,
 				2137D8181BAC978600310545 /* LoginViewController.m */,
-				2137D8191BAC978600310545 /* LogMealSinglePageViewController.h */,
-				2137D81A1BAC978600310545 /* LogMealSinglePageViewController.m */,
 				2137D8141BAC977F00310545 /* LauncherViewController.h */,
 				2137D8151BAC977F00310545 /* LauncherViewController.m */,
 				2137D8111BAC977600310545 /* initialViewController.h */,
@@ -442,9 +467,9 @@
 		21643A541BC5950C0099E6FB /* Member View */ = {
 			isa = PBXGroup;
 			children = (
+				21333E5A1BC82FE20011D78C /* Settings */,
+				21333E591BC82FD90011D78C /* Log Meal */,
 				21D4E2D91BC2F81400962C6B /* Firebase */,
-				2137D8491BAC97DB00310545 /* SettingsTableViewController.h */,
-				2137D84A1BAC97DB00310545 /* SettingsTableViewController.m */,
 			);
 			name = "Member View";
 			sourceTree = "<group>";
@@ -526,12 +551,11 @@
 		21D4E2D91BC2F81400962C6B /* Firebase */ = {
 			isa = PBXGroup;
 			children = (
-				21FECF111BC431DD00C5FB8B /* MediaItems */,
-				21D4E2DD1BC2F82000962C6B /* Messages */,
 				21D4E2DA1BC2F81D00962C6B /* Chatview.h */,
 				21D4E2DB1BC2F81D00962C6B /* Chatview.m */,
-				21643A4D1BC56D470099E6FB /* ConvertToFirebaseViewController.h */,
-				21643A4E1BC56D470099E6FB /* ConvertToFirebaseViewController.m */,
+				21333E581BC82FC40011D78C /* Utilities */,
+				21FECF111BC431DD00C5FB8B /* MediaItems */,
+				21D4E2DD1BC2F82000962C6B /* Messages */,
 			);
 			name = Firebase;
 			sourceTree = "<group>";
@@ -593,6 +617,8 @@
 				D05AEBC21057EFF5C6B3ED80 /* Check Pods Manifest.lock */,
 				21C88A1E1BAC95CF00792E9C /* Sources */,
 				21C88A1F1BAC95CF00792E9C /* Frameworks */,
+				21643A561BC6FF950099E6FB /* ShellScript */,
+				21643A551BC6FF6B0099E6FB /* ShellScript */,
 				21C88A201BAC95CF00792E9C /* Resources */,
 			);
 			buildRules = (
@@ -740,6 +766,32 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		21643A551BC6FF6B0099E6FB /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"";
+		};
+		21643A561BC6FF950099E6FB /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 8;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = "VERSIONNUM=$(/usr/libexec/PlistBuddy -c \"Print CFBundleShortVersionString\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\")\nNEWSUBVERSION=`echo $VERSIONNUM | awk -F \".\" '{print $3}'`\nNEWSUBVERSION=$(($NEWSUBVERSION + 1))\nNEWVERSIONSTRING=`echo $VERSIONNUM | awk -F \".\" '{print $1 \".\" $2 \".'$NEWSUBVERSION'\" }'`\n/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $NEWVERSIONSTRING\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"";
+		};
 		D05AEBC21057EFF5C6B3ED80 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -958,8 +1010,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = "Nomful-App/Nomful-App.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = "Nomful-App/PrefixHeader.pch";
 				INFOPLIST_FILE = "Nomful-App/Info.plist";
@@ -967,7 +1019,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Nomful;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "6c2c2ad3-225b-4a6b-9ee5-f62dc76cd8e1";
 			};
 			name = Debug;
 		};
@@ -978,8 +1030,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = "Nomful-App/Nomful-App.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = "Nomful-App/PrefixHeader.pch";
 				INFOPLIST_FILE = "Nomful-App/Info.plist";
@@ -987,7 +1039,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Nomful;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "6c2c2ad3-225b-4a6b-9ee5-f62dc76cd8e1";
 			};
 			name = Release;
 		};

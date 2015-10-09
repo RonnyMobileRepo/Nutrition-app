@@ -108,6 +108,8 @@
     //set the client, RD, and PT
     [chatroom setObject:[PFUser currentUser] forKey:@"clientUser"];
     [chatroom setObject:_coachUser forKey:@"dietitianUser"];
+    [chatroom setObject:@"Yes" forKey:@"upgradedToFirebase"];
+
     
     if(_trainerUser){
         [chatroom setObject:_trainerUser forKey:@"trainerUser"];

@@ -18,6 +18,7 @@
     
     //chatroom ID
     NSString *groupId;
+    NSString *messageContent;
     
     //flags
     BOOL initialized;
@@ -92,6 +93,8 @@
 
     //set the avatar image when chat is blank?
     avatarImageBlank = [JSQMessagesAvatarImageFactory avatarImageWithImage:[UIImage imageNamed:@"profilePlaceholder.png"] diameter:30.0];
+
+    self.collectionView.collectionViewLayout.messageBubbleFont = [UIFont fontWithName:kFontFamilyName size:15.0];
 
     //**havent used these before. Look into what they do
 //    [JSQMessagesCollectionViewCell registerMenuAction:@selector(actionCopy:)];
@@ -246,7 +249,7 @@
 - (void)didPressSendButton:(UIButton *)button withMessageText:(NSString *)text senderId:(NSString *)senderId senderDisplayName:(NSString *)name date:(NSDate *)date
 
 {
-    
+    messageContent = text;
     [self messageSend:text Video:nil Picture:nil Audio:nil];
     [self sendPushNotifications];
 }
@@ -612,6 +615,14 @@
                 }
             }];
             
+            //save message in parse eventually
+            PFObject *message = [[PFObject alloc] initWithClassName:@"Messages"];
+            message[@"chatroom"] = object;
+            message[@"content"] = messageContent;
+            message[@"fromUser"] = [PFUser currentUser];
+            message[@"toUser"] = sendPushToUser;
+            [message saveEventually];
+
         }];//end chatroom query
 }
 

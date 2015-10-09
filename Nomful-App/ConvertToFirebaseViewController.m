@@ -87,7 +87,7 @@
                 
                 i++;
                 
-                if (i == totalMessages) {
+                if (i == totalMessages || i == 0) {
                     //we have reached the last message
                     [self dismissViewControllerAnimated:YES completion:^{
                         //save chatroom as converted
