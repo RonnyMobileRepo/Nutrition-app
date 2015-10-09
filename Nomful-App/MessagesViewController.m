@@ -149,16 +149,14 @@
     
     self.currentUser = [PFUser currentUser];
     if([self.currentUser[@"role"] isEqualToString:@"RD"]){
-    UIBarButtonItem *rightPhone = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"phone-barbutton"] style:UIBarButtonItemStylePlain target:self action:@selector(callClient)];
+        //add phone button for calling
+        UIBarButtonItem *rightPhone = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"phone-barbutton"] style:UIBarButtonItemStylePlain target:self action:@selector(callClient)];
     
         self.navigationItem.rightBarButtonItem = rightPhone;
-    }
-    
-    //if current user is a coach...
-    //they just opened the messages view
-    //let's set the chatroom as READ
-    
-    if ([self.currentUser[@"role"] isEqualToString:@"RD"]) {
+        
+        //if current user is a coach...
+        //they just opened the messages view
+        //let's set the chatroom as READ
         [self markMessageAsUnread:false];
     }
 }
@@ -917,7 +915,6 @@
     self.chatroomObject[@"isUnread"] = isUnreadNum;
     [self.chatroomObject saveInBackground];
     
-
 }
 
 

@@ -15,7 +15,7 @@
 @interface Chatview : JSQMessagesViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 @property (nonatomic,strong) UIImagePickerController *imagePicker;
-
+@property (nonatomic, strong) PFObject *chatroomObject;
 - (id)initWith:(NSString *)groupId_;
 
 

@@ -63,8 +63,9 @@
     //**check if the user has converted chatrooms yet
     PFQuery *query = [PFQuery queryWithClassName:@"Chatrooms"];
     [query getObjectInBackgroundWithId:groupId block:^(PFObject * _Nullable chatroom, NSError * _Nullable error) {
+        
         if ([chatroom[@"upgradedToFirebase"] isEqualToString:@"Yes"]) {
-            //chatroom is already converted do nothing
+            //do nothgint
             
         }else{
             ConvertToFirebaseViewController *convertView = [[ConvertToFirebaseViewController alloc] initWith:groupId];
@@ -127,7 +128,12 @@
         UIBarButtonItem *rightPhone = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"phone-barbutton"] style:UIBarButtonItemStylePlain target:self action:@selector(callClient)];
         
         self.navigationItem.rightBarButtonItem = rightPhone;
+        
+        [self markMessageAsUnread:false];
+
     }
+    
+   
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -252,6 +258,7 @@
     messageContent = text;
     [self messageSend:text Video:nil Picture:nil Audio:nil];
     [self sendPushNotifications];
+    [self markMessageAsUnread:true];
 }
 
 
@@ -648,5 +655,28 @@
     
     
 }
+
+- (void)markMessageAsUnread:(bool)isUnread{
+    
+    //there is a new message that loaded in the view
+    //mark it as read
+    
+    NSLog(@"mark messages as unread");
+    
+    //**check if the user has converted chatrooms yet
+    PFQuery *query = [PFQuery queryWithClassName:@"Chatrooms"];
+    [query getObjectInBackgroundWithId:groupId block:^(PFObject * _Nullable chatroom, NSError * _Nullable error) {
+        NSLog(@"the objet it: %@", chatroom);
+        
+        NSNumber *isUnreadNum = [[NSNumber alloc] initWithBool:isUnread];
+        chatroom[@"isUnread"] = isUnreadNum;
+        [chatroom saveEventually];
+
+        
+    }];
+    
+    
+}
+
 
 @end
