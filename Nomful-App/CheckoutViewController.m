@@ -438,11 +438,14 @@ NSString *const kBOOTCAMPAMOUNT = @"199.00";
     _bootCampSelected = false;
     _healthyStartSelected = true;
     
+    [_bootCampButton setTitle:@"Sign Me Up!" forState:UIControlStateNormal];
+    [_healthyStartButton setTitle:@"$49" forState:UIControlStateNormal];
 }
 
 - (IBAction)bootCampButtonPressed:(id)sender {
     
     NSLog(@"boot camp pressed");
+    
     _paymentView.hidden = false;
 
     //make payment buttons visible
@@ -461,6 +464,9 @@ NSString *const kBOOTCAMPAMOUNT = @"199.00";
     _healthyStartSelected = false;
     _bootCampSelected = true;
     
+    [_healthyStartButton setTitle:@"Sign Me Up!" forState:UIControlStateNormal];
+    [_bootCampButton setTitle:@"$199" forState:UIControlStateNormal];
+
 }
 
 - (void)animatePaymentOptions{
@@ -527,8 +533,8 @@ NSString *const kBOOTCAMPAMOUNT = @"199.00";
     //then do autolayout of those items
     [self paymentViewsAutolayout];
     
-    [_bootCampButton setTitle:@"Package Selected" forState:UIControlStateNormal];
-    [_healthyStartButton setTitle:@"Package Selected" forState:UIControlStateNormal];
+    [_bootCampButton setTitle:@"$199 Package Selected" forState:UIControlStateNormal];
+    [_healthyStartButton setTitle:@"$49 Package Selected" forState:UIControlStateNormal];
     
     _bootCampButton.enabled = false;
     _healthyStartButton.enabled = false;
