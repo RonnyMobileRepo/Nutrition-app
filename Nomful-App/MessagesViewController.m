@@ -31,7 +31,9 @@
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
+    [super viewDidLoad]; //****
+    
+    NSLog(@"sean you made it");
     
     [self checkNetworkStatus];
     self.collectionView.collectionViewLayout.messageBubbleFont = [UIFont fontWithName:kFontFamilyName size:15.0];
@@ -99,7 +101,7 @@
     }//endif
     else{
         //you are not a client, so we need to get the chatroom object from clientdetailsviewcontroller
-        NSLog(@"Messages: You are a someone other than a client");
+        NSLog(@"Messages: You are a someone other than a client %@", _chatroomObjectFromList);
         self.chatroomObject =  self.chatroomObjectFromList;
         [self getTheAvatars];
         
@@ -410,15 +412,15 @@
 
 - (void)didPressAccessoryButton:(UIButton *)sender
 {
-    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"Media messages"
-                                                       delegate:self
-                                              cancelButtonTitle:@"Cancel"
-                                         destructiveButtonTitle:nil
-                                              otherButtonTitles:@"Send photo", @"Send location", @"Send video", nil];
-    
-    [sheet showFromToolbar:self.inputToolbar];
-    
-    [self finishSendingMessage];
+//    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"Media messages"
+//                                                       delegate:self
+//                                              cancelButtonTitle:@"Cancel"
+//                                         destructiveButtonTitle:nil
+//                                              otherButtonTitles:@"Send photo", @"Send location", @"Send video", nil];
+//    
+//    [sheet showFromToolbar:self.inputToolbar];
+//    
+//    [self finishSendingMessage];
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
@@ -435,7 +437,7 @@
             
         case 1:
         {
-            __weak UICollectionView *weakView = self.collectionView;
+            //__weak UICollectionView *weakView = self.collectionView;
             
 //            [self.demoData addLocationMediaMessageCompletion:^{
 //                [weakView reloadData];

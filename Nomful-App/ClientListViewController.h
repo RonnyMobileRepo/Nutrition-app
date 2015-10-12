@@ -12,7 +12,7 @@
 #import "UserAccountViewController.h"
 #import <UIButton+Badge.h>
 
-@interface ClientListViewController : PFQueryTableViewController
+@interface ClientListViewController : PFQueryTableViewController <MessagesViewControllerDelegate>
 - (IBAction)chatButtonPressed:(UIButton*)button;
 - (IBAction)mealsButtonPressed:(UIButton*)button;
 - (IBAction)accountButtonPressed:(UIButton*)button;

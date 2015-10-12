@@ -8,6 +8,9 @@
 
 #import "AppDelegate.h"
 #import <Stripe/Stripe.h>
+#import <Fabric/Fabric.h>
+#import <Crashlytics/Crashlytics.h>
+
 @interface AppDelegate ()
 
 @end
@@ -19,15 +22,16 @@
     
     //DEV KEYS changed
     
-    //parse
-    [Parse setApplicationId:@"EcHepDGBmNvZhRx8D1vMFLzMPgqAXqfIjpiIJuIe"
-                  clientKey:@"C0f7frNwhubdUjZplLyowAbEw4CUnmls6lubcs0M"];
-    
-    
+//    //parse
+//    [Parse setApplicationId:@"KjqhJkgvtVSsPA9SVHxq1Euad73fWhLWfVS4LNxO"
+//                  clientKey:@"EnXbaltwwCtiRrruc9ibpx0XWculRyWmiy3KrRzb"];
+//    [PFUser enableRevocableSessionInBackground];
+//
+//    
     //stripe key
     [Stripe setDefaultPublishableKey:STRIPE_TOKEN];
     
-    /*
+    
     // Branch *branch = [Branch getInstance:@"144975538040099258"];
      
     // [branch initSessionWithLaunchOptions:launchOptions andRegisterDeepLinkHandler:^(NSDictionary *params, NSError *error) {
@@ -36,8 +40,8 @@
     // }];
      
      //CRASH REPORTING
-     //[Fabric with:@[CrashlyticsKit]];
-     
+    [Fabric with:@[[Crashlytics class]]];
+
 
      //Mixpanel
      [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
@@ -68,7 +72,7 @@
      
      }
     
-    */
+    
     
     UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
                                                     UIUserNotificationTypeBadge |

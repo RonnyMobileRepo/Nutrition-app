@@ -16,7 +16,6 @@
 - (IBAction)login:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 @property (weak, nonatomic) IBOutlet UIButton *sendCodebutton;
-- (IBAction)logout:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *sendCodeButton;
 @property (weak, nonatomic) IBOutlet UIImageView *background;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;

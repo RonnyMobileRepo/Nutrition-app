@@ -10,6 +10,5 @@
 
 @interface ParseErrorHandlingController : NSObject
 
-+ (void)handleParseError:(NSError *)error;
 
 @end

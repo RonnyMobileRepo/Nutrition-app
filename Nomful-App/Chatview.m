@@ -64,14 +64,15 @@
     PFQuery *query = [PFQuery queryWithClassName:@"Chatrooms"];
     [query getObjectInBackgroundWithId:groupId block:^(PFObject * _Nullable chatroom, NSError * _Nullable error) {
         
+        
         if ([chatroom[@"upgradedToFirebase"] isEqualToString:@"Yes"]) {
             //do nothgint
-            
+            NSLog(@"do nothing");
         }else{
             ConvertToFirebaseViewController *convertView = [[ConvertToFirebaseViewController alloc] initWith:groupId];
             //convert testing
             [self.navigationController presentViewController:convertView animated:YES completion:^{
-                NSLog(@"convert view shown");
+                NSLog(@"convert view shown %@", chatroom);
             }];
         }
     }];

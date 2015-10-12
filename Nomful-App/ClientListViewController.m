@@ -8,7 +8,7 @@
 
 #import "ClientListViewController.h"
 #import "AvailableClientTableViewCell.h"
-#import "Chatview.h"
+//#import "Chatview.h"
 
 @interface ClientListViewController ()
 
@@ -234,7 +234,13 @@
         NSLog(@"Meal segue called");
         ClientCollectionViewController *vc = [segue destinationViewController];
         vc.chatroomObject = [self.objects objectAtIndex:senderButton.tag];
-    }else if([segue.identifier isEqualToString:@"showAccount"]){
+    }else if([segue.identifier isEqualToString:@"listToChat"]){
+        MessagesViewController *vc = [segue destinationViewController];
+        vc.delegates = self;
+        vc.chatroomObjectFromList = [self.objects objectAtIndex:senderButton.tag];
+        vc.youAreDietitian = true;
+    }
+    else if([segue.identifier isEqualToString:@"showAccount"]){
         UserAccountViewController *vc = [segue destinationViewController];
         vc.chatroomObject = [self.objects objectAtIndex:senderButton.tag];
     }
@@ -244,11 +250,14 @@
 
 - (IBAction)chatButtonPressed:(UIButton*)button {
     
-    PFObject *chatroom = [self.objects objectAtIndex:button.tag];
-    Chatview *chatview = [[Chatview alloc] initWith:chatroom.objectId];
+//    PFObject *chatroom = [self.objects objectAtIndex:button.tag];
+//    Chatview *chatview = [[Chatview alloc] initWith:chatroom.objectId];
+//    
+//    
+//    [self.navigationController pushViewController:chatview animated:YES];
     
-    
-    [self.navigationController pushViewController:chatview animated:YES];
+    [self performSegueWithIdentifier:@"listToChat" sender:button];
+
     
 }
 

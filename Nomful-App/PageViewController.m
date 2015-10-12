@@ -46,7 +46,9 @@
     //set to view controller
     self.homeVCNav = [self.storyboard instantiateViewControllerWithIdentifier:@"homeViewNav"];
     self.profileVC = [self.storyboard instantiateViewControllerWithIdentifier:@"profileView"];
-    [self initializeChatView];
+    self.chatVC = [self.storyboard instantiateViewControllerWithIdentifier:@"chatView"];
+
+    //[self initializeChatView];
     
     
     NSMutableArray *homeVCArray = [[NSMutableArray alloc] initWithObjects:self.homeVCNav, nil];
@@ -69,14 +71,14 @@
     
 }
 
--(void)initializeChatView{
-    
-    PFQuery *query = [PFQuery queryWithClassName:@"Chatrooms"];
-    [query whereKey:@"clientUser" equalTo:[PFUser currentUser]];
-    [query getFirstObjectInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
-        self.chatVC = [[Chatview alloc] initWith:object.objectId];
-    }];
-}
+//-(void)initializeChatView{
+//    
+//    PFQuery *query = [PFQuery queryWithClassName:@"Chatrooms"];
+//    [query whereKey:@"clientUser" equalTo:[PFUser currentUser]];
+//    [query getFirstObjectInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+//        self.chatVC = [[Chatview alloc] initWith:object.objectId];
+//    }];
+//}
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController
       viewControllerBeforeViewController:(UIViewController *)viewController{

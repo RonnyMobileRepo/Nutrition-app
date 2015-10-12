@@ -766,7 +766,7 @@ bool keyboardIsShowing = false;
         }else
             //either the current user has no goals yet
             //or an error occured
-            [ParseErrorHandlingController handleParseError:error];
+            //[ParseErrorHandlingController handleParseError:error];
             NSLog(@"No object found/ error occured" );
         
     }];
@@ -1661,7 +1661,7 @@ bool keyboardIsShowing = false;
                     [push sendPushInBackground];
                 }
                 else{
-                    [ParseErrorHandlingController handleParseError:error];
+                    //[ParseErrorHandlingController handleParseError:error];
                 }
             }];
             
