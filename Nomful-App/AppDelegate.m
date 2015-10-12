@@ -20,14 +20,14 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    //DEV KEYS changed
+    //DEV KEYS
     
-//    //parse
-//    [Parse setApplicationId:@"KjqhJkgvtVSsPA9SVHxq1Euad73fWhLWfVS4LNxO"
-//                  clientKey:@"EnXbaltwwCtiRrruc9ibpx0XWculRyWmiy3KrRzb"];
-//    [PFUser enableRevocableSessionInBackground];
-//
-//    
+    //parse
+    [Parse setApplicationId:@"KjqhJkgvtVSsPA9SVHxq1Euad73fWhLWfVS4LNxO"
+                  clientKey:@"EnXbaltwwCtiRrruc9ibpx0XWculRyWmiy3KrRzb"];
+    [PFUser enableRevocableSessionInBackground];
+
+    
     //stripe key
     [Stripe setDefaultPublishableKey:STRIPE_TOKEN];
     
@@ -42,7 +42,7 @@
      //CRASH REPORTING
     [Fabric with:@[[Crashlytics class]]];
 
-
+/*
      //Mixpanel
      [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
      
@@ -73,7 +73,7 @@
      }
     
     
-    
+    */
     UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
                                                     UIUserNotificationTypeBadge |
                                                     UIUserNotificationTypeSound);
