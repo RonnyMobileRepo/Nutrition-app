@@ -386,8 +386,6 @@
 				2137D82A1BAC97AE00310545 /* pagecontentViewController.m */,
 				2137D82B1BAC97AE00310545 /* PageItemController.h */,
 				2137D82C1BAC97AE00310545 /* PageItemController.m */,
-				2137D82D1BAC97AE00310545 /* PageViewController.h */,
-				2137D82E1BAC97AF00310545 /* PageViewController.m */,
 				2137D82F1BAC97AF00310545 /* ParseErrorHandlingController.h */,
 				2137D8301BAC97AF00310545 /* ParseErrorHandlingController.m */,
 				2137D8311BAC97AF00310545 /* pastMealsViewController.h */,
@@ -409,8 +407,6 @@
 				2137D8061BAC975900310545 /* fullSizeImageViewController.m */,
 				2137D7ED1BAC974E00310545 /* ChatViewController.h */,
 				2137D7EE1BAC974E00310545 /* ChatViewController.m */,
-				2137D7EF1BAC974E00310545 /* CheckoutViewController.h */,
-				2137D7F01BAC974E00310545 /* CheckoutViewController.m */,
 				2137D7F11BAC974E00310545 /* ChooseTrainerTableViewCell.h */,
 				2137D7F21BAC974E00310545 /* ChooseTrainerTableViewCell.m */,
 				2137D7F31BAC974E00310545 /* ChooseTrainerTableViewController.h */,
@@ -465,6 +461,8 @@
 				2137D84E1BAC97E400310545 /* SignUpConversationViewController.m */,
 				2137D8601BAC980000310545 /* TrialViewController.h */,
 				2137D8611BAC980000310545 /* TrialViewController.m */,
+				2137D7EF1BAC974E00310545 /* CheckoutViewController.h */,
+				2137D7F01BAC974E00310545 /* CheckoutViewController.m */,
 			);
 			name = "Sign Up";
 			sourceTree = "<group>";
@@ -483,11 +481,21 @@
 		21643A541BC5950C0099E6FB /* Member View */ = {
 			isa = PBXGroup;
 			children = (
+				21BA63281BCBFE1E0055117F /* Page Controller */,
 				21333E5A1BC82FE20011D78C /* Settings */,
 				21333E591BC82FD90011D78C /* Log Meal */,
 				21D4E2D91BC2F81400962C6B /* Firebase */,
 			);
 			name = "Member View";
+			sourceTree = "<group>";
+		};
+		21BA63281BCBFE1E0055117F /* Page Controller */ = {
+			isa = PBXGroup;
+			children = (
+				2137D82D1BAC97AE00310545 /* PageViewController.h */,
+				2137D82E1BAC97AF00310545 /* PageViewController.m */,
+			);
+			name = "Page Controller";
 			sourceTree = "<group>";
 		};
 		21C88A191BAC95CF00792E9C = {
@@ -517,17 +525,17 @@
 		21C88A241BAC95CF00792E9C /* Nomful-App */ = {
 			isa = PBXGroup;
 			children = (
+				21C88A281BAC95CF00792E9C /* AppDelegate.h */,
+				21C88A291BAC95CF00792E9C /* AppDelegate.m */,
+				2137D8821BAC9E8D00310545 /* Main.storyboard */,
+				2137D8811BAC9E8D00310545 /* LaunchScreen.xib */,
 				21643A541BC5950C0099E6FB /* Member View */,
 				21643A501BC591180099E6FB /* Login */,
 				21643A4C1BC4BA270099E6FB /* Sign Up */,
 				21D4E2E41BC2F93300962C6B /* Coach View */,
 				21C6FC4F1BAF20EE004599E8 /* Nomful-App.entitlements */,
 				2137D8851BACA03900310545 /* images */,
-				2137D8811BAC9E8D00310545 /* LaunchScreen.xib */,
-				2137D8821BAC9E8D00310545 /* Main.storyboard */,
 				2137D7E31BAC971400310545 /* files */,
-				21C88A281BAC95CF00792E9C /* AppDelegate.h */,
-				21C88A291BAC95CF00792E9C /* AppDelegate.m */,
 				21C88A2B1BAC95CF00792E9C /* ViewController.h */,
 				21C88A2C1BAC95CF00792E9C /* ViewController.m */,
 				21C88A341BAC95CF00792E9C /* Assets.xcassets */,
@@ -1076,7 +1084,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "c33a780b-03e5-4f8a-8b9f-13c1e35fa154";
+				PROVISIONING_PROFILE = "6c2c2ad3-225b-4a6b-9ee5-f62dc76cd8e1";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1114,7 +1122,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "c33a780b-03e5-4f8a-8b9f-13c1e35fa154";
+				PROVISIONING_PROFILE = "6c2c2ad3-225b-4a6b-9ee5-f62dc76cd8e1";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -1141,7 +1149,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Nomful;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "c33a780b-03e5-4f8a-8b9f-13c1e35fa154";
+				PROVISIONING_PROFILE = "6c2c2ad3-225b-4a6b-9ee5-f62dc76cd8e1";
 			};
 			name = Debug;
 		};
@@ -1165,7 +1173,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Nomful;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "c33a780b-03e5-4f8a-8b9f-13c1e35fa154";
+				PROVISIONING_PROFILE = "6c2c2ad3-225b-4a6b-9ee5-f62dc76cd8e1";
 			};
 			name = Release;
 		};

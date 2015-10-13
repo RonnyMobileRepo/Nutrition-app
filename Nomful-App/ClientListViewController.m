@@ -234,12 +234,14 @@
         NSLog(@"Meal segue called");
         ClientCollectionViewController *vc = [segue destinationViewController];
         vc.chatroomObject = [self.objects objectAtIndex:senderButton.tag];
-    }else if([segue.identifier isEqualToString:@"listToChat"]){
+    }
+    else if([segue.identifier isEqualToString:@"listToChat"]){
         MessagesViewController *vc = [segue destinationViewController];
         vc.delegates = self;
         vc.chatroomObjectFromList = [self.objects objectAtIndex:senderButton.tag];
         vc.youAreDietitian = true;
-    }
+        
+            }
     else if([segue.identifier isEqualToString:@"showAccount"]){
         UserAccountViewController *vc = [segue destinationViewController];
         vc.chatroomObject = [self.objects objectAtIndex:senderButton.tag];
@@ -250,15 +252,24 @@
 
 - (IBAction)chatButtonPressed:(UIButton*)button {
     
-//    PFObject *chatroom = [self.objects objectAtIndex:button.tag];
-//    Chatview *chatview = [[Chatview alloc] initWith:chatroom.objectId];
-//    
-//    
-//    [self.navigationController pushViewController:chatview animated:YES];
+    PFObject *chatroom = [self.objects objectAtIndex:button.tag];
     
-    [self performSegueWithIdentifier:@"listToChat" sender:button];
+    //if we're using the old messaging then double check if chat is updated
+    [chatroom fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+        //
+        if ([object[@"upgradedToFirebase"] isEqualToString:@"Yes"]) {
+            //go to firebase
+            Chatview *chatview = [[Chatview alloc] initWith:object.objectId];
+            [self.navigationController pushViewController:chatview animated:YES];
+            
+        }else{
+            [self performSegueWithIdentifier:@"listToChat" sender:button];
+        }
+        
+        
+    }];
 
-    
+
 }
 
 - (IBAction)mealsButtonPressed:(UIButton*)button

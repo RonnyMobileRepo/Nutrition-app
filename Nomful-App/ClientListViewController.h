@@ -17,4 +17,6 @@
 - (IBAction)mealsButtonPressed:(UIButton*)button;
 - (IBAction)accountButtonPressed:(UIButton*)button;
 
+@property (strong, nonatomic) PFObject *chatroomObject;
+
 @end

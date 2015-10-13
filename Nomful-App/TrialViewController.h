@@ -24,5 +24,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *activateButton;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+@property (weak, nonatomic) IBOutlet UIButton *termsButton;
+- (IBAction)termsButtonPressed:(id)sender;
 
 @end

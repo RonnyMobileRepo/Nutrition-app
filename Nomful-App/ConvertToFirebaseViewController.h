@@ -11,5 +11,7 @@
 @interface ConvertToFirebaseViewController : UIViewController
 
 - (id)initWith:(NSString *)groupId_;
+@property (strong, nonatomic) UIActivityIndicatorView *activityIndicator;
+@property (strong, nonatomic) UIButton *doneButton;
 
 @end

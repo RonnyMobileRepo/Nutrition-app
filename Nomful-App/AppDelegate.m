@@ -23,8 +23,8 @@
     //DEV KEYS
     
     //parse
-    [Parse setApplicationId:@"KjqhJkgvtVSsPA9SVHxq1Euad73fWhLWfVS4LNxO"
-                  clientKey:@"EnXbaltwwCtiRrruc9ibpx0XWculRyWmiy3KrRzb"];
+    [Parse setApplicationId:@"EcHepDGBmNvZhRx8D1vMFLzMPgqAXqfIjpiIJuIe"
+                  clientKey:@"C0f7frNwhubdUjZplLyowAbEw4CUnmls6lubcs0M"];
     [PFUser enableRevocableSessionInBackground];
 
     
