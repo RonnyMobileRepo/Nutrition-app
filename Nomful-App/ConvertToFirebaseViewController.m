@@ -139,17 +139,35 @@
 - (void)loadViewElements{
     NSLog(@"loading view elements for convert view");
     
+    UIView *containerView = [[UIView alloc] init];
+    containerView.translatesAutoresizingMaskIntoConstraints = NO;
+    containerView.backgroundColor = [UIColor colorWithRed:126.0/255.0 green:202.0/255.0 blue:175.0/255.0 alpha:1.0];
+    containerView.layer.cornerRadius = 4.0;
+    [self.view addSubview:containerView];
+    
     //let's add a label in the middle
     UILabel *mainLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 50)];
-    mainLabel.backgroundColor = [UIColor blueColor];
-    mainLabel.text = @"Upgrading your messaging to include picture messaging and more stability :)";
+    mainLabel.text = @"Chatroom Upgrade";
     mainLabel.translatesAutoresizingMaskIntoConstraints = NO;
     mainLabel.numberOfLines = 3;
     mainLabel.textAlignment = NSTextAlignmentCenter;
     mainLabel.layer.cornerRadius = 4.0;
     mainLabel.clipsToBounds = YES; //need this for the corner radius
     mainLabel.textColor = [UIColor whiteColor];
-    [self.view addSubview:mainLabel];
+    mainLabel.font = [UIFont fontWithName:kFontFamilyName size:25.0];
+    [containerView addSubview:mainLabel];
+    
+    UILabel *descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 50)];
+    descriptionLabel.text = @"New features include the ability to send pictures in case you forget to log a meal, faster and more reliable messaging, and overall it just works smoother :) Enjoy!";
+    descriptionLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    descriptionLabel.numberOfLines = 6;
+    descriptionLabel.textAlignment = NSTextAlignmentCenter;
+    descriptionLabel.layer.cornerRadius = 4.0;
+    descriptionLabel.clipsToBounds = YES; //need this for the corner radius
+    descriptionLabel.textColor = [UIColor whiteColor];
+    descriptionLabel.font = [UIFont fontWithName:kFontFamilyName size:20.0];
+    [containerView addSubview:descriptionLabel];
+    
     
     //add activity indicator
     _activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
@@ -159,10 +177,11 @@
     
     
     //add button
-    _doneButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
+    _doneButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 100)];
     [_doneButton setTitle:@"Let's See it!" forState:UIControlStateNormal];
+    [_doneButton setTitleColor:[UIColor colorWithRed:126.0/255.0 green:202.0/255.0 blue:175.0/255.0 alpha:1.0] forState:UIControlStateNormal];
     _doneButton.translatesAutoresizingMaskIntoConstraints = NO;
-    _doneButton.backgroundColor = [UIColor blackColor];
+    _doneButton.backgroundColor = [UIColor whiteColor];
     _doneButton.layer.cornerRadius = 2.0;
     _doneButton.clipsToBounds = YES;
     [_doneButton addTarget:self action:@selector(doneButtonPressed) forControlEvents:UIControlEventTouchUpInside];
@@ -175,38 +194,80 @@
     
     NSDictionary *views = @{@"mainLabel": mainLabel,
                             @"indicator":_activityIndicator,
-                            @"doneButton": _doneButton};
+                            @"doneButton": _doneButton,
+                            @"container": containerView,
+                            @"description": descriptionLabel};
+    
+    //_________________________________________________________________________________________________________
+
+    //set container view
+    [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(20)-[container]-(20)-|"
+                                                                       options:0
+                                                                       metrics:nil
+                                                                         views:views]];
+    
+    [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(20)-[container]-(20)-|"
+                                                                       options:0
+                                                                       metrics:nil
+                                                                         views:views]];
+    //_________________________________________________________________________________________________________
     
     
-    //set label from edges
+    //label view
     [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(30)-[mainLabel]-(30)-|"
                                                                                      options:0
                                                                                      metrics:nil
                                                                                        views:views]];
     
-    //set the height
-    [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"V:[mainLabel(100)]-(-25)-[indicator]"
+    [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(20)-[mainLabel]"
+                                                                       options:0
+                                                                       metrics:nil
+                                                                         views:views]];
+    //_________________________________________________________________________________________________________
+    
+    
+    //descrition view
+    [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(30)-[description]-(30)-|"
                                                                        options:0
                                                                        metrics:nil
                                                                          views:views]];
     
-    [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"V:[mainLabel]-(10)-[doneButton]"
-                                                                       options:0
-                                                                       metrics:nil
-                                                                         views:views]];
     
-    //align in the middle vertically
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view
+    
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:containerView
                                                           attribute:NSLayoutAttributeCenterY
                                                           relatedBy:NSLayoutRelationEqual
-                                                             toItem:mainLabel
+                                                             toItem:descriptionLabel
                                                           attribute:NSLayoutAttributeCenterY
                                                          multiplier:1.0f constant:0.0f]];
-    
 
-   
     
-    //align in the middle vertically
+    //_________________________________________________________________________________________________________
+
+    //done button
+    [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(50)-[doneButton]-(50)-|"
+                                                                       options:0
+                                                                       metrics:nil
+                                                                         views:views]];
+    
+    [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"V:[doneButton]-(30)-|"
+                                                                       options:0
+                                                                       metrics:nil
+                                                                         views:views]];
+    
+    
+    
+    
+    //_________________________________________________________________________________________________________
+
+
+ 
+    
+  
+    //_________________________________________________________________________________________________________
+
+
+    //indicator
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view
                                                           attribute:NSLayoutAttributeCenterX
                                                           relatedBy:NSLayoutRelationEqual
@@ -214,12 +275,9 @@
                                                           attribute:NSLayoutAttributeCenterX
                                                          multiplier:1.0f constant:0.0f]];
     
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view
-                                                          attribute:NSLayoutAttributeCenterX
-                                                          relatedBy:NSLayoutRelationEqual
-                                                             toItem:_doneButton
-                                                          attribute:NSLayoutAttributeCenterX
-                                                         multiplier:1.0f constant:0.0f]];
+    //_________________________________________________________________________________________________________
+
+   
     
 }
 
@@ -227,6 +285,7 @@
     
     //send push notification to coach
     //dismiss view
+    [_activityIndicator stopAnimating];
     
     
     
