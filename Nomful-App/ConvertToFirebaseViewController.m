@@ -32,91 +32,10 @@
     
     //build the ui
     self.view.backgroundColor = [UIColor whiteColor];
-    self.view.alpha = 0.8f;
     
     [self loadViewElements];
     
-    PFQuery *query = [PFQuery queryWithClassName:@"Chatrooms"];
-    [query getObjectInBackgroundWithId:groupId block:^(PFObject * _Nullable chatroom, NSError * _Nullable error) {
-      
-        //
-        PFQuery *messagesQuery = [[PFQuery alloc] initWithClassName:@"Messages"];
-        [messagesQuery whereKey:@"chatroom" equalTo:chatroom];
-        //[messagesQuery orderByDescending:@"chatroom"];
-        [messagesQuery orderByAscending:@"createdAt"];
-        [messagesQuery includeKey:@"fromUser"];
-        //[messagesQuery setSkip: 1000];
-        messagesQuery.limit = 1000;
-        
-        [messagesQuery findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
-            //objects is all messages sorted by chatroom first then ordered by time with most recent on top
-            NSLog(@"We now have %lu messages", objects.count);
-            
-            if (objects.count > 0) {
-                //
-                NSArray *messagesArray = objects;
-                int totalMessages = (int)[messagesArray count];
-                
-                PFObject *message = [[PFObject alloc] initWithClassName:@"Messages"];
-                
-                int i = 0;
-                for (message in objects) {
-                    
-                    //get the sender user
-                    PFUser *fromUser = message[@"fromUser"];
-                    
-                    //build firebase object
-                    NSMutableDictionary *item = [[NSMutableDictionary alloc] init];
-                    
-                    item[@"userId"] = fromUser.objectId;
-                    item[@"name"] = fromUser[@"firstName"];
-                    item[@"date"] = [self Date2String:message.createdAt];
-                    item[@"status"] = @"Delivered";
-                    
-                    item[@"video"] = item[@"thumbnail"] = item[@"picture"] = item[@"audio"] = item[@"latitude"] = item[@"longitude"] = @"";
-                    item[@"video_duration"] = item[@"audio_duration"] = @0;
-                    item[@"picture_width"] = item[@"picture_height"] = @0;
-                    
-                    item[@"text"] = message[@"content"];
-                    item[@"type"] = @"text";
-                    
-                    Firebase *firebase = [[Firebase alloc] initWithUrl:[NSString stringWithFormat:@"%@/Message/%@", kFirechatNS, groupId]];
-                    Firebase *reference = [firebase childByAutoId];
-                    item[@"messageId"] = reference.key;
-                    
-                    [reference setValue:item withCompletionBlock:^(NSError *error, Firebase *ref)
-                     {
-                         if (error != nil) NSLog(@"Outgoing sendMessage network error.");
-                     }];
-                    
-                    i++;
-                    
-                    if (i == totalMessages || i == 0) {
-                        //we have reached the last message
-                        NSLog(@"last message reached");
-                        
-                        //wait to show button
-                        _doneButton.hidden = NO;
-                        
-                        chatroom[@"upgradedToFirebase"] = @"Yes";
-                        [chatroom saveInBackground];
-                        
-                        [self finishUpdatingChatroom];
-                        
-                    }
-                }
 
-            }
-            
-        }];
-        
-    }];
-    
-    
-    
-    
-    
-    
 }
 
 -(NSString*)Date2String:(NSDate *)date
@@ -187,7 +106,6 @@
     [_doneButton addTarget:self action:@selector(doneButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     
     [self.view addSubview:_doneButton];
-    _doneButton.hidden = YES;
 
 
     //constrainstss
@@ -255,13 +173,7 @@
                                                                        metrics:nil
                                                                          views:views]];
     
-    
-    
-    
-    //_________________________________________________________________________________________________________
 
-
- 
     
   
     //_________________________________________________________________________________________________________
@@ -278,7 +190,7 @@
     //_________________________________________________________________________________________________________
 
    
-    
+    [self convert];
 }
 
 - (void)finishUpdatingChatroom{
@@ -287,7 +199,7 @@
     //dismiss view
     [_activityIndicator stopAnimating];
     
-    
+    // _doneButton.hidden = NO;
     
     
     
@@ -300,6 +212,88 @@
         //
     }];
     
+}
+
+- (void)convert{
+    PFQuery *query = [PFQuery queryWithClassName:@"Chatrooms"];
+    [query getObjectInBackgroundWithId:groupId block:^(PFObject * _Nullable chatroom, NSError * _Nullable error) {
+        
+        //
+        PFQuery *messagesQuery = [[PFQuery alloc] initWithClassName:@"Messages"];
+        [messagesQuery whereKey:@"chatroom" equalTo:chatroom];
+        //[messagesQuery orderByDescending:@"chatroom"];
+        [messagesQuery orderByAscending:@"createdAt"];
+        [messagesQuery includeKey:@"fromUser"];
+        //[messagesQuery setSkip: 1000];
+        messagesQuery.limit = 1000;
+        
+        [messagesQuery findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+            //objects is all messages sorted by chatroom first then ordered by time with most recent on top
+            NSLog(@"We now have %lu messages", objects.count);
+            
+            if (objects.count > 0) {
+                //
+                NSArray *messagesArray = objects;
+                int totalMessages = (int)[messagesArray count];
+                
+                PFObject *message = [[PFObject alloc] initWithClassName:@"Messages"];
+                
+                int i = 0;
+                for (message in objects) {
+                    
+                    //get the sender user
+                    PFUser *fromUser = message[@"fromUser"];
+                    
+                    //build firebase object
+                    NSMutableDictionary *item = [[NSMutableDictionary alloc] init];
+                    
+                    item[@"userId"] = fromUser.objectId;
+                    item[@"name"] = fromUser[@"firstName"];
+                    item[@"date"] = [self Date2String:message.createdAt];
+                    item[@"status"] = @"Delivered";
+                    
+                    item[@"video"] = item[@"thumbnail"] = item[@"picture"] = item[@"audio"] = item[@"latitude"] = item[@"longitude"] = @"";
+                    item[@"video_duration"] = item[@"audio_duration"] = @0;
+                    item[@"picture_width"] = item[@"picture_height"] = @0;
+                    
+                    item[@"text"] = message[@"content"];
+                    item[@"type"] = @"text";
+                    
+                    Firebase *firebase = [[Firebase alloc] initWithUrl:[NSString stringWithFormat:@"%@/Message/%@", kFirechatNS, groupId]];
+                    Firebase *reference = [firebase childByAutoId];
+                    item[@"messageId"] = reference.key;
+                    
+                    [reference setValue:item withCompletionBlock:^(NSError *error, Firebase *ref)
+                     {
+                         if (error != nil) NSLog(@"Outgoing sendMessage network error.");
+                     }];
+                    
+                    i++;
+                    
+                    if (i == totalMessages || i == 0) {
+                        //we have reached the last message
+                        NSLog(@"last message reached");
+                        
+                        //wait to show button
+                        
+                        
+                        chatroom[@"upgradedToFirebase"] = @"Yes";
+                        [chatroom saveInBackground];
+                        
+                        [self finishUpdatingChatroom];
+                        
+                    }
+                }
+                
+            }
+            
+        }];
+        
+    }];
+    
+    
+    
+
 }
 /*
 #pragma mark - Navigation

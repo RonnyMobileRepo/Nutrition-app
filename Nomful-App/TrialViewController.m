@@ -89,9 +89,25 @@
             
             [PFUser currentUser][@"planType"] = @"trial"; //this can be either 'trial' 'intro' or 'bootcamp'
             
+        }else if([[PFUser currentUser][@"planType"] isEqualToString:@"intro"]){
+            NSDate *now = [NSDate date];
+            NSInteger daysInTrial = 30; //30 days
+            NSDate *trialEndDate = [now dateByAddingTimeInterval:60*60*24*daysInTrial];
             
-            [[PFUser currentUser] saveEventually];
+            //mark trial start date
+            [PFUser currentUser][@"trialEndDate"] = trialEndDate;
+            
+        }else if([[PFUser currentUser][@"planType"] isEqualToString:@"bootcamp"]){
+            NSDate *now = [NSDate date];
+            NSInteger daysInTrial = 84; //12 weeks
+            NSDate *trialEndDate = [now dateByAddingTimeInterval:60*60*24*daysInTrial];
+            
+            //mark trial start date
+            [PFUser currentUser][@"trialEndDate"] = trialEndDate;
         }
+        
+        [[PFUser currentUser] saveEventually];
+
     }else{
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Terms and Conditions" message:@"Please agree to our terms and conditions before activiting!" delegate:self cancelButtonTitle:@"Okay" otherButtonTitles: nil];
         [alert show];

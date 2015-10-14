@@ -419,8 +419,6 @@
 				2137D7FC1BAC974E00310545 /* editImageViewController.m */,
 				2137D7E71BAC974200310545 /* AvailableClientsTableViewController.h */,
 				2137D7E81BAC974200310545 /* AvailableClientsTableViewController.m */,
-				2137D7E91BAC974200310545 /* AvailableClientTableViewCell.h */,
-				2137D7EA1BAC974200310545 /* AvailableClientTableViewCell.m */,
 				2137D7E41BAC973000310545 /* AccountViewController.m */,
 				2137D7E61BAC973600310545 /* AccountViewController.h */,
 			);
@@ -602,6 +600,8 @@
 			children = (
 				2137D7F71BAC974E00310545 /* ClientListViewController.h */,
 				2137D7F81BAC974E00310545 /* ClientListViewController.m */,
+				2137D7E91BAC974200310545 /* AvailableClientTableViewCell.h */,
+				2137D7EA1BAC974200310545 /* AvailableClientTableViewCell.m */,
 			);
 			name = "Coach View";
 			sourceTree = "<group>";

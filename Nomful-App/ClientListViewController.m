@@ -138,13 +138,12 @@
     //set name label to full name
     cell.nameLabel.text = fullName;
     
-    
     //configure time left label
-    if(clientUserObject[@"membershipStartDate"]){
-        NSDate *startDate = clientUserObject[@"membershipStartDate"];
+    if(clientUserObject[@"trialEndDate"]){
+        NSDate *startDate = clientUserObject[@"trialEndDate"];
         NSDate *today = [NSDate date];
         
-        NSInteger days = (30 - [self daysBetweenDate:startDate andDate:today]);
+        NSInteger days = ([self daysBetweenDate:today andDate:startDate]);
         NSString *daysLeft = [[NSString alloc] init];
         
         if(days > 5){
@@ -164,22 +163,9 @@
         cell.daysLeftLabel.text = daysLeft;
     }
     
-    //query for the plan type
-    PFQuery *query = [PFQuery queryWithClassName:@"GymMembers"];
-    [query whereKey:@"clientObject" equalTo:clientUserObject];
-    [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error){
-        
-        if(!error){
-            if(object[@"planID"]){
-                NSString *plan = [NSString stringWithFormat:@"%@ plan", object[@"planID"]];
-                cell.membershipLabel.text = plan;
-            }else{
-                cell.membershipLabel.text = @"-";
-            }
-        }else{
-            NSLog(@"ERROR!");
-        }
-    }];
+    
+        NSString *plan = [NSString stringWithFormat:@"%@ plan", clientUserObject[@"planType"]];
+        cell.membershipLabel.text = plan;
     
     //    cell.membershipLabel.text = @"hey";
     //    PFQuery *sessionQuery = [PFQuery queryWithClassName:@"_Session"];
