@@ -26,7 +26,6 @@
     
     //firebase objects
     Firebase *firebase1;
-    Firebase *firebase2;
     
     //message arrays
     NSMutableArray *items;
@@ -58,13 +57,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    //NSLog(@"group id is: %@", groupId);
     
-    //**check if the user has converted chatrooms yet
+    //Here we are going to get the chatroom object from parse
+    //we're given the chatroom id when the class was initialized
     PFQuery *query = [PFQuery queryWithClassName:@"Chatrooms"];
     [query getObjectInBackgroundWithId:groupId block:^(PFObject * _Nullable chatroom, NSError * _Nullable error) {
         
-        
+        //now that we have the chatroom object
+        //we can check to see if it has been upgraded to firebase yet
+        //if yes...then we don't have to do anything!
+        //if no...then we can load the convert code
         if ([chatroom[@"upgradedToFirebase"] isEqualToString:@"Yes"]) {
             //do nothgint
             NSLog(@"do nothing");
@@ -83,8 +85,7 @@
     started = [[NSMutableDictionary alloc] init];
     avatars = [[NSMutableDictionary alloc] init];
 
-    //set the jsqmessagesviewcontroller senderID variable to the object ID of the current user
-    //same with the name
+    //set the jsqmessagesviewcontroller senderID and name variable to the object ID of the current user
     self.senderId = [PFUser currentUser].objectId;
     self.senderDisplayName = [PFUser currentUser][@"firstName"];
     
@@ -96,6 +97,7 @@
     //set the avatar image when chat is blank?
     avatarImageBlank = [JSQMessagesAvatarImageFactory avatarImageWithImage:[UIImage imageNamed:@"profilePlaceholder.png"] diameter:30.0];
 
+    //set the font for the messages
     self.collectionView.collectionViewLayout.messageBubbleFont = [UIFont fontWithName:kFontFamilyName size:15.0];
 
     //**havent used these before. Look into what they do
@@ -111,10 +113,11 @@
     //lets go get the chatroom id and upon comletion, load firebase and messages
     //we should make this an initializtion thing like it was before
     
-    //delcare two firebase objects
+    //delcare firebase connection!
+    //url saved in prefixheader and groupid from initialization
     firebase1 = [[Firebase alloc] initWithUrl:[NSString stringWithFormat:@"%@/Message/%@", kFirechatNS, groupId]];
-    firebase2 = [[Firebase alloc] initWithUrl:[NSString stringWithFormat:@"%@/Typing/%@", kFirechatNS, groupId]];
 
+    //load messages
     [self loadMessages];
   
     
@@ -153,7 +156,6 @@
     {
         //**ClearRecentCounter(groupId);
         [firebase1 removeAllObservers];
-        [firebase2 removeAllObservers];
     }
 }
 
@@ -165,31 +167,35 @@
     initialized = NO;
     self.automaticallyScrollsToMostRecentMessage = NO;
     
-    //add the observer for a child being added to the firebase stream...basically this ensures
-    //that when a new message is put in stream...this method is called
+    //add the observer for a child being added to the firebase stream...
+    //basically this ensures that when a new message is put in stream this code is fired
     [firebase1 observeEventType:FEventTypeChildAdded withBlock:^(FDataSnapshot *snapshot)
      {
-         NSLog(@"message: %@", snapshot.value);
-         
+         //on initial load...initialized is false so it doesn't execute
          if (initialized)
          {
-             //you get here when a user recieves a new message?
+             //You get here when a new child is added to the datastream
              BOOL incoming = [self addMessage:snapshot.value];
              if (incoming) [JSQSystemSoundPlayer jsq_playMessageReceivedSound];
              [self finishReceivingMessage];
              
              
          }else{
-             [self addMessage:snapshot.value]; //** i added this so the messages load initially
+             //this code works on the first load only
+             [self addMessage:snapshot.value]; //** I added this so the messages load initially
          }
      }];
 
+    //FEventTypeValue: Fired when any data changes at a location and, recursively, any children
     [firebase1 observeSingleEventOfType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot)
      {
+         //reloads view
          [self finishReceivingMessage];
          [self scrollToBottomAnimated:NO];
          self.automaticallyScrollsToMostRecentMessage = YES;
          self.showLoadEarlierMessagesHeader = NO;
+         
+         //sets initialized to yes so we dont' run the code above on line 177-ish 'bool incoming...'
          initialized	= YES;
      }];
 }
