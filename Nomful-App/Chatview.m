@@ -139,12 +139,15 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    NSLog(@"viewdidappear");
+
     [super viewDidAppear:animated];
     self.collectionView.collectionViewLayout.springinessEnabled = NO;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    NSLog(@"Chatview did dissapear");
     [super viewWillDisappear:animated];
     if (self.isMovingFromParentViewController)
     {
@@ -563,7 +566,7 @@
     NSLog(@"picture is: %@", picture);
     
     [self messageSend:nil Video:nil Picture:picture Audio:nil];
-    
+    [self sendPushNotifications];
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
