@@ -277,8 +277,28 @@ NSString *const kBOOTCAMPAMOUNT = @"199.00";
                                                                   //dismiss view if the person was a trial user
                                                                   [self dismissViewControllerAnimated:true completion:^{
                                                                       //we need to clear out the trialdate
-                                                                      [[PFUser currentUser] removeObjectForKey:@"trialEndDate"];
-                                                                      [[PFUser currentUser]saveInBackground];
+                                                                      //                                                                      NSLog(@"you ar ehere");
+                                                                      NSDate *now = [NSDate date];
+                                                                      NSInteger daysInTrial;
+                                                                      
+                                                                      
+                                                                      //mark as verified and paid user
+                                                                      if(_bootCampSelected) {
+                                                                          [PFUser currentUser][@"planType"] = @"bootcamp"; //this can be either 'trial' 'intro' or 'bootcamp'
+                                                                          daysInTrial = 84; //12 weeks
+                                                                      }else if(_healthyStartSelected){
+                                                                          [PFUser currentUser][@"planType"] = @"intro"; //this can be either 'trial' 'intro' or 'bootcamp'
+                                                                          daysInTrial = 30; //12 weeks
+                                                                      }
+                                                                      
+                                                                      
+                                                                      NSDate *trialEndDate = [now dateByAddingTimeInterval:60*60*24*daysInTrial];
+                                                                      
+                                                                      //mark trial start date
+                                                                      [PFUser currentUser][@"trialEndDate"] = trialEndDate;
+                                                                      [[PFUser currentUser] saveEventually];
+                                                                      
+                                                                      
                                                                   }];
                                                                   
                                                               }else{
@@ -361,9 +381,31 @@ NSString *const kBOOTCAMPAMOUNT = @"199.00";
         
     }else{
         [self dismissViewControllerAnimated:true completion:^{
-            //we need to clear out the trialdate
-            [[PFUser currentUser] removeObjectForKey:@"trialEndDate"];
-            [[PFUser currentUser]saveInBackground];
+
+            NSLog(@"you ar ehere");
+            NSDate *now = [NSDate date];
+            NSInteger daysInTrial;
+            
+            
+            //mark as verified and paid user
+            if(_bootCampSelected) {
+                [PFUser currentUser][@"planType"] = @"bootcamp"; //this can be either 'trial' 'intro' or 'bootcamp'
+                daysInTrial = 84; //12 weeks
+            }else if(_healthyStartSelected){
+                [PFUser currentUser][@"planType"] = @"intro"; //this can be either 'trial' 'intro' or 'bootcamp'
+                daysInTrial = 30; //12 weeks
+            }
+            
+            
+            NSDate *trialEndDate = [now dateByAddingTimeInterval:60*60*24*daysInTrial];
+            
+            //mark trial start date
+            [PFUser currentUser][@"trialEndDate"] = trialEndDate;
+            [[PFUser currentUser] saveEventually];
+
+            
+            
+            
         }];
 
     }
