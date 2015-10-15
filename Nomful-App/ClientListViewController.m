@@ -19,6 +19,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self registerWithMixpanel];
+    
     //nav Bar style
     [[UINavigationBar appearance] setTitleTextAttributes: @{
                                                             //NSForegroundColorAttributeName: [UIColor greenColor],
@@ -287,4 +289,9 @@
     return [difference day];
 }
 
+- (void)registerWithMixpanel{
+    
+
+    
+}
 @end

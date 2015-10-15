@@ -42,10 +42,29 @@
      //CRASH REPORTING
     [Fabric with:@[[Crashlytics class]]];
 
-/*
+
      //Mixpanel
      [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
-     
+    
+    if([PFUser currentUser]){
+        // We're logged in, we can register the user with Intercom
+        PFUser *currentUser =  [PFUser currentUser];
+        
+        //Mixpanel
+        Mixpanel *mixpanel = [Mixpanel sharedInstance];
+        [mixpanel identify:currentUser.objectId];
+        
+        //identifies user in mixpanel
+        if(currentUser[@"firstName"]) [mixpanel.people set:@{@"$first_name": currentUser[@"firstName"]}];
+        
+        
+    }else{
+        //no user
+        
+    }
+
+    
+    /*
      //PARSE
      [Parse setApplicationId:@"KjqhJkgvtVSsPA9SVHxq1Euad73fWhLWfVS4LNxO"
      clientKey:@"EnXbaltwwCtiRrruc9ibpx0XWculRyWmiy3KrRzb"];
@@ -58,20 +77,7 @@
      
      //mixpanel
      
-     if([PFUser currentUser]){
-     // We're logged in, we can register the user with Intercom
-     PFUser *currentUser =  [PFUser currentUser];
      
-     //Mixpanel
-     Mixpanel *mixpanel = [Mixpanel sharedInstance];
-     [mixpanel identify:currentUser.objectId];
-     
-     
-     }else{
-     //no user
-     
-     }
-    
     
     */
     UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
@@ -165,6 +171,11 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    NSLog(@"app did enter background");
+    
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel track:@"Session"];
+
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -173,6 +184,13 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    NSLog(@"App did become active");
+    
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    // start the timer for the event "App Close"
+    [mixpanel timeEvent:@"Session"];
+    
+
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {

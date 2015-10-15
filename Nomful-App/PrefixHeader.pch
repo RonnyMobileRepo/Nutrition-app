@@ -26,7 +26,7 @@
 
 
 //constants
-#define MIXPANEL_TOKEN @"50a2e49f239ebf848d4097c31987ba4a" //nomful in mixpanel
+#define MIXPANEL_TOKEN @"ae7013273336abc4ab973b55223d3ace" //nomful in mixpanel //ae7013273336abc4ab973b55223d3ace //50a2e49f239ebf848d4097c31987ba4a
 #define MAILCHIMP_TOKEN @"458779a92e35ef155beeb58b445fd2ee-us10" //NOMFUL MAILCHIMP
 #define kFontFamilyName @"MuseoSansRounded-300" //font group
 #define STRIPE_TOKEN @"pk_test_JQ0bC9TcrUXB06bKoMjYjw3l" //live: pk_live_a7plqC3BMb74TAFBiefltyaf test: pk_test_JQ0bC9TcrUXB06bKoMjYjw3l

@@ -104,6 +104,13 @@
             
             //mark trial start date
             [PFUser currentUser][@"trialEndDate"] = trialEndDate;
+        }else if([[PFUser currentUser][@"planType"] isEqualToString:@"perry"]){
+            NSDate *now = [NSDate date];
+            NSInteger daysInTrial = 100; //30 days
+            NSDate *trialEndDate = [now dateByAddingTimeInterval:60*60*24*daysInTrial];
+            
+            //mark trial start date
+            [PFUser currentUser][@"trialEndDate"] = trialEndDate;
         }
         
         [[PFUser currentUser] saveEventually];

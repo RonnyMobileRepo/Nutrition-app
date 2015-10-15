@@ -1287,7 +1287,7 @@ CGFloat const ktypeInterval = 0.02;
     ///toher
     if([segue.identifier isEqualToString:@"showCheckoutSegue"]){
         CheckoutViewController *vc = [segue destinationViewController];
-        vc.coachUser = _coachUser;
+        vc.coachUserFromSegue = _coachUser;
         vc.profileImage = _coachProfileImage.image;
         
         if(_hasTrainer){
