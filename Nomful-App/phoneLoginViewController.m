@@ -123,6 +123,10 @@
                                                 
                                             } else {
                                                 // The current user is now set to user.
+                                               PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+                                                currentInstallation[@"user"] = user;
+                                                [currentInstallation saveEventually];
+                                                
                                                 // no longer anonymous user!
                                                 NSLog(@"Login Successful! %@", token);
                                                 

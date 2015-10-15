@@ -269,6 +269,13 @@
     [self messageSend:text Video:nil Picture:nil Audio:nil];
     [self sendPushNotifications];
     [self markMessageAsUnread:true];
+    
+    //mixpanel tracking
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    
+    [mixpanel track:@"Message Sent" properties:@{
+      
+      }];
 }
 
 

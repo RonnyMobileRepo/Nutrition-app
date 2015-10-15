@@ -289,6 +289,18 @@
     return [difference day];
 }
 
+- (void)_refreshControlValueChanged:(UIRefreshControl *)refreshControl {
+    [self loadObjects];
+    
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel identify:[PFUser currentUser].objectId];
+
+    [mixpanel track:@"Pulled-to-refresh" properties:@{
+        @"numberOfClients": @7
+    }];
+
+}
+
 - (void)registerWithMixpanel{
     
 
