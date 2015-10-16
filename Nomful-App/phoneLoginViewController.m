@@ -127,6 +127,7 @@
                                                 currentInstallation[@"user"] = user;
                                                 [currentInstallation saveEventually];
                                                 
+                                
                                                 // no longer anonymous user!
                                                 NSLog(@"Login Successful! %@", token);
                                                 

@@ -16,6 +16,7 @@
 
 @interface Chatview (){
     
+    
     //chatroom ID
     NSString *groupId;
     NSString *messageContent;
@@ -57,7 +58,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
+
     //Here we are going to get the chatroom object from parse
     //we're given the chatroom id when the class was initialized
     PFQuery *query = [PFQuery queryWithClassName:@"Chatrooms"];
@@ -142,10 +143,12 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    NSLog(@"viewdidappear");
+    NSLog(@"viewdidAppear");
 
     [super viewDidAppear:animated];
     self.collectionView.collectionViewLayout.springinessEnabled = NO;
+    
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -155,7 +158,7 @@
     if (self.isMovingFromParentViewController)
     {
         //**ClearRecentCounter(groupId);
-        [firebase1 removeAllObservers];
+        //[firebase1 removeAllObservers];
     }
 }
 
@@ -695,5 +698,15 @@
     
 }
 
+
+- (IBAction)didPressBackButton:(id)sender{
+    NSLog(@"back button pressed");
+    
+    PageViewController *vc = [[PageViewController alloc] init];
+    
+    
+    [vc goToPreviousVC];
+    
+}
 
 @end
