@@ -698,15 +698,4 @@
     
 }
 
-
-- (IBAction)didPressBackButton:(id)sender{
-    NSLog(@"back button pressed");
-    
-    PageViewController *vc = [[PageViewController alloc] init];
-    
-    
-    [vc goToPreviousVC];
-    
-}
-
 @end

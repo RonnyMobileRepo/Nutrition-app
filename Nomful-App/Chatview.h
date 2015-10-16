@@ -18,6 +18,4 @@
 @property (nonatomic, strong) PFObject *chatroomObject;
 - (id)initWith:(NSString *)groupId_;
 
-- (void)didPressBackButton;
-
 @end

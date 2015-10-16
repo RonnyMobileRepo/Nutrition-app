@@ -20,31 +20,51 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    //DEV KEYS
+    // ______________________________________________________________________________________________________________________________
     
-    //parse
-    [Parse setApplicationId:@"EcHepDGBmNvZhRx8D1vMFLzMPgqAXqfIjpiIJuIe"
-                  clientKey:@"C0f7frNwhubdUjZplLyowAbEw4CUnmls6lubcs0M"];
+    /*
+    
+    [Parse setApplicationId:PARSE_APP_ID_DEV
+                  clientKey:PARSE_CLIENT_ID_DEV];
     [PFUser enableRevocableSessionInBackground];
 
+    [Stripe setDefaultPublishableKey:STRIPE_TOKEN_DEV];
     
-    //stripe key
+    [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN_DEV];
+    
+     */
+    
+    //______________________________________________________________________________________________________________________________
+    
+    //LIVE
+    
+    [Parse setApplicationId:PARSE_APP_ID
+                  clientKey:PARSE_CLIENT_ID];
+    [PFUser enableRevocableSessionInBackground];
+    [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
+    
     [Stripe setDefaultPublishableKey:STRIPE_TOKEN];
     
+    [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
+
     
+    //______________________________________________________________________________________________________________________________
+    
+    //BOTH
+    
+    [Fabric with:@[[Crashlytics class]]];
+    [[ChimpKit sharedKit] setApiKey:MAILCHIMP_TOKEN];
+    
+    //______________________________________________________________________________________________________________________________
+
+
     // Branch *branch = [Branch getInstance:@"144975538040099258"];
      
     // [branch initSessionWithLaunchOptions:launchOptions andRegisterDeepLinkHandler:^(NSDictionary *params, NSError *error) {
     // params are the deep linked params associated with the link that the user clicked before showing up.
     // NSLog(@"deep link data: %@", [params description]);
     // }];
-     
-     //CRASH REPORTING
-    [Fabric with:@[[Crashlytics class]]];
-
-
-     //Mixpanel
-     [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
+    
     
     if([PFUser currentUser]){
         // We're logged in, we can register the user with Intercom
@@ -64,22 +84,6 @@
     }
 
     
-    /*
-     //PARSE
-     [Parse setApplicationId:@"KjqhJkgvtVSsPA9SVHxq1Euad73fWhLWfVS4LNxO"
-     clientKey:@"EnXbaltwwCtiRrruc9ibpx0XWculRyWmiy3KrRzb"];
-     [PFUser enableRevocableSessionInBackground];
-     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
-     
-     //MAILCHIMP
-     [[ChimpKit sharedKit] setApiKey:MAILCHIMP_TOKEN];
-     
-     
-     //mixpanel
-     
-     
-    
-    */
     UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
                                                     UIUserNotificationTypeBadge |
                                                     UIUserNotificationTypeSound);
