@@ -17,6 +17,9 @@
 @interface Chatview (){
     
     
+    //test
+    int numberOfMessagesToLoad;
+    
     //chatroom ID
     NSString *groupId;
     NSString *messageContent;
@@ -168,26 +171,24 @@
 - (void)loadMessages{
     NSLog(@"load messages for chatrom %@", groupId);
     initialized = NO;
-    self.automaticallyScrollsToMostRecentMessage = NO;
+    self.automaticallyScrollsToMostRecentMessage = YES;
     
-    //add the observer for a child being added to the firebase stream...
-    //basically this ensures that when a new message is put in stream this code is fired
-    [firebase1 observeEventType:FEventTypeChildAdded withBlock:^(FDataSnapshot *snapshot)
-     {
-         //on initial load...initialized is false so it doesn't execute
-         if (initialized)
-         {
+    //querying data
+    [[[firebase1 queryOrderedByChild:@"date"] queryLimitedToLast:25] observeEventType:FEventTypeChildAdded withBlock:^(FDataSnapshot *snapshot) {
+    
+         if(initialized){
              //You get here when a new child is added to the datastream
              BOOL incoming = [self addMessage:snapshot.value];
              if (incoming) [JSQSystemSoundPlayer jsq_playMessageReceivedSound];
              [self finishReceivingMessage];
-             
-             
+
          }else{
-             //this code works on the first load only
+             
              [self addMessage:snapshot.value]; //** I added this so the messages load initially
          }
+         
      }];
+    
 
     //FEventTypeValue: Fired when any data changes at a location and, recursively, any children
     [firebase1 observeSingleEventOfType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot)
@@ -196,7 +197,7 @@
          [self finishReceivingMessage];
          [self scrollToBottomAnimated:NO];
          self.automaticallyScrollsToMostRecentMessage = YES;
-         self.showLoadEarlierMessagesHeader = NO;
+         self.showLoadEarlierMessagesHeader = YES;
          
          //sets initialized to yes so we dont' run the code above on line 177-ish 'bool incoming...'
          initialized	= YES;
@@ -470,7 +471,34 @@
                 header:(JSQMessagesLoadEarlierHeaderView *)headerView didTapLoadEarlierMessagesButton:(UIButton *)sender
 
 {
-    //ActionPremium(self);
+    bool earlierButtonPressed = true;
+    //calculates the number of messages to load
+    numberOfMessagesToLoad = (int)(messages.count + 15);
+    
+    //this makes sure that the previous listener no longer is being fired when messages added
+    [firebase1 removeAllObservers];
+    
+    //this takes the current messages in the view and removes them so we can replace them with new ones
+    [messages removeAllObjects];
+    
+    
+    //querying data
+    [[[firebase1 queryOrderedByChild:@"date"] queryLimitedToLast:numberOfMessagesToLoad] observeEventType:FEventTypeChildAdded withBlock:^(FDataSnapshot *snapshot) {
+        
+        //You get here when a new child is added to the datastream
+        BOOL incoming = [self addMessage:snapshot.value];
+        if (incoming) [JSQSystemSoundPlayer jsq_playMessageReceivedSound];
+        
+        if (earlierButtonPressed) {
+            [self.collectionView reloadData];
+
+        }else{
+            [self finishReceivingMessage];
+
+        }
+        
+    
+    }];
 }
 
 

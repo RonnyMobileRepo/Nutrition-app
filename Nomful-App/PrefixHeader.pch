@@ -34,8 +34,7 @@
 #define STRIPE_TOKEN_DEV @"pk_test_JQ0bC9TcrUXB06bKoMjYjw3l"
 
 //firebase
-#define kFirechatNS @"https://nomful-prod.firebaseio.com/"
-#define kFirechatNS_DEV @"https://nomful-test.firebaseio.com/"
+#define kFirechatNS @"https://nomful-test.firebaseio.com/"
 
 //Parse
 #define PARSE_APP_ID_DEV @"EcHepDGBmNvZhRx8D1vMFLzMPgqAXqfIjpiIJuIe"

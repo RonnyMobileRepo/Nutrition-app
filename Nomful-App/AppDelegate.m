@@ -22,7 +22,7 @@
     
     // ______________________________________________________________________________________________________________________________
     
-    /*
+    
     
     [Parse setApplicationId:PARSE_APP_ID_DEV
                   clientKey:PARSE_CLIENT_ID_DEV];
@@ -32,12 +32,14 @@
     
     [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN_DEV];
     
-     */
+     
     
     //______________________________________________________________________________________________________________________________
     
     //LIVE
     
+    /*
+     
     [Parse setApplicationId:PARSE_APP_ID
                   clientKey:PARSE_CLIENT_ID];
     [PFUser enableRevocableSessionInBackground];
@@ -47,6 +49,7 @@
     
     [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
 
+    */
     
     //______________________________________________________________________________________________________________________________
     
@@ -55,16 +58,18 @@
     [Fabric with:@[[Crashlytics class]]];
     [[ChimpKit sharedKit] setApiKey:MAILCHIMP_TOKEN];
     
-    //______________________________________________________________________________________________________________________________
-
-
     // Branch *branch = [Branch getInstance:@"144975538040099258"];
-     
+    
     // [branch initSessionWithLaunchOptions:launchOptions andRegisterDeepLinkHandler:^(NSDictionary *params, NSError *error) {
     // params are the deep linked params associated with the link that the user clicked before showing up.
     // NSLog(@"deep link data: %@", [params description]);
     // }];
     
+    
+    //______________________________________________________________________________________________________________________________
+
+
+   
     
     if([PFUser currentUser]){
         // We're logged in, we can register the user with Intercom

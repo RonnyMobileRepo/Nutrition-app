@@ -285,6 +285,8 @@
                     }
                 }
                 
+            }else if (objects.count == 0){
+                NSLog(@"no messages");
             }
             
         }];
