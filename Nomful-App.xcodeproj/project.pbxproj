@@ -386,8 +386,6 @@
 				2137D82A1BAC97AE00310545 /* pagecontentViewController.m */,
 				2137D82B1BAC97AE00310545 /* PageItemController.h */,
 				2137D82C1BAC97AE00310545 /* PageItemController.m */,
-				2137D82D1BAC97AE00310545 /* PageViewController.h */,
-				2137D82E1BAC97AF00310545 /* PageViewController.m */,
 				2137D82F1BAC97AF00310545 /* ParseErrorHandlingController.h */,
 				2137D8301BAC97AF00310545 /* ParseErrorHandlingController.m */,
 				2137D8311BAC97AF00310545 /* pastMealsViewController.h */,
@@ -409,8 +407,6 @@
 				2137D8061BAC975900310545 /* fullSizeImageViewController.m */,
 				2137D7ED1BAC974E00310545 /* ChatViewController.h */,
 				2137D7EE1BAC974E00310545 /* ChatViewController.m */,
-				2137D7EF1BAC974E00310545 /* CheckoutViewController.h */,
-				2137D7F01BAC974E00310545 /* CheckoutViewController.m */,
 				2137D7F11BAC974E00310545 /* ChooseTrainerTableViewCell.h */,
 				2137D7F21BAC974E00310545 /* ChooseTrainerTableViewCell.m */,
 				2137D7F31BAC974E00310545 /* ChooseTrainerTableViewController.h */,
@@ -423,8 +419,6 @@
 				2137D7FC1BAC974E00310545 /* editImageViewController.m */,
 				2137D7E71BAC974200310545 /* AvailableClientsTableViewController.h */,
 				2137D7E81BAC974200310545 /* AvailableClientsTableViewController.m */,
-				2137D7E91BAC974200310545 /* AvailableClientTableViewCell.h */,
-				2137D7EA1BAC974200310545 /* AvailableClientTableViewCell.m */,
 				2137D7E41BAC973000310545 /* AccountViewController.m */,
 				2137D7E61BAC973600310545 /* AccountViewController.h */,
 			);
@@ -465,6 +459,8 @@
 				2137D84E1BAC97E400310545 /* SignUpConversationViewController.m */,
 				2137D8601BAC980000310545 /* TrialViewController.h */,
 				2137D8611BAC980000310545 /* TrialViewController.m */,
+				2137D7EF1BAC974E00310545 /* CheckoutViewController.h */,
+				2137D7F01BAC974E00310545 /* CheckoutViewController.m */,
 			);
 			name = "Sign Up";
 			sourceTree = "<group>";
@@ -483,11 +479,21 @@
 		21643A541BC5950C0099E6FB /* Member View */ = {
 			isa = PBXGroup;
 			children = (
+				21BA63281BCBFE1E0055117F /* Page Controller */,
 				21333E5A1BC82FE20011D78C /* Settings */,
 				21333E591BC82FD90011D78C /* Log Meal */,
 				21D4E2D91BC2F81400962C6B /* Firebase */,
 			);
 			name = "Member View";
+			sourceTree = "<group>";
+		};
+		21BA63281BCBFE1E0055117F /* Page Controller */ = {
+			isa = PBXGroup;
+			children = (
+				2137D82D1BAC97AE00310545 /* PageViewController.h */,
+				2137D82E1BAC97AF00310545 /* PageViewController.m */,
+			);
+			name = "Page Controller";
 			sourceTree = "<group>";
 		};
 		21C88A191BAC95CF00792E9C = {
@@ -517,17 +523,17 @@
 		21C88A241BAC95CF00792E9C /* Nomful-App */ = {
 			isa = PBXGroup;
 			children = (
+				21C88A281BAC95CF00792E9C /* AppDelegate.h */,
+				21C88A291BAC95CF00792E9C /* AppDelegate.m */,
+				2137D8821BAC9E8D00310545 /* Main.storyboard */,
+				2137D8811BAC9E8D00310545 /* LaunchScreen.xib */,
 				21643A541BC5950C0099E6FB /* Member View */,
 				21643A501BC591180099E6FB /* Login */,
 				21643A4C1BC4BA270099E6FB /* Sign Up */,
 				21D4E2E41BC2F93300962C6B /* Coach View */,
 				21C6FC4F1BAF20EE004599E8 /* Nomful-App.entitlements */,
 				2137D8851BACA03900310545 /* images */,
-				2137D8811BAC9E8D00310545 /* LaunchScreen.xib */,
-				2137D8821BAC9E8D00310545 /* Main.storyboard */,
 				2137D7E31BAC971400310545 /* files */,
-				21C88A281BAC95CF00792E9C /* AppDelegate.h */,
-				21C88A291BAC95CF00792E9C /* AppDelegate.m */,
 				21C88A2B1BAC95CF00792E9C /* ViewController.h */,
 				21C88A2C1BAC95CF00792E9C /* ViewController.m */,
 				21C88A341BAC95CF00792E9C /* Assets.xcassets */,
@@ -594,6 +600,8 @@
 			children = (
 				2137D7F71BAC974E00310545 /* ClientListViewController.h */,
 				2137D7F81BAC974E00310545 /* ClientListViewController.m */,
+				2137D7E91BAC974200310545 /* AvailableClientTableViewCell.h */,
+				2137D7EA1BAC974200310545 /* AvailableClientTableViewCell.m */,
 			);
 			name = "Coach View";
 			sourceTree = "<group>";
@@ -1054,6 +1062,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
@@ -1076,7 +1085,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "c33a780b-03e5-4f8a-8b9f-13c1e35fa154";
+				PROVISIONING_PROFILE = "b282d234-69cc-49b4-a2a8-36a0184ebb13";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1099,6 +1108,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -1114,7 +1124,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "c33a780b-03e5-4f8a-8b9f-13c1e35fa154";
+				PROVISIONING_PROFILE = "b282d234-69cc-49b4-a2a8-36a0184ebb13";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -1128,7 +1138,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = "Nomful-App/Nomful-App.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Real Dietitian Corporation (7N7P237XEB)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Real Dietitian Corporation (7N7P237XEB)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1141,7 +1151,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Nomful;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "c33a780b-03e5-4f8a-8b9f-13c1e35fa154";
+				PROVISIONING_PROFILE = "b282d234-69cc-49b4-a2a8-36a0184ebb13";
 			};
 			name = Debug;
 		};
@@ -1152,7 +1162,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = "Nomful-App/Nomful-App.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Real Dietitian Corporation (7N7P237XEB)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Real Dietitian Corporation (7N7P237XEB)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1165,7 +1175,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Nomful;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "c33a780b-03e5-4f8a-8b9f-13c1e35fa154";
+				PROVISIONING_PROFILE = "b282d234-69cc-49b4-a2a8-36a0184ebb13";
 			};
 			name = Release;
 		};

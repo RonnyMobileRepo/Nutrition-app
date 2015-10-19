@@ -20,7 +20,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    //DEV KEYS
+    // ______________________________________________________________________________________________________________________________
     
     //parse
 //    [Parse setApplicationId:@"KjqhJkgvtVSsPA9SVHxq1Euad73fWhLWfVS4LNxO"
@@ -28,19 +28,28 @@
 //    [PFUser enableRevocableSessionInBackground];
 //
     
-    //stripe key
     [Stripe setDefaultPublishableKey:STRIPE_TOKEN];
     
+    [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
+
+    //*/
+    
+    //______________________________________________________________________________________________________________________________
+    
+    //BOTH
+    
+    [Fabric with:@[[Crashlytics class]]];
+    [[ChimpKit sharedKit] setApiKey:MAILCHIMP_TOKEN];
     
     // Branch *branch = [Branch getInstance:@"144975538040099258"];
-     
+    
     // [branch initSessionWithLaunchOptions:launchOptions andRegisterDeepLinkHandler:^(NSDictionary *params, NSError *error) {
     // params are the deep linked params associated with the link that the user clicked before showing up.
     // NSLog(@"deep link data: %@", [params description]);
     // }];
-     
-     //CRASH REPORTING
-    [Fabric with:@[[Crashlytics class]]];
+    
+    
+    //______________________________________________________________________________________________________________________________
 
 
      //Mixpanel
@@ -72,6 +81,23 @@
      
      }
     
+    if([PFUser currentUser]){
+        // We're logged in, we can register the user with Intercom
+        PFUser *currentUser =  [PFUser currentUser];
+        
+        //Mixpanel
+        Mixpanel *mixpanel = [Mixpanel sharedInstance];
+        [mixpanel identify:currentUser.objectId];
+        
+        //identifies user in mixpanel
+        if(currentUser[@"firstName"]) [mixpanel.people set:@{@"$first_name": currentUser[@"firstName"]}];
+        
+        
+    }else{
+        //no user
+        
+    }
+
     
     
     UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
@@ -165,6 +191,11 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    NSLog(@"app did enter background");
+    
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel track:@"Session"];
+
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -173,6 +204,13 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    NSLog(@"App did become active");
+    
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    // start the timer for the event "App Close"
+    [mixpanel timeEvent:@"Session"];
+    
+
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {

@@ -8,7 +8,10 @@
 
 #import "TrialViewController.h"
 
-@interface TrialViewController ()
+@interface TrialViewController (){
+    
+    bool isChecked;
+}
 
 @end
 
@@ -65,30 +68,58 @@
 
 - (IBAction)activateButtonPressed:(id)sender {
     
-    [_activityIndicator startAnimating];
-    
-    //create chatroom
-    [self buildChatroom];
-    
-    [self activatePushNotification];
-    
-    if(_isTrial){
-        NSLog(@"trainer user ttrial");
+    if(isChecked){
+        //button is checked...we good
+        [_activityIndicator startAnimating];
         
-        NSDate *now = [NSDate date];
-        NSInteger daysInTrial = 10;
-        NSDate *trialEndDate = [now dateByAddingTimeInterval:60*60*24*daysInTrial];
+        //create chatroom
+        [self buildChatroom];
         
-        //mark trial start date
-        [PFUser currentUser][@"trialEndDate"] = trialEndDate;
+        [self activatePushNotification];
         
-        [PFUser currentUser][@"planType"] = @"trial"; //this can be either 'trial' 'intro' or 'bootcamp'
-        
+        if(_isTrial){
+            NSLog(@"trainer user ttrial");
+            
+            NSDate *now = [NSDate date];
+            NSInteger daysInTrial = 10;
+            NSDate *trialEndDate = [now dateByAddingTimeInterval:60*60*24*daysInTrial];
+            
+            //mark trial start date
+            [PFUser currentUser][@"trialEndDate"] = trialEndDate;
+            
+            [PFUser currentUser][@"planType"] = @"trial"; //this can be either 'trial' 'intro' or 'bootcamp'
+            
+        }else if([[PFUser currentUser][@"planType"] isEqualToString:@"intro"]){
+            NSDate *now = [NSDate date];
+            NSInteger daysInTrial = 30; //30 days
+            NSDate *trialEndDate = [now dateByAddingTimeInterval:60*60*24*daysInTrial];
+            
+            //mark trial start date
+            [PFUser currentUser][@"trialEndDate"] = trialEndDate;
+            
+        }else if([[PFUser currentUser][@"planType"] isEqualToString:@"bootcamp"]){
+            NSDate *now = [NSDate date];
+            NSInteger daysInTrial = 84; //12 weeks
+            NSDate *trialEndDate = [now dateByAddingTimeInterval:60*60*24*daysInTrial];
+            
+            //mark trial start date
+            [PFUser currentUser][@"trialEndDate"] = trialEndDate;
+        }else if([[PFUser currentUser][@"planType"] isEqualToString:@"perry"]){
+            NSDate *now = [NSDate date];
+            NSInteger daysInTrial = 100; //30 days
+            NSDate *trialEndDate = [now dateByAddingTimeInterval:60*60*24*daysInTrial];
+            
+            //mark trial start date
+            [PFUser currentUser][@"trialEndDate"] = trialEndDate;
+        }
         
         [[PFUser currentUser] saveEventually];
 
+    }else{
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Terms and Conditions" message:@"Please agree to our terms and conditions before activiting!" delegate:self cancelButtonTitle:@"Okay" otherButtonTitles: nil];
+        [alert show];
     }
-  
+    
 }
 
 - (void)buildChatroom{
@@ -244,14 +275,9 @@
         
     }];//end chatroom query
     
-    
-    
-    
     //select first number in resulting array
     //assign that number to the coachUser
     //save
-    
-    
 }
 
 - (void)activatePushNotification{
@@ -269,5 +295,17 @@
     [mixpanel.people set:@{@"$first_name"    : [PFUser currentUser][@"firstName"],
                            @"$email"         : [PFUser currentUser].email}];
 
+}
+- (IBAction)termsButtonPressed:(id)sender {
+    
+    
+    if(!isChecked){
+        [_termsButton setBackgroundImage:[UIImage imageNamed:@"box_checked"] forState:UIControlStateNormal];
+        isChecked = YES;
+    }else{
+        [_termsButton setBackgroundImage:[UIImage imageNamed:@"box_empty"] forState:UIControlStateNormal];
+        isChecked = NO;
+    }
+   
 }
 @end

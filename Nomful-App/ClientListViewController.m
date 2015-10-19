@@ -19,6 +19,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self registerWithMixpanel];
+    
     //nav Bar style
     [[UINavigationBar appearance] setTitleTextAttributes: @{
                                                             //NSForegroundColorAttributeName: [UIColor greenColor],
@@ -138,13 +140,12 @@
     //set name label to full name
     cell.nameLabel.text = fullName;
     
-    
     //configure time left label
-    if(clientUserObject[@"membershipStartDate"]){
-        NSDate *startDate = clientUserObject[@"membershipStartDate"];
+    if(clientUserObject[@"trialEndDate"]){
+        NSDate *startDate = clientUserObject[@"trialEndDate"];
         NSDate *today = [NSDate date];
         
-        NSInteger days = (30 - [self daysBetweenDate:startDate andDate:today]);
+        NSInteger days = ([self daysBetweenDate:today andDate:startDate]);
         NSString *daysLeft = [[NSString alloc] init];
         
         if(days > 5){
@@ -164,22 +165,9 @@
         cell.daysLeftLabel.text = daysLeft;
     }
     
-    //query for the plan type
-    PFQuery *query = [PFQuery queryWithClassName:@"GymMembers"];
-    [query whereKey:@"clientObject" equalTo:clientUserObject];
-    [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error){
-        
-        if(!error){
-            if(object[@"planID"]){
-                NSString *plan = [NSString stringWithFormat:@"%@ plan", object[@"planID"]];
-                cell.membershipLabel.text = plan;
-            }else{
-                cell.membershipLabel.text = @"-";
-            }
-        }else{
-            NSLog(@"ERROR!");
-        }
-    }];
+    
+        NSString *plan = [NSString stringWithFormat:@"%@ plan", clientUserObject[@"planType"]];
+        cell.membershipLabel.text = plan;
     
     //    cell.membershipLabel.text = @"hey";
     //    PFQuery *sessionQuery = [PFQuery queryWithClassName:@"_Session"];
@@ -234,12 +222,14 @@
         NSLog(@"Meal segue called");
         ClientCollectionViewController *vc = [segue destinationViewController];
         vc.chatroomObject = [self.objects objectAtIndex:senderButton.tag];
-    }else if([segue.identifier isEqualToString:@"listToChat"]){
+    }
+    else if([segue.identifier isEqualToString:@"listToChat"]){
         MessagesViewController *vc = [segue destinationViewController];
         vc.delegates = self;
         vc.chatroomObjectFromList = [self.objects objectAtIndex:senderButton.tag];
         vc.youAreDietitian = true;
-    }
+        
+            }
     else if([segue.identifier isEqualToString:@"showAccount"]){
         UserAccountViewController *vc = [segue destinationViewController];
         vc.chatroomObject = [self.objects objectAtIndex:senderButton.tag];
@@ -250,15 +240,24 @@
 
 - (IBAction)chatButtonPressed:(UIButton*)button {
     
-//    PFObject *chatroom = [self.objects objectAtIndex:button.tag];
-//    Chatview *chatview = [[Chatview alloc] initWith:chatroom.objectId];
-//    
-//    
-//    [self.navigationController pushViewController:chatview animated:YES];
+    PFObject *chatroom = [self.objects objectAtIndex:button.tag];
     
-    [self performSegueWithIdentifier:@"listToChat" sender:button];
+    //if we're using the old messaging then double check if chat is updated
+    [chatroom fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+        //
+        if ([object[@"upgradedToFirebase"] isEqualToString:@"Yes"]) {
+            //go to firebase
+            Chatview *chatview = [[Chatview alloc] initWith:object.objectId];
+            [self.navigationController pushViewController:chatview animated:YES];
+            
+        }else{
+            [self performSegueWithIdentifier:@"listToChat" sender:button];
+        }
+        
+        
+    }];
 
-    
+
 }
 
 - (IBAction)mealsButtonPressed:(UIButton*)button
@@ -290,4 +289,21 @@
     return [difference day];
 }
 
+- (void)_refreshControlValueChanged:(UIRefreshControl *)refreshControl {
+    [self loadObjects];
+    
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel identify:[PFUser currentUser].objectId];
+
+    [mixpanel track:@"Pulled-to-refresh" properties:@{
+        @"numberOfClients": @7
+    }];
+
+}
+
+- (void)registerWithMixpanel{
+    
+
+    
+}
 @end

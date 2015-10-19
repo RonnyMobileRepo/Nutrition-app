@@ -16,6 +16,10 @@
 
 @interface Chatview (){
     
+    
+    //test
+    int numberOfMessagesToLoad;
+    
     //chatroom ID
     NSString *groupId;
     NSString *messageContent;
@@ -26,7 +30,6 @@
     
     //firebase objects
     Firebase *firebase1;
-    Firebase *firebase2;
     
     //message arrays
     NSMutableArray *items;
@@ -58,13 +61,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    //NSLog(@"group id is: %@", groupId);
-    
-    //**check if the user has converted chatrooms yet
+
+    //Here we are going to get the chatroom object from parse
+    //we're given the chatroom id when the class was initialized
     PFQuery *query = [PFQuery queryWithClassName:@"Chatrooms"];
     [query getObjectInBackgroundWithId:groupId block:^(PFObject * _Nullable chatroom, NSError * _Nullable error) {
         
-        
+        //now that we have the chatroom object
+        //we can check to see if it has been upgraded to firebase yet
+        //if yes...then we don't have to do anything!
+        //if no...then we can load the convert code
         if ([chatroom[@"upgradedToFirebase"] isEqualToString:@"Yes"]) {
             //do nothgint
             NSLog(@"do nothing");
@@ -83,8 +89,7 @@
     started = [[NSMutableDictionary alloc] init];
     avatars = [[NSMutableDictionary alloc] init];
 
-    //set the jsqmessagesviewcontroller senderID variable to the object ID of the current user
-    //same with the name
+    //set the jsqmessagesviewcontroller senderID and name variable to the object ID of the current user
     self.senderId = [PFUser currentUser].objectId;
     self.senderDisplayName = [PFUser currentUser][@"firstName"];
     
@@ -96,6 +101,7 @@
     //set the avatar image when chat is blank?
     avatarImageBlank = [JSQMessagesAvatarImageFactory avatarImageWithImage:[UIImage imageNamed:@"profilePlaceholder.png"] diameter:30.0];
 
+    //set the font for the messages
     self.collectionView.collectionViewLayout.messageBubbleFont = [UIFont fontWithName:kFontFamilyName size:15.0];
 
     //**havent used these before. Look into what they do
@@ -111,10 +117,11 @@
     //lets go get the chatroom id and upon comletion, load firebase and messages
     //we should make this an initializtion thing like it was before
     
-    //delcare two firebase objects
+    //delcare firebase connection!
+    //url saved in prefixheader and groupid from initialization
     firebase1 = [[Firebase alloc] initWithUrl:[NSString stringWithFormat:@"%@/Message/%@", kFirechatNS, groupId]];
-    firebase2 = [[Firebase alloc] initWithUrl:[NSString stringWithFormat:@"%@/Typing/%@", kFirechatNS, groupId]];
 
+    //load messages
     [self loadMessages];
   
     
@@ -139,18 +146,22 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    NSLog(@"viewdidAppear");
+
     [super viewDidAppear:animated];
     self.collectionView.collectionViewLayout.springinessEnabled = NO;
+    
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    NSLog(@"Chatview did dissapear");
     [super viewWillDisappear:animated];
     if (self.isMovingFromParentViewController)
     {
         //**ClearRecentCounter(groupId);
-        [firebase1 removeAllObservers];
-        [firebase2 removeAllObservers];
+        //[firebase1 removeAllObservers];
     }
 }
 
@@ -160,33 +171,35 @@
 - (void)loadMessages{
     NSLog(@"load messages for chatrom %@", groupId);
     initialized = NO;
-    self.automaticallyScrollsToMostRecentMessage = NO;
+    self.automaticallyScrollsToMostRecentMessage = YES;
     
-    //add the observer for a child being added to the firebase stream...basically this ensures
-    //that when a new message is put in stream...this method is called
-    [firebase1 observeEventType:FEventTypeChildAdded withBlock:^(FDataSnapshot *snapshot)
-     {
-         NSLog(@"message: %@", snapshot.value);
-         
-         if (initialized)
-         {
-             //you get here when a user recieves a new message?
+    //querying data
+    [[[firebase1 queryOrderedByChild:@"date"] queryLimitedToLast:25] observeEventType:FEventTypeChildAdded withBlock:^(FDataSnapshot *snapshot) {
+    
+         if(initialized){
+             //You get here when a new child is added to the datastream
              BOOL incoming = [self addMessage:snapshot.value];
              if (incoming) [JSQSystemSoundPlayer jsq_playMessageReceivedSound];
              [self finishReceivingMessage];
-             
-             
-         }else{
-             [self addMessage:snapshot.value]; //** i added this so the messages load initially
-         }
-     }];
 
+         }else{
+             
+             [self addMessage:snapshot.value]; //** I added this so the messages load initially
+         }
+         
+     }];
+    
+
+    //FEventTypeValue: Fired when any data changes at a location and, recursively, any children
     [firebase1 observeSingleEventOfType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot)
      {
+         //reloads view
          [self finishReceivingMessage];
          [self scrollToBottomAnimated:NO];
          self.automaticallyScrollsToMostRecentMessage = YES;
-         self.showLoadEarlierMessagesHeader = NO;
+         self.showLoadEarlierMessagesHeader = YES;
+         
+         //sets initialized to yes so we dont' run the code above on line 177-ish 'bool incoming...'
          initialized	= YES;
      }];
 }
@@ -260,6 +273,13 @@
     [self messageSend:text Video:nil Picture:nil Audio:nil];
     [self sendPushNotifications];
     [self markMessageAsUnread:true];
+    
+    //mixpanel tracking
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    
+    [mixpanel track:@"Message Sent" properties:@{
+      
+      }];
 }
 
 
@@ -451,7 +471,34 @@
                 header:(JSQMessagesLoadEarlierHeaderView *)headerView didTapLoadEarlierMessagesButton:(UIButton *)sender
 
 {
-    //ActionPremium(self);
+    bool earlierButtonPressed = true;
+    //calculates the number of messages to load
+    numberOfMessagesToLoad = (int)(messages.count + 15);
+    
+    //this makes sure that the previous listener no longer is being fired when messages added
+    [firebase1 removeAllObservers];
+    
+    //this takes the current messages in the view and removes them so we can replace them with new ones
+    [messages removeAllObjects];
+    
+    
+    //querying data
+    [[[firebase1 queryOrderedByChild:@"date"] queryLimitedToLast:numberOfMessagesToLoad] observeEventType:FEventTypeChildAdded withBlock:^(FDataSnapshot *snapshot) {
+        
+        //You get here when a new child is added to the datastream
+        BOOL incoming = [self addMessage:snapshot.value];
+        if (incoming) [JSQSystemSoundPlayer jsq_playMessageReceivedSound];
+        
+        if (earlierButtonPressed) {
+            [self.collectionView reloadData];
+
+        }else{
+            [self finishReceivingMessage];
+
+        }
+        
+    
+    }];
 }
 
 
@@ -563,7 +610,7 @@
     NSLog(@"picture is: %@", picture);
     
     [self messageSend:nil Video:nil Picture:picture Audio:nil];
-    
+    [self sendPushNotifications];
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -678,6 +725,5 @@
     
     
 }
-
 
 @end

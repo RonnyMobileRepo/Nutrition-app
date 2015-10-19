@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
@@ -14,6 +14,7 @@
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo-600" translatesAutoresizingMaskIntoConstraints="NO" id="UiC-Hf-in3">
                     <rect key="frame" x="71" y="282" width="579" height="138"/>
+                    <animations/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="UiC-Hf-in3" secondAttribute="height" multiplier="600:221" constant="204.33936651583707" id="5Ld-ff-Vy2"/>
                         <constraint firstAttribute="width" secondItem="UiC-Hf-in3" secondAttribute="height" multiplier="193:46" id="7bR-Fl-Uk0"/>
@@ -25,6 +26,7 @@
                     </variation>
                 </imageView>
             </subviews>
+            <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="UiC-Hf-in3" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="71" id="IkR-5O-nKS"/>

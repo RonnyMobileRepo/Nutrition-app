@@ -1788,7 +1788,7 @@ bool keyboardIsShowing = false;
                         [self performSegueWithIdentifier:@"trialEnded" sender:self];
                     }];
                     
-                    UIAlertView *trialAlert = [[UIAlertView alloc] initWithTitle:@"Hey You!" message:@"Your trial has ended, please complete payment to continue workign with your coach" delegate:self cancelButtonTitle:@"Okay!" otherButtonTitles: nil];
+                    UIAlertView *trialAlert = [[UIAlertView alloc] initWithTitle:@"Membership Renewal" message:@"Your membership period has ended, please complete payment to continue workign with your coach" delegate:self cancelButtonTitle:@"Okay!" otherButtonTitles: nil];
                     
                     [trialAlert show];
                     
