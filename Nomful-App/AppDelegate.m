@@ -22,11 +22,29 @@
     
     // ______________________________________________________________________________________________________________________________
     
-    //parse
-//    [Parse setApplicationId:@"KjqhJkgvtVSsPA9SVHxq1Euad73fWhLWfVS4LNxO"
-//                  clientKey:@"EnXbaltwwCtiRrruc9ibpx0XWculRyWmiy3KrRzb"];
-//    [PFUser enableRevocableSessionInBackground];
-//
+    /*
+    
+    [Parse setApplicationId:PARSE_APP_ID_DEV
+                  clientKey:PARSE_CLIENT_ID_DEV];
+    [PFUser enableRevocableSessionInBackground];
+
+    [Stripe setDefaultPublishableKey:STRIPE_TOKEN_DEV];
+    
+    [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN_DEV];
+    
+     
+    */
+    
+    //______________________________________________________________________________________________________________________________
+    
+    //LIVE
+    
+    ///*
+     
+    [Parse setApplicationId:PARSE_APP_ID
+                  clientKey:PARSE_CLIENT_ID];
+    [PFUser enableRevocableSessionInBackground];
+    [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     
     [Stripe setDefaultPublishableKey:STRIPE_TOKEN];
     
@@ -52,34 +70,7 @@
     //______________________________________________________________________________________________________________________________
 
 
-     //Mixpanel
-     [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
-     
-     //PARSE
-     [Parse setApplicationId:@"KjqhJkgvtVSsPA9SVHxq1Euad73fWhLWfVS4LNxO"
-     clientKey:@"EnXbaltwwCtiRrruc9ibpx0XWculRyWmiy3KrRzb"];
-     [PFUser enableRevocableSessionInBackground];
-     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
-     
-     //MAILCHIMP
-     [[ChimpKit sharedKit] setApiKey:MAILCHIMP_TOKEN];
-     
-     
-     //mixpanel
-     
-     if([PFUser currentUser]){
-     // We're logged in, we can register the user with Intercom
-     PFUser *currentUser =  [PFUser currentUser];
-     
-     //Mixpanel
-     Mixpanel *mixpanel = [Mixpanel sharedInstance];
-     [mixpanel identify:currentUser.objectId];
-     
-     
-     }else{
-     //no user
-     
-     }
+   
     
     if([PFUser currentUser]){
         // We're logged in, we can register the user with Intercom
