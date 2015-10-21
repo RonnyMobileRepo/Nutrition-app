@@ -1577,11 +1577,6 @@ bool keyboardIsShowing = false;
     
     NSLog(@"You are going to save the image to Parse... %@", [PFUser currentUser]);
     
-    //start a save duration on mixpanel
-    Mixpanel *mixpanel = [Mixpanel sharedInstance];
-    [mixpanel timeEvent:@"Image Upload"];
-    
-    
     
     if (!self.photoFile || !self.thumbnailFile) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Couldn't post your photo"

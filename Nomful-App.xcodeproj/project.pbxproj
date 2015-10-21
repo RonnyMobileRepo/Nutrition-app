@@ -82,6 +82,7 @@
 		21643A531BC592FC0099E6FB /* adminViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21643A521BC592FC0099E6FB /* adminViewController.m */; settings = {ASSET_TAGS = (); }; };
 		21856A851BCAADFA00E217F7 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21856A831BCAADFA00E217F7 /* Fabric.framework */; settings = {ASSET_TAGS = (); }; };
 		21856A861BCAADFA00E217F7 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21856A841BCAADFA00E217F7 /* Crashlytics.framework */; settings = {ASSET_TAGS = (); }; };
+		2187BD291BD7DFE40058A7C3 /* MealDetailCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2187BD281BD7DFE40058A7C3 /* MealDetailCardViewController.m */; settings = {ASSET_TAGS = (); }; };
 		21C88A271BAC95CF00792E9C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 21C88A261BAC95CF00792E9C /* main.m */; };
 		21C88A2A1BAC95CF00792E9C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 21C88A291BAC95CF00792E9C /* AppDelegate.m */; };
 		21C88A2D1BAC95CF00792E9C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21C88A2C1BAC95CF00792E9C /* ViewController.m */; };
@@ -245,6 +246,8 @@
 		21643A521BC592FC0099E6FB /* adminViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = adminViewController.m; sourceTree = "<group>"; };
 		21856A831BCAADFA00E217F7 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		21856A841BCAADFA00E217F7 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
+		2187BD271BD7DFE40058A7C3 /* MealDetailCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MealDetailCardViewController.h; sourceTree = "<group>"; };
+		2187BD281BD7DFE40058A7C3 /* MealDetailCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MealDetailCardViewController.m; sourceTree = "<group>"; };
 		21C6FC4F1BAF20EE004599E8 /* Nomful-App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Nomful-App.entitlements"; sourceTree = "<group>"; };
 		21C88A221BAC95CF00792E9C /* Nomful-App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Nomful-App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		21C88A261BAC95CF00792E9C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -411,10 +414,6 @@
 				2137D7F21BAC974E00310545 /* ChooseTrainerTableViewCell.m */,
 				2137D7F31BAC974E00310545 /* ChooseTrainerTableViewController.h */,
 				2137D7F41BAC974E00310545 /* ChooseTrainerTableViewController.m */,
-				2137D7F51BAC974E00310545 /* ClientCollectionViewController.h */,
-				2137D7F61BAC974E00310545 /* ClientCollectionViewController.m */,
-				2137D7F91BAC974E00310545 /* ClientMealsCollectionViewCell.h */,
-				2137D7FA1BAC974E00310545 /* ClientMealsCollectionViewCell.m */,
 				2137D7FB1BAC974E00310545 /* editImageViewController.h */,
 				2137D7FC1BAC974E00310545 /* editImageViewController.m */,
 				2137D7E71BAC974200310545 /* AvailableClientsTableViewController.h */,
@@ -487,6 +486,26 @@
 			name = "Member View";
 			sourceTree = "<group>";
 		};
+		2187BD261BD7DFC50058A7C3 /* Meal Detail */ = {
+			isa = PBXGroup;
+			children = (
+				2187BD271BD7DFE40058A7C3 /* MealDetailCardViewController.h */,
+				2187BD281BD7DFE40058A7C3 /* MealDetailCardViewController.m */,
+			);
+			name = "Meal Detail";
+			sourceTree = "<group>";
+		};
+		2187BD2B1BD7EAE90058A7C3 /* Client Meals */ = {
+			isa = PBXGroup;
+			children = (
+				2137D7F51BAC974E00310545 /* ClientCollectionViewController.h */,
+				2137D7F61BAC974E00310545 /* ClientCollectionViewController.m */,
+				2137D7F91BAC974E00310545 /* ClientMealsCollectionViewCell.h */,
+				2137D7FA1BAC974E00310545 /* ClientMealsCollectionViewCell.m */,
+			);
+			name = "Client Meals";
+			sourceTree = "<group>";
+		};
 		21BA63281BCBFE1E0055117F /* Page Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -523,15 +542,16 @@
 		21C88A241BAC95CF00792E9C /* Nomful-App */ = {
 			isa = PBXGroup;
 			children = (
+				2187BD261BD7DFC50058A7C3 /* Meal Detail */,
 				21C88A281BAC95CF00792E9C /* AppDelegate.h */,
 				21C88A291BAC95CF00792E9C /* AppDelegate.m */,
 				2137D8821BAC9E8D00310545 /* Main.storyboard */,
 				2137D8811BAC9E8D00310545 /* LaunchScreen.xib */,
+				21C6FC4F1BAF20EE004599E8 /* Nomful-App.entitlements */,
 				21643A541BC5950C0099E6FB /* Member View */,
 				21643A501BC591180099E6FB /* Login */,
 				21643A4C1BC4BA270099E6FB /* Sign Up */,
 				21D4E2E41BC2F93300962C6B /* Coach View */,
-				21C6FC4F1BAF20EE004599E8 /* Nomful-App.entitlements */,
 				2137D8851BACA03900310545 /* images */,
 				2137D7E31BAC971400310545 /* files */,
 				21C88A2B1BAC95CF00792E9C /* ViewController.h */,
@@ -598,6 +618,7 @@
 		21D4E2E41BC2F93300962C6B /* Coach View */ = {
 			isa = PBXGroup;
 			children = (
+				2187BD2B1BD7EAE90058A7C3 /* Client Meals */,
 				2137D7F71BAC974E00310545 /* ClientListViewController.h */,
 				2137D7F81BAC974E00310545 /* ClientListViewController.m */,
 				2137D7E91BAC974200310545 /* AvailableClientTableViewCell.h */,
@@ -944,6 +965,7 @@
 				2137D8781BAC980000310545 /* UserAccountViewController.m in Sources */,
 				2137D87C1BAC980D00310545 /* WebViewViewController.m in Sources */,
 				21D4E2E21BC2F82800962C6B /* Incoming.m in Sources */,
+				2187BD291BD7DFE40058A7C3 /* MealDetailCardViewController.m in Sources */,
 				21C88A331BAC95CF00792E9C /* Nomful_App.xcdatamodeld in Sources */,
 				2137D8031BAC974E00310545 /* ClientMealsCollectionViewCell.m in Sources */,
 				2137D83C1BAC97AF00310545 /* PaymentViewController.m in Sources */,
@@ -1085,7 +1107,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "b282d234-69cc-49b4-a2a8-36a0184ebb13";
+				PROVISIONING_PROFILE = "6c2c2ad3-225b-4a6b-9ee5-f62dc76cd8e1";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1124,7 +1146,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "b282d234-69cc-49b4-a2a8-36a0184ebb13";
+				PROVISIONING_PROFILE = "6c2c2ad3-225b-4a6b-9ee5-f62dc76cd8e1";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -1151,7 +1173,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Nomful;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "b282d234-69cc-49b4-a2a8-36a0184ebb13";
+				PROVISIONING_PROFILE = "6c2c2ad3-225b-4a6b-9ee5-f62dc76cd8e1";
 			};
 			name = Debug;
 		};
@@ -1175,7 +1197,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Nomful;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "b282d234-69cc-49b4-a2a8-36a0184ebb13";
+				PROVISIONING_PROFILE = "6c2c2ad3-225b-4a6b-9ee5-f62dc76cd8e1";
 			};
 			name = Release;
 		};

@@ -19,10 +19,11 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    NSLog(@"did finish launching");
     
     // ______________________________________________________________________________________________________________________________
     
-    /*
+    ///*
     
     [Parse setApplicationId:PARSE_APP_ID_DEV
                   clientKey:PARSE_CLIENT_ID_DEV];
@@ -33,13 +34,13 @@
     [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN_DEV];
     
      
-    */
+    //*/
     
     //______________________________________________________________________________________________________________________________
     
     //LIVE
     
-    ///*
+    /*
      
     [Parse setApplicationId:PARSE_APP_ID
                   clientKey:PARSE_CLIENT_ID];
@@ -50,7 +51,7 @@
     
     [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
 
-    //*/
+    */
     
     //______________________________________________________________________________________________________________________________
     
@@ -69,25 +70,6 @@
     
     //______________________________________________________________________________________________________________________________
 
-
-   
-    
-    if([PFUser currentUser]){
-        // We're logged in, we can register the user with Intercom
-        PFUser *currentUser =  [PFUser currentUser];
-        
-        //Mixpanel
-        Mixpanel *mixpanel = [Mixpanel sharedInstance];
-        [mixpanel identify:currentUser.objectId];
-        
-        //identifies user in mixpanel
-        if(currentUser[@"firstName"]) [mixpanel.people set:@{@"$first_name": currentUser[@"firstName"]}];
-        
-        
-    }else{
-        //no user
-        
-    }
 
     
     UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
@@ -120,12 +102,6 @@
     [currentInstallation setDeviceTokenFromData:deviceToken];
     currentInstallation.channels = @[ @"global" ];
     [currentInstallation saveInBackground];
-    
-    //register for mixpanel push
-    PFUser *currentUser = [PFUser currentUser];
-    Mixpanel *mixpanel = [Mixpanel sharedInstance];
-    [mixpanel identify:currentUser.objectId];
-    [mixpanel.people addPushDeviceToken:deviceToken];
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
