@@ -71,6 +71,25 @@
     //______________________________________________________________________________________________________________________________
 
 
+    if ([PFUser currentUser]) {
+        //if there is an active user...mixpanel dat shit
+        Mixpanel *mixpanel = [Mixpanel sharedInstance];
+        [mixpanel identify:[PFUser currentUser].objectId];
+        //sets the Role property in mixpanel as
+        if([PFUser currentUser][@"planType"]){[mixpanel registerSuperProperties:@{@"Plan Type":[PFUser currentUser][@"planType"]}];}
+        if([PFUser currentUser][@"role"]){[mixpanel registerSuperProperties:@{@"Role":[PFUser currentUser][@"role"],
+                                                                              @"timestamp":[NSDate date]}];}
+        //set the timezone for the current user
+        if ([PFUser currentUser][@"timezone"] ) {
+        }else{
+            [PFUser currentUser][@"timezone"] = [NSTimeZone localTimeZone].name;
+            [[PFUser currentUser] saveEventually];
+
+        }
+        
+
+    }
+    
     
     UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
                                                     UIUserNotificationTypeBadge |
@@ -173,7 +192,11 @@
     NSLog(@"App did become active");
     
     Mixpanel *mixpanel = [Mixpanel sharedInstance];
-    // start the timer for the event "App Close"
+    
+    //event for app open
+    [mixpanel track:@"App Opened" properties:@{}];
+    
+    // start the timer for the event session ("App Close")
     [mixpanel timeEvent:@"Session"];
     
 

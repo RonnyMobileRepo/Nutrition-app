@@ -139,6 +139,7 @@
     
     //set name label to full name
     cell.nameLabel.text = fullName;
+    cell.lastSeenLabel.text = clientUserObject[@"timezone"];
     
     //configure time left label
     if(clientUserObject[@"trialEndDate"]){

@@ -160,8 +160,10 @@
     [self.navigationController pushViewController:mealView animated:YES];
     
     
-//    [self performSegueWithIdentifier:@"showImage"
-//                              sender:objectd];
+    //log event in mixpanel
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel track:@"Meal Detail Viewed" properties:@{@"Meal_ID":objectd.objectId}];
+
     [self.collectionView
      deselectItemAtIndexPath:indexPath animated:YES];
     
@@ -229,6 +231,40 @@
     
 }
 
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForNextPageAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIdentifier = @"NextPageCell";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
+    if (!cell)
+    {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    }
+    
+    // Add activity indicator to let the user know that more images are coming.
+    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [cell setBackgroundView:spinner];
+    [spinner startAnimating];
+    
+    return cell;
+}
+
+#pragma mark - UITableViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    // If the scroll has reached the end of the screen.
+    if (([scrollView contentSize].height - [scrollView contentOffset].y) < [self.view bounds].size.height)
+    {
+        // As long as there no other network request in place.
+        if (![self isLoading])
+        {
+            // Trigger the load of the next page.
+            [self loadNextPage];
+        }
+    }
+}
 
 /*
 #pragma mark - Navigation
