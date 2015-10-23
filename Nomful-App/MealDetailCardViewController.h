@@ -10,6 +10,17 @@
 
 @interface MealDetailCardViewController : UIViewController
 
-- (id)initWith:(PFFile *)mealImage_ withDescriptionText:(NSString *)mealDescription_;
+- (id)initWith:(PFObject *)mealObject_;
+
+//hashtag buttons
+@property (strong, nonatomic) UIButton *breakfastButton;
+@property (strong, nonatomic) UIButton *lunchButton;
+@property (strong, nonatomic) UIButton *dinnerButton;
+@property (strong, nonatomic) UIButton *snackButton;
+@property (strong, nonatomic) UIButton *coffeeButton;
+@property (strong, nonatomic) UIButton *nomfulButton;
+@property (strong, nonatomic) UIButton *makeYourOwnButton;
+
+@property (strong, nonatomic) UIColor *brandColor;
 
 @end

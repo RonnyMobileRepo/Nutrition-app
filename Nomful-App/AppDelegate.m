@@ -84,10 +84,7 @@
         }else{
             [PFUser currentUser][@"timezone"] = [NSTimeZone localTimeZone].name;
             [[PFUser currentUser] saveEventually];
-
         }
-        
-
     }
     
     

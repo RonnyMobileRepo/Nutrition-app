@@ -150,12 +150,8 @@
     //get the meal object
     PFObject *objectd = [self.objects objectAtIndex:indexPath.row];
     
-    //Get the meal image FILE from parse
-    PFFile *thumbnail = [objectd objectForKey:@"mealPhoto"];
-
     //instantiate the detail view with the meal description and image file
-    MealDetailCardViewController *mealView = [[MealDetailCardViewController alloc] initWith:thumbnail withDescriptionText:objectd[@"description"]];
-    
+    MealDetailCardViewController *mealView = [[MealDetailCardViewController alloc] initWith:objectd];
     //add to nav stack
     [self.navigationController pushViewController:mealView animated:YES];
     

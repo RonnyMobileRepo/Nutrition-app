@@ -314,6 +314,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		212C7A1F1BDA7FA600BBBA82 /* Past Meals */ = {
+			isa = PBXGroup;
+			children = (
+				2137D8311BAC97AF00310545 /* pastMealsViewController.h */,
+				2137D8321BAC97AF00310545 /* pastMealsViewController.m */,
+			);
+			name = "Past Meals";
+			sourceTree = "<group>";
+		};
 		21333E581BC82FC40011D78C /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
@@ -391,8 +400,6 @@
 				2137D82C1BAC97AE00310545 /* PageItemController.m */,
 				2137D82F1BAC97AF00310545 /* ParseErrorHandlingController.h */,
 				2137D8301BAC97AF00310545 /* ParseErrorHandlingController.m */,
-				2137D8311BAC97AF00310545 /* pastMealsViewController.h */,
-				2137D8321BAC97AF00310545 /* pastMealsViewController.m */,
 				2137D8331BAC97AF00310545 /* PaymentViewController.h */,
 				2137D8341BAC97AF00310545 /* PaymentViewController.m */,
 				2137D81E1BAC978F00310545 /* ManageSubscriptionViewController.m */,
@@ -478,6 +485,7 @@
 		21643A541BC5950C0099E6FB /* Member View */ = {
 			isa = PBXGroup;
 			children = (
+				212C7A1F1BDA7FA600BBBA82 /* Past Meals */,
 				21BA63281BCBFE1E0055117F /* Page Controller */,
 				21333E5A1BC82FE20011D78C /* Settings */,
 				21333E591BC82FD90011D78C /* Log Meal */,

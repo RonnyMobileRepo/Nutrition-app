@@ -8,6 +8,7 @@
 
 #import "pastMealsViewController.h"
 #import "imageDetailViewController.h"
+#import "MealDetailCardViewController.h"
 
 @interface pastMealsViewController ()
 
@@ -130,16 +131,22 @@
 }
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     
-    
-    
+    //get the meal object
     PFObject *objectd = [self.objects objectAtIndex:indexPath.row];
     
+    //instantiate the detail view with the meal description and image file
+    MealDetailCardViewController *mealView = [[MealDetailCardViewController alloc] initWith:objectd];
     
+    //add to nav stack
+    [self.navigationController pushViewController:mealView animated:YES];
     
-    [self performSegueWithIdentifier:@"showMealImageSegue"
-                              sender:objectd];
+    //log event in mixpanel
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel track:@"Meal Detail Viewed" properties:@{@"Meal_ID":objectd.objectId}];
+    
     [self.collectionView
      deselectItemAtIndexPath:indexPath animated:YES];
+
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
