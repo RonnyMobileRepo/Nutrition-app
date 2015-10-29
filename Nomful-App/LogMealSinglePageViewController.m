@@ -1242,10 +1242,9 @@ bool keyboardIsShowing = false;
             self.capturedImage = newImage;
             self.captureButton.hidden = YES;
             
-            
             //change ui
             [self showDescription];
-            
+
             
             //RESIZING STUFF
             ///////////////
