@@ -10,7 +10,12 @@
 
 @interface CoachBioViewController (){
     
-    NSArray *bulletsArray;
+    NSString *coachNameString;
+    NSString *coachCityString;
+    NSString *coachBioString;
+    PFFile *coachImageFile;
+    NSArray *coachSpecialitesArray;
+
 }
 
 @end
@@ -29,11 +34,29 @@ CGFloat const kbulletTextHeight = 15.0;
 
 @implementation CoachBioViewController
 
+- (id)initWith:(PFObject *)coachObject_
+
+{
+    self = [super init];
+    
+    //coach information
+    coachNameString = [coachObject_ objectForKey:@""];
+    coachCityString = [coachObject_ objectForKey:@""];
+    coachBioString = [coachObject_ objectForKey:@""];
+    coachSpecialitesArray = [coachObject_ objectForKey:@""];
+    
+    //coach profile image
+    PFFile *profileFile = [coachObject_ objectForKey:@"photo"];
+    coachImageFile = profileFile;
+
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor colorWithRed:126.0/255.0 green:202.0/255.0 blue:175.0/255.0 alpha:1.0]];
     
-    bulletsArray = [[NSArray alloc] initWithObjects:@"Sex",@"Pre-Natal",@"Weight Loss",@"Sports Nutrition",@"Eating Better Bitches", nil];
+    coachSpecialitesArray = [[NSArray alloc] initWithObjects:@"Sex",@"Pre-Natal",@"Weight Loss",@"Sports Nutrition",@"Eating Better Bitches", nil];
     
     [self loadElements];
     
@@ -113,28 +136,28 @@ CGFloat const kbulletTextHeight = 15.0;
     //bullet 1
     UILabel *bullet1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
     bullet1.translatesAutoresizingMaskIntoConstraints = NO;
-    bullet1.text = bulletsArray[1];
+    bullet1.text = coachSpecialitesArray[0];
     [bullet1 setFont:[UIFont fontWithName:kFontFamilyName size:15]];
     [bottonCardView addSubview:bullet1];
 
     //bullet 2
     UILabel *bullet2 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
     bullet2.translatesAutoresizingMaskIntoConstraints = NO;
-    bullet2.text = bulletsArray[2];
+    bullet2.text = coachSpecialitesArray[1];
     [bullet2 setFont:[UIFont fontWithName:kFontFamilyName size:15]];
     [bottonCardView addSubview:bullet2];
     
     //bullet 3
     UILabel *bullet3 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
     bullet3.translatesAutoresizingMaskIntoConstraints = NO;
-    bullet3.text = bulletsArray[3];
+    bullet3.text = coachSpecialitesArray[2];
     [bullet3 setFont:[UIFont fontWithName:kFontFamilyName size:15]];
     [bottonCardView addSubview:bullet3];
     
     //bullet 4
     UILabel *bullet4 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
     bullet4.translatesAutoresizingMaskIntoConstraints = NO;
-    bullet4.text = bulletsArray[4];
+    bullet4.text = coachSpecialitesArray[3];
     [bullet4 setFont:[UIFont fontWithName:kFontFamilyName size:15]];
     [bottonCardView addSubview:bullet4];
 
