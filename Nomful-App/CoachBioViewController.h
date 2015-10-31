@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface CoachBioViewController : UIViewController
-
+@property (strong, nonatomic) IBOutlet UIImageView *backgroundView;
+- (id)initWith:(PFObject *)coachObject_;
 @end

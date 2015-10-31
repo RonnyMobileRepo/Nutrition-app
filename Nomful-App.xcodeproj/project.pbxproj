@@ -439,8 +439,6 @@
 				2137D7FC1BAC974E00310545 /* editImageViewController.m */,
 				2137D7E71BAC974200310545 /* AvailableClientsTableViewController.h */,
 				2137D7E81BAC974200310545 /* AvailableClientsTableViewController.m */,
-				2137D7E41BAC973000310545 /* AccountViewController.m */,
-				2137D7E61BAC973600310545 /* AccountViewController.h */,
 			);
 			name = files;
 			sourceTree = "<group>";
@@ -500,6 +498,7 @@
 		21643A541BC5950C0099E6FB /* Member View */ = {
 			isa = PBXGroup;
 			children = (
+				21C846101BE3C8D800AFFF3C /* Account */,
 				210022521BE013A600838A5E /* Coach Bio */,
 				212C7A1F1BDA7FA600BBBA82 /* Past Meals */,
 				21BA63281BCBFE1E0055117F /* Page Controller */,
@@ -537,6 +536,15 @@
 				2137D82E1BAC97AF00310545 /* PageViewController.m */,
 			);
 			name = "Page Controller";
+			sourceTree = "<group>";
+		};
+		21C846101BE3C8D800AFFF3C /* Account */ = {
+			isa = PBXGroup;
+			children = (
+				2137D7E41BAC973000310545 /* AccountViewController.m */,
+				2137D7E61BAC973600310545 /* AccountViewController.h */,
+			);
+			name = Account;
 			sourceTree = "<group>";
 		};
 		21C88A191BAC95CF00792E9C = {

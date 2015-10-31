@@ -15,6 +15,9 @@
     NSString *coachBioString;
     PFFile *coachImageFile;
     NSArray *coachSpecialitesArray;
+    PFImageView *profileImageView;
+    UISwipeGestureRecognizer *swipeGesture;
+    
 
 }
 
@@ -29,6 +32,7 @@ CGFloat const kProfileImageSize = 125.0;
 CGFloat const kInsideCardMargin = 10.0;
 CGFloat const kleftMarginBullets = 35.0;
 CGFloat const kbulletTextHeight = 15.0;
+CGFloat const kInbetweenMartin = 5.0;
 
 
 
@@ -40,10 +44,10 @@ CGFloat const kbulletTextHeight = 15.0;
     self = [super init];
     
     //coach information
-    coachNameString = [coachObject_ objectForKey:@""];
-    coachCityString = [coachObject_ objectForKey:@""];
-    coachBioString = [coachObject_ objectForKey:@""];
-    coachSpecialitesArray = [coachObject_ objectForKey:@""];
+    coachNameString = [coachObject_ objectForKey:@"firstName"];
+    coachCityString = [coachObject_ objectForKey:@"city"];
+    coachBioString = [coachObject_ objectForKey:@"bio"];
+    //coachSpecialitesArray = [coachObject_ objectForKey:@""];
     
     //coach profile image
     PFFile *profileFile = [coachObject_ objectForKey:@"photo"];
@@ -54,13 +58,17 @@ CGFloat const kbulletTextHeight = 15.0;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    swipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(detectSwipe)];
+    [swipeGesture setDirection:UISwipeGestureRecognizerDirectionDown | UISwipeGestureRecognizerDirectionUp];
+    [self.view addGestureRecognizer:swipeGesture];
+    
     [self.view setBackgroundColor:[UIColor colorWithRed:126.0/255.0 green:202.0/255.0 blue:175.0/255.0 alpha:1.0]];
     
-    coachSpecialitesArray = [[NSArray alloc] initWithObjects:@"Sex",@"Pre-Natal",@"Weight Loss",@"Sports Nutrition",@"Eating Better Bitches", nil];
+    coachSpecialitesArray = [[NSArray alloc] initWithObjects:@"Lose Weight",@"Gain Weight",@"Marathon",@"Energy",@"Eat Better",@"Sports", nil];
+    
     
     [self loadElements];
-    
-    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -69,6 +77,22 @@ CGFloat const kbulletTextHeight = 15.0;
 }
 
 - (void)loadElements{
+    
+    //load background image
+    UIImageView *backgroundImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"smoothie-stomach.jpg"]];
+    backgroundImage.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:backgroundImage];
+    UIBlurEffect *blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+    UIVisualEffectView *effectView = [[UIVisualEffectView alloc]initWithEffect:blur];
+    effectView.frame = self.view.frame;
+    [backgroundImage addSubview:effectView];
+    
+    //x button
+    UIButton *closeButton = [[UIButton alloc]init];
+    [closeButton setBackgroundImage:[UIImage imageNamed:@"cancel"] forState:UIControlStateNormal];
+    closeButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [closeButton addTarget:self action:@selector(closeButtonPressedy) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:closeButton];
     
     //first card
     UIView *topCardView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
@@ -95,32 +119,33 @@ CGFloat const kbulletTextHeight = 15.0;
     [self.view addSubview:bottonCardView];
     
     //profile picture
-    UIImageView *profileImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Brittany-Icon.png"]];
+    profileImageView = [[PFImageView alloc] initWithImage:[UIImage imageNamed:@"Brittany-Icon.png"]];
     profileImageView.translatesAutoresizingMaskIntoConstraints = NO;
     profileImageView.layer.cornerRadius = kProfileImageSize / 2;
     profileImageView.layer.borderWidth = 4.0;
     profileImageView.layer.borderColor = [[UIColor whiteColor] CGColor];
     profileImageView.clipsToBounds = YES;
-    
     [topCardView addSubview:profileImageView];
+    profileImageView.file = coachImageFile;
+    [profileImageView loadInBackground];
     
     //bio text
     UITextView *textView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
     textView.translatesAutoresizingMaskIntoConstraints = NO;
-    textView.text = @" \"Hi! I'm Brittany Chin :) horseradish azuki bean lettuce avocado asparagus okra. Kohlrabi radish okra azuki bean corn fava bean mustard tigernut jÃ­cama green bean celtuce collard greens avocado quandong fennel gumbo black-eyed pea. Grape silver beet watercress potato tigernut corn groundnut. Chickweed okra pea winter purslane coriander yarrow sweet pepper radish garlic brussels sprout groundnut summer purslane earthnut pea tomato spring onion azuki bean gourd. Gumbo kakadu plum komatsuna black-eyed pea green bean zucchini gourd winter purslane silver beet rock.\" ";
+    textView.text = coachBioString;
     [textView setFont:[UIFont fontWithName:kFontFamilyName size:15]];
     [topCardView addSubview:textView];
     
     //name label
     UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
     nameLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    nameLabel.text = @"Brittany Chin, RD";
+    nameLabel.text = coachNameString;
     [topCardView addSubview:nameLabel];
     
     //location label
     UILabel *cityLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
     cityLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    cityLabel.text = @"Chicago, IL";
+    cityLabel.text = coachCityString;
     [cityLabel setFont:[UIFont fontWithName:kFontFamilyName size:12]];
     cityLabel.textColor = [UIColor grayColor];
     [topCardView addSubview:cityLabel];
@@ -133,39 +158,88 @@ CGFloat const kbulletTextHeight = 15.0;
     specialitesLabel.textColor = [UIColor blackColor];
     [bottonCardView addSubview:specialitesLabel];
 
-    //bullet 1
-    UILabel *bullet1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
+    //button 1
+    UIButton *bullet1 = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
     bullet1.translatesAutoresizingMaskIntoConstraints = NO;
-    bullet1.text = coachSpecialitesArray[0];
-    [bullet1 setFont:[UIFont fontWithName:kFontFamilyName size:15]];
+    [bullet1 setTitle: coachSpecialitesArray[0] forState:UIControlStateNormal];
+    [bullet1.titleLabel setFont:[UIFont fontWithName:kFontFamilyName size:15]];
+    [bullet1 setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    [bullet1 setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+    [bullet1.layer setBorderWidth:2];
+    bullet1.layer.cornerRadius = 4;
+    [bullet1.layer setBorderColor:[[UIColor colorWithRed:126.0/255.0 green:202.0/255.0 blue:175.0/255.0 alpha:1.0] CGColor]];
     [bottonCardView addSubview:bullet1];
-
-    //bullet 2
-    UILabel *bullet2 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
-    bullet2.translatesAutoresizingMaskIntoConstraints = NO;
-    bullet2.text = coachSpecialitesArray[1];
-    [bullet2 setFont:[UIFont fontWithName:kFontFamilyName size:15]];
-    [bottonCardView addSubview:bullet2];
     
-    //bullet 3
-    UILabel *bullet3 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
+    //button 2
+    UIButton *bullet2 = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
+    bullet2.translatesAutoresizingMaskIntoConstraints = NO;
+    [bullet2 setTitle: coachSpecialitesArray[1] forState:UIControlStateNormal];
+    [bullet2.titleLabel setFont:[UIFont fontWithName:kFontFamilyName size:15]];
+    [bullet2 setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    [bullet2 setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+    [bullet2.layer setBorderWidth:2];
+    bullet2.layer.cornerRadius = 4;
+    [bullet2.layer setBorderColor:[[UIColor colorWithRed:126.0/255.0 green:202.0/255.0 blue:175.0/255.0 alpha:1.0] CGColor]];
+    [bottonCardView addSubview:bullet2];
+
+    //button 3
+    UIButton *bullet3 = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
     bullet3.translatesAutoresizingMaskIntoConstraints = NO;
-    bullet3.text = coachSpecialitesArray[2];
-    [bullet3 setFont:[UIFont fontWithName:kFontFamilyName size:15]];
+    [bullet3 setTitle: coachSpecialitesArray[2] forState:UIControlStateNormal];
+    [bullet3.titleLabel setFont:[UIFont fontWithName:kFontFamilyName size:15]];
+    [bullet3 setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    [bullet3 setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+    [bullet3.layer setBorderWidth:2];
+    bullet3.layer.cornerRadius = 4;
+    [bullet3.layer setBorderColor:[[UIColor colorWithRed:126.0/255.0 green:202.0/255.0 blue:175.0/255.0 alpha:1.0] CGColor]];
     [bottonCardView addSubview:bullet3];
     
-    //bullet 4
-    UILabel *bullet4 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
+    //button 4
+    UIButton *bullet4 = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
     bullet4.translatesAutoresizingMaskIntoConstraints = NO;
-    bullet4.text = coachSpecialitesArray[3];
-    [bullet4 setFont:[UIFont fontWithName:kFontFamilyName size:15]];
+    [bullet4 setTitle: coachSpecialitesArray[3] forState:UIControlStateNormal];
+    [bullet4.titleLabel setFont:[UIFont fontWithName:kFontFamilyName size:15]];
+    [bullet4 setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    [bullet4 setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+    [bullet4.layer setBorderWidth:2];
+    bullet4.layer.cornerRadius = 4;
+    [bullet4.layer setBorderColor:[[UIColor colorWithRed:126.0/255.0 green:202.0/255.0 blue:175.0/255.0 alpha:1.0] CGColor]];
     [bottonCardView addSubview:bullet4];
 
+    //button 5
+    UIButton *bullet5 = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
+    bullet5.translatesAutoresizingMaskIntoConstraints = NO;
+    [bullet5 setTitle: coachSpecialitesArray[4] forState:UIControlStateNormal];
+    [bullet5.titleLabel setFont:[UIFont fontWithName:kFontFamilyName size:15]];
+    [bullet5 setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    [bullet5 setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+    [bullet5.layer setBorderWidth:2];
+    bullet5.layer.cornerRadius = 4;
+    [bullet5.layer setBorderColor:[[UIColor colorWithRed:126.0/255.0 green:202.0/255.0 blue:175.0/255.0 alpha:1.0] CGColor]];
+    [bottonCardView addSubview:bullet5];
+
+    //button 6
+    UIButton *bullet6 = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
+    bullet6.translatesAutoresizingMaskIntoConstraints = NO;
+    [bullet6 setTitle: coachSpecialitesArray[5] forState:UIControlStateNormal];
+    [bullet6.titleLabel setFont:[UIFont fontWithName:kFontFamilyName size:15]];
+    [bullet6 setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    [bullet6 setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+    [bullet6.layer setBorderWidth:2];
+    bullet6.layer.cornerRadius = 4;
+    [bullet6.layer setBorderColor:[[UIColor colorWithRed:126.0/255.0 green:202.0/255.0 blue:175.0/255.0 alpha:1.0] CGColor]];
+    [bottonCardView addSubview:bullet6];
+    
     //constraints
     
     //calc height of top card with screen height
     CGFloat screenHeight = (self.view.bounds.size.height/1.6);
+    CGFloat screenWidth = (self.view.bounds.size.width);
+
+    CGFloat bottomCardWidth = screenWidth - (kSideMargin*2);
+    CGFloat buttonWidths = (bottomCardWidth - ((kInbetweenMartin * 2) + (kInsideCardMargin * 2)))/3;
     
+
     //convert floats to nsnumber for the constraint dictionary
     NSNumber *aNumber = [NSNumber numberWithFloat:screenHeight];
     NSNumber *topMargin = [NSNumber numberWithFloat:kTopMargin];
@@ -174,25 +248,26 @@ CGFloat const kbulletTextHeight = 15.0;
     NSNumber *profileImage = [NSNumber numberWithFloat:kProfileImageSize];
     NSNumber *insideCardMargin = [NSNumber numberWithFloat:kInsideCardMargin];
     NSNumber *spaceBetweenProfText = [NSNumber numberWithFloat:kSpaceBetweenProfText];
-    NSNumber *leftMarginBullets = [NSNumber numberWithFloat:kleftMarginBullets];
-    NSNumber *bulletHeight = [NSNumber numberWithFloat:kbulletTextHeight];
+    NSNumber *buttonWidth = [NSNumber numberWithFloat:buttonWidths];
+    NSNumber *inbetween = [NSNumber numberWithFloat:kInbetweenMartin];
 
-    
-    
 
-    
-  
-    NSDictionary *views = @{@"topCard":topCardView,
+
+    NSDictionary *views = @{@"background": backgroundImage,
+                            @"topCard":topCardView,
+                            @"close":closeButton,
                             @"bottomCard": bottonCardView,
                             @"profileImage":profileImageView,
                             @"bioText":textView,
                             @"nameLabel":nameLabel,
                             @"city": cityLabel,
-                            @"specialties":specialitesLabel,
+                            @"card2Title": specialitesLabel,
                             @"bullet1": bullet1,
-                            @"bullet2":bullet2,
-                            @"bullet3":bullet3,
-                            @"bullet4":bullet4};
+                            @"bullet2": bullet2,
+                            @"bullet3": bullet3,
+                            @"bullet4": bullet4,
+                            @"bullet5": bullet5,
+                            @"bullet6": bullet6};
     
     NSDictionary *metrics = @{@"topCardHeight" :  aNumber,
                               @"topMargin": topMargin,
@@ -201,10 +276,45 @@ CGFloat const kbulletTextHeight = 15.0;
                               @"profileImageSize":profileImage,
                               @"insideMargin":insideCardMargin,
                               @"spaceProfText":spaceBetweenProfText,
-                              @"leftMargin": leftMarginBullets,
-                              @"bulletHeight":bulletHeight};
+                              @"buttonWidth":buttonWidth,
+                              @"inbetween": inbetween};
 
+    
+    
+    //background image
+    [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(0)-[background]-(0)-|"
+                                                                       options:0
+                                                                       metrics:metrics
+                                                                         views:views]];
+    
+    //center
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view
+                                                          attribute:NSLayoutAttributeCenterY
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:backgroundImage
+                                                          attribute:NSLayoutAttributeCenterY
+                                                         multiplier:1.0f constant:0.0f]];
+    
+    //make square
+    [self.view addConstraint: [NSLayoutConstraint constraintWithItem:backgroundImage
+                                                           attribute:NSLayoutAttributeHeight
+                                                           relatedBy:NSLayoutRelationEqual
+                                                              toItem:backgroundImage
+                                                           attribute:NSLayoutAttributeWidth
+                                                          multiplier:1.0/1.0 //Aspect ratio: 4*height = 3*width
+                                                            constant:0.0f]];
  
+    //close button
+    [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(10)-[close(20)]"
+                                                                       options:0
+                                                                       metrics:metrics
+                                                                         views:views]];
+    
+    [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(10)-[close(20)]"
+                                                                       options:0
+                                                                       metrics:metrics
+                                                                         views:views]];
+    
     //top card
     [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(topMargin)-[topCard(topCardHeight)]"
                                                                        options:0
@@ -222,7 +332,7 @@ CGFloat const kbulletTextHeight = 15.0;
                                                                        metrics:metrics
                                                                          views:views]];
     
-    [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"V:[topCard]-(betweenCards)-[bottomCard]-(sideMargin)-|"
+    [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"V:[topCard]-(betweenCards)-[bottomCard(125)]"
                                                                        options:0
                                                                        metrics:metrics
                                                                          views:views]];
@@ -260,7 +370,7 @@ CGFloat const kbulletTextHeight = 15.0;
                                                                        metrics:metrics
                                                                          views:views]];
     
-    //city labe;
+    //city label
     [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"H:[profileImage]-(insideMargin)-[city]-(insideMargin)-|"
                                                                        options:0
                                                                        metrics:metrics
@@ -270,62 +380,104 @@ CGFloat const kbulletTextHeight = 15.0;
                                                                        options:0
                                                                        metrics:metrics
                                                                          views:views]];
-
-    //card two label
-    [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(insideMargin)-[specialties]-(insideMargin)-|"
+    
+    //specialties
+    [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(insideMargin)-[card2Title]-(insideMargin)-|"
                                                                        options:0
                                                                        metrics:metrics
                                                                          views:views]];
     
-    [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(insideMargin)-[specialties(20)]"
-                                                                       options:0
-                                                                       metrics:metrics
-                                                                         views:views]];
-    
-    //bullets 1
-    [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"V:[specialties]-(15)-[bullet1(bulletHeight)]"
-                                                                       options:0
-                                                                       metrics:metrics
-                                                                         views:views]];
-    
-    [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftMargin)-[bullet1]-(insideMargin)-|"
-                                                                       options:0
-                                                                       metrics:metrics
-                                                                         views:views]];
-    
-    //bullets 2
-    [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"V:[bullet1]-(10)-[bullet2(bulletHeight)]"
-                                                                       options:0
-                                                                       metrics:metrics
-                                                                         views:views]];
-    
-    [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftMargin)-[bullet2]-(insideMargin)-|"
+    [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(insideMargin)-[card2Title(20)]"
                                                                        options:0
                                                                        metrics:metrics
                                                                          views:views]];
 
-    //bullets 3
-    [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"V:[bullet2]-(10)-[bullet3(bulletHeight)]"
+    //button 1
+    [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(insideMargin)-[bullet1(buttonWidth)]"
                                                                        options:0
                                                                        metrics:metrics
                                                                          views:views]];
     
-    [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftMargin)-[bullet3]-(insideMargin)-|"
+    [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"V:[card2Title]-(insideMargin)-[bullet1(30)]"
                                                                        options:0
                                                                        metrics:metrics
                                                                          views:views]];
     
-    //bullets 3
-    [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"V:[bullet3]-(10)-[bullet4(bulletHeight)]"
+    //button 2
+    [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"H:[bullet1]-(inbetween)-[bullet2(buttonWidth)]"
                                                                        options:0
                                                                        metrics:metrics
                                                                          views:views]];
     
-    [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftMargin)-[bullet4]-(insideMargin)-|"
+    [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"V:[card2Title]-(insideMargin)-[bullet2(30)]"
+                                                                       options:0
+                                                                       metrics:metrics
+                                                                         views:views]];
+    //button 3
+    [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"H:[bullet2]-(inbetween)-[bullet3(buttonWidth)]-(insideMargin)-|"
+                                                                       options:0
+                                                                       metrics:metrics
+                                                                         views:views]];
+    
+    [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"V:[card2Title]-(insideMargin)-[bullet3(30)]"
                                                                        options:0
                                                                        metrics:metrics
                                                                          views:views]];
 
+    
+    //button 4
+    [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(insideMargin)-[bullet4(buttonWidth)]"
+                                                                       options:0
+                                                                       metrics:metrics
+                                                                         views:views]];
+    
+    [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"V:[bullet1]-(inbetween)-[bullet4(30)]"
+                                                                       options:0
+                                                                       metrics:metrics
+                                                                         views:views]];
+    
+    //button 5
+    [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"H:[bullet4]-(inbetween)-[bullet5(buttonWidth)]"
+                                                                       options:0
+                                                                       metrics:metrics
+                                                                         views:views]];
+    
+    [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"V:[bullet2]-(inbetween)-[bullet5(30)]"
+                                                                       options:0
+                                                                       metrics:metrics
+                                                                         views:views]];
+    
+    //button 6
+    [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"H:[bullet5]-(inbetween)-[bullet6(buttonWidth)]-(insideMargin)-|"
+                                                                       options:0
+                                                                       metrics:metrics
+                                                                         views:views]];
+    
+    [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"V:[bullet3]-(inbetween)-[bullet6(30)]"
+                                                                       options:0
+                                                                       metrics:metrics
+                                                                         views:views]];
+
+
+   }
+
+-(void)closeButtonPressedy{
+    NSLog(@"close button pressed");
+    [self dismissViewControllerAnimated:YES completion:^{
+        //
+    }];
+    
+}
+
+- (BOOL) prefersStatusBarHidden
+{
+    return YES;
+}
+
+-(void)detectSwipe{
+    [self dismissViewControllerAnimated:YES completion:^{
+    //
+    }];
 }
 
 

@@ -12,6 +12,7 @@
 #import "PhotoMediaItem.h"
 #import <IDMPhotoBrowser.h>
 #import "ConvertToFirebaseViewController.h"
+#import "CoachBioViewController.h"
 
 
 @interface Chatview (){
@@ -506,14 +507,23 @@
            atIndexPath:(NSIndexPath *)indexPath
 
 {
-    /*
+    
     JSQMessage *message = messages[indexPath.item];
     if ([self incoming:message])
     {
-        ProfileView *profileView = [[ProfileView alloc] initWith:message.senderId User:nil];
-        [self.navigationController pushViewController:profileView animated:YES];
+        PFQuery *query = [PFUser query];
+        [query getObjectInBackgroundWithId:message.senderId block:^(PFObject * _Nullable object, NSError * _Nullable error) {
+            //
+            CoachBioViewController *profileView = [[CoachBioViewController alloc] initWith:object];
+            [self presentViewController:profileView animated:YES completion:^{
+                //
+            }];
+
+        }];
+        
+    
     }
-     */
+    
 }
 
 

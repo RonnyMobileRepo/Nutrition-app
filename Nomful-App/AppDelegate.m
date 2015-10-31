@@ -257,7 +257,7 @@
 
 
 - (NSManagedObjectContext *)managedObjectContext {
-    // Returns the managed object context for the application (which is already bound to the persistent store coordinator for the application.)
+    // Returns the managed object context for the application (which is already bound to the persistent store coordinator for the application.)lkasjdflksjdfl;kajsdfl;asjdfl;akjsdfl;askjdfl;asjkdfsf
     if (_managedObjectContext != nil) {
         return _managedObjectContext;
     }
