@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		210022551BE013B600838A5E /* CoachBioViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 210022541BE013B600838A5E /* CoachBioViewController.m */; };
+		210022571BE17E2E00838A5E /* Brittany-Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 210022561BE17E2E00838A5E /* Brittany-Icon.png */; };
 		2137D7E51BAC973000310545 /* AccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2137D7E41BAC973000310545 /* AccountViewController.m */; };
 		2137D7EB1BAC974200310545 /* AvailableClientsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2137D7E81BAC974200310545 /* AvailableClientsTableViewController.m */; };
 		2137D7EC1BAC974200310545 /* AvailableClientTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2137D7EA1BAC974200310545 /* AvailableClientTableViewCell.m */; };
@@ -82,6 +84,7 @@
 		21643A531BC592FC0099E6FB /* adminViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21643A521BC592FC0099E6FB /* adminViewController.m */; };
 		21856A851BCAADFA00E217F7 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21856A831BCAADFA00E217F7 /* Fabric.framework */; };
 		21856A861BCAADFA00E217F7 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21856A841BCAADFA00E217F7 /* Crashlytics.framework */; };
+		2187BD291BD7DFE40058A7C3 /* MealDetailCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2187BD281BD7DFE40058A7C3 /* MealDetailCardViewController.m */; };
 		21C88A271BAC95CF00792E9C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 21C88A261BAC95CF00792E9C /* main.m */; };
 		21C88A2A1BAC95CF00792E9C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 21C88A291BAC95CF00792E9C /* AppDelegate.m */; };
 		21C88A2D1BAC95CF00792E9C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21C88A2C1BAC95CF00792E9C /* ViewController.m */; };
@@ -1138,7 +1141,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "c33a780b-03e5-4f8a-8b9f-13c1e35fa154";
+				PROVISIONING_PROFILE = "074de199-173d-4830-97d1-b21eb9a4d5a8";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1177,7 +1180,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "c33a780b-03e5-4f8a-8b9f-13c1e35fa154";
+				PROVISIONING_PROFILE = "074de199-173d-4830-97d1-b21eb9a4d5a8";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -1204,7 +1207,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Nomful;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "c33a780b-03e5-4f8a-8b9f-13c1e35fa154";
+				PROVISIONING_PROFILE = "074de199-173d-4830-97d1-b21eb9a4d5a8";
 			};
 			name = Debug;
 		};
@@ -1228,7 +1231,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Nomful;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "c33a780b-03e5-4f8a-8b9f-13c1e35fa154";
+				PROVISIONING_PROFILE = "074de199-173d-4830-97d1-b21eb9a4d5a8";
 			};
 			name = Release;
 		};
