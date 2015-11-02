@@ -14,7 +14,7 @@
     NSString *coachCityString;
     NSString *coachBioString;
     PFFile *coachImageFile;
-    NSArray *coachSpecialitesArray;
+    NSMutableArray *coachSpecialitesArray;
     PFImageView *profileImageView;
     UISwipeGestureRecognizer *swipeGesture;
     
@@ -44,10 +44,11 @@ CGFloat const kInbetweenMartin = 5.0;
     self = [super init];
     
     //coach information
-    coachNameString = [coachObject_ objectForKey:@"firstName"];
-    coachCityString = [coachObject_ objectForKey:@"city"];
-    coachBioString = [coachObject_ objectForKey:@"bio"];
-    //coachSpecialitesArray = [coachObject_ objectForKey:@""];
+    
+    if (coachObject_[@"firstName"]) coachNameString = [coachObject_ objectForKey:@"firstName"];
+    if (coachObject_[@"city"]) coachCityString = [coachObject_ objectForKey:@"city"];
+    if (coachObject_[@"bio"]) coachBioString = [coachObject_ objectForKey:@"bio"];
+    if (coachObject_[@"goals"]) coachSpecialitesArray = [coachObject_ objectForKey:@"goals"];
     
     //coach profile image
     PFFile *profileFile = [coachObject_ objectForKey:@"photo"];
@@ -65,7 +66,7 @@ CGFloat const kInbetweenMartin = 5.0;
     
     [self.view setBackgroundColor:[UIColor colorWithRed:126.0/255.0 green:202.0/255.0 blue:175.0/255.0 alpha:1.0]];
     
-    coachSpecialitesArray = [[NSArray alloc] initWithObjects:@"Lose Weight",@"Gain Weight",@"Marathon",@"Energy",@"Eat Better",@"Sports", nil];
+    //coachSpecialitesArray = [[NSMutableArray alloc] initWithObjects:@"Lose Weight",@"Gain Weight",@"Marathon",@"Energy",@"Eat Better",@"Sports", nil];
     
     
     [self loadElements];
@@ -161,75 +162,107 @@ CGFloat const kInbetweenMartin = 5.0;
     //button 1
     UIButton *bullet1 = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
     bullet1.translatesAutoresizingMaskIntoConstraints = NO;
-    [bullet1 setTitle: coachSpecialitesArray[0] forState:UIControlStateNormal];
     [bullet1.titleLabel setFont:[UIFont fontWithName:kFontFamilyName size:15]];
     [bullet1 setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     [bullet1 setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
     [bullet1.layer setBorderWidth:2];
     bullet1.layer.cornerRadius = 4;
     [bullet1.layer setBorderColor:[[UIColor colorWithRed:126.0/255.0 green:202.0/255.0 blue:175.0/255.0 alpha:1.0] CGColor]];
+    bullet1.hidden = true;
     [bottonCardView addSubview:bullet1];
     
     //button 2
     UIButton *bullet2 = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
     bullet2.translatesAutoresizingMaskIntoConstraints = NO;
-    [bullet2 setTitle: coachSpecialitesArray[1] forState:UIControlStateNormal];
     [bullet2.titleLabel setFont:[UIFont fontWithName:kFontFamilyName size:15]];
     [bullet2 setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     [bullet2 setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
     [bullet2.layer setBorderWidth:2];
     bullet2.layer.cornerRadius = 4;
     [bullet2.layer setBorderColor:[[UIColor colorWithRed:126.0/255.0 green:202.0/255.0 blue:175.0/255.0 alpha:1.0] CGColor]];
+    bullet2.hidden = true;
     [bottonCardView addSubview:bullet2];
 
     //button 3
     UIButton *bullet3 = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
     bullet3.translatesAutoresizingMaskIntoConstraints = NO;
-    [bullet3 setTitle: coachSpecialitesArray[2] forState:UIControlStateNormal];
     [bullet3.titleLabel setFont:[UIFont fontWithName:kFontFamilyName size:15]];
     [bullet3 setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     [bullet3 setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
     [bullet3.layer setBorderWidth:2];
     bullet3.layer.cornerRadius = 4;
     [bullet3.layer setBorderColor:[[UIColor colorWithRed:126.0/255.0 green:202.0/255.0 blue:175.0/255.0 alpha:1.0] CGColor]];
+    bullet3.hidden = true;
     [bottonCardView addSubview:bullet3];
     
     //button 4
     UIButton *bullet4 = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
     bullet4.translatesAutoresizingMaskIntoConstraints = NO;
-    [bullet4 setTitle: coachSpecialitesArray[3] forState:UIControlStateNormal];
     [bullet4.titleLabel setFont:[UIFont fontWithName:kFontFamilyName size:15]];
     [bullet4 setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     [bullet4 setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
     [bullet4.layer setBorderWidth:2];
     bullet4.layer.cornerRadius = 4;
     [bullet4.layer setBorderColor:[[UIColor colorWithRed:126.0/255.0 green:202.0/255.0 blue:175.0/255.0 alpha:1.0] CGColor]];
+    bullet4.hidden = true;
     [bottonCardView addSubview:bullet4];
 
     //button 5
     UIButton *bullet5 = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
     bullet5.translatesAutoresizingMaskIntoConstraints = NO;
-    [bullet5 setTitle: coachSpecialitesArray[4] forState:UIControlStateNormal];
     [bullet5.titleLabel setFont:[UIFont fontWithName:kFontFamilyName size:15]];
     [bullet5 setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     [bullet5 setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
     [bullet5.layer setBorderWidth:2];
     bullet5.layer.cornerRadius = 4;
     [bullet5.layer setBorderColor:[[UIColor colorWithRed:126.0/255.0 green:202.0/255.0 blue:175.0/255.0 alpha:1.0] CGColor]];
+    bullet5.hidden = true;
     [bottonCardView addSubview:bullet5];
 
     //button 6
     UIButton *bullet6 = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
     bullet6.translatesAutoresizingMaskIntoConstraints = NO;
-    [bullet6 setTitle: coachSpecialitesArray[5] forState:UIControlStateNormal];
     [bullet6.titleLabel setFont:[UIFont fontWithName:kFontFamilyName size:15]];
     [bullet6 setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     [bullet6 setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
     [bullet6.layer setBorderWidth:2];
     bullet6.layer.cornerRadius = 4;
     [bullet6.layer setBorderColor:[[UIColor colorWithRed:126.0/255.0 green:202.0/255.0 blue:175.0/255.0 alpha:1.0] CGColor]];
+    bullet6.hidden = true;
     [bottonCardView addSubview:bullet6];
     
+   //set titles
+    if(coachSpecialitesArray.count > 0){
+        [bullet1 setTitle: coachSpecialitesArray[0] forState:UIControlStateNormal];
+        bullet1.hidden = false;
+       
+    }
+    
+    if(coachSpecialitesArray.count > 1){
+        [bullet2 setTitle: coachSpecialitesArray[1] forState:UIControlStateNormal];
+        bullet2.hidden = false;
+    }
+    
+    if(coachSpecialitesArray.count > 2){
+        [bullet3 setTitle: coachSpecialitesArray[2] forState:UIControlStateNormal];
+        bullet3.hidden = false;
+    }
+    
+    if(coachSpecialitesArray.count > 3){
+        [bullet4 setTitle: coachSpecialitesArray[3] forState:UIControlStateNormal];
+        bullet4.hidden = false;
+    }
+    
+    if(coachSpecialitesArray.count > 4){
+        [bullet5 setTitle: coachSpecialitesArray[4] forState:UIControlStateNormal];
+        bullet5.hidden = false;
+    }
+    
+    if(coachSpecialitesArray.count > 5){
+        [bullet6 setTitle: coachSpecialitesArray[5] forState:UIControlStateNormal];
+        bullet6.hidden = false;
+    }
+ 
     //constraints
     
     //calc height of top card with screen height

@@ -23,7 +23,7 @@
     
     // ______________________________________________________________________________________________________________________________
     
-    ///*
+    /*
     
     [Parse setApplicationId:PARSE_APP_ID_DEV
                   clientKey:PARSE_CLIENT_ID_DEV];
@@ -34,13 +34,13 @@
     [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN_DEV];
     
      
-    //*/
+    */
     
     //______________________________________________________________________________________________________________________________
     
     //LIVE
     
-    /*
+    ///*
      
     [Parse setApplicationId:PARSE_APP_ID
                   clientKey:PARSE_CLIENT_ID];
@@ -51,7 +51,7 @@
     
     [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
 
-    */
+    //*/
     
     //______________________________________________________________________________________________________________________________
     
@@ -60,12 +60,7 @@
     [Fabric with:@[[Crashlytics class]]];
     [[ChimpKit sharedKit] setApiKey:MAILCHIMP_TOKEN];
     
-    // Branch *branch = [Branch getInstance:@"144975538040099258"];
-    
-    // [branch initSessionWithLaunchOptions:launchOptions andRegisterDeepLinkHandler:^(NSDictionary *params, NSError *error) {
-    // params are the deep linked params associated with the link that the user clicked before showing up.
-    // NSLog(@"deep link data: %@", [params description]);
-    // }];
+   
     
     
     //______________________________________________________________________________________________________________________________
@@ -99,7 +94,7 @@
     
     //global nav bar
     [[UINavigationBar appearance] setBarTintColor:[UIColor whiteColor]]; //background of bar
-    
+   
     //style the page controller dots...
     UIPageControl *pageControl = [UIPageControl appearance];
     pageControl.pageIndicatorTintColor = [UIColor lightGrayColor];

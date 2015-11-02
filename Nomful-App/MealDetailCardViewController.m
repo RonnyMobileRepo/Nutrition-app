@@ -34,10 +34,11 @@
     hashtagArray = [mealObject_ objectForKey:@"hashtagsArrays"];
     NSLog(@"hash array: %@", hashtagArray);
     
+    self.title = [self timestampFormatter:mealObject_.createdAt];
     
     self.brandColor = [UIColor colorWithRed:126.0/255.0 green:202.0/255.0 blue:175.0/255.0 alpha:1.0];
     self.view.backgroundColor = _brandColor;
-    
+
     return self;
 }
 
@@ -384,6 +385,54 @@
 
         }
        
+    }
+    
+}
+
+- (NSString *)timestampFormatter:(NSDate *)date{
+    
+    //decalre new formatter
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    
+    //set variable time to the DATE (when photo was taken) passed from the cellForRowAtIndexPath
+    NSDate *time = date;
+    
+    //set NSDateComponents to the date the photo was taken
+    NSDateComponents *otherDay = [[NSCalendar currentCalendar] components:NSCalendarUnitEra|NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:time];
+    
+    //set a variable for TODAY with current time
+    NSDateComponents *today = [[NSCalendar currentCalendar] components:NSCalendarUnitEra|NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:[NSDate date]];
+    
+    //if the timestamp of when the photo was taken is equal to today...
+    if([today day] == [otherDay day] &&
+       [today month] == [otherDay month] &&
+       [today year] == [otherDay year] &&
+       [today era] == [otherDay era]) {
+        
+        //...then we set the format to "Today at 2:43 PM"
+        [formatter setDateFormat:@"h:mm a"];
+        NSString *todayDate = [formatter stringFromDate:time];
+        NSString *returnString = [NSString stringWithFormat:@"Today at %@", todayDate];
+        
+        return returnString;
+        
+    }else{
+        //..if the time of the photo taken is NOT today...
+        
+        //...then we set the format of the stamp to "April 07 at 2:43 PM"
+        [formatter setDateFormat:@"MMMM dd"];
+        
+        //set a string to the timestamp from time of photo taken (time)
+        NSString *dateString = [formatter stringFromDate:time];
+        
+        //sets the hour format
+        [formatter setDateFormat:@"h:mm a"];
+        NSString *timeString = [formatter stringFromDate:time];
+        
+        //final built string combinging the month and day with the time "April 07" + "2:43 PM"
+        NSString *messageDate = [NSString stringWithFormat:@"%@ at %@", dateString, timeString];
+        
+        return messageDate;
     }
     
 }

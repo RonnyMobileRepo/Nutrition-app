@@ -133,9 +133,11 @@
     
     //get the meal object
     PFObject *objectd = [self.objects objectAtIndex:indexPath.row];
-    
+       
     //instantiate the detail view with the meal description and image file
     MealDetailCardViewController *mealView = [[MealDetailCardViewController alloc] initWith:objectd];
+    self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:126.0/255.0 green:202.0/255.0 blue:175.0/255.0 alpha:1.0];
+
     
     //add to nav stack
     [self.navigationController pushViewController:mealView animated:YES];
@@ -155,6 +157,41 @@
         imageDetailViewController *vc = segue.destinationViewController;
         vc.objectFromSegue = sender;
         vc.chatroomObject = _chatroomObject;
+    }
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForNextPageAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIdentifier = @"NextPageCell";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
+    if (!cell)
+    {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    }
+    
+    // Add activity indicator to let the user know that more images are coming.
+    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [cell setBackgroundView:spinner];
+    [spinner startAnimating];
+    
+    return cell;
+}
+
+#pragma mark - UITableViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    // If the scroll has reached the end of the screen.
+    if (([scrollView contentSize].height - [scrollView contentOffset].y) < [self.view bounds].size.height)
+    {
+        // As long as there no other network request in place.
+        if (![self isLoading])
+        {
+            // Trigger the load of the next page.
+            [self loadNextPage];
+        }
     }
 }
 
