@@ -27,7 +27,7 @@
 
 //mixpanel
 #define MIXPANEL_TOKEN @"50a2e49f239ebf848d4097c31987ba4a"
-#define MIXPANEL_TOKEN_DEV @"50a2e49f239ebf848d4097c31987ba4a"
+#define MIXPANEL_TOKEN_DEV @"ae7013273336abc4ab973b55223d3ace"
 
 //stripe
 #define STRIPE_TOKEN @"pk_live_a7plqC3BMb74TAFBiefltyaf"

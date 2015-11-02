@@ -118,6 +118,9 @@
 
 /* Begin PBXFileReference section */
 		1C78BC0883C254837912E4D0 /* Pods-Nomful-AppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nomful-AppTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Nomful-AppTests/Pods-Nomful-AppTests.debug.xcconfig"; sourceTree = "<group>"; };
+		210022531BE013B600838A5E /* CoachBioViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoachBioViewController.h; sourceTree = "<group>"; };
+		210022541BE013B600838A5E /* CoachBioViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoachBioViewController.m; sourceTree = "<group>"; };
+		210022561BE17E2E00838A5E /* Brittany-Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Brittany-Icon.png"; sourceTree = "<group>"; };
 		2137D7E41BAC973000310545 /* AccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountViewController.m; sourceTree = "<group>"; };
 		2137D7E61BAC973600310545 /* AccountViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AccountViewController.h; sourceTree = "<group>"; };
 		2137D7E71BAC974200310545 /* AvailableClientsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AvailableClientsTableViewController.h; sourceTree = "<group>"; };
@@ -245,6 +248,8 @@
 		21643A521BC592FC0099E6FB /* adminViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = adminViewController.m; sourceTree = "<group>"; };
 		21856A831BCAADFA00E217F7 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		21856A841BCAADFA00E217F7 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
+		2187BD271BD7DFE40058A7C3 /* MealDetailCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MealDetailCardViewController.h; sourceTree = "<group>"; };
+		2187BD281BD7DFE40058A7C3 /* MealDetailCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MealDetailCardViewController.m; sourceTree = "<group>"; };
 		21C6FC4F1BAF20EE004599E8 /* Nomful-App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Nomful-App.entitlements"; sourceTree = "<group>"; };
 		21C88A221BAC95CF00792E9C /* Nomful-App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Nomful-App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		21C88A261BAC95CF00792E9C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -311,6 +316,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		210022521BE013A600838A5E /* Coach Bio */ = {
+			isa = PBXGroup;
+			children = (
+				210022531BE013B600838A5E /* CoachBioViewController.h */,
+				210022541BE013B600838A5E /* CoachBioViewController.m */,
+			);
+			name = "Coach Bio";
+			sourceTree = "<group>";
+		};
+		212C7A1F1BDA7FA600BBBA82 /* Past Meals */ = {
+			isa = PBXGroup;
+			children = (
+				2137D8311BAC97AF00310545 /* pastMealsViewController.h */,
+				2137D8321BAC97AF00310545 /* pastMealsViewController.m */,
+			);
+			name = "Past Meals";
+			sourceTree = "<group>";
+		};
 		21333E581BC82FC40011D78C /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
@@ -388,8 +411,6 @@
 				2137D82C1BAC97AE00310545 /* PageItemController.m */,
 				2137D82F1BAC97AF00310545 /* ParseErrorHandlingController.h */,
 				2137D8301BAC97AF00310545 /* ParseErrorHandlingController.m */,
-				2137D8311BAC97AF00310545 /* pastMealsViewController.h */,
-				2137D8321BAC97AF00310545 /* pastMealsViewController.m */,
 				2137D8331BAC97AF00310545 /* PaymentViewController.h */,
 				2137D8341BAC97AF00310545 /* PaymentViewController.m */,
 				2137D81E1BAC978F00310545 /* ManageSubscriptionViewController.m */,
@@ -411,16 +432,10 @@
 				2137D7F21BAC974E00310545 /* ChooseTrainerTableViewCell.m */,
 				2137D7F31BAC974E00310545 /* ChooseTrainerTableViewController.h */,
 				2137D7F41BAC974E00310545 /* ChooseTrainerTableViewController.m */,
-				2137D7F51BAC974E00310545 /* ClientCollectionViewController.h */,
-				2137D7F61BAC974E00310545 /* ClientCollectionViewController.m */,
-				2137D7F91BAC974E00310545 /* ClientMealsCollectionViewCell.h */,
-				2137D7FA1BAC974E00310545 /* ClientMealsCollectionViewCell.m */,
 				2137D7FB1BAC974E00310545 /* editImageViewController.h */,
 				2137D7FC1BAC974E00310545 /* editImageViewController.m */,
 				2137D7E71BAC974200310545 /* AvailableClientsTableViewController.h */,
 				2137D7E81BAC974200310545 /* AvailableClientsTableViewController.m */,
-				2137D7E41BAC973000310545 /* AccountViewController.m */,
-				2137D7E61BAC973600310545 /* AccountViewController.h */,
 			);
 			name = files;
 			sourceTree = "<group>";
@@ -435,6 +450,7 @@
 				2137D88A1BACA04600310545 /* fruit.png */,
 				2137D88B1BACA04600310545 /* healthy-person-woman-sport.jpg */,
 				2137D88C1BACA04600310545 /* iphone_6.png */,
+				210022561BE17E2E00838A5E /* Brittany-Icon.png */,
 				2137D88D1BACA04600310545 /* iphoneCall.png */,
 				2137D88E1BACA04600310545 /* Layer 1.png */,
 				2137D88F1BACA04600310545 /* marketingscreen-coach.png */,
@@ -479,12 +495,35 @@
 		21643A541BC5950C0099E6FB /* Member View */ = {
 			isa = PBXGroup;
 			children = (
+				21C846101BE3C8D800AFFF3C /* Account */,
+				210022521BE013A600838A5E /* Coach Bio */,
+				212C7A1F1BDA7FA600BBBA82 /* Past Meals */,
 				21BA63281BCBFE1E0055117F /* Page Controller */,
 				21333E5A1BC82FE20011D78C /* Settings */,
 				21333E591BC82FD90011D78C /* Log Meal */,
 				21D4E2D91BC2F81400962C6B /* Firebase */,
 			);
 			name = "Member View";
+			sourceTree = "<group>";
+		};
+		2187BD261BD7DFC50058A7C3 /* Meal Detail */ = {
+			isa = PBXGroup;
+			children = (
+				2187BD271BD7DFE40058A7C3 /* MealDetailCardViewController.h */,
+				2187BD281BD7DFE40058A7C3 /* MealDetailCardViewController.m */,
+			);
+			name = "Meal Detail";
+			sourceTree = "<group>";
+		};
+		2187BD2B1BD7EAE90058A7C3 /* Client Meals */ = {
+			isa = PBXGroup;
+			children = (
+				2137D7F51BAC974E00310545 /* ClientCollectionViewController.h */,
+				2137D7F61BAC974E00310545 /* ClientCollectionViewController.m */,
+				2137D7F91BAC974E00310545 /* ClientMealsCollectionViewCell.h */,
+				2137D7FA1BAC974E00310545 /* ClientMealsCollectionViewCell.m */,
+			);
+			name = "Client Meals";
 			sourceTree = "<group>";
 		};
 		21BA63281BCBFE1E0055117F /* Page Controller */ = {
@@ -494,6 +533,15 @@
 				2137D82E1BAC97AF00310545 /* PageViewController.m */,
 			);
 			name = "Page Controller";
+			sourceTree = "<group>";
+		};
+		21C846101BE3C8D800AFFF3C /* Account */ = {
+			isa = PBXGroup;
+			children = (
+				2137D7E41BAC973000310545 /* AccountViewController.m */,
+				2137D7E61BAC973600310545 /* AccountViewController.h */,
+			);
+			name = Account;
 			sourceTree = "<group>";
 		};
 		21C88A191BAC95CF00792E9C = {
@@ -523,15 +571,16 @@
 		21C88A241BAC95CF00792E9C /* Nomful-App */ = {
 			isa = PBXGroup;
 			children = (
+				2187BD261BD7DFC50058A7C3 /* Meal Detail */,
 				21C88A281BAC95CF00792E9C /* AppDelegate.h */,
 				21C88A291BAC95CF00792E9C /* AppDelegate.m */,
 				2137D8821BAC9E8D00310545 /* Main.storyboard */,
 				2137D8811BAC9E8D00310545 /* LaunchScreen.xib */,
+				21C6FC4F1BAF20EE004599E8 /* Nomful-App.entitlements */,
 				21643A541BC5950C0099E6FB /* Member View */,
 				21643A501BC591180099E6FB /* Login */,
 				21643A4C1BC4BA270099E6FB /* Sign Up */,
 				21D4E2E41BC2F93300962C6B /* Coach View */,
-				21C6FC4F1BAF20EE004599E8 /* Nomful-App.entitlements */,
 				2137D8851BACA03900310545 /* images */,
 				2137D7E31BAC971400310545 /* files */,
 				21C88A2B1BAC95CF00792E9C /* ViewController.h */,
@@ -598,6 +647,7 @@
 		21D4E2E41BC2F93300962C6B /* Coach View */ = {
 			isa = PBXGroup;
 			children = (
+				2187BD2B1BD7EAE90058A7C3 /* Client Meals */,
 				2137D7F71BAC974E00310545 /* ClientListViewController.h */,
 				2137D7F81BAC974E00310545 /* ClientListViewController.m */,
 				2137D7E91BAC974200310545 /* AvailableClientTableViewCell.h */,
@@ -761,6 +811,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2137D8831BAC9E8D00310545 /* LaunchScreen.xib in Resources */,
+				210022571BE17E2E00838A5E /* Brittany-Icon.png in Resources */,
 				2137D8841BAC9E8D00310545 /* Main.storyboard in Resources */,
 				2137D8A01BACA04600310545 /* iphone_6.png in Resources */,
 				2137D8A61BACA04600310545 /* MuseoSansRounded-300.otf in Resources */,
@@ -944,6 +995,7 @@
 				2137D8781BAC980000310545 /* UserAccountViewController.m in Sources */,
 				2137D87C1BAC980D00310545 /* WebViewViewController.m in Sources */,
 				21D4E2E21BC2F82800962C6B /* Incoming.m in Sources */,
+				2187BD291BD7DFE40058A7C3 /* MealDetailCardViewController.m in Sources */,
 				21C88A331BAC95CF00792E9C /* Nomful_App.xcdatamodeld in Sources */,
 				2137D8031BAC974E00310545 /* ClientMealsCollectionViewCell.m in Sources */,
 				2137D83C1BAC97AF00310545 /* PaymentViewController.m in Sources */,
@@ -989,6 +1041,7 @@
 				2137D8101BAC976000310545 /* imageDetailViewController.m in Sources */,
 				2137D8561BAC97E400310545 /* SignUpLandingVideoViewController.m in Sources */,
 				2137D8711BAC980000310545 /* TrialEndedViewController.m in Sources */,
+				210022551BE013B600838A5E /* CoachBioViewController.m in Sources */,
 				21D4E2DC1BC2F81D00962C6B /* Chatview.m in Sources */,
 				2137D8771BAC980000310545 /* UpdateProfileViewController.m in Sources */,
 				2137D8161BAC977F00310545 /* LauncherViewController.m in Sources */,
@@ -1138,7 +1191,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = "Nomful-App/Nomful-App.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Real Dietitian Corporation (7N7P237XEB)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Real Dietitian Corporation (7N7P237XEB)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1162,7 +1215,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = "Nomful-App/Nomful-App.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Real Dietitian Corporation (7N7P237XEB)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Real Dietitian Corporation (7N7P237XEB)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (

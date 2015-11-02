@@ -11,7 +11,7 @@
 #import "Outgoing.h"
 #import "PhotoMediaItem.h"
 #import <IDMPhotoBrowser.h>
-#import "ConvertToFirebaseViewController.h"
+#import "CoachBioViewController.h"
 
 
 @interface Chatview (){
@@ -60,28 +60,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-
-    //Here we are going to get the chatroom object from parse
-    //we're given the chatroom id when the class was initialized
-    PFQuery *query = [PFQuery queryWithClassName:@"Chatrooms"];
-    [query getObjectInBackgroundWithId:groupId block:^(PFObject * _Nullable chatroom, NSError * _Nullable error) {
-        
-        //now that we have the chatroom object
-        //we can check to see if it has been upgraded to firebase yet
-        //if yes...then we don't have to do anything!
-        //if no...then we can load the convert code
-        if ([chatroom[@"upgradedToFirebase"] isEqualToString:@"Yes"]) {
-            //do nothgint
-            NSLog(@"do nothing");
-        }else{
-            ConvertToFirebaseViewController *convertView = [[ConvertToFirebaseViewController alloc] initWith:groupId];
-            //convert testing
-            [self.navigationController presentViewController:convertView animated:YES completion:^{
-                NSLog(@"convert view shown %@", chatroom);
-            }];
-        }
-    }];
     
     //declare items for memory stuff i still don't get
     items = [[NSMutableArray alloc] init];
@@ -195,7 +173,7 @@
      {
          //reloads view
          [self finishReceivingMessage];
-         [self scrollToBottomAnimated:NO];
+         [self scrollToBottomAnimated:YES];
          self.automaticallyScrollsToMostRecentMessage = YES;
          self.showLoadEarlierMessagesHeader = YES;
          
@@ -506,14 +484,23 @@
            atIndexPath:(NSIndexPath *)indexPath
 
 {
-    /*
+    
     JSQMessage *message = messages[indexPath.item];
     if ([self incoming:message])
     {
-        ProfileView *profileView = [[ProfileView alloc] initWith:message.senderId User:nil];
-        [self.navigationController pushViewController:profileView animated:YES];
+        PFQuery *query = [PFUser query];
+        [query getObjectInBackgroundWithId:message.senderId block:^(PFObject * _Nullable object, NSError * _Nullable error) {
+            //
+            CoachBioViewController *profileView = [[CoachBioViewController alloc] initWith:object];
+            [self presentViewController:profileView animated:YES completion:^{
+                //
+            }];
+
+        }];
+        
+    
     }
-     */
+    
 }
 
 

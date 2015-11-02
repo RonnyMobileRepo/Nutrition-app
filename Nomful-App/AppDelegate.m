@@ -19,6 +19,7 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    NSLog(@"did finish launching");
     
     // ______________________________________________________________________________________________________________________________
     
@@ -59,36 +60,28 @@
     [Fabric with:@[[Crashlytics class]]];
     [[ChimpKit sharedKit] setApiKey:MAILCHIMP_TOKEN];
     
-    // Branch *branch = [Branch getInstance:@"144975538040099258"];
-    
-    // [branch initSessionWithLaunchOptions:launchOptions andRegisterDeepLinkHandler:^(NSDictionary *params, NSError *error) {
-    // params are the deep linked params associated with the link that the user clicked before showing up.
-    // NSLog(@"deep link data: %@", [params description]);
-    // }];
+   
     
     
     //______________________________________________________________________________________________________________________________
 
 
-   
-    
-    if([PFUser currentUser]){
-        // We're logged in, we can register the user with Intercom
-        PFUser *currentUser =  [PFUser currentUser];
-        
-        //Mixpanel
+    if ([PFUser currentUser]) {
+        //if there is an active user...mixpanel dat shit
         Mixpanel *mixpanel = [Mixpanel sharedInstance];
-        [mixpanel identify:currentUser.objectId];
-        
-        //identifies user in mixpanel
-        if(currentUser[@"firstName"]) [mixpanel.people set:@{@"$first_name": currentUser[@"firstName"]}];
-        
-        
-    }else{
-        //no user
-        
+        [mixpanel identify:[PFUser currentUser].objectId];
+        //sets the Role property in mixpanel as
+        if([PFUser currentUser][@"planType"]){[mixpanel registerSuperProperties:@{@"Plan Type":[PFUser currentUser][@"planType"]}];}
+        if([PFUser currentUser][@"role"]){[mixpanel registerSuperProperties:@{@"Role":[PFUser currentUser][@"role"],
+                                                                              @"timestamp":[NSDate date]}];}
+        //set the timezone for the current user
+        if ([PFUser currentUser][@"timezone"] ) {
+        }else{
+            [PFUser currentUser][@"timezone"] = [NSTimeZone localTimeZone].name;
+            [[PFUser currentUser] saveEventually];
+        }
     }
-
+    
     
     
     UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
@@ -102,7 +95,7 @@
     
     //global nav bar
     [[UINavigationBar appearance] setBarTintColor:[UIColor whiteColor]]; //background of bar
-    
+   
     //style the page controller dots...
     UIPageControl *pageControl = [UIPageControl appearance];
     pageControl.pageIndicatorTintColor = [UIColor lightGrayColor];
@@ -121,12 +114,6 @@
     [currentInstallation setDeviceTokenFromData:deviceToken];
     currentInstallation.channels = @[ @"global" ];
     [currentInstallation saveInBackground];
-    
-    //register for mixpanel push
-    PFUser *currentUser = [PFUser currentUser];
-    Mixpanel *mixpanel = [Mixpanel sharedInstance];
-    [mixpanel identify:currentUser.objectId];
-    [mixpanel.people addPushDeviceToken:deviceToken];
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
@@ -186,11 +173,12 @@
     
     Mixpanel *mixpanel = [Mixpanel sharedInstance];
     [mixpanel track:@"Session"];
-
+    
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
@@ -198,7 +186,11 @@
     NSLog(@"App did become active");
     
     Mixpanel *mixpanel = [Mixpanel sharedInstance];
-    // start the timer for the event "App Close"
+    
+    //event for app open
+    [mixpanel track:@"App Opened" properties:@{}];
+    
+    // start the timer for the event session ("App Close")
     [mixpanel timeEvent:@"Session"];
     
 
@@ -261,7 +253,7 @@
 
 
 - (NSManagedObjectContext *)managedObjectContext {
-    // Returns the managed object context for the application (which is already bound to the persistent store coordinator for the application.)
+    // Returns the managed object context for the application (which is already bound to the persistent store coordinator for the application.)lkasjdflksjdfl;kajsdfl;asjdfl;akjsdfl;askjdfl;asjkdfsf
     if (_managedObjectContext != nil) {
         return _managedObjectContext;
     }
