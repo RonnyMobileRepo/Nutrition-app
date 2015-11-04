@@ -574,12 +574,12 @@
 		21C88A241BAC95CF00792E9C /* Nomful-App */ = {
 			isa = PBXGroup;
 			children = (
-				2187BD261BD7DFC50058A7C3 /* Meal Detail */,
 				21C88A281BAC95CF00792E9C /* AppDelegate.h */,
 				21C88A291BAC95CF00792E9C /* AppDelegate.m */,
 				2137D8821BAC9E8D00310545 /* Main.storyboard */,
 				2137D8811BAC9E8D00310545 /* LaunchScreen.xib */,
 				21C6FC4F1BAF20EE004599E8 /* Nomful-App.entitlements */,
+				2187BD261BD7DFC50058A7C3 /* Meal Detail */,
 				21643A541BC5950C0099E6FB /* Member View */,
 				21643A501BC591180099E6FB /* Login */,
 				21643A4C1BC4BA270099E6FB /* Sign Up */,

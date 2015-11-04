@@ -250,7 +250,10 @@
     messageContent = text;
     [self messageSend:text Video:nil Picture:nil Audio:nil];
     [self sendPushNotifications];
-    [self markMessageAsUnread:true];
+    
+    if ([[PFUser currentUser][@"role"] isEqualToString:@"Client"]) {
+        [self markMessageAsUnread:true];
+    }
     
     //mixpanel tracking
     Mixpanel *mixpanel = [Mixpanel sharedInstance];

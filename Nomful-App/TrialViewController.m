@@ -203,7 +203,6 @@
     
     NSLog(@"Push's sent and everything okay...");
 
-    
 }
 - (void)setTwilioNumber:(PFObject *)chatroom coachuser:(PFUser *)coachUser{
     //set the twilio number for the chatroom
@@ -288,7 +287,7 @@
         NSLog(@"You just saved the client user on the installation in parse");
     }];
     
-    
+
     //register with Mixpanel
     Mixpanel *mixpanel = [Mixpanel sharedInstance];
     [mixpanel identify:[PFUser currentUser].objectId];
