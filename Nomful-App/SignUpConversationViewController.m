@@ -41,6 +41,16 @@ CGFloat const ktypeInterval = 0.02;
     //set the messages
     
     _textfield1.delegate = self;
+    // Add a "textFieldDidChange" notification method to the text field control.
+    [_textfield1 addTarget:self
+                  action:@selector(textFieldDidChange)
+        forControlEvents:UIControlEventEditingChanged];
+    _coachBioView.layer.cornerRadius = 6.0;
+    _coachBioView.layer.shadowOffset = CGSizeMake(4, 4);
+    _coachBioView.layer.shadowColor = [[UIColor lightGrayColor] CGColor];
+    _coachBioView.layer.shadowRadius = 0.4f;
+    _coachBioView.layer.shadowOpacity = 0.80f;
+
     
     _messagesArray = [[NSMutableArray alloc] initWithObjects:
                                                         @"Hi! Welcome to Nomful. My name is Nomberry.",
@@ -442,6 +452,7 @@ CGFloat const ktypeInterval = 0.02;
             case 10:{
             
                 _coachBioView.hidden = YES;
+                _messageTextView.hidden = NO;
 
                 
                 if(sender == _button1){
@@ -922,6 +933,7 @@ CGFloat const ktypeInterval = 0.02;
 
                         //set coach bio info
                         _coachBioTextView.text = _coachUser[@"bio"];
+                        _coachNameLabel.text = [NSString stringWithFormat:@"%@ %@",[_coachUser valueForKey:@"firstName"], [_coachUser valueForKey:@"lastName"]];
                         
                         
                         NSLog(@"number of objects in array is: %lu", (unsigned long)[_messagesArray count]);
@@ -987,8 +999,7 @@ CGFloat const ktypeInterval = 0.02;
           
             //show coach bio stuff
 
-            _messageTextView.text = @"";
-            _messageTextView.hidden = false;
+            _messageTextView.text = @"what";
             _coachBioView.hidden = false;
             
             //show next message
@@ -1027,27 +1038,13 @@ CGFloat const ktypeInterval = 0.02;
             
             [self animateInputIn:_button1];
             
-        }
-        
-        //show text input
-        else if(_messageCount == 2 || _messageCount == 8 || _messageCount == 11){
+        }else if(_messageCount == 2){
             [_textfield1 becomeFirstResponder];
             _textfield1.hidden = false;
             
             //for #9...we may want to force format the phone number
             //maybe a new textfield init'd programatically will be good here
-        }
-        else if(_messageCount == 5){
-            
-            //age
-            //_textfield1.keyboardType = UIKeyboardTypeNumberPad; //**for now leaving this out since we have ot add in a 'send' button that would normally be in the keyboard
-            
-            [_textfield1 becomeFirstResponder];
-            _textfield1.hidden = false;
-            
-        }
-        
-        else if(_messageCount == 3){
+        }else if(_messageCount == 3){
             
             //maybe we do an array input here instead??
             [self animateInputIn:_button1];
@@ -1055,12 +1052,17 @@ CGFloat const ktypeInterval = 0.02;
             [self animateInputIn:_button3];
             [self animateInputIn:_button4];
             
-        }
-        
-        else if(_messageCount == 4){
+        }else if(_messageCount == 4){
             
             [self animateInputIn:_button1];
             [self animateInputIn:_button2];
+            
+        }else if(_messageCount == 5){
+            
+            //age
+            _textfield1.keyboardType = UIKeyboardTypeNumberPad;
+            [_textfield1 becomeFirstResponder];
+            _textfield1.hidden = false;
             
         }else if(_messageCount == 6){
             _textfield1.hidden = true;
@@ -1081,6 +1083,14 @@ CGFloat const ktypeInterval = 0.02;
                 [self addTrainerTable];
             }
             
+        }else if(_messageCount == 8){
+            
+            //age
+            _textfield1.keyboardType = UIKeyboardTypeEmailAddress; //**for now leaving this out since we have ot add in a 'send' button that would normally be in the keyboard
+            
+            [_textfield1 becomeFirstResponder];
+            _textfield1.hidden = false;
+            
         }else if(_messageCount == 9){
             _textfield1.hidden = true;
             
@@ -1089,6 +1099,10 @@ CGFloat const ktypeInterval = 0.02;
         }else if(_messageCount == 10){
             [self animateInputIn:_button2];
             [self animateInputIn:_button1];
+        }else if (_messageCount == 11){
+            //_textfield1.keyboardType = UIKeyboardTypeNumberPad;
+            [_textfield1 becomeFirstResponder];
+            _textfield1.hidden = false;
         }else if(_messageCount == 12 ){
             [_textfield1 becomeFirstResponder];
             _textfield1.hidden = false;
@@ -1162,8 +1176,8 @@ CGFloat const ktypeInterval = 0.02;
         _coachUser = coaches[_i];
         
         //create message and add to message array!
-        NSString *foundCoachString = [NSString stringWithFormat:@"Based on everything I know about you, I think %@ is giong to be an awesome fit :)", _coachUser[@"firstName"]];
-        [_messagesArray replaceObjectAtIndex:_messageCount withObject:foundCoachString];
+//        NSString *foundCoachString = [NSString stringWithFormat:@"Based on everything I know about you, I think %@ is giong to be an awesome fit :)", _coachUser[@"firstName"]];
+//        [_messagesArray replaceObjectAtIndex:_messageCount withObject:foundCoachString];
         
         
         if(_coachUser){
@@ -1197,9 +1211,9 @@ CGFloat const ktypeInterval = 0.02;
             _coachUser = coachUsers;
             
             //create message and add to message array!
-            NSString *foundCoachString = [NSString stringWithFormat:@"Based on everything I know about you, I think %@ is giong to be an awesome fit :)", _coachUser[@"firstName"]];
-            [_messagesArray replaceObjectAtIndex:_messageCount withObject:foundCoachString];
-            
+//            NSString *foundCoachString = [NSString stringWithFormat:@"Based on everything I know about you, I think %@ is giong to be an awesome fit :)", _coachUser[@"firstName"]];
+//            [_messagesArray replaceObjectAtIndex:_messageCount withObject:foundCoachString];
+//            
             //complete the block
             if(_coachUser){
                 NSLog(@"coach block completed");
@@ -1223,10 +1237,10 @@ CGFloat const ktypeInterval = 0.02;
             _coachUser = coaches[0];
             
             //create message and add to message array!
-            NSString *foundCoachString = [NSString stringWithFormat:@"Based on everything I know about you, I think %@ is giong to be an awesome fit :)", _coachUser[@"firstName"]];
-            [_messagesArray replaceObjectAtIndex:_messageCount withObject:foundCoachString];
-            
-            
+//            NSString *foundCoachString = [NSString stringWithFormat:@"Based on everything I know about you, I think %@ is giong to be an awesome fit :)", _coachUser[@"firstName"]];
+//            [_messagesArray replaceObjectAtIndex:_messageCount withObject:foundCoachString];
+//            
+//            
             if(_coachUser){
                 NSLog(@"coach block completed");
                 compblock(YES);
@@ -1819,5 +1833,19 @@ CGFloat const ktypeInterval = 0.02;
     //for now, let's just go back to the last message
     _messageCount --;
     [self showNextMessage];
+}
+
+- (void)textFieldDidChange{
+    NSLog(@"did change");
+    
+    if (_messageCount == 5) {
+        //we are entering age
+        if (_textfield1.text.length == 2) {
+            
+            [_textfield1 resignFirstResponder];
+            [self buttonPressed:_textfield1];
+
+        }
+    }
 }
 @end

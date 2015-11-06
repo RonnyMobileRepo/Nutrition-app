@@ -14,6 +14,7 @@
 
 
 @interface SignUpConversationViewController : UIViewController <UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, VPImageCropperDelegate, UITableViewDataSource, UITableViewDelegate>
+@property (weak, nonatomic) IBOutlet UILabel *coachNameLabel;
 
 //variables
 @property NSInteger messageCount;
