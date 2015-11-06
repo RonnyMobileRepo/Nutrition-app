@@ -131,6 +131,9 @@
                                                 // no longer anonymous user!
                                                 NSLog(@"Login Successful! %@", token);
                                                 
+                                                //identify with branch
+                                              
+
                                                 
                                                 //check for role first
                                                 //if coach/trainer
@@ -149,7 +152,6 @@
                                                     }else{
                                                         //they have no plan type...get them ousta here!
                                                         [PFUser logOut];
-                                                        
                                                         //show alert view
                                                         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error!" message:@"Looks like you aren't a member yet. Please go back and select GET STARTED. If you think this is an error, please contact us." delegate:self cancelButtonTitle:@"Sounds Good!" otherButtonTitles: nil];
                                                         [alert show];

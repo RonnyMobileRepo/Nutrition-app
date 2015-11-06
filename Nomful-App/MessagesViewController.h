@@ -11,7 +11,6 @@
 #import "JSQMessages.h"
 #import <Parse/Parse.h>
 #import  "Reachability.h"
-#import "GAITrackedViewController.h"
 #import "PageViewController.h"
 #import "LogMealSinglePageViewController.h"
 

@@ -10,6 +10,7 @@
 #import <Stripe/Stripe.h>
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
+#import "Branch.h"
 
 @interface AppDelegate ()
 
@@ -21,7 +22,10 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     NSLog(@"did finish launching");
     
+  
+    
     // ______________________________________________________________________________________________________________________________
+    
     
     ///*
     
@@ -59,9 +63,11 @@
     
     [Fabric with:@[[Crashlytics class]]];
     [[ChimpKit sharedKit] setApiKey:MAILCHIMP_TOKEN];
-    
-   
-    
+    Branch *branch = [Branch getInstance];
+    [branch initSessionWithLaunchOptions:launchOptions andRegisterDeepLinkHandler:^(NSDictionary *params, NSError *error) {
+        // params are the deep linked params associated with the link that the user clicked before showing up.
+        NSLog(@"deep link data: %@", [params description]);
+    }];
     
     //______________________________________________________________________________________________________________________________
 
@@ -101,10 +107,25 @@
     pageControl.currentPageIndicatorTintColor = [UIColor blackColor];
     pageControl.backgroundColor = [UIColor whiteColor];
     
-    return YES;
+    
+    //testing!!
+//    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+//    params[@"article_id"] = @"1234";
+//    params[@"$og_title"] = @"MyApp is disrupting apps";
+//    
+//    
+//    [[Branch getInstance] getShortURLWithParams:params andChannel:@"sms" andFeature:BRANCH_FEATURE_TAG_SHARE andCallback:^(NSString *url, NSError *error) {
+//        if (!error) NSLog(@"got my Branch link to share: %@", url);
+//    }];
+//    
+//    
+//    
+    
+        return YES;
 }
 
 #pragma mark - Push
+
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     // Store the deviceToken in the current installation and save it to Parse.
@@ -280,5 +301,15 @@
         }
     }
 }
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+
+    NSLog(@"branch thing called");
+    [[Branch getInstance] handleDeepLink:url];
+
+    return YES;
+
+}
+
 
 @end

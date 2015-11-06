@@ -796,7 +796,7 @@ CGFloat const ktypeInterval = 0.02;
     
     if( [_text length] >= self.index )
     {
-        self.messageLabel.text = [NSString stringWithFormat:@"%@", [self.text substringToIndex:self.index++]];
+        self.messageTextView.text = [NSString stringWithFormat:@"%@", [self.text substringToIndex:self.index++]];
     }
     else
     {
@@ -1626,6 +1626,9 @@ CGFloat const ktypeInterval = 0.02;
                                                 // no longer anonymous user!
                                                 NSLog(@"Login Successful! %@", token);
                                                 [user signUpInBackground];
+                                                // your app's userId, 127 chars or less
+                                               
+                                                
                                                 
                                                 if(_isGymMember){
                                                     NSLog(@"is gym member. probably perry client %d", _isGymMember);

@@ -96,7 +96,6 @@
         [self performSegueWithIdentifier:@"loggedOutSegue" sender:self];
         
         [PFUser logOut];
-        [Intercom reset];
         
         
     }
