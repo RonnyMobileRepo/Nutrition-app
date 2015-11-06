@@ -124,7 +124,7 @@ CGFloat const ktypeInterval = 0.02;
     self.index = 1;
     _i = 0;
     //display message based on the count
-    _messageLabel.text = [_messagesArray objectAtIndex:_messageCount];
+    _messageTextView.text = [_messagesArray objectAtIndex:_messageCount];
     [_button1 setTitle:[_buttonLabelArray objectAtIndex:_buttonLabelCount] forState:UIControlStateNormal];
     
 
@@ -222,7 +222,22 @@ CGFloat const ktypeInterval = 0.02;
                 }else{
                     //name entered save
                     //save name to anonymouse user
-                    [PFUser currentUser][@"firstName"] = [_textfield1.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+                    NSString *fullName = [_textfield1.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+                    NSRange range = [fullName rangeOfString:@" "];
+                    
+
+                    
+                    if (range.location != NSNotFound) {
+                        //space found...so this menas that there is prolly a last name
+                        NSString *fname = [fullName substringToIndex:range.location];
+                        NSString *lname = [fullName substringFromIndex:range.location+1];
+                        [PFUser currentUser][@"lastName"] = lname;
+                        [PFUser currentUser][@"firstName"] = fname;
+                    }else{
+                        [PFUser currentUser][@"firstName"] = fullName;
+                        [PFUser currentUser][@"lastName"] = @"";
+                    }
+                    
                     [PFUser currentUser][@"role"] = @"Client";
                     [[PFUser currentUser] saveInBackground];
                     
@@ -853,7 +868,7 @@ CGFloat const ktypeInterval = 0.02;
 }
 - (void)animateNomberry{
     
-    _messageLabel.hidden = true;
+    _messageTextView.hidden = true;
     _button1.hidden = true;
     
     //remove the constraint 40pts and horizontal alignment
@@ -972,8 +987,8 @@ CGFloat const ktypeInterval = 0.02;
           
             //show coach bio stuff
 
-            _messageLabel.text = @"";
-            _messageLabel.hidden = false;
+            _messageTextView.text = @"";
+            _messageTextView.hidden = false;
             _coachBioView.hidden = false;
             
             //show next message
@@ -1742,7 +1757,7 @@ CGFloat const ktypeInterval = 0.02;
 - (IBAction)cancelButtonPressed:(id)sender {
     
     _cancelButtonPressed = YES;
-    _replacedString = _messageLabel.text;
+    _replacedString = _messageTextView.text;
     
     _textfield1.hidden = true;
     //dismiss keyboard
