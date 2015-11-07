@@ -485,21 +485,66 @@ CGFloat const ktypeInterval = 0.02;
                 }else{
                     //success, the phone is valid 10 digits
                     
-                    //**check to see if phone already in use....does cloud code do this already?
-                    [PFUser currentUser][@"phoneNumber"] = _phone;
-                    [[PFUser currentUser] saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                        //cloud code uses the phoneNumber so we need to do this in a block
-                        //send twilio text
-                        [self sendCode];
-                        [self checkIfGymMember]; //this is for the perry's of the world
-                        //clear textfield
-                        _textfield1.text = @"";
+                    //check for a user with phone number typed in in phoneNumber field
+                    //if already exists
+                        //display error message that phone already in use
+                    //if doesn't exist
+                        //call cloud code
+                    
+                    PFQuery *query = [PFUser query];
+                    [query whereKey:@"phoneNumber" equalTo:_phone];
+                    [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+                        if (objects.count > 0) {
+                            
+                            //you are here b/c we found other users with the phone number
+                            //in case the user typed in their number...was saved to their user
+                            //and then selected send me another code, we must see if the current user already
+                            //has the phone number selected. If it is, then send code for login
+                            
+                            if ([[PFUser currentUser][@"phoneNumber"] isEqualToString:_phone]) {
+                                //send code stuf
+                                [[PFUser currentUser] saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                                    //cloud code uses the phoneNumber so we need to do this in a block
+                                    //send twilio text
+                                    [self sendCode];
+                                    [self checkIfGymMember]; //this is for the perry's of the world
+                                    
+                                    
+                                    //clear textfield
+                                    _textfield1.text = @"";
+                                    _messageCount ++;
+                                    [self showNextMessage];
+                                    
+                                }];
+                            }else{
+                                //again, you are here b/c we found other users with the phone number
+                                //but we know it isn't the current user so we can allert them to try and log in or somehing
+                                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Uh Oh!" message:@"Looks like your phone number is already in use. Please go back to home screen and select login, instead of Get Started" delegate:self cancelButtonTitle:@"Got it!" otherButtonTitles: nil];
+                                [alert show];
+                                [_textfield1 becomeFirstResponder];
+                                _textfield1.hidden = false;
+                            }
                         
-                        _messageCount ++;
-                        [self showNextMessage];
-                        
-                       
+                       }else{
+                            //succes! There are no other users with that phone number
+                            [PFUser currentUser][@"phoneNumber"] = _phone; //*we can put this in cloud code eventually
+                            [[PFUser currentUser] saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                                //cloud code uses the phoneNumber so we need to do this in a block
+                                //send twilio text
+                                [self sendCode];
+                                [self checkIfGymMember]; //this is for the perry's of the world
+                                
+                                
+                                //clear textfield
+                                _textfield1.text = @"";
+                                _messageCount ++;
+                                [self showNextMessage];
+                                
+                                
+                            }];
+                        }
                     }];
+                    
                     
                 }
                 
