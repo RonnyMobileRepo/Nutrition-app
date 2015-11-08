@@ -162,6 +162,7 @@
         //set twilio number
         [self setTwilioNumber:chatroom coachuser:_coachUser];
         
+        [self sendFirstMessage:chatroom];
 
     }];//end save chatroom object
     
@@ -307,4 +308,47 @@
     }
    
 }
+
+- (void)sendFirstMessage:(PFObject *)chatroom{
+    NSLog(@"send first message activated");
+    
+    //set the text we want it to be
+    NSString *text = @"Welcome to Nomful! This is where you will communicate with your coach :) She will reach out to you today and set up a phone call so you can get to know eachother! In the meantime....";
+    
+    //build firebase json? object
+    NSMutableDictionary *item = [[NSMutableDictionary alloc] init];
+    item[@"userId"] = @"9EZw4s8feD";
+    item[@"name"] = @"Nomberry";
+    item[@"date"] = [self Date2String:[NSDate date]];
+    item[@"status"] = @"Delivered"; //*this is the string that show up on each message underneath...timestamp instead?
+    item[@"video"] = item[@"thumbnail"] = item[@"picture"] = item[@"audio"] = item[@"latitude"] = item[@"longitude"] = @"";
+    item[@"video_duration"] = item[@"audio_duration"] = @0;
+    item[@"picture_width"] = item[@"picture_height"] = @0;
+    item[@"text"] = text;
+    item[@"type"] = @"text";
+
+    //send to firebase feed
+    Firebase *firebase = [[Firebase alloc] initWithUrl:[NSString stringWithFormat:@"%@/Message/%@", kFirechatNS, chatroom.objectId]];
+    Firebase *reference = [firebase childByAutoId];
+    item[@"messageId"] = reference.key;
+    
+    [reference setValue:item withCompletionBlock:^(NSError *error, Firebase *ref)
+     {
+         if (error != nil) NSLog(@"Outgoing sendMessage network error.");
+     }];
+
+    
+    
+    
+}
+
+-(NSString*)Date2String:(NSDate *)date
+
+{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ss"];
+    [formatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+    return [formatter stringFromDate:date];
+}
+
 @end

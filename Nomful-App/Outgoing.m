@@ -47,7 +47,8 @@
 	item[@"userId"] = [PFUser currentUser].objectId;
 	item[@"name"] = [PFUser currentUser][@"firstName"];
     item[@"date"] = [self Date2String:[NSDate date]];
-	item[@"status"] = @"Delivered";
+	item[@"status"] = @"Delivered"; //*this is the string that show up on each message underneath...timestamp instead?
+    
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	item[@"video"] = item[@"thumbnail"] = item[@"picture"] = item[@"audio"] = item[@"latitude"] = item[@"longitude"] = @"";
 	item[@"video_duration"] = item[@"audio_duration"] = @0;
