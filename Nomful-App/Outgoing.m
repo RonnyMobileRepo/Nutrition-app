@@ -43,7 +43,7 @@
     
     NSMutableDictionary *item = [[NSMutableDictionary alloc] init];
     item[@"userId"] = @"9EZw4s8feD";
-    item[@"name"] = [PFUser currentUser][@"firstName"];
+    item[@"name"] = @"Nomberry";
     item[@"date"] = [self Date2String:[NSDate date]];
     item[@"status"] = @"Delivered"; //*this is the string that show up on each message underneath...timestamp instead?
     item[@"video"] = item[@"thumbnail"] = item[@"picture"] = item[@"audio"] = item[@"latitude"] = item[@"longitude"] = @"";
