@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		10299C823D0DCF6DFB00181A /* libPods-Nomful-App.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D964F6FB1BB2EF253B70EC9B /* libPods-Nomful-App.a */; };
 		210022551BE013B600838A5E /* CoachBioViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 210022541BE013B600838A5E /* CoachBioViewController.m */; };
 		210022571BE17E2E00838A5E /* Brittany-Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 210022561BE17E2E00838A5E /* Brittany-Icon.png */; };
 		2137D7E51BAC973000310545 /* AccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2137D7E41BAC973000310545 /* AccountViewController.m */; };
@@ -97,7 +98,6 @@
 		21D4E2E21BC2F82800962C6B /* Incoming.m in Sources */ = {isa = PBXBuildFile; fileRef = 21D4E2DF1BC2F82800962C6B /* Incoming.m */; };
 		21D4E2E31BC2F82800962C6B /* Outgoing.m in Sources */ = {isa = PBXBuildFile; fileRef = 21D4E2E11BC2F82800962C6B /* Outgoing.m */; };
 		21FECF141BC431E800C5FB8B /* PhotoMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 21FECF131BC431E800C5FB8B /* PhotoMediaItem.m */; };
-		5EDD67B4A8A9E0D710949A4F /* libPods-Nomful-App.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DE4DE3B1DF31D17CBF9E1A0C /* libPods-Nomful-App.a */; };
 		AF506B75587A9DEF81A83E92 /* libPods-Nomful-AppUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D59B015D86A658025692A20 /* libPods-Nomful-AppUITests.a */; };
 		D90A71F8CF68228131732D10 /* libPods-Nomful-AppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DF9BA7B1C8F44032E169948A /* libPods-Nomful-AppTests.a */; };
 /* End PBXBuildFile section */
@@ -284,7 +284,7 @@
 		83716DA2E1B570912D18C269 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A71D6DCBA5596388F989469 /* Pods-Nomful-AppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nomful-AppUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Nomful-AppUITests/Pods-Nomful-AppUITests.release.xcconfig"; sourceTree = "<group>"; };
 		B0C77B8308A6F382C4A349C1 /* Pods-Nomful-AppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nomful-AppTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Nomful-AppTests/Pods-Nomful-AppTests.release.xcconfig"; sourceTree = "<group>"; };
-		DE4DE3B1DF31D17CBF9E1A0C /* libPods-Nomful-App.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Nomful-App.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D964F6FB1BB2EF253B70EC9B /* libPods-Nomful-App.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Nomful-App.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF9BA7B1C8F44032E169948A /* libPods-Nomful-AppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Nomful-AppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7AFC07723092381382DA4CB /* Pods-Nomful-App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nomful-App.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Nomful-App/Pods-Nomful-App.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -294,9 +294,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5EDD67B4A8A9E0D710949A4F /* libPods-Nomful-App.a in Frameworks */,
 				21856A861BCAADFA00E217F7 /* Crashlytics.framework in Frameworks */,
 				21856A851BCAADFA00E217F7 /* Fabric.framework in Frameworks */,
+				10299C823D0DCF6DFB00181A /* libPods-Nomful-App.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -684,10 +684,10 @@
 		C9BBC740C3234417E779A178 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				DE4DE3B1DF31D17CBF9E1A0C /* libPods-Nomful-App.a */,
 				83716DA2E1B570912D18C269 /* libPods.a */,
 				DF9BA7B1C8F44032E169948A /* libPods-Nomful-AppTests.a */,
 				3D59B015D86A658025692A20 /* libPods-Nomful-AppUITests.a */,
+				D964F6FB1BB2EF253B70EC9B /* libPods-Nomful-App.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -707,6 +707,8 @@
 				21C88A201BAC95CF00792E9C /* Resources */,
 				21856A821BCAADB900E217F7 /* ShellScript */,
 				2113B7E41BCAC48E007F7B84 /* Copy Pod Resources */,
+				D7E4F794CFA54A1B27F62F86 /* Embed Pods Frameworks */,
+				76FD1CDF0A2B6A1F77367998 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -942,6 +944,21 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
+		76FD1CDF0A2B6A1F77367998 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Nomful-App/Pods-Nomful-App-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		B0848173466ECC7BCC80A6D3 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -970,6 +987,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		D7E4F794CFA54A1B27F62F86 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Nomful-App/Pods-Nomful-App-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FC4BEF3F7FE7A3BDA485B675 /* Copy Pods Resources */ = {
