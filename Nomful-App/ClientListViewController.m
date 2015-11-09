@@ -166,7 +166,7 @@
         cell.daysLeftLabel.text = daysLeft;
     }
     
-    
+
         NSString *plan = [NSString stringWithFormat:@"%@ plan", clientUserObject[@"planType"]];
         cell.membershipLabel.text = plan;
     
