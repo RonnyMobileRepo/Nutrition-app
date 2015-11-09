@@ -306,7 +306,10 @@
 }
 
 - (void)sendFirstMessage:(PFObject *)chatroom{
-    NSLog(@"send first message activated");
+
+    /////////////////////////////////////
+    //BUILD MESSAGE TO SEND TO FIREBASE//
+    /////////////////////////////////////
     
     //set the text we want it to be
     NSString *text = @"Welcome to Nomful! This is where you will communicate with your coach :) She will reach out to you today and set up a phone call so you can get to know eachother! In the meantime....";
@@ -333,6 +336,9 @@
          if (error != nil) NSLog(@"Outgoing sendMessage network error.");
      }];
 
+    //////////////////////////////////////////
+    //SEND PUSH NOTIFICATION TO CURRENT USER//
+    //////////////////////////////////////////
     
     //send push notification
     //send push notification to RD and PT
@@ -367,9 +373,24 @@
     //send
     [push sendPushInBackground];
     
-    NSLog(@"Push's sent and everything okay...");
-
+    ///////////////////////////////
+    //SEND FIRST TIME LOGIN EMAIL//
+    ///////////////////////////////
     
+    //send first time login email
+    [PFCloud callFunctionInBackground:@"sendFirstTimeLoginEmail"
+                       withParameters:@{@"toEmail": currentUser.email,
+                                        @"toName": currentUser[@"firstName"]
+                                        }
+                                block:^(NSString *result, NSError *error) {
+                                    if (!error) {
+                                        NSLog(@"RESULT IS: %@", result);
+                                    }
+                                    else{
+                                        NSLog(@"ERROR: %@", error);
+                                    }
+                                }];
+
     
 }
 
