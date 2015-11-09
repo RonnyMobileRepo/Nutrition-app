@@ -168,7 +168,7 @@ NSString *const kBOOTCAMPAMOUNT = @"199.00";
     NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"0.00"];
 
     if (_healthyStartSelected) {
-        label   = @"Healthy Start - 30 Day Coaching";
+        label   = @"Healthy Start - 21 Day Coaching";
         amount  = [NSDecimalNumber decimalNumberWithString:kINTROAMOUNT];
     }
     
@@ -288,7 +288,7 @@ NSString *const kBOOTCAMPAMOUNT = @"199.00";
                                                                           daysInTrial = 84; //12 weeks
                                                                       }else if(_healthyStartSelected){
                                                                           [PFUser currentUser][@"planType"] = @"intro"; //this can be either 'trial' 'intro' or 'bootcamp'
-                                                                          daysInTrial = 30; //12 weeks
+                                                                          daysInTrial = 21; //12 weeks
                                                                       }
                                                                       
                                                                       
@@ -393,7 +393,7 @@ NSString *const kBOOTCAMPAMOUNT = @"199.00";
                 daysInTrial = 84; //12 weeks
             }else if(_healthyStartSelected){
                 [PFUser currentUser][@"planType"] = @"intro"; //this can be either 'trial' 'intro' or 'bootcamp'
-                daysInTrial = 30; //12 weeks
+                daysInTrial = 21; //12 weeks
             }
             
             

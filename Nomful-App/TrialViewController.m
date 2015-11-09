@@ -87,7 +87,7 @@
             
         }else if([[PFUser currentUser][@"planType"] isEqualToString:@"intro"]){
             NSDate *now = [NSDate date];
-            NSInteger daysInTrial = 30; //30 days
+            NSInteger daysInTrial = 21; //30 days
             NSDate *trialEndDate = [now dateByAddingTimeInterval:60*60*24*daysInTrial];
             
             //mark trial start date

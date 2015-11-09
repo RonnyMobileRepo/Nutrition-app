@@ -519,7 +519,7 @@ CGFloat const ktypeInterval = 0.02;
                             }else{
                                 //again, you are here b/c we found other users with the phone number
                                 //but we know it isn't the current user so we can allert them to try and log in or somehing
-                                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Uh Oh!" message:@"Looks like your phone number is already in use. Please go back to home screen and select login, instead of Get Started" delegate:self cancelButtonTitle:@"Got it!" otherButtonTitles: nil];
+                                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Uh Oh!" message:@"Looks like an account with your phone number is already in use. Please check and try again or go back and login to your account." delegate:self cancelButtonTitle:@"Got it!" otherButtonTitles: nil];
                                 [alert show];
                                 [_textfield1 becomeFirstResponder];
                                 _textfield1.hidden = false;
