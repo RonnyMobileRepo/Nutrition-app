@@ -19,4 +19,5 @@
 
 - (void)send:(NSString *)text Video:(NSURL *)video Picture:(UIImage *)picture Audio:(NSString *)audio;
 
+- (void)logPhone;
 @end

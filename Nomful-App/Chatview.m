@@ -26,6 +26,7 @@
     
     //flags
     BOOL initialized;
+    BOOL phoneCallActive;
     int typingCounter;
     
     //firebase objects
@@ -118,6 +119,14 @@
         [self markMessageAsUnread:false];
 
     }
+    
+    //put these here so that the timer isn't started prematurley on initial load 'enter foreground'
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didEnterForeground)
+                                                 name:UIApplicationDidBecomeActiveNotification object:nil];
+
+    
+    
     
 }
 
@@ -675,6 +684,7 @@
     //only show if the user is an RD
     
     NSLog(@"You pressed the phone button! Woot woot!");
+    phoneCallActive = true;
     
     PFQuery *query = [PFQuery queryWithClassName:@"Chatrooms"];
     [query getObjectInBackgroundWithId:groupId block:^(PFObject * _Nullable object, NSError * _Nullable error) {
@@ -715,6 +725,29 @@
     
 }
 
+- (void)didEnterForeground{
+    NSLog(@"did enter foreground 2");
+    
+    /////////////////////////////////////
+    //BUILD MESSAGE TO SEND TO FIREBASE//
+    /////////////////////////////////////
+    
+    if(phoneCallActive){
+        Outgoing *outgoing = [[Outgoing alloc] initWith:groupId View:self.navigationController.view];
+        [outgoing logPhone];
+        phoneCallActive = false;
+    }
+    
 
+}
+
+-(NSString*)Date2String:(NSDate *)date
+
+{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ss"];
+    [formatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+    return [formatter stringFromDate:date];
+}
 
 @end
