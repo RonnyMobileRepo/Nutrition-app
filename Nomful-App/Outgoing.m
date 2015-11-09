@@ -89,8 +89,8 @@
 - (void)sendPhoneCall:(NSMutableDictionary *)item
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 {
-    item[@"text"] = @"Hey there! For your records, you and your coach had a phone call.";
-
+    //**this is where we set the phone call message from nomberry
+    item[@"text"] = @"Hey there! Glad you guys had a call :) keep up the healthy progress!";
     item[@"type"] = @"phonecall";
     [self sendMessage:item];
 }
