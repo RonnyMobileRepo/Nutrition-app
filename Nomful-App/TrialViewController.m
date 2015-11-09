@@ -17,10 +17,6 @@
 
 @implementation TrialViewController
 
-- (BOOL) prefersStatusBarHidden
-{
-    return YES;
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -338,6 +334,41 @@
      }];
 
     
+    //send push notification
+    //send push notification to RD and PT
+    PFUser *currentUser = [PFUser currentUser];
+    
+    //fetch for data...?
+    [currentUser fetch];
+    
+    //build array of who is getting the push sent to them
+    NSArray *pushUsers = @[currentUser];
+    
+    //build push query
+    PFQuery *pushQuery = [PFInstallation query];
+    [pushQuery whereKey:@"user" containedIn:pushUsers];
+    
+    //build push string
+    NSString *name = [NSString stringWithFormat:@"Welcome to Nomful %@! Glad you've joined us. ", currentUser[@"firstName"]];
+    
+    //set data for push
+    NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys:
+                          name, @"alert",
+                          @1, @"badge",
+                          nil];
+    
+    //new push object
+    PFPush *push = [[PFPush alloc] init];
+    
+    //set data and send
+    [push setQuery:pushQuery];
+    [push setData:data];
+    
+    //send
+    [push sendPushInBackground];
+    
+    NSLog(@"Push's sent and everything okay...");
+
     
     
 }
