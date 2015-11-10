@@ -55,7 +55,7 @@ CGFloat const ktypeInterval = 0.02;
     _messagesArray = [[NSMutableArray alloc] initWithObjects:
                                                         @"Hi! Welcome to Nomful. My name is Nomberry.",
                                                         @"I'll help you get matched up with the perfect coach and together you'll work towards achieving your health goals.",
-                                                        @"First, I'll need a little more info from you. Let's start with your full name",
+                                                        @"First, I'll need a little more info from you. Let's start with your full name.",
                                                         @"placeholder 0",
                                                         @"Are you Male or Female?",
                                                         @"How old are you?",
@@ -978,7 +978,13 @@ CGFloat const ktypeInterval = 0.02;
 
                         //set coach bio info
                         _coachBioTextView.text = _coachUser[@"bio"];
-                        _coachNameLabel.text = [NSString stringWithFormat:@"%@ %@",[_coachUser valueForKey:@"firstName"], [_coachUser valueForKey:@"lastName"]];
+                        NSString* nameStr = [NSString stringWithFormat:@"%@ %@",[_coachUser valueForKey:@"firstName"], [_coachUser valueForKey:@"lastName"]];
+                        NSArray* firstLastStrings = [nameStr componentsSeparatedByString:@" "];
+                        NSString* firstName = [firstLastStrings objectAtIndex:0];
+                        NSString* lastName = [firstLastStrings objectAtIndex:1];
+                        char lastInitialChar = [lastName characterAtIndex:0];
+                        NSString* newNameStr = [NSString stringWithFormat:@"%@ %c.", firstName, lastInitialChar];
+                        _coachNameLabel.text = newNameStr;
                         
                         
                         NSLog(@"number of objects in array is: %lu", (unsigned long)[_messagesArray count]);
@@ -1887,9 +1893,18 @@ CGFloat const ktypeInterval = 0.02;
         //we are entering age
         if (_textfield1.text.length == 2) {
             
-            [_textfield1 resignFirstResponder];
-            [self buttonPressed:_textfield1];
+            //pause so the last digit appears in textview
+            
+            double delayInSeconds = 0.15;
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                NSLog(@"Do some work");
+                [_textfield1 resignFirstResponder];
+                [self buttonPressed:_textfield1];
 
+            });
+            
+            
         }
     }
 }

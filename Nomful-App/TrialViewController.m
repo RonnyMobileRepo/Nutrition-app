@@ -170,7 +170,7 @@
     PFUser *currentUser = [PFUser currentUser];
     
     //fetch for data...?
-    [currentUser fetch];
+    [currentUser fetchIfNeeded];
     
     //build array of who is getting the push sent to them
     NSArray *pushUsers = @[_coachUser];
@@ -312,7 +312,7 @@
     /////////////////////////////////////
     
     //set the text we want it to be
-    NSString *text = @"Welcome to Nomful! This is where you will communicate with your coach :) She will reach out to you today and set up a phone call so you can get to know eachother! In the meantime....";
+    NSString *text = @"Welcome to Nomful! This is where you will communicate with your coach :) I let her know that you're all signed up and ready to go! She will reach out to you today and set up a phone call so you can get to know eachother. In the meantime you can start taking photos of your foods for your coach to review!";
     
     //build firebase json? object
     NSMutableDictionary *item = [[NSMutableDictionary alloc] init];
@@ -361,6 +361,7 @@
     NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys:
                           name, @"alert",
                           @1, @"badge",
+                          @"message", @"type",
                           nil];
     
     //new push object
