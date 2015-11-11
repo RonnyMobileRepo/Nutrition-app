@@ -58,6 +58,10 @@
 	if ([item[@"type"] isEqualToString:@"picture"])		message = [self createPictureMessage:item];
 	if ([item[@"type"] isEqualToString:@"audio"])		message = [self createAudioMessage:item];
 	if ([item[@"type"] isEqualToString:@"location"])	message = [self createLocationMessage:item];
+    if ([item[@"type"] isEqualToString:@"phonecall"])	message = [self createPhoneCallMessage:item];
+
+    
+    
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	return message;
 }
@@ -77,6 +81,18 @@
 	return message;
 }
 
+
+- (JSQMessage *)createPhoneCallMessage:(NSDictionary *)item
+{
+    NSString *name = item[@"name"];
+    NSString *userId = item[@"userId"];
+    NSDate *date = [self String2Date:item[@"date"]];
+    NSString *text = item[@"text"];
+    JSQMessage *message = [[JSQMessage alloc] initWithSenderId:userId senderDisplayName:name date:date text:text];
+
+    return message;
+    
+}
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 - (JSQMessage *)createEmojiMessage:(NSDictionary *)item
 //-------------------------------------------------------------------------------------------------------------------------------------------------

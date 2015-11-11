@@ -202,7 +202,6 @@ CGFloat const kMarginForText = 60.0;
                     
                     //register with intercom
                     PFUser *currentUser =  [PFUser currentUser];
-                    [Intercom registerUserWithUserId:currentUser.objectId email:currentUser.email];
                     
                     
                     //register with Mixpanel

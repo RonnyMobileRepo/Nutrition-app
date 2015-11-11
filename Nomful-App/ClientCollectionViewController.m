@@ -152,6 +152,16 @@
     
     //instantiate the detail view with the meal description and image file
     MealDetailCardViewController *mealView = [[MealDetailCardViewController alloc] initWith:objectd];
+    
+    //sets the back button label to a blank string
+    //otherwise it is the clients name and its too long
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc]
+                                   initWithTitle: @""
+                                   style: UIBarButtonItemStylePlain
+                                   target: nil action: nil];
+    
+    [self.navigationItem setBackBarButtonItem: backButton];
+    
     //add to nav stack
     [self.navigationController pushViewController:mealView animated:YES];
     

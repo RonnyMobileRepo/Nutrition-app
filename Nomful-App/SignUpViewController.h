@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
 #import <VPImageCropperViewController.h>
-#import <Intercom/Intercom.h>
 #import <Mixpanel.h>
 
 @interface SignUpViewController : UIViewController <UIImagePickerControllerDelegate, UIActionSheetDelegate, UINavigationControllerDelegate, VPImageCropperDelegate, UITextFieldDelegate, UIPopoverControllerDelegate>

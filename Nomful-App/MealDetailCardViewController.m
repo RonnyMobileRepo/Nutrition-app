@@ -93,11 +93,11 @@
     UITextView *descriptionTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
     descriptionTextView.translatesAutoresizingMaskIntoConstraints = NO;
     descriptionTextView.text = mealDescription;
+    descriptionTextView.editable = NO;
     [container addSubview:descriptionTextView];
     
     
     //constraints
-    
     NSDictionary *views = @{@"container": container,
                             @"imageView": imageView,
                             @"description": descriptionTextView};

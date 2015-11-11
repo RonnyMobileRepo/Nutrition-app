@@ -33,6 +33,7 @@ CGFloat const ktypeInterval = 0.02;
         }];
     }
     
+    [_messageTextView setFont:[UIFont fontWithName:kFontFamilyName100 size:22.0]];
     _realCode = [[NSString alloc] init];
     
     [_nomberry setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -41,11 +42,21 @@ CGFloat const ktypeInterval = 0.02;
     //set the messages
     
     _textfield1.delegate = self;
+    // Add a "textFieldDidChange" notification method to the text field control.
+    [_textfield1 addTarget:self
+                  action:@selector(textFieldDidChange)
+        forControlEvents:UIControlEventEditingChanged];
+    _coachBioView.layer.cornerRadius = 6.0;
+    _coachBioView.layer.shadowOffset = CGSizeMake(4, 4);
+    _coachBioView.layer.shadowColor = [[UIColor lightGrayColor] CGColor];
+    _coachBioView.layer.shadowRadius = 0.4f;
+    _coachBioView.layer.shadowOpacity = 0.80f;
+
     
     _messagesArray = [[NSMutableArray alloc] initWithObjects:
                                                         @"Hi! Welcome to Nomful. My name is Nomberry.",
                                                         @"I'll help you get matched up with the perfect coach and together you'll work towards achieving your health goals.",
-                                                        @"First, I'll need a little more info from you. Let's start with your full name",
+                                                        @"First, I'll need a little more info from you. Let's start with your full name.",
                                                         @"placeholder 0",
                                                         @"Are you Male or Female?",
                                                         @"How old are you?",
@@ -124,7 +135,7 @@ CGFloat const ktypeInterval = 0.02;
     self.index = 1;
     _i = 0;
     //display message based on the count
-    _messageLabel.text = [_messagesArray objectAtIndex:_messageCount];
+    _messageTextView.text = [_messagesArray objectAtIndex:_messageCount];
     [_button1 setTitle:[_buttonLabelArray objectAtIndex:_buttonLabelCount] forState:UIControlStateNormal];
     
 
@@ -222,7 +233,22 @@ CGFloat const ktypeInterval = 0.02;
                 }else{
                     //name entered save
                     //save name to anonymouse user
-                    [PFUser currentUser][@"firstName"] = [_textfield1.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+                    NSString *fullName = [_textfield1.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+                    NSRange range = [fullName rangeOfString:@" "];
+                    
+
+                    
+                    if (range.location != NSNotFound) {
+                        //space found...so this menas that there is prolly a last name
+                        NSString *fname = [fullName substringToIndex:range.location];
+                        NSString *lname = [fullName substringFromIndex:range.location+1];
+                        [PFUser currentUser][@"lastName"] = lname;
+                        [PFUser currentUser][@"firstName"] = fname;
+                    }else{
+                        [PFUser currentUser][@"firstName"] = fullName;
+                        [PFUser currentUser][@"lastName"] = @"";
+                    }
+                    
                     [PFUser currentUser][@"role"] = @"Client";
                     [[PFUser currentUser] saveInBackground];
                     
@@ -427,6 +453,7 @@ CGFloat const ktypeInterval = 0.02;
             case 10:{
             
                 _coachBioView.hidden = YES;
+                _messageTextView.hidden = NO;
 
                 
                 if(sender == _button1){
@@ -459,21 +486,66 @@ CGFloat const ktypeInterval = 0.02;
                 }else{
                     //success, the phone is valid 10 digits
                     
-                    //**check to see if phone already in use....does cloud code do this already?
-                    [PFUser currentUser][@"phoneNumber"] = _phone;
-                    [[PFUser currentUser] saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                        //cloud code uses the phoneNumber so we need to do this in a block
-                        //send twilio text
-                        [self sendCode];
-                        [self checkIfGymMember]; //this is for the perry's of the world
-                        //clear textfield
-                        _textfield1.text = @"";
+                    //check for a user with phone number typed in in phoneNumber field
+                    //if already exists
+                        //display error message that phone already in use
+                    //if doesn't exist
+                        //call cloud code
+                    
+                    PFQuery *query = [PFUser query];
+                    [query whereKey:@"phoneNumber" equalTo:_phone];
+                    [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+                        if (objects.count > 0) {
+                            
+                            //you are here b/c we found other users with the phone number
+                            //in case the user typed in their number...was saved to their user
+                            //and then selected send me another code, we must see if the current user already
+                            //has the phone number selected. If it is, then send code for login
+                            
+                            if ([[PFUser currentUser][@"phoneNumber"] isEqualToString:_phone]) {
+                                //send code stuf
+                                [[PFUser currentUser] saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                                    //cloud code uses the phoneNumber so we need to do this in a block
+                                    //send twilio text
+                                    [self sendCode];
+                                    [self checkIfGymMember]; //this is for the perry's of the world
+                                    
+                                    
+                                    //clear textfield
+                                    _textfield1.text = @"";
+                                    _messageCount ++;
+                                    [self showNextMessage];
+                                    
+                                }];
+                            }else{
+                                //again, you are here b/c we found other users with the phone number
+                                //but we know it isn't the current user so we can allert them to try and log in or somehing
+                                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Uh Oh!" message:@"Looks like an account with your phone number is already in use. Please check and try again or go back and login to your account." delegate:self cancelButtonTitle:@"Got it!" otherButtonTitles: nil];
+                                [alert show];
+                                [_textfield1 becomeFirstResponder];
+                                _textfield1.hidden = false;
+                            }
                         
-                        _messageCount ++;
-                        [self showNextMessage];
-                        
-                       
+                       }else{
+                            //succes! There are no other users with that phone number
+                            [PFUser currentUser][@"phoneNumber"] = _phone; //*we can put this in cloud code eventually
+                            [[PFUser currentUser] saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                                //cloud code uses the phoneNumber so we need to do this in a block
+                                //send twilio text
+                                [self sendCode];
+                                [self checkIfGymMember]; //this is for the perry's of the world
+                                
+                                
+                                //clear textfield
+                                _textfield1.text = @"";
+                                _messageCount ++;
+                                [self showNextMessage];
+                                
+                                
+                            }];
+                        }
                     }];
+                    
                     
                 }
                 
@@ -796,7 +868,7 @@ CGFloat const ktypeInterval = 0.02;
     
     if( [_text length] >= self.index )
     {
-        self.messageLabel.text = [NSString stringWithFormat:@"%@", [self.text substringToIndex:self.index++]];
+        self.messageTextView.text = [NSString stringWithFormat:@"%@", [self.text substringToIndex:self.index++]];
     }
     else
     {
@@ -853,7 +925,7 @@ CGFloat const ktypeInterval = 0.02;
 }
 - (void)animateNomberry{
     
-    _messageLabel.hidden = true;
+    _messageTextView.hidden = true;
     _button1.hidden = true;
     
     //remove the constraint 40pts and horizontal alignment
@@ -907,6 +979,13 @@ CGFloat const ktypeInterval = 0.02;
 
                         //set coach bio info
                         _coachBioTextView.text = _coachUser[@"bio"];
+                        NSString* nameStr = [NSString stringWithFormat:@"%@ %@",[_coachUser valueForKey:@"firstName"], [_coachUser valueForKey:@"lastName"]];
+                        NSArray* firstLastStrings = [nameStr componentsSeparatedByString:@" "];
+                        NSString* firstName = [firstLastStrings objectAtIndex:0];
+                        NSString* lastName = [firstLastStrings objectAtIndex:1];
+                        char lastInitialChar = [lastName characterAtIndex:0];
+                        NSString* newNameStr = [NSString stringWithFormat:@"%@ %c.", firstName, lastInitialChar];
+                        _coachNameLabel.text = newNameStr;
                         
                         
                         NSLog(@"number of objects in array is: %lu", (unsigned long)[_messagesArray count]);
@@ -972,8 +1051,7 @@ CGFloat const ktypeInterval = 0.02;
           
             //show coach bio stuff
 
-            _messageLabel.text = @"";
-            _messageLabel.hidden = false;
+            _messageTextView.text = @"what";
             _coachBioView.hidden = false;
             
             //show next message
@@ -1012,27 +1090,13 @@ CGFloat const ktypeInterval = 0.02;
             
             [self animateInputIn:_button1];
             
-        }
-        
-        //show text input
-        else if(_messageCount == 2 || _messageCount == 8 || _messageCount == 11){
+        }else if(_messageCount == 2){
             [_textfield1 becomeFirstResponder];
             _textfield1.hidden = false;
             
             //for #9...we may want to force format the phone number
             //maybe a new textfield init'd programatically will be good here
-        }
-        else if(_messageCount == 5){
-            
-            //age
-            //_textfield1.keyboardType = UIKeyboardTypeNumberPad; //**for now leaving this out since we have ot add in a 'send' button that would normally be in the keyboard
-            
-            [_textfield1 becomeFirstResponder];
-            _textfield1.hidden = false;
-            
-        }
-        
-        else if(_messageCount == 3){
+        }else if(_messageCount == 3){
             
             //maybe we do an array input here instead??
             [self animateInputIn:_button1];
@@ -1040,12 +1104,17 @@ CGFloat const ktypeInterval = 0.02;
             [self animateInputIn:_button3];
             [self animateInputIn:_button4];
             
-        }
-        
-        else if(_messageCount == 4){
+        }else if(_messageCount == 4){
             
             [self animateInputIn:_button1];
             [self animateInputIn:_button2];
+            
+        }else if(_messageCount == 5){
+            
+            //age
+            _textfield1.keyboardType = UIKeyboardTypeNumberPad;
+            [_textfield1 becomeFirstResponder];
+            _textfield1.hidden = false;
             
         }else if(_messageCount == 6){
             _textfield1.hidden = true;
@@ -1066,6 +1135,14 @@ CGFloat const ktypeInterval = 0.02;
                 [self addTrainerTable];
             }
             
+        }else if(_messageCount == 8){
+            
+            //age
+            _textfield1.keyboardType = UIKeyboardTypeEmailAddress; //**for now leaving this out since we have ot add in a 'send' button that would normally be in the keyboard
+            
+            [_textfield1 becomeFirstResponder];
+            _textfield1.hidden = false;
+            
         }else if(_messageCount == 9){
             _textfield1.hidden = true;
             
@@ -1074,6 +1151,10 @@ CGFloat const ktypeInterval = 0.02;
         }else if(_messageCount == 10){
             [self animateInputIn:_button2];
             [self animateInputIn:_button1];
+        }else if (_messageCount == 11){
+            //_textfield1.keyboardType = UIKeyboardTypeNumberPad;
+            [_textfield1 becomeFirstResponder];
+            _textfield1.hidden = false;
         }else if(_messageCount == 12 ){
             [_textfield1 becomeFirstResponder];
             _textfield1.hidden = false;
@@ -1147,8 +1228,8 @@ CGFloat const ktypeInterval = 0.02;
         _coachUser = coaches[_i];
         
         //create message and add to message array!
-        NSString *foundCoachString = [NSString stringWithFormat:@"Based on everything I know about you, I think %@ is giong to be an awesome fit :)", _coachUser[@"firstName"]];
-        [_messagesArray replaceObjectAtIndex:_messageCount withObject:foundCoachString];
+//        NSString *foundCoachString = [NSString stringWithFormat:@"Based on everything I know about you, I think %@ is giong to be an awesome fit :)", _coachUser[@"firstName"]];
+//        [_messagesArray replaceObjectAtIndex:_messageCount withObject:foundCoachString];
         
         
         if(_coachUser){
@@ -1182,9 +1263,9 @@ CGFloat const ktypeInterval = 0.02;
             _coachUser = coachUsers;
             
             //create message and add to message array!
-            NSString *foundCoachString = [NSString stringWithFormat:@"Based on everything I know about you, I think %@ is giong to be an awesome fit :)", _coachUser[@"firstName"]];
-            [_messagesArray replaceObjectAtIndex:_messageCount withObject:foundCoachString];
-            
+//            NSString *foundCoachString = [NSString stringWithFormat:@"Based on everything I know about you, I think %@ is giong to be an awesome fit :)", _coachUser[@"firstName"]];
+//            [_messagesArray replaceObjectAtIndex:_messageCount withObject:foundCoachString];
+//            
             //complete the block
             if(_coachUser){
                 NSLog(@"coach block completed");
@@ -1208,10 +1289,10 @@ CGFloat const ktypeInterval = 0.02;
             _coachUser = coaches[0];
             
             //create message and add to message array!
-            NSString *foundCoachString = [NSString stringWithFormat:@"Based on everything I know about you, I think %@ is giong to be an awesome fit :)", _coachUser[@"firstName"]];
-            [_messagesArray replaceObjectAtIndex:_messageCount withObject:foundCoachString];
-            
-            
+//            NSString *foundCoachString = [NSString stringWithFormat:@"Based on everything I know about you, I think %@ is giong to be an awesome fit :)", _coachUser[@"firstName"]];
+//            [_messagesArray replaceObjectAtIndex:_messageCount withObject:foundCoachString];
+//            
+//            
             if(_coachUser){
                 NSLog(@"coach block completed");
                 compblock(YES);
@@ -1626,6 +1707,9 @@ CGFloat const ktypeInterval = 0.02;
                                                 // no longer anonymous user!
                                                 NSLog(@"Login Successful! %@", token);
                                                 [user signUpInBackground];
+                                                // your app's userId, 127 chars or less
+                                               
+                                                
                                                 
                                                 if(_isGymMember){
                                                     NSLog(@"is gym member. probably perry client %d", _isGymMember);
@@ -1739,7 +1823,7 @@ CGFloat const ktypeInterval = 0.02;
 - (IBAction)cancelButtonPressed:(id)sender {
     
     _cancelButtonPressed = YES;
-    _replacedString = _messageLabel.text;
+    _replacedString = _messageTextView.text;
     
     _textfield1.hidden = true;
     //dismiss keyboard
@@ -1801,5 +1885,28 @@ CGFloat const ktypeInterval = 0.02;
     //for now, let's just go back to the last message
     _messageCount --;
     [self showNextMessage];
+}
+
+- (void)textFieldDidChange{
+    NSLog(@"did change");
+    
+    if (_messageCount == 5) {
+        //we are entering age
+        if (_textfield1.text.length == 2) {
+            
+            //pause so the last digit appears in textview
+            
+            double delayInSeconds = 0.15;
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                NSLog(@"Do some work");
+                [_textfield1 resignFirstResponder];
+                [self buttonPressed:_textfield1];
+
+            });
+            
+            
+        }
+    }
 }
 @end

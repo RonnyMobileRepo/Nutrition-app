@@ -26,6 +26,7 @@
     
     //flags
     BOOL initialized;
+    BOOL phoneCallActive;
     int typingCounter;
     
     //firebase objects
@@ -61,6 +62,23 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    PFUser *current = [PFUser currentUser];
+    
+    if ([current[@"role"] isEqualToString:@"Client"]) {
+        //if user is client then update!
+        PFQuery *query = [PFQuery queryWithClassName:@"Chatrooms"];
+        [query getObjectInBackgroundWithId:groupId block:^(PFObject * _Nullable object, NSError * _Nullable error) {
+            //object is chatroom
+            
+            if (!object[@"isOnLatestVersion"]) {
+                object[@"isOnLatestVersion"] = @"YAS";
+                [object saveInBackground];
+                
+            }
+        }];
+    }
+    
+        
     //declare items for memory stuff i still don't get
     items = [[NSMutableArray alloc] init];
     messages = [[NSMutableArray alloc] init];
@@ -119,7 +137,14 @@
 
     }
     
-   
+    //put these here so that the timer isn't started prematurley on initial load 'enter foreground'
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didEnterForeground)
+                                                 name:UIApplicationDidBecomeActiveNotification object:nil];
+
+    
+    
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -250,7 +275,10 @@
     messageContent = text;
     [self messageSend:text Video:nil Picture:nil Audio:nil];
     [self sendPushNotifications];
-    [self markMessageAsUnread:true];
+    
+    if ([[PFUser currentUser][@"role"] isEqualToString:@"Client"]) {
+        [self markMessageAsUnread:true];
+    }
     
     //mixpanel tracking
     Mixpanel *mixpanel = [Mixpanel sharedInstance];
@@ -673,6 +701,7 @@
     //only show if the user is an RD
     
     NSLog(@"You pressed the phone button! Woot woot!");
+    phoneCallActive = true;
     
     PFQuery *query = [PFQuery queryWithClassName:@"Chatrooms"];
     [query getObjectInBackgroundWithId:groupId block:^(PFObject * _Nullable object, NSError * _Nullable error) {
@@ -705,12 +734,47 @@
         
         NSNumber *isUnreadNum = [[NSNumber alloc] initWithBool:isUnread];
         chatroom[@"isUnread"] = isUnreadNum;
-        [chatroom saveEventually];
+        [chatroom saveInBackground]; //don't do save eventually b/c badge won't show up on coach end
 
         
     }];
     
     
+}
+
+- (void)didEnterForeground{
+    NSLog(@"did enter foreground 2");
+    
+    /////////////////////////////////////
+    //BUILD MESSAGE TO SEND TO FIREBASE//
+    /////////////////////////////////////
+    
+    //if coming from a phone call then...
+    //get chatroom and check if updated
+    //
+    if(phoneCallActive){
+        
+        PFQuery *query = [PFQuery queryWithClassName:@"Chatrooms"];
+        [query getObjectInBackgroundWithId:groupId block:^(PFObject * _Nullable object, NSError * _Nullable error) {
+            //object is chatroom
+            if ([object[@"isOnLatestVersion"] isEqualToString:@"YAS"]) {
+                Outgoing *outgoing = [[Outgoing alloc] initWith:groupId View:self.navigationController.view];
+                [outgoing logPhone];
+            }
+            
+        }];
+        
+        phoneCallActive = false;
+    }
+}
+
+-(NSString*)Date2String:(NSDate *)date
+
+{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ss"];
+    [formatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+    return [formatter stringFromDate:date];
 }
 
 @end

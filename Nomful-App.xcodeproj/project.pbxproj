@@ -97,6 +97,7 @@
 		21D4E2DC1BC2F81D00962C6B /* Chatview.m in Sources */ = {isa = PBXBuildFile; fileRef = 21D4E2DB1BC2F81D00962C6B /* Chatview.m */; };
 		21D4E2E21BC2F82800962C6B /* Incoming.m in Sources */ = {isa = PBXBuildFile; fileRef = 21D4E2DF1BC2F82800962C6B /* Incoming.m */; };
 		21D4E2E31BC2F82800962C6B /* Outgoing.m in Sources */ = {isa = PBXBuildFile; fileRef = 21D4E2E11BC2F82800962C6B /* Outgoing.m */; };
+		21E9012F1BF2C5BF00DDEAFB /* Sean.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 21E9012E1BF2C5BF00DDEAFB /* Sean.jpeg */; };
 		21FECF141BC431E800C5FB8B /* PhotoMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 21FECF131BC431E800C5FB8B /* PhotoMediaItem.m */; };
 		AF506B75587A9DEF81A83E92 /* libPods-Nomful-AppUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D59B015D86A658025692A20 /* libPods-Nomful-AppUITests.a */; };
 		D90A71F8CF68228131732D10 /* libPods-Nomful-AppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DF9BA7B1C8F44032E169948A /* libPods-Nomful-AppTests.a */; };
@@ -276,6 +277,7 @@
 		21D4E2DF1BC2F82800962C6B /* Incoming.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Incoming.m; sourceTree = "<group>"; };
 		21D4E2E01BC2F82800962C6B /* Outgoing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Outgoing.h; sourceTree = "<group>"; };
 		21D4E2E11BC2F82800962C6B /* Outgoing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Outgoing.m; sourceTree = "<group>"; };
+		21E9012E1BF2C5BF00DDEAFB /* Sean.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Sean.jpeg; sourceTree = "<group>"; };
 		21FECF121BC431E800C5FB8B /* PhotoMediaItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoMediaItem.h; sourceTree = "<group>"; };
 		21FECF131BC431E800C5FB8B /* PhotoMediaItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoMediaItem.m; sourceTree = "<group>"; };
 		3D59B015D86A658025692A20 /* libPods-Nomful-AppUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Nomful-AppUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -385,8 +387,6 @@
 				2137D8691BAC980000310545 /* UIImage+RoundedCornerAdditions.m */,
 				2137D86A1BAC980000310545 /* UpdateProfileViewController.h */,
 				2137D86B1BAC980000310545 /* UpdateProfileViewController.m */,
-				2137D86C1BAC980000310545 /* UserAccountViewController.h */,
-				2137D86D1BAC980000310545 /* UserAccountViewController.m */,
 				2137D86E1BAC980000310545 /* VerificationCodeViewController.h */,
 				2137D86F1BAC980000310545 /* VerificationCodeViewController.m */,
 				2137D8591BAC97F000310545 /* stripeViewController.h */,
@@ -446,6 +446,7 @@
 		2137D8851BACA03900310545 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				21E9012E1BF2C5BF00DDEAFB /* Sean.jpeg */,
 				2137D8861BACA04600310545 /* broWithSmoothie.jpg */,
 				2137D8871BACA04600310545 /* fitness-background.png */,
 				2137D8881BACA04600310545 /* food-square.png */,
@@ -574,12 +575,12 @@
 		21C88A241BAC95CF00792E9C /* Nomful-App */ = {
 			isa = PBXGroup;
 			children = (
-				2187BD261BD7DFC50058A7C3 /* Meal Detail */,
 				21C88A281BAC95CF00792E9C /* AppDelegate.h */,
 				21C88A291BAC95CF00792E9C /* AppDelegate.m */,
 				2137D8821BAC9E8D00310545 /* Main.storyboard */,
 				2137D8811BAC9E8D00310545 /* LaunchScreen.xib */,
 				21C6FC4F1BAF20EE004599E8 /* Nomful-App.entitlements */,
+				2187BD261BD7DFC50058A7C3 /* Meal Detail */,
 				21643A541BC5950C0099E6FB /* Member View */,
 				21643A501BC591180099E6FB /* Login */,
 				21643A4C1BC4BA270099E6FB /* Sign Up */,
@@ -590,7 +591,6 @@
 				21C88A2C1BAC95CF00792E9C /* ViewController.m */,
 				21C88A341BAC95CF00792E9C /* Assets.xcassets */,
 				21C88A361BAC95CF00792E9C /* LaunchScreen.storyboard */,
-				21C88A391BAC95CF00792E9C /* Info.plist */,
 				21C88A311BAC95CF00792E9C /* Nomful_App.xcdatamodeld */,
 				21C88A251BAC95CF00792E9C /* Supporting Files */,
 			);
@@ -600,6 +600,7 @@
 		21C88A251BAC95CF00792E9C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				21C88A391BAC95CF00792E9C /* Info.plist */,
 				21C88A261BAC95CF00792E9C /* main.m */,
 				2137D87D1BAC986C00310545 /* PrefixHeader.pch */,
 			);
@@ -650,6 +651,8 @@
 		21D4E2E41BC2F93300962C6B /* Coach View */ = {
 			isa = PBXGroup;
 			children = (
+				2137D86C1BAC980000310545 /* UserAccountViewController.h */,
+				2137D86D1BAC980000310545 /* UserAccountViewController.m */,
 				2187BD2B1BD7EAE90058A7C3 /* Client Meals */,
 				2137D7F71BAC974E00310545 /* ClientListViewController.h */,
 				2137D7F81BAC974E00310545 /* ClientListViewController.m */,
@@ -819,6 +822,7 @@
 				210022571BE17E2E00838A5E /* Brittany-Icon.png in Resources */,
 				2137D8841BAC9E8D00310545 /* Main.storyboard in Resources */,
 				2137D8A01BACA04600310545 /* iphone_6.png in Resources */,
+				21E9012F1BF2C5BF00DDEAFB /* Sean.jpeg in Resources */,
 				2137D8A61BACA04600310545 /* MuseoSansRounded-300.otf in Resources */,
 				2137D89C1BACA04600310545 /* food-square.png in Resources */,
 				2137D8AD1BACA04600310545 /* white-button.png in Resources */,

@@ -14,12 +14,14 @@
 
 
 @interface SignUpConversationViewController : UIViewController <UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, VPImageCropperDelegate, UITableViewDataSource, UITableViewDelegate>
+@property (weak, nonatomic) IBOutlet UILabel *coachNameLabel;
 
 //variables
 @property NSInteger messageCount;
 @property NSInteger buttonLabelCount;
 @property (strong, nonatomic) PFUser *coachUser;
 @property (strong, nonatomic) UIImage *coachImage;
+@property (weak, nonatomic) IBOutlet UITextView *messageTextView;
 
 //coach stuff
 @property (weak, nonatomic) IBOutlet UIImageView *coachProfileImage;

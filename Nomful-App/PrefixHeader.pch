@@ -17,7 +17,6 @@
 #import <Parse/Parse.h>
 #import <ParseUI.h>
 #import <Mixpanel.h>
-#import <Intercom.h>
 #import <ChimpKit.h>
 #import "Reachability.h"
 #import "ParseErrorHandlingController.h"
@@ -44,8 +43,7 @@
 
 #define MAILCHIMP_TOKEN @"458779a92e35ef155beeb58b445fd2ee-us10" //NOMFUL MAILCHIMP
 #define kFontFamilyName @"MuseoSansRounded-300" //font group
-
-
+#define kFontFamilyName100 @"MuseoSansRounded-100"
 
 
 #endif /* PrefixHeader_pch */

@@ -221,7 +221,6 @@ CGFloat const kMarginForTextField= 60.0;
         if(daysLeft <= 0){
             NSLog(@"user logged out...membership canceled");
             [PFUser logOut];
-            
             //replace and push rootview manually
             return true;
         }

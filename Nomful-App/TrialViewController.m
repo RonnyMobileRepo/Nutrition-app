@@ -17,10 +17,6 @@
 
 @implementation TrialViewController
 
-- (BOOL) prefersStatusBarHidden
-{
-    return YES;
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -91,7 +87,7 @@
             
         }else if([[PFUser currentUser][@"planType"] isEqualToString:@"intro"]){
             NSDate *now = [NSDate date];
-            NSInteger daysInTrial = 30; //30 days
+            NSInteger daysInTrial = 21; //30 days
             NSDate *trialEndDate = [now dateByAddingTimeInterval:60*60*24*daysInTrial];
             
             //mark trial start date
@@ -162,6 +158,7 @@
         //set twilio number
         [self setTwilioNumber:chatroom coachuser:_coachUser];
         
+        [self sendFirstMessage:chatroom];
 
     }];//end save chatroom object
     
@@ -173,7 +170,7 @@
     PFUser *currentUser = [PFUser currentUser];
     
     //fetch for data...?
-    [currentUser fetch];
+    [currentUser fetchIfNeeded];
     
     //build array of who is getting the push sent to them
     NSArray *pushUsers = @[_coachUser];
@@ -203,7 +200,6 @@
     
     NSLog(@"Push's sent and everything okay...");
 
-    
 }
 - (void)setTwilioNumber:(PFObject *)chatroom coachuser:(PFUser *)coachUser{
     //set the twilio number for the chatroom
@@ -288,7 +284,7 @@
         NSLog(@"You just saved the client user on the installation in parse");
     }];
     
-    
+
     //register with Mixpanel
     Mixpanel *mixpanel = [Mixpanel sharedInstance];
     [mixpanel identify:[PFUser currentUser].objectId];
@@ -308,4 +304,118 @@
     }
    
 }
+
+- (void)sendFirstMessage:(PFObject *)chatroom{
+
+    /////////////////////////////////////
+    //BUILD MESSAGE TO SEND TO FIREBASE//
+    /////////////////////////////////////
+    
+    NSString *gender1;
+    NSString *gender2;
+    
+    NSString *firstName = _coachUser[@"firstName"];
+    
+    if ([_coachUser[@"gender"] isEqualToString:@"m"]) {
+        //female
+        gender1 = @"him";
+        gender2 = @"He";
+    }else{
+        gender1 = @"her";
+        gender2 = @"She";
+    }
+    //set the text we want it to be
+ 
+    NSString *text = [[NSString alloc] initWithFormat:@"Welcome to Nomful! This is where you will communicate with your coach, %@ :) I let %@ know that you're all signed up and ready to go! %@ will reach out to you today and set up a phone call so you can get to know eachother. In the meantime you can start taking photos of your foods for %@ to review!",firstName, gender1, gender2, firstName];
+    
+    //build firebase json? object
+    NSMutableDictionary *item = [[NSMutableDictionary alloc] init];
+    item[@"userId"] = @"7zMGN960nO"; //prod 7zMGN960nO //dev 9EZw4s8feD
+    item[@"name"] = @"Nomberry";
+    item[@"date"] = [self Date2String:[NSDate date]];
+    item[@"status"] = @"Delivered"; //*this is the string that show up on each message underneath...timestamp instead?
+    item[@"video"] = item[@"thumbnail"] = item[@"picture"] = item[@"audio"] = item[@"latitude"] = item[@"longitude"] = @"";
+    item[@"video_duration"] = item[@"audio_duration"] = @0;
+    item[@"picture_width"] = item[@"picture_height"] = @0;
+    item[@"text"] = text;
+    item[@"type"] = @"text";
+
+    //send to firebase feed
+    Firebase *firebase = [[Firebase alloc] initWithUrl:[NSString stringWithFormat:@"%@/Message/%@", kFirechatNS, chatroom.objectId]];
+    Firebase *reference = [firebase childByAutoId];
+    item[@"messageId"] = reference.key;
+    
+    [reference setValue:item withCompletionBlock:^(NSError *error, Firebase *ref)
+     {
+         if (error != nil) NSLog(@"Outgoing sendMessage network error.");
+     }];
+
+    //////////////////////////////////////////
+    //SEND PUSH NOTIFICATION TO CURRENT USER//
+    //////////////////////////////////////////
+    
+    //send push notification
+    //send push notification to RD and PT
+    PFUser *currentUser = [PFUser currentUser];
+    
+    //fetch for data...?
+    [currentUser fetch];
+    
+    //build array of who is getting the push sent to them
+    NSArray *pushUsers = @[currentUser];
+    
+    //build push query
+    PFQuery *pushQuery = [PFInstallation query];
+    [pushQuery whereKey:@"user" containedIn:pushUsers];
+    
+    //build push string
+    NSString *name = [NSString stringWithFormat:@"Welcome to Nomful %@! Glad you've joined us. ", currentUser[@"firstName"]];
+    
+    //set data for push
+    NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys:
+                          name, @"alert",
+                          @1, @"badge",
+                          @"message", @"type",
+                          nil];
+    
+    //new push object
+    PFPush *push = [[PFPush alloc] init];
+    
+    //set data and send
+    [push setQuery:pushQuery];
+    [push setData:data];
+    
+    //send
+    [push sendPushInBackground];
+    
+    ///////////////////////////////
+    //SEND FIRST TIME LOGIN EMAIL//
+    ///////////////////////////////
+    
+    //send first time login email
+    [PFCloud callFunctionInBackground:@"sendFirstTimeLoginEmail"
+                       withParameters:@{@"toEmail": currentUser.email,
+                                        @"toName": currentUser[@"firstName"]
+                                        }
+                                block:^(NSString *result, NSError *error) {
+                                    if (!error) {
+                                        NSLog(@"RESULT IS: %@", result);
+                                    }
+                                    else{
+                                        NSLog(@"ERROR: %@", error);
+                                    }
+                                }];
+
+    
+}
+
+-(NSString*)Date2String:(NSDate *)date
+
+{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ss"];
+    [formatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+    return [formatter stringFromDate:date];
+}
+
 @end

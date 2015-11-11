@@ -38,6 +38,22 @@
 	return self;
 }
 
+
+- (void)logPhone{
+    
+    NSMutableDictionary *item = [[NSMutableDictionary alloc] init];
+    item[@"userId"] = @"7zMGN960nO"; //live 7zMGN960nO //dev 9EZw4s8feD
+    item[@"name"] = @"Nomberry";
+    item[@"date"] = [self Date2String:[NSDate date]];
+    item[@"status"] = @"Delivered"; //*this is the string that show up on each message underneath...timestamp instead?
+    item[@"video"] = item[@"thumbnail"] = item[@"picture"] = item[@"audio"] = item[@"latitude"] = item[@"longitude"] = @"";
+    item[@"video_duration"] = item[@"audio_duration"] = @0;
+    item[@"picture_width"] = item[@"picture_height"] = @0;
+    
+    [self sendPhoneCall:item];
+
+}
+
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 - (void)send:(NSString *)text Video:(NSURL *)video Picture:(UIImage *)picture Audio:(NSString *)audio
 //-------------------------------------------------------------------------------------------------------------------------------------------------
@@ -47,7 +63,8 @@
 	item[@"userId"] = [PFUser currentUser].objectId;
 	item[@"name"] = [PFUser currentUser][@"firstName"];
     item[@"date"] = [self Date2String:[NSDate date]];
-	item[@"status"] = @"Delivered";
+	item[@"status"] = @"Delivered"; //*this is the string that show up on each message underneath...timestamp instead?
+    
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	item[@"video"] = item[@"thumbnail"] = item[@"picture"] = item[@"audio"] = item[@"latitude"] = item[@"longitude"] = @"";
 	item[@"video_duration"] = item[@"audio_duration"] = @0;
@@ -67,6 +84,15 @@
 	item[@"text"] = text;
 	item[@"type"] = @"text";
 	[self sendMessage:item];
+}
+
+- (void)sendPhoneCall:(NSMutableDictionary *)item
+//-------------------------------------------------------------------------------------------------------------------------------------------------
+{
+    //**this is where we set the phone call message from nomberry
+    item[@"text"] = @"Hey there! Glad you guys had a call :) keep up the healthy progress!";
+    item[@"type"] = @"phonecall";
+    [self sendMessage:item];
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
