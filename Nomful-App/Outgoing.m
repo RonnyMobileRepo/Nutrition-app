@@ -42,7 +42,7 @@
 - (void)logPhone{
     
     NSMutableDictionary *item = [[NSMutableDictionary alloc] init];
-    item[@"userId"] = @"9EZw4s8feD";
+    item[@"userId"] = @"7zMGN960nO"; //live 7zMGN960nO //dev 9EZw4s8feD
     item[@"name"] = @"Nomberry";
     item[@"date"] = [self Date2String:[NSDate date]];
     item[@"status"] = @"Delivered"; //*this is the string that show up on each message underneath...timestamp instead?
