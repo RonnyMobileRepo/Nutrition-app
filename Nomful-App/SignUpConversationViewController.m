@@ -33,6 +33,7 @@ CGFloat const ktypeInterval = 0.02;
         }];
     }
     
+    [_messageTextView setFont:[UIFont fontWithName:kFontFamilyName100 size:22.0]];
     _realCode = [[NSString alloc] init];
     
     [_nomberry setTranslatesAutoresizingMaskIntoConstraints:NO];
