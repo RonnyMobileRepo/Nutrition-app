@@ -62,6 +62,23 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    PFUser *current = [PFUser currentUser];
+    
+    if ([current[@"role"] isEqualToString:@"Client"]) {
+        //if user is client then update!
+        PFQuery *query = [PFQuery queryWithClassName:@"Chatrooms"];
+        [query getObjectInBackgroundWithId:groupId block:^(PFObject * _Nullable object, NSError * _Nullable error) {
+            //object is chatroom
+            
+            if (!object[@"isOnLatestVersion"]) {
+                object[@"isOnLatestVersion"] = @"YAS";
+                [object saveInBackground];
+                
+            }
+        }];
+    }
+    
+        
     //declare items for memory stuff i still don't get
     items = [[NSMutableArray alloc] init];
     messages = [[NSMutableArray alloc] init];
@@ -732,13 +749,23 @@
     //BUILD MESSAGE TO SEND TO FIREBASE//
     /////////////////////////////////////
     
+    //if coming from a phone call then...
+    //get chatroom and check if updated
+    //
     if(phoneCallActive){
-        Outgoing *outgoing = [[Outgoing alloc] initWith:groupId View:self.navigationController.view];
-        [outgoing logPhone];
+        
+        PFQuery *query = [PFQuery queryWithClassName:@"Chatrooms"];
+        [query getObjectInBackgroundWithId:groupId block:^(PFObject * _Nullable object, NSError * _Nullable error) {
+            //object is chatroom
+            if ([object[@"isOnLatestVersion"] isEqualToString:@"YAS"]) {
+                Outgoing *outgoing = [[Outgoing alloc] initWith:groupId View:self.navigationController.view];
+                [outgoing logPhone];
+            }
+            
+        }];
+        
         phoneCallActive = false;
     }
-    
-
 }
 
 -(NSString*)Date2String:(NSDate *)date
