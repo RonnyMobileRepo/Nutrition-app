@@ -17,6 +17,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
     
     [[UINavigationBar appearance] setTitleTextAttributes: @{
                                                             //NSForegroundColorAttributeName: [UIColor greenColor],
@@ -69,6 +70,7 @@
             }
         }];
     }else{
+        NSLog(@"you made it");
         UIImage *backimage = [UIImage imageNamed:@"Sean.jpeg"];
         //set background to default
         [self.bacgroundImage setImage:backimage];

@@ -311,8 +311,22 @@
     //BUILD MESSAGE TO SEND TO FIREBASE//
     /////////////////////////////////////
     
+    NSString *gender1;
+    NSString *gender2;
+    
+    NSString *firstName = _coachUser[@"firstName"];
+    
+    if ([_coachUser[@"gender"] isEqualToString:@"m"]) {
+        //female
+        gender1 = @"him";
+        gender2 = @"He";
+    }else{
+        gender1 = @"her";
+        gender2 = @"She";
+    }
     //set the text we want it to be
-    NSString *text = @"Welcome to Nomful! This is where you will communicate with your coach :) I let her know that you're all signed up and ready to go! She will reach out to you today and set up a phone call so you can get to know eachother. In the meantime you can start taking photos of your foods for your coach to review!";
+ 
+    NSString *text = [[NSString alloc] initWithFormat:@"Welcome to Nomful! This is where you will communicate with your coach, %@ :) I let %@ know that you're all signed up and ready to go! %@ will reach out to you today and set up a phone call so you can get to know eachother. In the meantime you can start taking photos of your foods for %@ to review!",firstName, gender1, gender2, firstName];
     
     //build firebase json? object
     NSMutableDictionary *item = [[NSMutableDictionary alloc] init];

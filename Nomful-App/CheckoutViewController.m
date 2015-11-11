@@ -379,7 +379,7 @@ NSString *const kBOOTCAMPAMOUNT = @"199.00";
         //try to log in, we can check to see if their phone exists before sending to payment
         [self makeMember];
         
-    }else{
+    }else if(_paymentProcessed){
         [self dismissViewControllerAnimated:true completion:^{
 
             NSLog(@"you ar ehere");

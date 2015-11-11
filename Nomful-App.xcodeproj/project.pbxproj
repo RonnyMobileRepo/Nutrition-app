@@ -96,6 +96,7 @@
 		21D4E2DC1BC2F81D00962C6B /* Chatview.m in Sources */ = {isa = PBXBuildFile; fileRef = 21D4E2DB1BC2F81D00962C6B /* Chatview.m */; };
 		21D4E2E21BC2F82800962C6B /* Incoming.m in Sources */ = {isa = PBXBuildFile; fileRef = 21D4E2DF1BC2F82800962C6B /* Incoming.m */; };
 		21D4E2E31BC2F82800962C6B /* Outgoing.m in Sources */ = {isa = PBXBuildFile; fileRef = 21D4E2E11BC2F82800962C6B /* Outgoing.m */; };
+		21E9012F1BF2C5BF00DDEAFB /* Sean.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 21E9012E1BF2C5BF00DDEAFB /* Sean.jpeg */; };
 		21FECF141BC431E800C5FB8B /* PhotoMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 21FECF131BC431E800C5FB8B /* PhotoMediaItem.m */; };
 		5EDD67B4A8A9E0D710949A4F /* libPods-Nomful-App.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DE4DE3B1DF31D17CBF9E1A0C /* libPods-Nomful-App.a */; };
 		AF506B75587A9DEF81A83E92 /* libPods-Nomful-AppUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D59B015D86A658025692A20 /* libPods-Nomful-AppUITests.a */; };
@@ -276,6 +277,7 @@
 		21D4E2DF1BC2F82800962C6B /* Incoming.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Incoming.m; sourceTree = "<group>"; };
 		21D4E2E01BC2F82800962C6B /* Outgoing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Outgoing.h; sourceTree = "<group>"; };
 		21D4E2E11BC2F82800962C6B /* Outgoing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Outgoing.m; sourceTree = "<group>"; };
+		21E9012E1BF2C5BF00DDEAFB /* Sean.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Sean.jpeg; sourceTree = "<group>"; };
 		21FECF121BC431E800C5FB8B /* PhotoMediaItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoMediaItem.h; sourceTree = "<group>"; };
 		21FECF131BC431E800C5FB8B /* PhotoMediaItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoMediaItem.m; sourceTree = "<group>"; };
 		3D59B015D86A658025692A20 /* libPods-Nomful-AppUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Nomful-AppUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -385,8 +387,6 @@
 				2137D8691BAC980000310545 /* UIImage+RoundedCornerAdditions.m */,
 				2137D86A1BAC980000310545 /* UpdateProfileViewController.h */,
 				2137D86B1BAC980000310545 /* UpdateProfileViewController.m */,
-				2137D86C1BAC980000310545 /* UserAccountViewController.h */,
-				2137D86D1BAC980000310545 /* UserAccountViewController.m */,
 				2137D86E1BAC980000310545 /* VerificationCodeViewController.h */,
 				2137D86F1BAC980000310545 /* VerificationCodeViewController.m */,
 				2137D8591BAC97F000310545 /* stripeViewController.h */,
@@ -446,6 +446,7 @@
 		2137D8851BACA03900310545 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				21E9012E1BF2C5BF00DDEAFB /* Sean.jpeg */,
 				2137D8861BACA04600310545 /* broWithSmoothie.jpg */,
 				2137D8871BACA04600310545 /* fitness-background.png */,
 				2137D8881BACA04600310545 /* food-square.png */,
@@ -650,6 +651,8 @@
 		21D4E2E41BC2F93300962C6B /* Coach View */ = {
 			isa = PBXGroup;
 			children = (
+				2137D86C1BAC980000310545 /* UserAccountViewController.h */,
+				2137D86D1BAC980000310545 /* UserAccountViewController.m */,
 				2187BD2B1BD7EAE90058A7C3 /* Client Meals */,
 				2137D7F71BAC974E00310545 /* ClientListViewController.h */,
 				2137D7F81BAC974E00310545 /* ClientListViewController.m */,
@@ -818,6 +821,7 @@
 				210022571BE17E2E00838A5E /* Brittany-Icon.png in Resources */,
 				2137D8841BAC9E8D00310545 /* Main.storyboard in Resources */,
 				2137D8A01BACA04600310545 /* iphone_6.png in Resources */,
+				21E9012F1BF2C5BF00DDEAFB /* Sean.jpeg in Resources */,
 				2137D8A61BACA04600310545 /* MuseoSansRounded-300.otf in Resources */,
 				2137D89C1BACA04600310545 /* food-square.png in Resources */,
 				2137D8AD1BACA04600310545 /* white-button.png in Resources */,
@@ -1157,7 +1161,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "eb9bc7e2-7c72-4305-8936-83b9ce4e9d6b";
+				PROVISIONING_PROFILE = "6c2c2ad3-225b-4a6b-9ee5-f62dc76cd8e1";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1196,7 +1200,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "eb9bc7e2-7c72-4305-8936-83b9ce4e9d6b";
+				PROVISIONING_PROFILE = "6c2c2ad3-225b-4a6b-9ee5-f62dc76cd8e1";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -1223,7 +1227,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Nomful;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "eb9bc7e2-7c72-4305-8936-83b9ce4e9d6b";
+				PROVISIONING_PROFILE = "6c2c2ad3-225b-4a6b-9ee5-f62dc76cd8e1";
 			};
 			name = Debug;
 		};
@@ -1247,7 +1251,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Nomful;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "eb9bc7e2-7c72-4305-8936-83b9ce4e9d6b";
+				PROVISIONING_PROFILE = "6c2c2ad3-225b-4a6b-9ee5-f62dc76cd8e1";
 			};
 			name = Release;
 		};

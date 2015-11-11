@@ -717,7 +717,7 @@
         
         NSNumber *isUnreadNum = [[NSNumber alloc] initWithBool:isUnread];
         chatroom[@"isUnread"] = isUnreadNum;
-        [chatroom saveEventually];
+        [chatroom saveInBackground]; //don't do save eventually b/c badge won't show up on coach end
 
         
     }];

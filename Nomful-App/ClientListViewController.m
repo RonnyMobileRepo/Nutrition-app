@@ -45,6 +45,7 @@
                                                  name:UIApplicationDidBecomeActiveNotification object:nil];
 }
 
+
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
@@ -69,6 +70,8 @@
     }
     return self;
 }
+
+
 
 - (PFQuery *)queryForTable
 {
