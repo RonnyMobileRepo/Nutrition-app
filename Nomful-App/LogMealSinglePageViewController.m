@@ -1653,6 +1653,12 @@ bool keyboardIsShowing = false;
                     [push setQuery:pushQuery];
                     [push setData:data];
                     [push sendPushInBackground];
+                    
+                    //mixpanel tracking
+                    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+                    [mixpanel track:@"Meal Saved" properties:@{}];
+
+                    
                 }
                 else{
                     //[ParseErrorHandlingController handleParseError:error];
