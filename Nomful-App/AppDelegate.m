@@ -191,9 +191,12 @@
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     NSLog(@"app did enter background");
     
-    Mixpanel *mixpanel = [Mixpanel sharedInstance];
-    [mixpanel track:@"Session"];
-    
+    if ([PFUser currentUser]) {
+        //if there is an active user...mixpanel dat shit
+        Mixpanel *mixpanel = [Mixpanel sharedInstance];
+        [mixpanel track:@"Session"];
+        [mixpanel identify:[PFUser currentUser].objectId]; //this is what set the 'last seen' in mixpanel
+    }
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -209,11 +212,13 @@
     
     //event for app open
     [mixpanel track:@"App Opened" properties:@{}];
-    
     // start the timer for the event session ("App Close")
     [mixpanel timeEvent:@"Session"];
     
-
+    if ([PFUser currentUser]) {
+        //if there is an active user...mixpanel dat shit
+        [mixpanel identify:[PFUser currentUser].objectId]; //this is what set the 'last seen' in mixpanel
+    }
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
