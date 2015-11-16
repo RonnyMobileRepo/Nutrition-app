@@ -203,7 +203,7 @@
         NSLog(@"Available Clients TVC: You are an PT and are about to query for PT");
 
         [query whereKey:@"trainerUser" equalTo:[PFUser currentUser]];
-    }else if([currentUser[@"role"] isEqualToString:@"admin"]){
+    }else {
         //query all the chatrooms
     }
         [query whereKeyDoesNotExist:@"ptRemoved"];

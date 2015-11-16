@@ -81,7 +81,6 @@
 		2137D8AC1BACA04600310545 /* thomas.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 2137D8981BACA04600310545 /* thomas.JPG */; };
 		2137D8AD1BACA04600310545 /* white-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 2137D8991BACA04600310545 /* white-button.png */; };
 		21643A4F1BC56D470099E6FB /* ConvertToFirebaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21643A4E1BC56D470099E6FB /* ConvertToFirebaseViewController.m */; };
-		21643A531BC592FC0099E6FB /* adminViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21643A521BC592FC0099E6FB /* adminViewController.m */; };
 		21856A851BCAADFA00E217F7 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21856A831BCAADFA00E217F7 /* Fabric.framework */; };
 		21856A861BCAADFA00E217F7 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21856A841BCAADFA00E217F7 /* Crashlytics.framework */; };
 		2187BD291BD7DFE40058A7C3 /* MealDetailCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2187BD281BD7DFE40058A7C3 /* MealDetailCardViewController.m */; };
@@ -248,8 +247,6 @@
 		2137D8991BACA04600310545 /* white-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "white-button.png"; sourceTree = "<group>"; };
 		21643A4D1BC56D470099E6FB /* ConvertToFirebaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConvertToFirebaseViewController.h; sourceTree = "<group>"; };
 		21643A4E1BC56D470099E6FB /* ConvertToFirebaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConvertToFirebaseViewController.m; sourceTree = "<group>"; };
-		21643A511BC592FC0099E6FB /* adminViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = adminViewController.h; sourceTree = "<group>"; };
-		21643A521BC592FC0099E6FB /* adminViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = adminViewController.m; sourceTree = "<group>"; };
 		21856A831BCAADFA00E217F7 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		21856A841BCAADFA00E217F7 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		2187BD271BD7DFE40058A7C3 /* MealDetailCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MealDetailCardViewController.h; sourceTree = "<group>"; };
@@ -490,8 +487,6 @@
 			children = (
 				2137D8351BAC97AF00310545 /* phoneLoginViewController.h */,
 				2137D8361BAC97AF00310545 /* phoneLoginViewController.m */,
-				21643A511BC592FC0099E6FB /* adminViewController.h */,
-				21643A521BC592FC0099E6FB /* adminViewController.m */,
 			);
 			name = Login;
 			sourceTree = "<group>";
@@ -1052,7 +1047,6 @@
 				2137D8721BAC980000310545 /* TrialViewController.m in Sources */,
 				21C88A2A1BAC95CF00792E9C /* AppDelegate.m in Sources */,
 				21C88A271BAC95CF00792E9C /* main.m in Sources */,
-				21643A531BC592FC0099E6FB /* adminViewController.m in Sources */,
 				2137D8751BAC980000310545 /* UIImage+ResizeAdditions.m in Sources */,
 				2137D8281BAC979700310545 /* MessagesViewController.m in Sources */,
 				2137D8791BAC980000310545 /* VerificationCodeViewController.m in Sources */,

@@ -30,8 +30,6 @@
         if([currentUser[@"role"] isEqualToString:@"RD"] ||[currentUser[@"role"] isEqualToString:@"PT"] ){
             //either an RD or a PT signed in
             [self performSegueWithIdentifier:@"launchToCoach" sender:self];
-        }else if([currentUser[@"role"] isEqualToString:@"admin"]){
-            [self performSegueWithIdentifier:@"launchToCoach" sender:self];
         }else{
             //you are a client
             

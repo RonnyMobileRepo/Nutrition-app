@@ -82,11 +82,7 @@
     //query the chatroom calss
     PFQuery *query = [PFQuery queryWithClassName:self.parseClassName];
     
-    //admins get to see all
-    if([currentUser[@"role"] isEqualToString:@"admin"]){
-        [query orderByDescending:@"createdAt"];
-        [query orderByDescending:@"isUnread"];
-    }else if([currentUser[@"role"] isEqualToString:@"PT"]){
+    if([currentUser[@"role"] isEqualToString:@"PT"]){
         //coaches only get to see their clients
         [query whereKey:@"trainerUser" equalTo:currentUser];
         [query includeKey:@"clientUser"];

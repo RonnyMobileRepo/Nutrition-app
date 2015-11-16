@@ -111,10 +111,6 @@ CGFloat const kMarginForTextField= 60.0;
                 NSLog(@"Login VC: User is a PT!");
                 [self performSegueWithIdentifier:@"loginToLiz" sender:self];
                 
-            }else if([userRole isEqualToString:@"admin"]){
-                NSLog(@"Login VC: User is a admin!");
-                [self performSegueWithIdentifier:@"loginToLiz" sender:self];
-            
             }else{
                 NSLog(@"User has no credential");
             }
