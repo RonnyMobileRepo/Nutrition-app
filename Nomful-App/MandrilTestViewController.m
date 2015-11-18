@@ -17,8 +17,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-//    
+    
 //    PFUser *currentUser = [PFUser currentUser];
+//    NSLog(@"current user is: %@", currentUser);
+//    
 //    
 //    //send first time login email
 //    [PFCloud callFunctionInBackground:@"sendFirstTimeLoginEmail"
@@ -33,7 +35,7 @@
 //                                        NSLog(@"ERROR: %@", error);
 //                                    }
 //                                }];
-    
+//    
     
 
     _coachUsers = @[[PFUser currentUser]];
