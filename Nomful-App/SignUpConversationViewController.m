@@ -46,12 +46,6 @@ CGFloat const ktypeInterval = 0.02;
     [_textfield1 addTarget:self
                   action:@selector(textFieldDidChange)
         forControlEvents:UIControlEventEditingChanged];
-    _coachBioView.layer.cornerRadius = 6.0;
-    _coachBioView.layer.shadowOffset = CGSizeMake(4, 4);
-    _coachBioView.layer.shadowColor = [[UIColor lightGrayColor] CGColor];
-    _coachBioView.layer.shadowRadius = 0.4f;
-    _coachBioView.layer.shadowOpacity = 0.80f;
-
     
     _messagesArray = [[NSMutableArray alloc] initWithObjects:
                                                         @"Hi! Welcome to Nomful. My name is Nomberry.",
@@ -452,23 +446,7 @@ CGFloat const ktypeInterval = 0.02;
             
             case 10:{
             
-                _coachBioView.hidden = YES;
-                _messageTextView.hidden = NO;
-
-                
-                if(sender == _button1){
-                    //Let's Do this!
-                    
-                    _messageCount++;
-                    [self showNextMessage];
-                }
-                else if (sender == _button2) {
-                    //Find another coach
-                    _findAnotherCoachSelected = true;
-
-                    [self animateNomberry];
-                }
-                
+                //this gets bypassed sine we're now selecting choose coach
                 
                 }break;
                 
@@ -661,7 +639,6 @@ CGFloat const ktypeInterval = 0.02;
             [_button2 setTitle:@"Pull The Other One" forState:UIControlStateNormal];
         }
         if(_messageCount == 11){
-            _coachBioView.hidden = YES;
         }
         
         //don't start the timeer again when we go find the coach
@@ -979,6 +956,9 @@ CGFloat const ktypeInterval = 0.02;
                         //display the coaches in our new card view :)
                         _coachUsers = _coachUserArray;
                         
+                        
+                        //**animate this somehow and make smoothing display
+                        
                         // Create page view controller
                         self.pageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"coachBioPageViewController"];
                         self.pageViewController.dataSource = self;
@@ -1054,7 +1034,6 @@ CGFloat const ktypeInterval = 0.02;
             //show coach bio stuff
 
             _messageTextView.text = @"what";
-            _coachBioView.hidden = false;
             
             //show next message
             [self showNextMessage];
@@ -1226,20 +1205,8 @@ CGFloat const ktypeInterval = 0.02;
                 compblock(NO);
             }
             
-
-            
-            
-            
-            
             
         }];
-        
-        
-        
-        
-        
-        
-        
         
         
         
@@ -1850,8 +1817,6 @@ CGFloat const ktypeInterval = 0.02;
     _textfield1.hidden = true;
     //dismiss keyboard
     [_textfield1 resignFirstResponder];
-
-    _coachBioView.hidden = YES;
     
     //nothing was entered show warning message
     [_messagesArray replaceObjectAtIndex:_messageCount withObject:@"Are you sure you want to stop chatting? If you quit now, you will have to start over."];
@@ -1989,11 +1954,18 @@ CGFloat const ktypeInterval = 0.02;
 // Implement the delegate methods for ChildViewControllerDelegate
 - (void)childViewController:(CoachPageContentViewController *)viewController didChooseCoach:(PFUser *)coachUserSelected{
     
-    // Do something with value...
+    // when a user selectes...'CHOOSE COACH' on one of the cards, this method is fired
+    // we now have to coach that they selected AND we can dismiss the cards and continue with convo
+    
+    //convo
+    _messageTextView.hidden = NO;
+
+    _messageCount++;
+    [self showNextMessage];
+    
     
     // ...then dismiss the child view controller
     [_pageViewController.view removeFromSuperview];
 
-    NSLog(@"COACH SELECTED IS %@", coachUserSelected);
 }
 @end
