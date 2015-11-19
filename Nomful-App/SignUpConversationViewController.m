@@ -7,7 +7,7 @@
 //
 
 #import "SignUpConversationViewController.h"
-
+#import "MandrilTestViewController.h"
 @interface SignUpConversationViewController ()
 
 @end
@@ -458,6 +458,7 @@ CGFloat const ktypeInterval = 0.02;
                 
                 if(sender == _button1){
                     //Let's Do this!
+                    
                     _messageCount++;
                     [self showNextMessage];
                 }
@@ -967,28 +968,6 @@ CGFloat const ktypeInterval = 0.02;
             
                 [self findCoach:^(BOOL finished) {
                     if(finished){
-                        NSLog(@"success coach user is: %@", _coachUser);
-                        
-                        
-                        //get and load coach image in background
-                        PFFile *coachImage = _coachUser[@"photo"];
-                        _newestCoachImage.file = coachImage;
-                        [_newestCoachImage loadInBackground];
-                        _newestCoachImage.layer.cornerRadius = _newestCoachImage.frame.size.width / 2;
-                        _newestCoachImage.clipsToBounds = YES;
-
-                        //set coach bio info
-                        _coachBioTextView.text = _coachUser[@"bio"];
-                        NSString* nameStr = [NSString stringWithFormat:@"%@ %@",[_coachUser valueForKey:@"firstName"], [_coachUser valueForKey:@"lastName"]];
-                        NSArray* firstLastStrings = [nameStr componentsSeparatedByString:@" "];
-                        NSString* firstName = [firstLastStrings objectAtIndex:0];
-                        NSString* lastName = [firstLastStrings objectAtIndex:1];
-                        char lastInitialChar = [lastName characterAtIndex:0];
-                        NSString* newNameStr = [NSString stringWithFormat:@"%@ %c.", firstName, lastInitialChar];
-                        _coachNameLabel.text = newNameStr;
-                        
-                        
-                        NSLog(@"number of objects in array is: %lu", (unsigned long)[_messagesArray count]);
                         
                         
                         //You have found a coach
@@ -996,6 +975,29 @@ CGFloat const ktypeInterval = 0.02;
                         //return nomberry to top
                         [self nomberryLayoutAfterAnimation];
                         
+                       
+                        //display the coaches in our new card view :)
+                        _coachUsers = _coachUserArray;
+                        
+                        // Create page view controller
+                        self.pageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"coachBioPageViewController"];
+                        self.pageViewController.dataSource = self;
+                        
+                        //create view controller and pass it our user data
+                        CoachPageContentViewController *startingViewController = [self viewControllerAtIndex:0];
+                        startingViewController.delegate = self;
+                        NSArray *viewControllers = @[startingViewController];
+                        
+                        [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+                        
+                        // Change the size of page view controller...make room for button at bottom
+                        //self.pageViewController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-50);
+                        
+                        //[self addChildViewController:_pageViewController]; //just doing this doesn't work
+                        [self.view addSubview:_pageViewController.view]; //just doing this does work
+                        
+                        
+
                         
                     }else{
                         NSLog(@"failllleD");
@@ -1204,40 +1206,60 @@ CGFloat const ktypeInterval = 0.02;
     //when the trainer user is not set...go find a coach
     if(!_trainerUser){
         NSLog(@"trainer user not set");
+        
         NSMutableArray *memberGoals = [[NSMutableArray alloc] init];
         memberGoals = [[PFUser currentUser] objectForKey:@"goals"];
         
         PFQuery *query = [PFUser query];
         [query whereKey:@"goals" containedIn:memberGoals];
         [query whereKey:@"role" equalTo:@"RD"];
-        NSArray *coaches = [query findObjects]; //**make this a background task! aka go figure out how background task works on image capture food log thingy
-        
-        if(_findAnotherCoachSelected){
-            NSLog(@"number of coaches is: %lu", (unsigned long)[coaches count]);
-            NSLog(@"i is: %lu", (unsigned long)_i);
-
-            if (_i == [coaches count] - 1) {
-                 _i--;
+        [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable coaches, NSError * _Nullable error) {
+            
+            //array 'coaches' contains all the coaches returned from our query
+            _coachUserArray = [coaches mutableCopy];
+            
+            
+            if(coaches.count > 0){
+                NSLog(@"coach block completed");
+                compblock(YES);
             }else{
-                _i++;;
+                compblock(NO);
             }
-        }
+            
+
+            
+            
+            
+            
+            
+        }];
         
-        //validation check to see if the query returned anything!
-        NSLog(@"coach i is: %d", _i);
-        _coachUser = coaches[_i];
-        
-        //create message and add to message array!
-//        NSString *foundCoachString = [NSString stringWithFormat:@"Based on everything I know about you, I think %@ is giong to be an awesome fit :)", _coachUser[@"firstName"]];
-//        [_messagesArray replaceObjectAtIndex:_messageCount withObject:foundCoachString];
         
         
-        if(_coachUser){
-            NSLog(@"coach block completed");
-            compblock(YES);
-        }else{
-            compblock(NO);
-        }
+        
+        
+        
+        
+        
+        
+        
+//        if(_findAnotherCoachSelected){
+//            NSLog(@"number of coaches is: %lu", (unsigned long)[coaches count]);
+//            NSLog(@"i is: %lu", (unsigned long)_i);
+//
+//            if (_i == [coaches count] - 1) {
+//                 _i--;
+//            }else{
+//                _i++;;
+//            }
+//        }
+        
+//        //validation check to see if the query returned anything!
+//        NSLog(@"coach i is: %d", _i);
+//        _coachUser = coaches[_i];
+//        
+ 
+        
     }
     else{
         NSLog(@"Trainer user set");
@@ -1908,5 +1930,70 @@ CGFloat const ktypeInterval = 0.02;
             
         }
     }
+}
+
+#pragma mark - Page View Controller Data Source
+
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
+{
+    NSUInteger index = ((CoachPageContentViewController*) viewController).pageIndex;
+    
+    if ((index == 0) || (index == NSNotFound)) {
+        return nil;
+    }
+    
+    index--;
+    return [self viewControllerAtIndex:index];
+}
+
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
+{
+    NSUInteger index = ((CoachPageContentViewController*) viewController).pageIndex;
+    
+    if (index == NSNotFound) {
+        return nil;
+    }
+    
+    index++;
+    if (index == [self.coachUsers count]) {
+        return nil;
+    }
+    return [self viewControllerAtIndex:index];
+}
+
+- (CoachPageContentViewController *)viewControllerAtIndex:(NSUInteger)index
+{
+    if (([self.coachUsers count] == 0) || (index >= [self.coachUsers count])) {
+        return nil;
+    }
+    
+    // Create a new view controller and pass suitable data.
+    CoachPageContentViewController *pageContentViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"coachBioContent"];
+    pageContentViewController.delegate = self;
+    pageContentViewController.coachUserObject = self.coachUsers[index]; //LET'S SET A COACH USER HERE
+    pageContentViewController.pageIndex = index;
+    
+    return pageContentViewController;
+}
+
+- (NSInteger)presentationCountForPageViewController:(UIPageViewController *)pageViewController
+{
+    return [self.coachUsers count];
+}
+
+- (NSInteger)presentationIndexForPageViewController:(UIPageViewController *)pageViewController
+{
+    return 0;
+}
+
+// Implement the delegate methods for ChildViewControllerDelegate
+- (void)childViewController:(CoachPageContentViewController *)viewController didChooseCoach:(PFUser *)coachUserSelected{
+    
+    // Do something with value...
+    
+    // ...then dismiss the child view controller
+    [_pageViewController.view removeFromSuperview];
+
+    NSLog(@"COACH SELECTED IS %@", coachUserSelected);
 }
 @end

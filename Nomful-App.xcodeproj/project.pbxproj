@@ -80,6 +80,7 @@
 		2137D8AB1BACA04600310545 /* straws.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2137D8971BACA04600310545 /* straws.jpg */; };
 		2137D8AC1BACA04600310545 /* thomas.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 2137D8981BACA04600310545 /* thomas.JPG */; };
 		2137D8AD1BACA04600310545 /* white-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 2137D8991BACA04600310545 /* white-button.png */; };
+		215654BB1BFCFBB100FD917D /* CoachCardParentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 215654BA1BFCFBB100FD917D /* CoachCardParentViewController.m */; };
 		21643A4F1BC56D470099E6FB /* ConvertToFirebaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21643A4E1BC56D470099E6FB /* ConvertToFirebaseViewController.m */; };
 		21646F811BFA2D2E00235D51 /* MandrilTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21646F801BFA2D2E00235D51 /* MandrilTestViewController.m */; };
 		21856A851BCAADFA00E217F7 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21856A831BCAADFA00E217F7 /* Fabric.framework */; };
@@ -247,6 +248,8 @@
 		2137D8971BACA04600310545 /* straws.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = straws.jpg; sourceTree = "<group>"; };
 		2137D8981BACA04600310545 /* thomas.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = thomas.JPG; sourceTree = "<group>"; };
 		2137D8991BACA04600310545 /* white-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "white-button.png"; sourceTree = "<group>"; };
+		215654B91BFCFBB100FD917D /* CoachCardParentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoachCardParentViewController.h; sourceTree = "<group>"; };
+		215654BA1BFCFBB100FD917D /* CoachCardParentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoachCardParentViewController.m; sourceTree = "<group>"; };
 		21643A4D1BC56D470099E6FB /* ConvertToFirebaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConvertToFirebaseViewController.h; sourceTree = "<group>"; };
 		21643A4E1BC56D470099E6FB /* ConvertToFirebaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConvertToFirebaseViewController.m; sourceTree = "<group>"; };
 		21646F7F1BFA2D2E00235D51 /* MandrilTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MandrilTestViewController.h; sourceTree = "<group>"; };
@@ -671,6 +674,8 @@
 			children = (
 				21D6C1191BFB9308000BF35E /* CoachPageContentViewController.h */,
 				21D6C11A1BFB9308000BF35E /* CoachPageContentViewController.m */,
+				215654B91BFCFBB100FD917D /* CoachCardParentViewController.h */,
+				215654BA1BFCFBB100FD917D /* CoachCardParentViewController.m */,
 			);
 			name = "Coach Bio Cards";
 			sourceTree = "<group>";
@@ -1070,6 +1075,7 @@
 				2137D8281BAC979700310545 /* MessagesViewController.m in Sources */,
 				2137D8791BAC980000310545 /* VerificationCodeViewController.m in Sources */,
 				2137D7E51BAC973000310545 /* AccountViewController.m in Sources */,
+				215654BB1BFCFBB100FD917D /* CoachCardParentViewController.m in Sources */,
 				2137D8461BAC97D200310545 /* RootViewController.m in Sources */,
 				2137D8741BAC980000310545 /* UIImage+AlphaAdditions.m in Sources */,
 				2137D8391BAC97AF00310545 /* PageViewController.m in Sources */,

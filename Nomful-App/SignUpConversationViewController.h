@@ -11,15 +11,19 @@
 #import "trainerCell.h"
 #import "CheckoutViewController.h"
 #import "TrialViewController.h"
+#import "CoachPageContentViewController.h"
 
 
-@interface SignUpConversationViewController : UIViewController <UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, VPImageCropperDelegate, UITableViewDataSource, UITableViewDelegate>
+
+@interface SignUpConversationViewController : UIViewController <UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, VPImageCropperDelegate, UITableViewDataSource, UITableViewDelegate, UIPageViewControllerDataSource, CoachCardDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *coachNameLabel;
 
 //variables
 @property NSInteger messageCount;
 @property NSInteger buttonLabelCount;
 @property (strong, nonatomic) PFUser *coachUser;
+@property (strong, nonatomic) NSMutableArray *coachUserArray;
+
 @property (strong, nonatomic) UIImage *coachImage;
 @property (weak, nonatomic) IBOutlet UITextView *messageTextView;
 
@@ -97,5 +101,7 @@ typedef void(^findCoachCompleted)(BOOL);
 - (IBAction)cancelButtonPressed:(id)sender;
 - (IBAction)noTrainerButtonPressed:(id)sender;
 
+@property (strong, nonatomic) UIPageViewController *pageViewController;
+@property (strong, nonatomic) NSArray *coachUsers;
 
 @end

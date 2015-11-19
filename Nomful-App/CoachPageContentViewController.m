@@ -7,6 +7,7 @@
 //
 
 #import "CoachPageContentViewController.h"
+#import "SignUpConversationViewController.h"
 
 @interface CoachPageContentViewController ()
 
@@ -23,18 +24,44 @@
     [coachUser fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
         //get coach user info
         
-        //image
+        NSString *fullName = [NSString stringWithFormat:@"%@ %@",[coachUser valueForKey:@"firstName"], [coachUser valueForKey:@"lastName"]];
+        NSString *aboutMeString = coachUser[@"aboutMe"];
+        NSString *myPhilString = coachUser[@"myPhilosophy"];
+        NSString *cityString = coachUser[@"city"];
+
         PFFile *imageFile = coachUser[@"photo"];
+
+
+        
+        
+        //background image
         _backgroundImageView.file = imageFile;
         [_backgroundImageView loadInBackground];
 
-        //first name
-        self.coachLabel.text = coachUser[@"firstName"];
-
+        //profile image
         _roundProfileImageView.file = imageFile;
         [_roundProfileImageView loadInBackground];
         
+        //first name last initian Sean C.
+        NSArray* firstLastStrings = [fullName componentsSeparatedByString:@" "];
+        NSString* firstName = [firstLastStrings objectAtIndex:0];
+        NSString* lastName = [firstLastStrings objectAtIndex:1];
+        char lastInitialChar = [lastName characterAtIndex:0];
+        NSString* newNameStr = [NSString stringWithFormat:@"%@ %c.", firstName, lastInitialChar];
+        self.coachLabel.text = newNameStr;
+
+        //about me
+        _aboutMeTextView.text = aboutMeString;
+        _philTextView.text = myPhilString;
+        _cityLabel.text = cityString;
         
+       
+        
+        //text views
+        [_aboutMeTextView setTextColor:[UIColor whiteColor]];
+        [_aboutMeTextView setFont:[UIFont fontWithName:kFontFamilyName100 size:14.0]];
+        [_philTextView setTextColor:[UIColor whiteColor]];
+        [_philTextView setFont:[UIFont fontWithName:kFontFamilyName100 size:14.0]];
     }];
     
     
@@ -60,6 +87,7 @@
     [_goButton.layer setBorderColor:[UIColor whiteColor].CGColor];
     _goButton.layer.cornerRadius = 6.0;
     
+   
 
 }
 
@@ -69,7 +97,18 @@
 }
 
 - (IBAction)goButtonPressed:(id)sender {
-    NSLog(@"BUTTON %lu PRESSED!", (unsigned long)_pageIndex);
+    // Xcode will complain if we access a weak property more than
+    // once here, since it could in theory be nilled between accesses
+    // leading to unpredictable results. So we'll start by taking
+    // a local, strong reference to the delegate.
+    id<CoachCardDelegate> strongDelegate = self.delegate;
+    
+    // Our delegate method is optional, so we should
+    // check that the delegate implements it
+    if ([strongDelegate respondsToSelector:@selector(childViewController:didChooseCoach:)]) {
+        [strongDelegate childViewController:self didChooseCoach:_coachUserObject];
+    }
+
 }
 
 
