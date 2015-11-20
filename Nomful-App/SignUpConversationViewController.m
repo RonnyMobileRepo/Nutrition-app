@@ -446,11 +446,24 @@ CGFloat const ktypeInterval = 0.02;
             
             case 11:{
                 NSLog(@"case 11");
-                //only called when the NEXT button is pressed
+                //only called when the I LOOK GOOD button is pressed
+                //fade in coach view
                 
-                _coachMatchContainer.hidden = YES;
-                _messageCount++;
-                [self showNextMessage];
+                [UIView animateWithDuration:0.5f animations:^{
+                    
+                    [_coachMatchContainer setAlpha:0.0f];
+                    
+                } completion:^(BOOL finished) {
+                    // ...then dismiss the child view controller
+                    
+                    _coachMatchContainer.hidden = YES;
+                    _messageCount++;
+                    [self showNextMessage];
+                    
+                }];
+                
+
+                
                 }break;
                 
             case 12:{
@@ -952,21 +965,19 @@ CGFloat const ktypeInterval = 0.02;
                     if(finished){
                         
                         
-                        //You have found a coach
+                        //You have found a coach list
                         //stop animation
                         //return nomberry to top
                         [self nomberryLayoutAfterAnimation];
-                        
                        
                         //display the coaches in our new card view :)
                         _coachUsers = _coachUserArray;
-                        
-                        
-                        //**animate this somehow and make smoothing display
-                        
+                
                         // Create page view controller
                         self.pageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"coachBioPageViewController"];
                         self.pageViewController.dataSource = self;
+                        
+                        _pageViewController.view.alpha = 0.0f;
                         
                         //create view controller and pass it our user data
                         CoachPageContentViewController *startingViewController = [self viewControllerAtIndex:0];
@@ -981,8 +992,8 @@ CGFloat const ktypeInterval = 0.02;
                         //[self addChildViewController:_pageViewController]; //just doing this doesn't work
                         [self.view addSubview:_pageViewController.view]; //just doing this does work
                         
+                        //the view is not visible yet...it is animated in
                         
-
                         
                     }else{
                         NSLog(@"failllleD");
@@ -1044,6 +1055,17 @@ CGFloat const ktypeInterval = 0.02;
             [self showNextMessage];
             
             
+            //fade in coach view
+            
+            [UIView animateWithDuration:0.5f animations:^{
+                
+                [_pageViewController.view setAlpha:1.0f];
+                
+            } completion:^(BOOL finished) {
+                
+                
+            }];
+
         }
     }];
 }
@@ -1137,11 +1159,22 @@ CGFloat const ktypeInterval = 0.02;
         }else if(_messageCount == 10){
 //            [self animateInputIn:_button2];
 //            [self animateInputIn:_button1];
-            _coachMatchContainer.hidden = false;
+            _coachMatchContainer.alpha = 0.0f;
+            _dontShowProfileButton.hidden = false;
         }else if (_messageCount == 11){
             //add profile pic
             //_textfield1.keyboardType = UIKeyboardTypeNumberPad;
-            _noProfileButton.hidden = false;
+            
+            
+            _coachMatchContainer.hidden = false;
+
+            [UIView animateWithDuration:0.5f animations:^{
+                _coachMatchContainer.alpha = 1.0f;
+                _noProfileButton.hidden = false;
+
+            }];
+            
+
             
         }else if(_messageCount == 12 ){
             
@@ -1199,6 +1232,7 @@ CGFloat const ktypeInterval = 0.02;
     if(!_trainerUser){
         NSLog(@"trainer user not set");
         
+        //query for coaches based on goal selected
         NSMutableArray *memberGoals = [[NSMutableArray alloc] init];
         memberGoals = [[PFUser currentUser] objectForKey:@"goals"];
         
@@ -1263,6 +1297,8 @@ CGFloat const ktypeInterval = 0.02;
             
             //set the coachuser property to user!
             _coachUser = coachUsers;
+            
+            _coachUserArray = [NSMutableArray arrayWithObject:coachUsers];
             
             //create message and add to message array!
 //            NSString *foundCoachString = [NSString stringWithFormat:@"Based on everything I know about you, I think %@ is giong to be an awesome fit :)", _coachUser[@"firstName"]];
@@ -1849,9 +1885,7 @@ CGFloat const ktypeInterval = 0.02;
     _messageCount++;
     [self showNextMessage];
     
-    
-    // ...then dismiss the child view controller
-    [_pageViewController.view removeFromSuperview];
+  
     
     _coachMatchImageView.layer.cornerRadius = _coachMatchImageView.bounds.size.width/2;
     _coachMatchImageView.clipsToBounds = YES;
@@ -1867,6 +1901,18 @@ CGFloat const ktypeInterval = 0.02;
     //first name label
     _coachNameLabel.text = coachUserSelected[@"firstName"];
     _memberNameLabel.text = [PFUser currentUser][@"firstName"];
+    
+    //fade in coach view
+    
+    [UIView animateWithDuration:0.5f animations:^{
+        
+        [_pageViewController.view setAlpha:0.0f];
+        
+    } completion:^(BOOL finished) {
+        // ...then dismiss the child view controller
+        [_pageViewController.view removeFromSuperview];
+        
+    }];
     
     
 
@@ -1937,9 +1983,10 @@ CGFloat const ktypeInterval = 0.02;
 #pragma mark - Image Cropping
 - (void)imageCropper:(VPImageCropperViewController *)cropperViewController didFinished:(UIImage *)editedImage {
     NSLog(@"Cropper View Controller Show");
+    //image done selecting ********
     
     _addPhotoButton.hidden = true;
-
+    
     self.image = editedImage;
     [cropperViewController dismissViewControllerAnimated:YES completion:^{
         // dismiss the image cropper
@@ -1953,6 +2000,7 @@ CGFloat const ktypeInterval = 0.02;
         _memberMatchImageView.image = editedImage;
         NSLog(@"edited image is: %@", editedImage);
         _button1.hidden = NO;
+        _dontShowProfileButton.hidden = YES;
         [self uploadPhotoToParse];
     }];
 }
@@ -2059,6 +2107,7 @@ CGFloat const ktypeInterval = 0.02;
     //HIDE THE BIO VIEWS HERE. MAYBE ANIMATE **
     
    _coachMatchContainer.hidden = YES;
+    _dontShowProfileButton.hidden = YES;
     _messageCount++;
     [self showNextMessage];
 }

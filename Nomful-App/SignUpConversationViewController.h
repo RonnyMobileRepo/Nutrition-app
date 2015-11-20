@@ -110,5 +110,6 @@ typedef void(^findCoachCompleted)(BOOL);
 @property (weak, nonatomic) IBOutlet UIImageView *memberMatchImageView;
 - (IBAction)addProfileImagePressed:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *addPhotoButton;
+@property (weak, nonatomic) IBOutlet UIButton *dontShowProfileButton;
 
 @end
