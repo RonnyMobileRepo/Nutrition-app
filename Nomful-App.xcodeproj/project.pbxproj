@@ -86,6 +86,7 @@
 		21856A851BCAADFA00E217F7 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21856A831BCAADFA00E217F7 /* Fabric.framework */; };
 		21856A861BCAADFA00E217F7 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21856A841BCAADFA00E217F7 /* Crashlytics.framework */; };
 		2187BD291BD7DFE40058A7C3 /* MealDetailCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2187BD281BD7DFE40058A7C3 /* MealDetailCardViewController.m */; };
+		21B091B11BFF74F800340CAD /* AddProfilePicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21B091B01BFF74F800340CAD /* AddProfilePicViewController.m */; };
 		21C88A271BAC95CF00792E9C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 21C88A261BAC95CF00792E9C /* main.m */; };
 		21C88A2A1BAC95CF00792E9C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 21C88A291BAC95CF00792E9C /* AppDelegate.m */; };
 		21C88A2D1BAC95CF00792E9C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21C88A2C1BAC95CF00792E9C /* ViewController.m */; };
@@ -258,6 +259,8 @@
 		21856A841BCAADFA00E217F7 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		2187BD271BD7DFE40058A7C3 /* MealDetailCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MealDetailCardViewController.h; sourceTree = "<group>"; };
 		2187BD281BD7DFE40058A7C3 /* MealDetailCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MealDetailCardViewController.m; sourceTree = "<group>"; };
+		21B091AF1BFF74F800340CAD /* AddProfilePicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddProfilePicViewController.h; sourceTree = "<group>"; };
+		21B091B01BFF74F800340CAD /* AddProfilePicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddProfilePicViewController.m; sourceTree = "<group>"; };
 		21C6FC4F1BAF20EE004599E8 /* Nomful-App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Nomful-App.entitlements"; sourceTree = "<group>"; };
 		21C88A221BAC95CF00792E9C /* Nomful-App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Nomful-App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		21C88A261BAC95CF00792E9C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -488,6 +491,8 @@
 				2137D7EF1BAC974E00310545 /* CheckoutViewController.h */,
 				2137D7F01BAC974E00310545 /* CheckoutViewController.m */,
 				21D6C11C1BFB930D000BF35E /* Coach Bio Cards */,
+				21B091AF1BFF74F800340CAD /* AddProfilePicViewController.h */,
+				21B091B01BFF74F800340CAD /* AddProfilePicViewController.m */,
 			);
 			name = "Sign Up";
 			sourceTree = "<group>";
@@ -1077,6 +1082,7 @@
 				2137D7E51BAC973000310545 /* AccountViewController.m in Sources */,
 				215654BB1BFCFBB100FD917D /* CoachCardParentViewController.m in Sources */,
 				2137D8461BAC97D200310545 /* RootViewController.m in Sources */,
+				21B091B11BFF74F800340CAD /* AddProfilePicViewController.m in Sources */,
 				2137D8741BAC980000310545 /* UIImage+AlphaAdditions.m in Sources */,
 				2137D8391BAC97AF00310545 /* PageViewController.m in Sources */,
 				2137D8761BAC980000310545 /* UIImage+RoundedCornerAdditions.m in Sources */,

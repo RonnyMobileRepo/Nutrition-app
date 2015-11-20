@@ -15,8 +15,9 @@
 
 
 
-@interface SignUpConversationViewController : UIViewController <UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, VPImageCropperDelegate, UITableViewDataSource, UITableViewDelegate, UIPageViewControllerDataSource, CoachCardDelegate>
+@interface SignUpConversationViewController : UIViewController <UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, VPImageCropperDelegate, UITableViewDataSource, UITableViewDelegate, UIPageViewControllerDataSource, CoachCardDelegate, UIActionSheetDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *coachNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *memberNameLabel;
 
 //variables
 @property NSInteger messageCount;
@@ -73,6 +74,7 @@
 
 @property int i;
 
+- (IBAction)dontWantCoachToSeePressed:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UIButton *sendAnotherCodeButton;
 - (IBAction)sendAnotherButtonPressed:(id)sender;
@@ -89,19 +91,24 @@
 @property (strong, nonatomic) PFUser *trainerUser;
 
 typedef void(^findCoachCompleted)(BOOL);
-@property (weak, nonatomic) IBOutlet UIView *coachBioView;
 @property (strong, nonatomic) IBOutlet PFImageView *newestCoachImage;
 
 @property (weak, nonatomic) IBOutlet UIButton *notlistedbutton;
+@property (weak, nonatomic) IBOutlet UIButton *noProfileButton;
+
 @property (weak, nonatomic) IBOutlet UIButton *closeButton;
 
 - (IBAction)inputButtonPressed:(UIButton *)sender;
-@property (weak, nonatomic) IBOutlet UITextView *coachBioTextView;
 
 - (IBAction)cancelButtonPressed:(id)sender;
 - (IBAction)noTrainerButtonPressed:(id)sender;
 
 @property (strong, nonatomic) UIPageViewController *pageViewController;
 @property (strong, nonatomic) NSArray *coachUsers;
+@property (weak, nonatomic) IBOutlet UIView *coachMatchContainer;
+@property (weak, nonatomic) IBOutlet PFImageView *coachMatchImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *memberMatchImageView;
+- (IBAction)addProfileImagePressed:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *addPhotoButton;
 
 @end

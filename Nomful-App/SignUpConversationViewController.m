@@ -59,6 +59,7 @@ CGFloat const ktypeInterval = 0.02;
                                                         @"If I need to email you, what is the best way to reach you? Don’t worry you won’t be spammed...I would never do that to you!",
                                                         @"Awesome! Thanks for all the information. I'm going to find you the perfect coach for you to team up with :)",
                                                         @"placeholder 2",
+                                                        @"Congrats, you now have a Nomful coach! Let's see those pearly whites and add your photo :)",
                                                         @"Enter your phone number and I'll text you a secret code.",
                                                         @"Check your phone and tell me the secret password! :) ",
                                                         @"",
@@ -78,9 +79,9 @@ CGFloat const ktypeInterval = 0.02;
                          @"",
                          @"Can't Wait!",
                          @"Let's Do This!",
+                         @"I Look Good!",
                          @"Send Code",
                          @"Login",
-                         @"",
                          @"",
                          nil];
     
@@ -131,7 +132,8 @@ CGFloat const ktypeInterval = 0.02;
     //display message based on the count
     _messageTextView.text = [_messagesArray objectAtIndex:_messageCount];
     [_button1 setTitle:[_buttonLabelArray objectAtIndex:_buttonLabelCount] forState:UIControlStateNormal];
-    
+    _coachMatchContainer.hidden = true;
+
 
     [self showNextMessage];
     
@@ -182,10 +184,7 @@ CGFloat const ktypeInterval = 0.02;
             if(_messageCount == 6){
                 [_button2 setTitle:@"Nope" forState:UIControlStateNormal];
             }
-            if(_messageCount == 10){
-                [_button2 setTitle:@"Find Another Coach!" forState:UIControlStateNormal];
-            }
-            
+        
             _cancelButtonPressed = NO;
             [self showNextMessage];
         }
@@ -442,17 +441,22 @@ CGFloat const ktypeInterval = 0.02;
         
                 _messageCount++;
                 [self animateNomberry];
-                }break;
-            
-            case 10:{
-            
-                //this gets bypassed sine we're now selecting choose coach
                 
                 }break;
-                
+            
             case 11:{
+                NSLog(@"case 11");
+                //only called when the NEXT button is pressed
+                
+                _coachMatchContainer.hidden = YES;
+                _messageCount++;
+                [self showNextMessage];
+                }break;
+                
+            case 12:{
                 //send code
                 NSLog(@"send sending code to: %@", _textfield1.text);
+                _coachMatchContainer.hidden = true;
 
                 
                 //check to see the phone is valide
@@ -531,7 +535,7 @@ CGFloat const ktypeInterval = 0.02;
                 
                 }break;
                 
-            case 12:{
+            case 13:{
                 //login with phone
                 NSLog(@"cloud code login called");
                 //call cloud funciton...checks code and saves password
@@ -762,7 +766,7 @@ CGFloat const ktypeInterval = 0.02;
             }
             
             
-        }else if(_messageCount == 11){
+        }else if(_messageCount == 12){
             NSLog(@"send sending code to: %@", _textfield1.text);
             //save phone
             _phone = _textfield1.text;
@@ -775,7 +779,7 @@ CGFloat const ktypeInterval = 0.02;
                 
             }];
             
-        }else if(_messageCount == 12){
+        }else if(_messageCount == 13){
             NSLog(@"cloud code login called");
             //call cloud funciton...checks code and saves password
             [self loginWithPhone:_textfield1.text];
@@ -896,6 +900,7 @@ CGFloat const ktypeInterval = 0.02;
                                                          multiplier:1.0f constant:0.0f]];
 
 
+    
 
     
  
@@ -1130,19 +1135,27 @@ CGFloat const ktypeInterval = 0.02;
             [self animateInputIn:_button1];
             
         }else if(_messageCount == 10){
-            [self animateInputIn:_button2];
-            [self animateInputIn:_button1];
+//            [self animateInputIn:_button2];
+//            [self animateInputIn:_button1];
+            _coachMatchContainer.hidden = false;
         }else if (_messageCount == 11){
+            //add profile pic
             //_textfield1.keyboardType = UIKeyboardTypeNumberPad;
-            [_textfield1 becomeFirstResponder];
-            _textfield1.hidden = false;
+            _noProfileButton.hidden = false;
+            
         }else if(_messageCount == 12 ){
+            
             [_textfield1 becomeFirstResponder];
             _textfield1.hidden = false;
-
+            
+        }else if(_messageCount == 13){
+            [_textfield1 becomeFirstResponder];
+            _textfield1.hidden = false;
+            
             
             //show code didn't send button
             _sendAnotherCodeButton.hidden = false;
+
         }
     }
 }
@@ -1490,26 +1503,6 @@ CGFloat const ktypeInterval = 0.02;
        return 60;
 }
 
-- (void) imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
-    //You finished selecting an image, whether through taking a pic or selecting
-    //first dismiss the picker
-    //then show the cropper to make it square
-    NSLog(@"Image Selected");
-    
-    
-    [picker dismissViewControllerAnimated:NO completion:^() {
-        
-        UIImage *portraitImg = [info objectForKey:UIImagePickerControllerOriginalImage];
-        VPImageCropperViewController *imgCropperVC = [[VPImageCropperViewController alloc] initWithImage:portraitImg cropFrame:CGRectMake(0, 100.0f, self.view.frame.size.width, self.view.frame.size.width) limitScaleRatio:3.0];
-        imgCropperVC.delegate = self;
-        [self presentViewController:imgCropperVC animated:YES completion:^{
-            // TO DO
-        }];
-    }];
-    
-    [self dismissViewControllerAnimated:YES completion:nil];
-    
-}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
@@ -1539,115 +1532,6 @@ CGFloat const ktypeInterval = 0.02;
     _noTrainerButton.hidden = true;
 }
 
-#pragma mark - Image Cropping
-- (void)imageCropper:(VPImageCropperViewController *)cropperViewController didFinished:(UIImage *)editedImage {
-    NSLog(@"Cropper View Controller Show");
-    
-    self.image = editedImage;
-    [cropperViewController dismissViewControllerAnimated:YES completion:^{
-        // dismiss the image cropper
-        if (self.imagePicker.sourceType == UIImagePickerControllerSourceTypeCamera){
-            UIImageWriteToSavedPhotosAlbum(self.image, nil, nil, nil);
-        }
-        
-        CGFloat newSize = 100.0f; //this is the size of the square that we want
-        self.image = [self squareImageFromImage:self.image scaledToSize:newSize];
-        
-        [self uploadPhotoToParse];
-    }];
-}
-
-- (UIImage *)squareImageFromImage:(UIImage *)image scaledToSize:(CGFloat)newSize {
-    NSLog(@"Scaled to Size Called");
-    
-    CGAffineTransform scaleTransform;
-    CGPoint origin;
-    
-    if (image.size.width > image.size.height) {
-        CGFloat scaleRatio = newSize / image.size.height;
-        scaleTransform = CGAffineTransformMakeScale(scaleRatio, scaleRatio);
-        
-        origin = CGPointMake(-(image.size.width - image.size.height) / 2.0f, 0);
-    } else {
-        CGFloat scaleRatio = newSize / image.size.width;
-        scaleTransform = CGAffineTransformMakeScale(scaleRatio, scaleRatio);
-        
-        origin = CGPointMake(0, -(image.size.height - image.size.width) / 2.0f);
-    }
-    
-    CGSize size = CGSizeMake(newSize, newSize);
-    if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)]) {
-        UIGraphicsBeginImageContextWithOptions(size, YES, 0);
-    } else {
-        UIGraphicsBeginImageContext(size);
-    }
-    
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextConcatCTM(context, scaleTransform);
-    
-    [image drawAtPoint:origin];
-    
-    image = UIGraphicsGetImageFromCurrentImageContext();
-    
-    UIGraphicsEndImageContext();
-    
-    return image;
-}
-
-- (void)imageCropperDidCancel:(VPImageCropperViewController *)cropperViewController {
-    [cropperViewController dismissViewControllerAnimated:YES completion:^{
-    }];
-}
-
--(void)uploadPhotoToParse{
-    //declasre a file datatype and a filename datatype
-    NSData *fileData;
-    NSString *fileName;
-    UIImage *newImage = self.image; //lets try setting the new image to the image property that was set in the didfinishpickingimage method
-    
-    fileData = UIImagePNGRepresentation(newImage);
-    fileName = @"image.png";
-    PFFile *file = [PFFile fileWithName:fileName data:fileData];
-    
-    //save file
-    [file saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if(error){
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error Occured!"
-                                                                message:@"File didn't save."
-                                                               delegate:self
-                                                      cancelButtonTitle:@"OK"
-                                                      otherButtonTitles:nil, nil];
-            // [self.activityIndicatorView stopAnimating];
-            [alertView show];
-            
-        }
-        else{
-            //success, file is on parse.com
-            PFUser *currentUser = [PFUser currentUser];
-            [currentUser setObject:file forKey:@"photo"];
-            //save parse object in background
-            [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                if(error){
-                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error Occured!"
-                                                                        message:@"Couldn't save the image to the user"
-                                                                       delegate:self
-                                                              cancelButtonTitle:@"OK"
-                                                              otherButtonTitles:nil, nil];
-                    //[self.activityIndicatorView stopAnimating];
-                    [alertView show];
-                }
-                else{
-                    //success
-                    //[self reset];
-                    //NSLog(@"hey");
-                    
-                }
-                
-            }];
-            
-        }
-    }];
-}
 
 -(void)sendCode{
     
@@ -1839,7 +1723,7 @@ CGFloat const ktypeInterval = 0.02;
     if(!_getGymInstead){
         //change message
         [_messagesArray replaceObjectAtIndex:_messageCount withObject:@"What's your trainers name?"];
-    }else{
+    }else {
         [_messagesArray replaceObjectAtIndex:_messageCount withObject:@"What gym do you go to?"];
 
     }
@@ -1953,6 +1837,8 @@ CGFloat const ktypeInterval = 0.02;
 
 // Implement the delegate methods for ChildViewControllerDelegate
 - (void)childViewController:(CoachPageContentViewController *)viewController didChooseCoach:(PFUser *)coachUserSelected{
+    NSLog(@"delegate called on coach card");
+    
     
     // when a user selectes...'CHOOSE COACH' on one of the cards, this method is fired
     // we now have to coach that they selected AND we can dismiss the cards and continue with convo
@@ -1966,6 +1852,214 @@ CGFloat const ktypeInterval = 0.02;
     
     // ...then dismiss the child view controller
     [_pageViewController.view removeFromSuperview];
+    
+    _coachMatchImageView.layer.cornerRadius = _coachMatchImageView.bounds.size.width/2;
+    _coachMatchImageView.clipsToBounds = YES;
+    
+    _memberMatchImageView.layer.cornerRadius = _coachMatchImageView.bounds.size.width/2;
+    _memberMatchImageView.clipsToBounds = YES;
+    
+    //set container information for profile adding
+    PFFile *coachImage = coachUserSelected[@"photo"];
+    _coachMatchImageView.file = coachImage;
+    [_coachMatchImageView loadInBackground];
 
+    //first name label
+    _coachNameLabel.text = coachUserSelected[@"firstName"];
+    _memberNameLabel.text = [PFUser currentUser][@"firstName"];
+    
+    
+
+}
+
+#pragma mark - Image Picker
+
+- (IBAction)addProfileImagePressed:(id)sender {
+    //display image picker
+    
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                             delegate:self
+                                                    cancelButtonTitle:@"Cancel"
+                                               destructiveButtonTitle:nil
+                                                    otherButtonTitles:@"Choose Existing",@"Take Photo",nil];
+    [actionSheet showInView:self.view];
+    
+    
+}
+
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    //You are looking at an action sheet
+    //I make sure you are taken to the camera or the library
+    NSLog(@"Action Sheet Pressed");
+    
+    if(buttonIndex == 0){
+        //choose existing was pressed
+        //show the library
+        
+        self.imagePicker = [[UIImagePickerController alloc] init];
+        self.imagePicker.delegate = self;
+        self.imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        [self presentViewController:self.imagePicker animated:YES completion:nil];
+    }
+    else if(buttonIndex == 1){
+        //takephoto was pressed
+        //show the camera
+        self.imagePicker = [[UIImagePickerController alloc] init];
+        self.imagePicker.delegate = self;
+        self.imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        [self presentViewController:self.imagePicker animated:YES completion:nil];
+    }
+    
+}
+
+- (void) imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
+    //You finished selecting an image, whether through taking a pic or selecting
+    //first dismiss the picker
+    //then show the cropper to make it square
+    NSLog(@"Image Selected");
+    
+    
+    [picker dismissViewControllerAnimated:NO completion:^() {
+        
+        UIImage *portraitImg = [info objectForKey:UIImagePickerControllerOriginalImage];
+        VPImageCropperViewController *imgCropperVC = [[VPImageCropperViewController alloc] initWithImage:portraitImg cropFrame:CGRectMake(0, 100.0f, self.view.frame.size.width, self.view.frame.size.width) limitScaleRatio:3.0];
+        imgCropperVC.delegate = self;
+        [self presentViewController:imgCropperVC animated:YES completion:^{
+            // TO DO
+        }];
+    }];
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+}
+
+#pragma mark - Image Cropping
+- (void)imageCropper:(VPImageCropperViewController *)cropperViewController didFinished:(UIImage *)editedImage {
+    NSLog(@"Cropper View Controller Show");
+    
+    _addPhotoButton.hidden = true;
+
+    self.image = editedImage;
+    [cropperViewController dismissViewControllerAnimated:YES completion:^{
+        // dismiss the image cropper
+        if (self.imagePicker.sourceType == UIImagePickerControllerSourceTypeCamera){
+            UIImageWriteToSavedPhotosAlbum(self.image, nil, nil, nil);
+        }
+        
+        CGFloat newSize = 100.0f; //this is the size of the square that we want
+        self.image = [self squareImageFromImage:self.image scaledToSize:newSize];
+        
+        _memberMatchImageView.image = editedImage;
+        NSLog(@"edited image is: %@", editedImage);
+        _button1.hidden = NO;
+        [self uploadPhotoToParse];
+    }];
+}
+
+- (UIImage *)squareImageFromImage:(UIImage *)image scaledToSize:(CGFloat)newSize {
+    NSLog(@"Scaled to Size Called");
+    
+    CGAffineTransform scaleTransform;
+    CGPoint origin;
+    
+    if (image.size.width > image.size.height) {
+        CGFloat scaleRatio = newSize / image.size.height;
+        scaleTransform = CGAffineTransformMakeScale(scaleRatio, scaleRatio);
+        
+        origin = CGPointMake(-(image.size.width - image.size.height) / 2.0f, 0);
+    } else {
+        CGFloat scaleRatio = newSize / image.size.width;
+        scaleTransform = CGAffineTransformMakeScale(scaleRatio, scaleRatio);
+        
+        origin = CGPointMake(0, -(image.size.height - image.size.width) / 2.0f);
+    }
+    
+    CGSize size = CGSizeMake(newSize, newSize);
+    if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)]) {
+        UIGraphicsBeginImageContextWithOptions(size, YES, 0);
+    } else {
+        UIGraphicsBeginImageContext(size);
+    }
+    
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextConcatCTM(context, scaleTransform);
+    
+    [image drawAtPoint:origin];
+    
+    image = UIGraphicsGetImageFromCurrentImageContext();
+    
+    UIGraphicsEndImageContext();
+    
+    return image;
+}
+
+- (void)imageCropperDidCancel:(VPImageCropperViewController *)cropperViewController {
+    [cropperViewController dismissViewControllerAnimated:YES completion:^{
+    }];
+}
+
+-(void)uploadPhotoToParse{
+    //declasre a file datatype and a filename datatype
+    NSData *fileData;
+    NSString *fileName;
+    UIImage *newImage = self.image; //lets try setting the new image to the image property that was set in the didfinishpickingimage method
+    
+    fileData = UIImagePNGRepresentation(newImage);
+    fileName = @"image.png";
+    PFFile *file = [PFFile fileWithName:fileName data:fileData];
+    
+    //save file
+    [file saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if(error){
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error Occured!"
+                                                                message:@"File didn't save."
+                                                               delegate:self
+                                                      cancelButtonTitle:@"OK"
+                                                      otherButtonTitles:nil, nil];
+            // [self.activityIndicatorView stopAnimating];
+            [alertView show];
+            
+        }
+        else{
+            //success, file is on parse.com
+            PFUser *currentUser = [PFUser currentUser];
+            [currentUser setObject:file forKey:@"photo"];
+            //save parse object in background
+            [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                if(error){
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error Occured!"
+                                                                        message:@"Couldn't save the image to the user"
+                                                                       delegate:self
+                                                              cancelButtonTitle:@"OK"
+                                                              otherButtonTitles:nil, nil];
+                    //[self.activityIndicatorView stopAnimating];
+                    [alertView show];
+                }
+                else{
+                    //success
+                    //[self reset];
+                    //NSLog(@"hey");
+                    
+                }
+                
+            }];
+            
+        }
+    }];
+}
+
+
+- (IBAction)dontWantCoachToSeePressed:(id)sender {
+    
+//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Are you sure?" message:@"Coaches can provide better value to you if they can see what you look like! Are you sure you don't want to add a picture?" delegate:self cancelButtonTitle:@"Okay, I'll Go Add One" otherButtonTitles:@"Yup", nil];
+//    [alert show];
+    
+    //THIS DOES NOT CALL THE 'BUTTONPRESSED METHOD'
+    //HIDE THE BIO VIEWS HERE. MAYBE ANIMATE **
+    
+   _coachMatchContainer.hidden = YES;
+    _messageCount++;
+    [self showNextMessage];
 }
 @end
