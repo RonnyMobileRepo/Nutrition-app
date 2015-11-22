@@ -32,12 +32,14 @@
 @property (weak, nonatomic) IBOutlet UILabel *cityLabel;
 
 - (IBAction)goButtonPressed:(id)sender;
+@property (weak, nonatomic) IBOutlet UILabel *specialtiesTitleLabe;
 
 //DELEGATE STUFF?
 @property NSUInteger pageIndex;
 @property NSString *titleText;
 @property PFUser *coachUserObject;
 
+@property (strong, nonatomic) NSMutableArray *coachSpecialitesArray;
 
 @end
 

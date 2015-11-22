@@ -30,7 +30,7 @@
         // configure  image
         _profileImage = [[PFImageView alloc] initWithFrame:CGRectMake(15,10,30,30)];
         _profileImage.translatesAutoresizingMaskIntoConstraints = NO;
-        _profileImage.image = [UIImage imageNamed:@"Sean.jpeg"];
+        _profileImage.image = [UIImage imageNamed:@"profilePlaceholder.png"];
         
         [self addSubview:_profileImage];
         

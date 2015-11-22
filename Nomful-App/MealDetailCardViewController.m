@@ -11,9 +11,11 @@
 @interface MealDetailCardViewController (){
     
     PFFile *mealImageFile;
+    PFObject *mealObject;
     NSString *mealDescription;
     UIView *container;
     NSArray *hashtagArray;
+    UITextView *descriptionTextView;
 }
 
 @end
@@ -25,6 +27,7 @@
 
 {
     self = [super init];
+    mealObject = mealObject_;
     
     //Get the meal image FILE from parse
     PFFile *mealFile = [mealObject_ objectForKey:@"mealPhoto"];
@@ -47,22 +50,64 @@
     [self loadElements];
     [self loadHashtagButtons];
     [self selectHashtagButtons];
+    
+    if ([[PFUser currentUser][@"role"] isEqualToString:@"Client"]) {
+        
+        //user is member...so show the edit button
+        UIBarButtonItem *editItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(editButtonPressed)];
+        self.navigationItem.rightBarButtonItem = editItem;
+        
+        //listen for keyboard
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+
+
+    }
 }
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
+- (void)editButtonPressed{
+    
+    //change to save button
+    UIBarButtonItem *saveItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveButtonPressed)];
+    self.navigationItem.rightBarButtonItem = saveItem;
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    //change styling of textview
+    descriptionTextView.editable = YES;
+    descriptionTextView.layer.borderWidth = 1.0;
+    descriptionTextView.layer.borderColor = [[UIColor darkGrayColor]CGColor];
+    [descriptionTextView becomeFirstResponder];
+    
+    //move view up for keyboard
 }
-*/
+
+- (void)saveButtonPressed{
+    
+    //change back to edit button
+    UIBarButtonItem *editItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(editButtonPressed)];
+    self.navigationItem.rightBarButtonItem = editItem;
+    
+    //change styling of textview
+    descriptionTextView.editable = NO;
+    descriptionTextView.layer.borderWidth = 0.0;
+    [descriptionTextView resignFirstResponder];
+    
+    //save to parse
+    mealObject[@"description"] = descriptionTextView.text;
+    [mealObject saveInBackground];
+    
+}
+
 
 #pragma mark - Helper Methods
 
@@ -90,7 +135,7 @@
     [container addSubview:imageView];
     
     //uitextview
-    UITextView *descriptionTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
+    descriptionTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
     descriptionTextView.translatesAutoresizingMaskIntoConstraints = NO;
     descriptionTextView.text = mealDescription;
     descriptionTextView.editable = NO;
@@ -436,5 +481,27 @@
     }
     
 }
+
+#pragma mark - keyboard movements
+- (void)keyboardWillShow:(NSNotification *)notification
+{
+    CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        CGRect f = self.view.frame;
+        f.origin.y = -keyboardSize.height;
+        self.view.frame = f;
+    }];
+}
+
+-(void)keyboardWillHide:(NSNotification *)notification
+{
+    [UIView animateWithDuration:0.3 animations:^{
+        CGRect f = self.view.frame;
+        f.origin.y = 0.0f;
+        self.view.frame = f;
+    }];
+}
+
 
 @end

@@ -1125,6 +1125,8 @@ CGFloat const ktypeInterval = 0.02;
             _textfield1.hidden = false;
             
         }else if(_messageCount == 6){
+            _textfield1.keyboardType = UIKeyboardTypeDefault;
+
             _textfield1.hidden = true;
             [self animateInputIn:_button1];
             [self animateInputIn:_button2];
@@ -1879,6 +1881,8 @@ CGFloat const ktypeInterval = 0.02;
     // when a user selectes...'CHOOSE COACH' on one of the cards, this method is fired
     // we now have to coach that they selected AND we can dismiss the cards and continue with convo
     
+    _coachUser = coachUserSelected;
+    
     //convo
     _messageTextView.hidden = NO;
 
@@ -2111,4 +2115,5 @@ CGFloat const ktypeInterval = 0.02;
     _messageCount++;
     [self showNextMessage];
 }
+
 @end
