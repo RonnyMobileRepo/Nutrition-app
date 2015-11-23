@@ -59,7 +59,7 @@ CGFloat const ktypeInterval = 0.02;
                                                         @"If I need to email you, what is the best way to reach you? Don’t worry you won’t be spammed...I would never do that to you!",
                                                         @"Awesome! Thanks for all the information. I'm going to find you the perfect coach for you to team up with :)",
                                                         @"placeholder 2",
-                                                        @"Congrats, you now have a Nomful coach! Add a profile photo so your coach can see your awesome self!",
+                                                        @"Congrats! I'm excited for you to start working toward a happier, healthier life! Why don't you add a profile picture?",
                                                         @"Just to make sure you are human, enter your phone number and I'll text you a secret code.",
                                                         @"Check your phone and tell me the secret password! :) ",
                                                         @"",
@@ -79,7 +79,7 @@ CGFloat const ktypeInterval = 0.02;
                          @"",
                          @"Can't Wait!",
                          @"Let's Do This!",
-                         @"I Look Good!",
+                         @"Finish Creating Account",
                          @"Send Code",
                          @"Login",
                          @"",
@@ -1321,19 +1321,14 @@ CGFloat const ktypeInterval = 0.02;
             memberGoals = [[PFUser currentUser] objectForKey:@"goals"];
             
             PFQuery *query = [PFUser query];
+            query.limit = 5;
             [query whereKey:@"goals" containedIn:memberGoals];
             [query whereKey:@"role" equalTo:@"RD"];
             NSArray *coaches = [query findObjects]; //**make this a background task! aka go figure out how background task works on image capture food log thingy
             
-            //validation check to see if the query returned anything!
-            _coachUser = coaches[0];
-            
-            //create message and add to message array!
-//            NSString *foundCoachString = [NSString stringWithFormat:@"Based on everything I know about you, I think %@ is giong to be an awesome fit :)", _coachUser[@"firstName"]];
-//            [_messagesArray replaceObjectAtIndex:_messageCount withObject:foundCoachString];
-//            
-//            
-            if(_coachUser){
+            _coachUserArray = [coaches mutableCopy];
+        
+            if(_coachUserArray){
                 NSLog(@"coach block completed");
                 compblock(YES);
             }else{

@@ -91,7 +91,7 @@
                                      
                                     }
                                     else{
-                                        NSLog(@"ERROR: %@", error);
+                                        NSLog(@"ERROR: %@", self.phoneTextField.text);
                                         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Invalid Number" message:@"Looks like you aren't a member yet! Please go back and create an account first. If you think this is a mistake, please contact us." delegate:self cancelButtonTitle:@"Okay" otherButtonTitles: nil];
                                         [alert show];
                                         

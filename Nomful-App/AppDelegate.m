@@ -26,7 +26,7 @@
     
     // ______________________________________________________________________________________________________________________________
     
-    ///*
+    /*
     
     [Parse setApplicationId:PARSE_APP_ID_DEV
                   clientKey:PARSE_CLIENT_ID_DEV];
@@ -36,13 +36,13 @@
     
     [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN_DEV];
     
-    //*/
+    */
     
     //______________________________________________________________________________________________________________________________
     
     //LIVE
     
-    /*
+    ///*
      
     [Parse setApplicationId:PARSE_APP_ID
                   clientKey:PARSE_CLIENT_ID];
@@ -54,7 +54,7 @@
     [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
      [Fabric with:@[[Crashlytics class]]];
 
-    */
+    //*/
     
     //______________________________________________________________________________________________________________________________
     
@@ -132,6 +132,11 @@
     [currentInstallation setDeviceTokenFromData:deviceToken];
     currentInstallation.channels = @[ @"global" ];
     [currentInstallation saveInBackground];
+    
+    //send device token to mixpanel
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel.people addPushDeviceToken:deviceToken];
+
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
@@ -194,7 +199,7 @@
         Mixpanel *mixpanel = [Mixpanel sharedInstance];
         [mixpanel track:@"Session"];
         [mixpanel identify:[PFUser currentUser].objectId]; //this is what set the 'last seen' in mixpanel
-    }
+            }
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -216,6 +221,13 @@
     if ([PFUser currentUser]) {
         //if there is an active user...mixpanel dat shit
         [mixpanel identify:[PFUser currentUser].objectId]; //this is what set the 'last seen' in mixpanel
+        NSLog(@"current token is: %@", [PFInstallation currentInstallation].deviceToken);
+        
+        NSString *originalString = [NSString stringWithFormat:@"%@", [PFInstallation currentInstallation].deviceToken];
+        NSData *data = [originalString dataUsingEncoding:NSUTF8StringEncoding];
+        [mixpanel.people addPushDeviceToken:data];
+
+        
     }
 }
 
