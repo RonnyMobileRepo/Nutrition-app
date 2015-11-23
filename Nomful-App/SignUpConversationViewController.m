@@ -59,8 +59,8 @@ CGFloat const ktypeInterval = 0.02;
                                                         @"If I need to email you, what is the best way to reach you? Don’t worry you won’t be spammed...I would never do that to you!",
                                                         @"Awesome! Thanks for all the information. I'm going to find you the perfect coach for you to team up with :)",
                                                         @"placeholder 2",
-                                                        @"Congrats, you now have a Nomful coach! Let's see those pearly whites and add your photo :)",
-                                                        @"Enter your phone number and I'll text you a secret code.",
+                                                        @"Congrats, you now have a Nomful coach! Add a profile photo so your coach can see your awesome self!",
+                                                        @"Just to make sure you are human, enter your phone number and I'll text you a secret code.",
                                                         @"Check your phone and tell me the secret password! :) ",
                                                         @"",
                                                         nil];

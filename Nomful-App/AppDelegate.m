@@ -52,6 +52,7 @@
     [Stripe setDefaultPublishableKey:STRIPE_TOKEN];
     
     [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
+     [Fabric with:@[[Crashlytics class]]];
 
     */
     
@@ -59,7 +60,6 @@
     
     //BOTH
     
-    [Fabric with:@[[Crashlytics class]]];
     [[ChimpKit sharedKit] setApiKey:MAILCHIMP_TOKEN];
     Branch *branch = [Branch getInstance];
     [branch initSessionWithLaunchOptions:launchOptions andRegisterDeepLinkHandler:^(NSDictionary *params, NSError *error) {
