@@ -72,6 +72,9 @@
     hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     hud.mode = MBProgressHUDAnimationFade;
     
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel timeEvent:@"Loading Chat"];
+    
     PFUser *current = [PFUser currentUser];
     
     if ([current[@"role"] isEqualToString:@"Client"]) {
@@ -203,6 +206,9 @@
              
              if (i == messages.count) {
                  [hud hide:YES];
+                 Mixpanel *mixpanel = [Mixpanel sharedInstance];
+                 [mixpanel track:@"Loading Chat"];
+
              }
          }
          

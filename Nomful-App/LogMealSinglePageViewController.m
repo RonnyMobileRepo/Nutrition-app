@@ -39,8 +39,8 @@ bool keyboardIsShowing = false;
     
     //mixpanel tracking
     Mixpanel *mixpanel = [Mixpanel sharedInstance];
-    
     [mixpanel timeEvent:@"Loading Home"];
+    
     hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     hud.mode = MBProgressHUDAnimationFade;
     hud.labelText = @"Loading...";
