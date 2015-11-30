@@ -22,7 +22,19 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     NSLog(@"did finish launching");
     
-  
+    //______________________________________________________________________________________________________________________________
+    
+    //BOTH
+    [Parse enableLocalDatastore];
+    
+    [[ChimpKit sharedKit] setApiKey:MAILCHIMP_TOKEN];
+    Branch *branch = [Branch getInstance];
+    [branch initSessionWithLaunchOptions:launchOptions andRegisterDeepLinkHandler:^(NSDictionary *params, NSError *error) {
+        // params are the deep linked params associated with the link that the user clicked before showing up.
+        NSLog(@"deep link data: %@", [params description]);
+    }];
+    
+
     
     // ______________________________________________________________________________________________________________________________
     
@@ -55,17 +67,6 @@
      [Fabric with:@[[Crashlytics class]]];
 
     */
-    
-    //______________________________________________________________________________________________________________________________
-    
-    //BOTH
-    
-    [[ChimpKit sharedKit] setApiKey:MAILCHIMP_TOKEN];
-    Branch *branch = [Branch getInstance];
-    [branch initSessionWithLaunchOptions:launchOptions andRegisterDeepLinkHandler:^(NSDictionary *params, NSError *error) {
-        // params are the deep linked params associated with the link that the user clicked before showing up.
-        NSLog(@"deep link data: %@", [params description]);
-    }];
     
     //______________________________________________________________________________________________________________________________
 

@@ -84,6 +84,8 @@
 		215654BB1BFCFBB100FD917D /* CoachCardParentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 215654BA1BFCFBB100FD917D /* CoachCardParentViewController.m */; };
 		21643A4F1BC56D470099E6FB /* ConvertToFirebaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21643A4E1BC56D470099E6FB /* ConvertToFirebaseViewController.m */; };
 		21646F811BFA2D2E00235D51 /* MandrilTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21646F801BFA2D2E00235D51 /* MandrilTestViewController.m */; };
+		2180B4551C0CED5700722B1D /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2180B4541C0CED5700722B1D /* libsqlite3.dylib */; };
+		2180B4571C0CED7900722B1D /* libz.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2180B4561C0CED7900722B1D /* libz.1.dylib */; };
 		21856A851BCAADFA00E217F7 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21856A831BCAADFA00E217F7 /* Fabric.framework */; };
 		21856A861BCAADFA00E217F7 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21856A841BCAADFA00E217F7 /* Crashlytics.framework */; };
 		2187BD291BD7DFE40058A7C3 /* MealDetailCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2187BD281BD7DFE40058A7C3 /* MealDetailCardViewController.m */; };
@@ -256,6 +258,9 @@
 		21643A4E1BC56D470099E6FB /* ConvertToFirebaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConvertToFirebaseViewController.m; sourceTree = "<group>"; };
 		21646F7F1BFA2D2E00235D51 /* MandrilTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MandrilTestViewController.h; sourceTree = "<group>"; };
 		21646F801BFA2D2E00235D51 /* MandrilTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MandrilTestViewController.m; sourceTree = "<group>"; };
+		2180B4521C0CECFB00722B1D /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		2180B4541C0CED5700722B1D /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = ../../../../usr/lib/libsqlite3.dylib; sourceTree = "<group>"; };
+		2180B4561C0CED7900722B1D /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = ../../../../usr/lib/libz.1.dylib; sourceTree = "<group>"; };
 		21856A831BCAADFA00E217F7 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		21856A841BCAADFA00E217F7 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		2187BD271BD7DFE40058A7C3 /* MealDetailCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MealDetailCardViewController.h; sourceTree = "<group>"; };
@@ -305,6 +310,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2180B4571C0CED7900722B1D /* libz.1.dylib in Frameworks */,
+				2180B4551C0CED5700722B1D /* libsqlite3.dylib in Frameworks */,
 				5EDD67B4A8A9E0D710949A4F /* libPods-Nomful-App.a in Frameworks */,
 				21856A861BCAADFA00E217F7 /* Crashlytics.framework in Frameworks */,
 				21856A851BCAADFA00E217F7 /* Fabric.framework in Frameworks */,
@@ -710,6 +717,9 @@
 		C9BBC740C3234417E779A178 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2180B4561C0CED7900722B1D /* libz.1.dylib */,
+				2180B4541C0CED5700722B1D /* libsqlite3.dylib */,
+				2180B4521C0CECFB00722B1D /* libsqlite3.0.tbd */,
 				DE4DE3B1DF31D17CBF9E1A0C /* libPods-Nomful-App.a */,
 				83716DA2E1B570912D18C269 /* libPods.a */,
 				DF9BA7B1C8F44032E169948A /* libPods-Nomful-AppTests.a */,
