@@ -98,11 +98,18 @@
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController
        viewControllerAfterViewController:(UIViewController *)viewController{
     
+    NSLog(@"the view controller is: %@", viewController );
+
     if(viewController == self.profileVC){
+        NSLog(@"the view controller is: PROFILE" );
         return self.homeVCNav;
     }else if(viewController == self.homeVCNav){
+        NSLog(@"the view controller is: CHAT" );
+        //WHEN ON HOME SCREEN WE RETURN THIS...BUT IT IS NULL
         return self.chatVC;
     }else{
+        NSLog(@"the view controller is: NULL" );
+
         return nil;
     }
     
@@ -136,17 +143,30 @@
     UIViewController *currentView = [[UIViewController alloc] init];
     currentView = [self.viewControllers objectAtIndex:0];
     
-    prevVC = [self pageViewController:self viewControllerAfterViewController:currentView];
     
+    prevVC = [self pageViewController:self viewControllerAfterViewController:currentView]; //*null
+    
+    NSLog(@"prev view is: %@", prevVC);
+
     NSMutableArray  *prevVCArray = [[NSMutableArray alloc] init];
-    [prevVCArray addObject:prevVC];
     
-    [self setViewControllers:prevVCArray direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
-    
-    if(currentView == self.homeVCNav){
-        [self chatNavBar];
-    }else if(currentView == self.profileVC){
-        [self homeNavBar];
+    if (prevVC) {
+        //if prevVC was loaded
+        [prevVCArray addObject:prevVC];
+        
+        [self setViewControllers:prevVCArray direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
+        
+        if(currentView == self.homeVCNav){
+            [self chatNavBar];
+        }else if(currentView == self.profileVC){
+            [self homeNavBar];
+        }
+        
+    }else{
+        NSLog(@"FAILED TO LOAD");
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Poor Internet Connection" message:@"It appears your internet connection is very weak. Your experience may be limited until strong network connection is established" delegate:self cancelButtonTitle:@"Okay." otherButtonTitles: nil];
+        [alert show];
+        
     }
     
 }

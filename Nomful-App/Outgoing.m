@@ -11,7 +11,7 @@
 
 #import <Parse/Parse.h>
 #import <Firebase/Firebase.h>
-//#import "MBProgressHUD.h"
+#import "MBProgressHUD.h"
 
 //#import "utilities.h"
 
@@ -140,17 +140,17 @@
 - (void)sendPictureMessage:(NSMutableDictionary *)item Picture:(UIImage *)picture
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 {
-    /*
+    
 	MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
 	hud.mode = MBProgressHUDModeDeterminateHorizontalBar;
-     */
+     
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	int width = (int) picture.size.width;
 	int height = (int) picture.size.height;
 	PFFile *file = [PFFile fileWithName:@"picture.jpg" data:UIImageJPEGRepresentation(picture, 0.6)];
 	[file saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
 	{
-		//[hud hide:YES];
+		[hud hide:YES];
 		if (error == nil)
 		{
 			item[@"picture"] = file.url;
@@ -164,7 +164,7 @@
 	}
 	progressBlock:^(int percentDone)
 	{
-		//hud.progress = (float) percentDone/100;
+		hud.progress = (float) percentDone/100;
 	}];
      
 }

@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		210022551BE013B600838A5E /* CoachBioViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 210022541BE013B600838A5E /* CoachBioViewController.m */; };
 		210022571BE17E2E00838A5E /* Brittany-Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 210022561BE17E2E00838A5E /* Brittany-Icon.png */; };
+		2104F54B1C04032C0013911D /* logo-600.png in Resources */ = {isa = PBXBuildFile; fileRef = 2104F54A1C04032C0013911D /* logo-600.png */; };
+		2104F54D1C0405C50013911D /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2104F54C1C0405C50013911D /* Launch Screen.storyboard */; };
 		2137D7E51BAC973000310545 /* AccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2137D7E41BAC973000310545 /* AccountViewController.m */; };
 		2137D7EB1BAC974200310545 /* AvailableClientsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2137D7E81BAC974200310545 /* AvailableClientsTableViewController.m */; };
 		2137D7EC1BAC974200310545 /* AvailableClientTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2137D7EA1BAC974200310545 /* AvailableClientTableViewCell.m */; };
@@ -58,7 +60,6 @@
 		2137D8791BAC980000310545 /* VerificationCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2137D86F1BAC980000310545 /* VerificationCodeViewController.m */; };
 		2137D87C1BAC980D00310545 /* WebViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2137D87B1BAC980D00310545 /* WebViewViewController.m */; };
 		2137D8801BAC9B3400310545 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 2137D87F1BAC9B3400310545 /* Reachability.m */; };
-		2137D8831BAC9E8D00310545 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2137D8811BAC9E8D00310545 /* LaunchScreen.xib */; };
 		2137D8841BAC9E8D00310545 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2137D8821BAC9E8D00310545 /* Main.storyboard */; };
 		2137D89A1BACA04600310545 /* broWithSmoothie.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2137D8861BACA04600310545 /* broWithSmoothie.jpg */; };
 		2137D89B1BACA04600310545 /* fitness-background.png in Resources */ = {isa = PBXBuildFile; fileRef = 2137D8871BACA04600310545 /* fitness-background.png */; };
@@ -92,7 +93,6 @@
 		21C88A2D1BAC95CF00792E9C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21C88A2C1BAC95CF00792E9C /* ViewController.m */; };
 		21C88A331BAC95CF00792E9C /* Nomful_App.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 21C88A311BAC95CF00792E9C /* Nomful_App.xcdatamodeld */; };
 		21C88A351BAC95CF00792E9C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 21C88A341BAC95CF00792E9C /* Assets.xcassets */; };
-		21C88A381BAC95CF00792E9C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 21C88A361BAC95CF00792E9C /* LaunchScreen.storyboard */; };
 		21C88A431BAC95CF00792E9C /* Nomful_AppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 21C88A421BAC95CF00792E9C /* Nomful_AppTests.m */; };
 		21C88A4E1BAC95CF00792E9C /* Nomful_AppUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 21C88A4D1BAC95CF00792E9C /* Nomful_AppUITests.m */; };
 		21D4E2DC1BC2F81D00962C6B /* Chatview.m in Sources */ = {isa = PBXBuildFile; fileRef = 21D4E2DB1BC2F81D00962C6B /* Chatview.m */; };
@@ -128,6 +128,8 @@
 		210022531BE013B600838A5E /* CoachBioViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoachBioViewController.h; sourceTree = "<group>"; };
 		210022541BE013B600838A5E /* CoachBioViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoachBioViewController.m; sourceTree = "<group>"; };
 		210022561BE17E2E00838A5E /* Brittany-Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Brittany-Icon.png"; sourceTree = "<group>"; };
+		2104F54A1C04032C0013911D /* logo-600.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-600.png"; sourceTree = "<group>"; };
+		2104F54C1C0405C50013911D /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		2137D7E41BAC973000310545 /* AccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountViewController.m; sourceTree = "<group>"; };
 		2137D7E61BAC973600310545 /* AccountViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AccountViewController.h; sourceTree = "<group>"; };
 		2137D7E71BAC974200310545 /* AvailableClientsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AvailableClientsTableViewController.h; sourceTree = "<group>"; };
@@ -227,7 +229,6 @@
 		2137D87D1BAC986C00310545 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		2137D87E1BAC9B3400310545 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		2137D87F1BAC9B3400310545 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
-		2137D8811BAC9E8D00310545 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
 		2137D8821BAC9E8D00310545 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		2137D8861BACA04600310545 /* broWithSmoothie.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = broWithSmoothie.jpg; sourceTree = "<group>"; };
 		2137D8871BACA04600310545 /* fitness-background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fitness-background.png"; sourceTree = "<group>"; };
@@ -270,7 +271,6 @@
 		21C88A2C1BAC95CF00792E9C /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		21C88A321BAC95CF00792E9C /* Nomful_App.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Nomful_App.xcdatamodel; sourceTree = "<group>"; };
 		21C88A341BAC95CF00792E9C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		21C88A371BAC95CF00792E9C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		21C88A391BAC95CF00792E9C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		21C88A3E1BAC95CF00792E9C /* Nomful-AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Nomful-AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		21C88A421BAC95CF00792E9C /* Nomful_AppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Nomful_AppTests.m; sourceTree = "<group>"; };
@@ -462,6 +462,7 @@
 				2137D8891BACA04600310545 /* food.jpg */,
 				2137D88A1BACA04600310545 /* fruit.png */,
 				2137D88B1BACA04600310545 /* healthy-person-woman-sport.jpg */,
+				2104F54A1C04032C0013911D /* logo-600.png */,
 				2137D88C1BACA04600310545 /* iphone_6.png */,
 				210022561BE17E2E00838A5E /* Brittany-Icon.png */,
 				2137D88D1BACA04600310545 /* iphoneCall.png */,
@@ -588,7 +589,6 @@
 				21C88A281BAC95CF00792E9C /* AppDelegate.h */,
 				21C88A291BAC95CF00792E9C /* AppDelegate.m */,
 				2137D8821BAC9E8D00310545 /* Main.storyboard */,
-				2137D8811BAC9E8D00310545 /* LaunchScreen.xib */,
 				21C6FC4F1BAF20EE004599E8 /* Nomful-App.entitlements */,
 				2187BD261BD7DFC50058A7C3 /* Meal Detail */,
 				21643A541BC5950C0099E6FB /* Member View */,
@@ -600,11 +600,11 @@
 				21C88A2B1BAC95CF00792E9C /* ViewController.h */,
 				21C88A2C1BAC95CF00792E9C /* ViewController.m */,
 				21C88A341BAC95CF00792E9C /* Assets.xcassets */,
-				21C88A361BAC95CF00792E9C /* LaunchScreen.storyboard */,
 				21C88A311BAC95CF00792E9C /* Nomful_App.xcdatamodeld */,
 				21C88A251BAC95CF00792E9C /* Supporting Files */,
 				21646F7F1BFA2D2E00235D51 /* MandrilTestViewController.h */,
 				21646F801BFA2D2E00235D51 /* MandrilTestViewController.m */,
+				2104F54C1C0405C50013911D /* Launch Screen.storyboard */,
 			);
 			path = "Nomful-App";
 			sourceTree = "<group>";
@@ -840,21 +840,21 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2137D8831BAC9E8D00310545 /* LaunchScreen.xib in Resources */,
 				210022571BE17E2E00838A5E /* Brittany-Icon.png in Resources */,
 				2137D8841BAC9E8D00310545 /* Main.storyboard in Resources */,
+				2104F54D1C0405C50013911D /* Launch Screen.storyboard in Resources */,
 				2137D8A01BACA04600310545 /* iphone_6.png in Resources */,
 				21E9012F1BF2C5BF00DDEAFB /* Sean.jpeg in Resources */,
 				2137D8A61BACA04600310545 /* MuseoSansRounded-300.otf in Resources */,
 				2137D89C1BACA04600310545 /* food-square.png in Resources */,
 				2137D8AD1BACA04600310545 /* white-button.png in Resources */,
 				2137D8AB1BACA04600310545 /* straws.jpg in Resources */,
-				21C88A381BAC95CF00792E9C /* LaunchScreen.storyboard in Resources */,
 				2137D8A31BACA04600310545 /* marketingscreen-coach.png in Resources */,
 				2137D8A21BACA04600310545 /* Layer 1.png in Resources */,
 				2137D8AA1BACA04600310545 /* Straberry-in-bowl-login.png in Resources */,
 				2137D8AC1BACA04600310545 /* thomas.JPG in Resources */,
 				2137D89F1BACA04600310545 /* healthy-person-woman-sport.jpg in Resources */,
+				2104F54B1C04032C0013911D /* logo-600.png in Resources */,
 				2137D89A1BACA04600310545 /* broWithSmoothie.jpg in Resources */,
 				2137D89E1BACA04600310545 /* fruit.png in Resources */,
 				2137D8A91BACA04600310545 /* smoothie-stomach.jpg in Resources */,
@@ -1135,17 +1135,6 @@
 		};
 /* End PBXTargetDependency section */
 
-/* Begin PBXVariantGroup section */
-		21C88A361BAC95CF00792E9C /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				21C88A371BAC95CF00792E9C /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
-
 /* Begin XCBuildConfiguration section */
 		21C88A501BAC95CF00792E9C /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -1187,7 +1176,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "074de199-173d-4830-97d1-b21eb9a4d5a8";
+				PROVISIONING_PROFILE = "6c2c2ad3-225b-4a6b-9ee5-f62dc76cd8e1";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1226,7 +1215,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "074de199-173d-4830-97d1-b21eb9a4d5a8";
+				PROVISIONING_PROFILE = "6c2c2ad3-225b-4a6b-9ee5-f62dc76cd8e1";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -1238,6 +1227,7 @@
 			baseConfigurationReference = E7AFC07723092381382DA4CB /* Pods-Nomful-App.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				CODE_SIGN_ENTITLEMENTS = "Nomful-App/Nomful-App.entitlements";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -1252,7 +1242,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Nomful;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "074de199-173d-4830-97d1-b21eb9a4d5a8";
+				PROVISIONING_PROFILE = "6c2c2ad3-225b-4a6b-9ee5-f62dc76cd8e1";
 			};
 			name = Debug;
 		};
@@ -1261,6 +1251,7 @@
 			baseConfigurationReference = 62890AF4F1A893706C1A3067 /* Pods-Nomful-App.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				CODE_SIGN_ENTITLEMENTS = "Nomful-App/Nomful-App.entitlements";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -1275,7 +1266,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Nomful;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "074de199-173d-4830-97d1-b21eb9a4d5a8";
+				PROVISIONING_PROFILE = "6c2c2ad3-225b-4a6b-9ee5-f62dc76cd8e1";
 			};
 			name = Release;
 		};

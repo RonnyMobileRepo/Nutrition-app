@@ -18,42 +18,43 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-//    PFUser *currentUser = [PFUser currentUser];
-//    NSLog(@"current user is: %@", currentUser);
-//    
-//    
-//    //send first time login email
-//    [PFCloud callFunctionInBackground:@"sendFirstTimeLoginEmail"
-//                       withParameters:@{@"toEmail": currentUser.email,
-//                                        @"toName": currentUser[@"firstName"]
-//                                        }
-//                                block:^(NSString *result, NSError *error) {
-//                                    if (!error) {
-//                                        NSLog(@"RESULT IS: %@", result);
-//                                    }
-//                                    else{
-//                                        NSLog(@"ERROR: %@", error);
-//                                    }
-//                                }];
-//    
+    PFUser *currentUser = [PFUser currentUser];
+    [currentUser fetch];
+    NSLog(@"current user is: %@", currentUser);
+    
+    
+    //send first time login email
+    [PFCloud callFunctionInBackground:@"sendFirstTimeLoginEmail2"
+                       withParameters:@{@"toEmail": currentUser.email,
+                                        @"toName": currentUser[@"firstName"]
+                                        }
+                                block:^(NSString *result, NSError *error) {
+                                    if (!error) {
+                                        NSLog(@"RESULT IS: %@", result);
+                                    }
+                                    else{
+                                        NSLog(@"ERROR: %@", error);
+                                    }
+                                }];
+    
     
 
-    _coachUsers = @[[PFUser currentUser]];
-
-    // Create page view controller
-    self.pageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"coachBioPageViewController"];
-    self.pageViewController.dataSource = self;
-    
-    CoachPageContentViewController *startingViewController = [self viewControllerAtIndex:0];
-    NSArray *viewControllers = @[startingViewController];
-    [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
-    
-    // Change the size of page view controller
-    self.pageViewController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
-    
-    [self addChildViewController:_pageViewController];
-    [self.view addSubview:_pageViewController.view];
-    [self.pageViewController didMoveToParentViewController:self];
+//    _coachUsers = @[[PFUser currentUser]];
+//
+//    // Create page view controller
+//    self.pageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"coachBioPageViewController"];
+//    self.pageViewController.dataSource = self;
+//    
+//    CoachPageContentViewController *startingViewController = [self viewControllerAtIndex:0];
+//    NSArray *viewControllers = @[startingViewController];
+//    [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+//    
+//    // Change the size of page view controller
+//    self.pageViewController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+//    
+//    [self addChildViewController:_pageViewController];
+//    [self.view addSubview:_pageViewController.view];
+//    [self.pageViewController didMoveToParentViewController:self];
 
 }
 

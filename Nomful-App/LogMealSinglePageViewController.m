@@ -7,8 +7,13 @@
 //
 
 #import "LogMealSinglePageViewController.h"
+#import <MBProgressHUD.h>
 
-@interface LogMealSinglePageViewController ()
+@interface LogMealSinglePageViewController (){
+    
+    MBProgressHUD *hud;
+    NSTimer *hudTimer;
+}
 
 
 @end
@@ -29,6 +34,27 @@ bool keyboardIsShowing = false;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    //show loading view and track in mixpanel
+    
+    //mixpanel tracking
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    
+    [mixpanel timeEvent:@"Loading Home"];
+    hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    hud.mode = MBProgressHUDAnimationFade;
+    hud.labelText = @"Loading...";
+    hud.detailsLabelText = @"Poor Network Connection";
+    hud.detailsLabelColor = [UIColor clearColor];
+    
+    
+    hudTimer = [NSTimer scheduledTimerWithTimeInterval:6.5
+                                                        target:self
+                                                      selector:@selector(updateLabel)
+                                                      userInfo:nil
+                                                       repeats:YES];
+    
+    
 
     [self checkTrialEnd];
     
@@ -116,6 +142,12 @@ bool keyboardIsShowing = false;
     
 }
 
+- (void)updateLabel{
+
+    hud.detailsLabelColor = [UIColor whiteColor];
+    [hudTimer invalidate];
+
+}
 - (void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
     NSLog(@"view did disappear");
@@ -194,8 +226,11 @@ bool keyboardIsShowing = false;
     [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
         
         if (!error) {
+            
             //set the goal label to the retreved goal text
             self.goalsLabel.text = object[@"text"];
+            
+          
         }else
         
             if(error.code == kPFErrorInvalidSessionToken){
@@ -203,6 +238,12 @@ bool keyboardIsShowing = false;
 
             }
             self.goalsLabel.text = @"You and your personal nutrition expert will decide on your weekly goals :)";
+        
+        //HIDE the progress HUD
+        [hud hide:YES];
+        
+        Mixpanel *mixpanel = [Mixpanel sharedInstance];
+        [mixpanel track:@"Loading Home"];
     }];
     
     

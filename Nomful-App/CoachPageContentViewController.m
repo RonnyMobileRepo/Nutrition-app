@@ -13,12 +13,12 @@
 
 @end
 
-CGFloat const kTopMargin = 45.0; //add 20 pts for status bar
-CGFloat const kSideMargin = 35.0; //between card and edge
-CGFloat const kInsideCardMargin = 5.0;
-CGFloat const kleftMarginBullets = 10.0;
-CGFloat const kbulletTextHeight = 15.0;
-CGFloat const kInbetweenMartin = 5.0;
+CGFloat const kTopMargin1 = 45.0; //add 20 pts for status bar
+CGFloat const kSideMargin1 = 35.0; //between card and edge
+CGFloat const kInsideCardMargin1 = 5.0;
+CGFloat const kleftMarginBullets1 = 10.0;
+CGFloat const kbulletTextHeight1 = 15.0;
+CGFloat const kInbetweenMartin1 = 5.0;
 
 
 
@@ -235,17 +235,17 @@ CGFloat const kInbetweenMartin = 5.0;
     CGFloat screenHeight = (self.view.bounds.size.height/1.6);
     CGFloat screenWidth = (self.view.bounds.size.width);
     
-    CGFloat bottomCardWidth = screenWidth - (kSideMargin*2);
-    CGFloat buttonWidths = (bottomCardWidth - ((kInbetweenMartin * 2) + (kInsideCardMargin * 2)))/3;
+    CGFloat bottomCardWidth = screenWidth - (kSideMargin1*2);
+    CGFloat buttonWidths = (bottomCardWidth - ((kInbetweenMartin1 * 2) + (kInsideCardMargin1 * 2)))/3;
     
     
     //convert floats to nsnumber for the constraint dictionary
     NSNumber *aNumber = [NSNumber numberWithFloat:screenHeight];
-    NSNumber *topMargin = [NSNumber numberWithFloat:kTopMargin];
-    NSNumber *sideMargin = [NSNumber numberWithFloat:kSideMargin];
-    NSNumber *insideCardMargin = [NSNumber numberWithFloat:kInsideCardMargin];
+    NSNumber *topMargin = [NSNumber numberWithFloat:kTopMargin1];
+    NSNumber *sideMargin = [NSNumber numberWithFloat:kSideMargin1];
+    NSNumber *insideCardMargin = [NSNumber numberWithFloat:kInsideCardMargin1];
     NSNumber *buttonWidth = [NSNumber numberWithFloat:buttonWidths];
-    NSNumber *inbetween = [NSNumber numberWithFloat:kInbetweenMartin];
+    NSNumber *inbetween = [NSNumber numberWithFloat:kInbetweenMartin1];
     
     
     

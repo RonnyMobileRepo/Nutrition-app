@@ -12,6 +12,8 @@
 #import "PhotoMediaItem.h"
 #import <IDMPhotoBrowser.h>
 #import "CoachBioViewController.h"
+#import <MBProgressHUD/MBProgressHUD.h>
+
 
 
 @interface Chatview (){
@@ -45,6 +47,9 @@
     JSQMessagesBubbleImage *bubbleImageIncoming;
     JSQMessagesAvatarImage *avatarImageBlank;
     
+    MBProgressHUD *hud;
+    int i;
+    
 }
 
 @end
@@ -56,11 +61,16 @@
 {
     self = [super init];
     groupId = groupId_;
+    
+    
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    hud.mode = MBProgressHUDAnimationFade;
     
     PFUser *current = [PFUser currentUser];
     
@@ -73,12 +83,10 @@
             if (!object[@"isOnLatestVersion"]) {
                 object[@"isOnLatestVersion"] = @"YAS";
                 [object saveInBackground];
-                
             }
         }];
     }
     
-        
     //declare items for memory stuff i still don't get
     items = [[NSMutableArray alloc] init];
     messages = [[NSMutableArray alloc] init];
@@ -175,7 +183,7 @@
     NSLog(@"load messages for chatrom %@", groupId);
     initialized = NO;
     self.automaticallyScrollsToMostRecentMessage = YES;
-    
+    i = 0;
     //querying data
     [[[firebase1 queryOrderedByChild:@"date"] queryLimitedToLast:25] observeEventType:FEventTypeChildAdded withBlock:^(FDataSnapshot *snapshot) {
     
@@ -184,10 +192,18 @@
              BOOL incoming = [self addMessage:snapshot.value];
              if (incoming) [JSQSystemSoundPlayer jsq_playMessageReceivedSound];
              [self finishReceivingMessage];
+             
 
          }else{
-             
+            
              [self addMessage:snapshot.value]; //** I added this so the messages load initially
+             i ++;
+             
+             NSLog(@"i is %d", i);
+             
+             if (i == messages.count) {
+                 [hud hide:YES];
+             }
          }
          
      }];
