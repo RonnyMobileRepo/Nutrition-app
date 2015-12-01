@@ -248,7 +248,17 @@
              BOOL incoming = [self addMessage:snapshot.value];
              if (incoming) [JSQSystemSoundPlayer jsq_playMessageReceivedSound];
              [self finishReceivingMessage];
+             i ++;
              
+             NSLog(@"i is %d", i);
+             
+             if (i == messages.count) {
+                 [hud hide:YES];
+                 Mixpanel *mixpanel = [Mixpanel sharedInstance];
+                 [mixpanel track:@"Loading Chat"];
+                 
+             }
+
 
          }else{
             
@@ -261,9 +271,9 @@
                  [hud hide:YES];
                  Mixpanel *mixpanel = [Mixpanel sharedInstance];
                  [mixpanel track:@"Loading Chat"];
-
+                 
              }
-         }
+        }
          
      }];
     
