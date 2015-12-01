@@ -74,6 +74,7 @@
     Mixpanel *mixpanel = [Mixpanel sharedInstance];
     [mixpanel timeEvent:@"Loading Chat"];
     
+    
     PFUser *current = [PFUser currentUser];
     
     if ([current[@"role"] isEqualToString:@"Client"]) {
@@ -82,11 +83,15 @@
         [query fromLocalDatastore];
         [query getObjectInBackgroundWithId:groupId block:^(PFObject * _Nullable object, NSError * _Nullable error) {
             if (object) {
-                NSLog(@"chatview: we got the local object");
-                if (!object[@"isOnLatestVersion"]) {
-                    object[@"isOnLatestVersion"] = @"YAS";
-                    [object saveInBackground];
-                }
+                [object fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+                    //
+                    NSLog(@"chatview: we got the local object");
+                    if (!object[@"isOnLatestVersion"]) {
+                        object[@"isOnLatestVersion"] = @"YAS";
+                        [object saveEventually];
+                    }
+                }];
+                
             }else{
                 NSLog(@"chatview: we got to do the network ting");
                 
@@ -193,27 +198,27 @@
     [super viewDidAppear:animated];
     self.collectionView.collectionViewLayout.springinessEnabled = NO;
 
-    hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-    hud.mode = MBProgressHUDAnimationFade;
-    hud.labelText = @"Loading...";
-    hud.detailsLabelText = @"Poor Network Connection";
-    hud.detailsLabelColor = [UIColor clearColor];
-    
-    
-    hudTimer = [NSTimer scheduledTimerWithTimeInterval:6.5
-                                                target:self
-                                              selector:@selector(updateLabel)
-                                              userInfo:nil
-                                               repeats:YES];
-    
-    
-    
-    
-    
+    //only show the progress hud if there are no messages and we must load
+    if (messages.count == 0) {
+        //don't put this in view did appear b/c it shows everytime we swipe over to the view even though all is loaded
+        hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+        hud.mode = MBProgressHUDAnimationFade;
+        hud.labelText = @"Loading...";
+        hud.detailsLabelText = @"Poor Network Connection";
+        hud.detailsLabelColor = [UIColor clearColor];
+        
+        
+        hudTimer = [NSTimer scheduledTimerWithTimeInterval:6.5
+                                                    target:self
+                                                  selector:@selector(updateLabel)
+                                                  userInfo:nil
+                                                   repeats:YES];
+        
+
+        
+    }
     
 
-    
-    
 }
 
 - (void)viewWillDisappear:(BOOL)animated

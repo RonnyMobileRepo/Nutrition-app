@@ -22,7 +22,6 @@
 
 //declare constants
 CGFloat const kNavBarMargin = 0.0; //20px for status bar too
-
 CGFloat const kGoalTitleFontSize = 25.0;
 CGFloat const kGoalContentFontSize = 15.0;
 CGFloat const kButtonFontSize = 20.0;
@@ -37,28 +36,7 @@ bool keyboardIsShowing = false;
     [super viewDidLoad];
     
     //show loading view and track in mixpanel
-    
-    //mixpanel tracking
-    
-    /*
-    Mixpanel *mixpanel = [Mixpanel sharedInstance];
-    [mixpanel timeEvent:@"Loading Home"];
-    
-    hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-    hud.mode = MBProgressHUDAnimationFade;
-    hud.labelText = @"Loading...";
-    hud.detailsLabelText = @"Poor Network Connection";
-    hud.detailsLabelColor = [UIColor clearColor];
-    
-    
-    hudTimer = [NSTimer scheduledTimerWithTimeInterval:6.5
-                                                        target:self
-                                                      selector:@selector(updateLabel)
-                                                      userInfo:nil
-                                                       repeats:YES];
-    
-    */
-
+  
     [self checkTrialEnd];
     
     //main view background color
@@ -104,40 +82,6 @@ bool keyboardIsShowing = false;
                                                  name:UIApplicationDidBecomeActiveNotification object:nil];
 
     
-    //load the square camera viewfinder below the nav bar
-    //[self loadCameraView];
-
-    //load the spot where the captured image goes
-    //[self loadCapturedImageView];
-    
-    //load the capture button
-    //[self loadCaptureButton];
-    
-    //load the photo taken activity indicator
-    //[self loadPhotoTakenActivityIndicator];
-    
-    //load the textview INSIDE the container
-    //[self loadDetailTextView];
-    
-    //load the save button
-    //[self loadSaveButton];
-    
-    //load the past meals button
-    //[self loadPastMeals];
-    
-    //load Goal Stuff
-    //[self loadGoalStuff];
-    
-    //load hashtags
-    //[self loadHashtags];
-    
-    //load constraints
-    //[self loadConstraints];
-    
-    //load the camera viewfinder
-    //[self initializeCamera:self.cameraView];
-    
-
     //listen for keyboard notifications
     
     self.hashtagArray = [[NSMutableArray alloc] init];
@@ -220,8 +164,6 @@ bool keyboardIsShowing = false;
     self.goalsTitleLabel.font = [UIFont fontWithName:kFontFamilyName size:kGoalTitleFontSize];
     self.goalsTitleLabel.textAlignment = NSTextAlignmentLeft;
     
-    //set text
-    
     //add to view
     [self.bottomContainerView addSubview:self.goalsTitleLabel];
     [self.bottomContainerView addSubview:self.goalsLabel];
@@ -240,10 +182,9 @@ bool keyboardIsShowing = false;
     [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
         
         if (!error) {
-            NSLog(@"you got the local obeject");
             //set the goal label to the retreved goal text
             self.goalsLabel.text = object[@"text"];
-            
+    
         }else{
             //there was an error query on network instead
             
@@ -251,13 +192,16 @@ bool keyboardIsShowing = false;
             [query whereKey:@"userObject" equalTo:[PFUser currentUser]];
             [query orderByDescending:@"createdAt"];
             [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-                NSLog(@"you're querying from network");
-                //set the goal label to the retreved goal text
-                self.goalsLabel.text = object[@"text"];
                 
-                //pin for futures use
-                [object pinInBackground];
-            
+                if (!object) {
+                    //set text
+                    self.goalsLabel.text = @"You and your coach will come up with your first goal when you chat on the phone :)";
+                }else{
+                    //set the goal label to the retreved goal text
+                    self.goalsLabel.text = object[@"text"];
+                    //pin for futures use
+                    [object pinInBackground];
+                }
             }];
        
         }
