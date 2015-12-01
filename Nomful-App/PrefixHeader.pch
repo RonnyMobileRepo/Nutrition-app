@@ -22,6 +22,7 @@
 #import "ParseErrorHandlingController.h"
 #import <Firebase/Firebase.h>
 #import <Stripe/Stripe.h>
+#import <Bolts.h>
 
 
 //mixpanel

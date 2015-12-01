@@ -48,6 +48,8 @@
     JSQMessagesAvatarImage *avatarImageBlank;
     
     MBProgressHUD *hud;
+    NSTimer *hudTimer;
+    
     int i;
     
 }
@@ -69,9 +71,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-    hud.mode = MBProgressHUDAnimationFade;
-    
     Mixpanel *mixpanel = [Mixpanel sharedInstance];
     [mixpanel timeEvent:@"Loading Chat"];
     
@@ -80,14 +79,36 @@
     if ([current[@"role"] isEqualToString:@"Client"]) {
         //if user is client then update!
         PFQuery *query = [PFQuery queryWithClassName:@"Chatrooms"];
+        [query fromLocalDatastore];
         [query getObjectInBackgroundWithId:groupId block:^(PFObject * _Nullable object, NSError * _Nullable error) {
-            //object is chatroom
-            
-            if (!object[@"isOnLatestVersion"]) {
-                object[@"isOnLatestVersion"] = @"YAS";
-                [object saveInBackground];
+            if (object) {
+                NSLog(@"chatview: we got the local object");
+                if (!object[@"isOnLatestVersion"]) {
+                    object[@"isOnLatestVersion"] = @"YAS";
+                    [object saveInBackground];
+                }
+            }else{
+                NSLog(@"chatview: we got to do the network ting");
+                
+                PFQuery *query = [PFQuery queryWithClassName:@"Chatrooms"];
+                [query fromLocalDatastore];
+                [query getObjectInBackgroundWithId:groupId block:^(PFObject * _Nullable object, NSError * _Nullable error) {
+                    if (object) {
+                        NSLog(@"chatview: we got the local object");
+                        if (!object[@"isOnLatestVersion"]) {
+                            object[@"isOnLatestVersion"] = @"YAS";
+                            [object saveEventually];
+                            [object pinInBackground];
+                        }
+                    
+                    }
+                }];
+
+                
+                
             }
-        }];
+            
+    }];
     }
     
     //declare items for memory stuff i still don't get
@@ -158,12 +179,39 @@
     
 }
 
+- (void)updateLabel{
+    
+    hud.detailsLabelColor = [UIColor whiteColor];
+    [hudTimer invalidate];
+    
+}
+
 - (void)viewDidAppear:(BOOL)animated
 {
     NSLog(@"viewdidAppear");
 
     [super viewDidAppear:animated];
     self.collectionView.collectionViewLayout.springinessEnabled = NO;
+
+    hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    hud.mode = MBProgressHUDAnimationFade;
+    hud.labelText = @"Loading...";
+    hud.detailsLabelText = @"Poor Network Connection";
+    hud.detailsLabelColor = [UIColor clearColor];
+    
+    
+    hudTimer = [NSTimer scheduledTimerWithTimeInterval:6.5
+                                                target:self
+                                              selector:@selector(updateLabel)
+                                              userInfo:nil
+                                               repeats:YES];
+    
+    
+    
+    
+    
+    
+
     
     
 }
@@ -254,7 +302,6 @@
 
     PFQuery *query = [PFUser query];
     [query whereKey:@"objectId" equalTo:senderId];
-    [query setCachePolicy:kPFCachePolicyCacheThenNetwork];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
          if (error == nil)
@@ -670,6 +717,7 @@
 - (void)sendPushNotifications{
     
         PFQuery *query = [PFQuery queryWithClassName:@"Chatrooms"];
+        [query fromLocalDatastore];
         [query getObjectInBackgroundWithId:groupId block:^(PFObject * _Nullable object, NSError * _Nullable error) {
 
             //we now have the chatroom object!
@@ -726,6 +774,7 @@
     phoneCallActive = true;
     
     PFQuery *query = [PFQuery queryWithClassName:@"Chatrooms"];
+    [query fromLocalDatastore];
     [query getObjectInBackgroundWithId:groupId block:^(PFObject * _Nullable object, NSError * _Nullable error) {
         NSString *phoneNumber = object[@"twilioNumber"];
         NSString *cleanedPhone = [[phoneNumber componentsSeparatedByCharactersInSet:[[NSCharacterSet characterSetWithCharactersInString:@"0123456789"] invertedSet]] componentsJoinedByString:@""];
@@ -751,6 +800,7 @@
     
     //**check if the user has converted chatrooms yet
     PFQuery *query = [PFQuery queryWithClassName:@"Chatrooms"];
+    [query fromLocalDatastore];
     [query getObjectInBackgroundWithId:groupId block:^(PFObject * _Nullable chatroom, NSError * _Nullable error) {
         NSLog(@"the objet it: %@", chatroom);
         
@@ -777,6 +827,7 @@
     if(phoneCallActive){
         
         PFQuery *query = [PFQuery queryWithClassName:@"Chatrooms"];
+        [query fromLocalDatastore];
         [query getObjectInBackgroundWithId:groupId block:^(PFObject * _Nullable object, NSError * _Nullable error) {
             //object is chatroom
             if ([object[@"isOnLatestVersion"] isEqualToString:@"YAS"]) {

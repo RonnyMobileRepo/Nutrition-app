@@ -13,6 +13,7 @@
     
     MBProgressHUD *hud;
     NSTimer *hudTimer;
+    PFObject *goalObject;
 }
 
 
@@ -38,6 +39,8 @@ bool keyboardIsShowing = false;
     //show loading view and track in mixpanel
     
     //mixpanel tracking
+    
+    /*
     Mixpanel *mixpanel = [Mixpanel sharedInstance];
     [mixpanel timeEvent:@"Loading Home"];
     
@@ -54,7 +57,7 @@ bool keyboardIsShowing = false;
                                                       userInfo:nil
                                                        repeats:YES];
     
-    
+    */
 
     [self checkTrialEnd];
     
@@ -219,43 +222,58 @@ bool keyboardIsShowing = false;
     
     //set text
     
+    //add to view
+    [self.bottomContainerView addSubview:self.goalsTitleLabel];
+    [self.bottomContainerView addSubview:self.goalsLabel];
+    
+    [self queryForGoal];
+    
+}
+
+- (void)queryForGoal{
+    
     
     PFQuery *query = [PFQuery queryWithClassName:@"Goals"];
+    [query fromLocalDatastore];
     [query whereKey:@"userObject" equalTo:[PFUser currentUser]];
     [query orderByDescending:@"createdAt"];
     [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
         
         if (!error) {
-            
+            NSLog(@"you got the local obeject");
             //set the goal label to the retreved goal text
             self.goalsLabel.text = object[@"text"];
             
-          
-        }else
-        
-            if(error.code == kPFErrorInvalidSessionToken){
-                NSLog(@"SEAN WINS" );
-
-            }
-            self.goalsLabel.text = @"You and your personal nutrition expert will decide on your weekly goals :)";
-        
+        }else{
+            //there was an error query on network instead
+            
+            PFQuery *query = [PFQuery queryWithClassName:@"Goals"];
+            [query whereKey:@"userObject" equalTo:[PFUser currentUser]];
+            [query orderByDescending:@"createdAt"];
+            [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+                NSLog(@"you're querying from network");
+                //set the goal label to the retreved goal text
+                self.goalsLabel.text = object[@"text"];
+                
+                //pin for futures use
+                [object pinInBackground];
+            
+            }];
+       
+        }
+            
+            
+            
+            
+            
         //HIDE the progress HUD
-        [hud hide:YES];
+        //[hud hide:YES];
         
         Mixpanel *mixpanel = [Mixpanel sharedInstance];
         [mixpanel track:@"Loading Home"];
     }];
     
-    
-    //set the title label text
-    
-    
-    //add to view
-    [self.bottomContainerView addSubview:self.goalsTitleLabel];
-    [self.bottomContainerView addSubview:self.goalsLabel];
-    
 }
-
 
 - (void)loadCameraView{
     NSLog(@"Loading Camera View");
@@ -1661,9 +1679,10 @@ bool keyboardIsShowing = false;
             //set current user
             PFUser *currentUser = [PFUser currentUser];
             
-            //query for the current chatroom
+            //query for the current chatroom from local datastore
             PFQuery *query = [[PFQuery alloc] initWithClassName:@"Chatrooms"];
             [query whereKey:@"clientUser" equalTo:currentUser];
+            [query fromLocalDatastore];
             
             //get the chatroom
             [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
@@ -1702,6 +1721,7 @@ bool keyboardIsShowing = false;
                     
                 }
                 else{
+                    NSLog(@"SEAN: %@", error);
                     //[ParseErrorHandlingController handleParseError:error];
                 }
             }];
@@ -1824,9 +1844,30 @@ bool keyboardIsShowing = false;
                     //query for the current chatroom
                     PFQuery *query = [[PFQuery alloc] initWithClassName:@"Chatrooms"];
                     [query whereKey:@"clientUser" equalTo:[PFUser currentUser]];
+                    [query fromLocalDatastore];
                     [query getFirstObjectInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
-                        _chatroom = object;
-                        [self performSegueWithIdentifier:@"trialEnded" sender:self];
+                        
+                        if (!error) {
+                            NSLog(@"check for trial: using local object");
+                            _chatroom = object;
+                            [self performSegueWithIdentifier:@"trialEnded" sender:self];
+                        }else{
+                            PFQuery *query = [[PFQuery alloc] initWithClassName:@"Chatrooms"];
+                            [query whereKey:@"clientUser" equalTo:[PFUser currentUser]];
+                            [query getFirstObjectInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+                                
+                                if (!error) {
+                                    NSLog(@"check for trial: using network object");
+
+                                    _chatroom = object;
+                                    [object pinInBackground];
+                                    [self performSegueWithIdentifier:@"trialEnded" sender:self];
+                                }
+                            
+                            }];
+                        }
+                        
+                       
                     }];
                     
                     UIAlertView *trialAlert = [[UIAlertView alloc] initWithTitle:@"Membership Renewal" message:@"Your membership period has ended, please complete payment to continue workign with your coach" delegate:self cancelButtonTitle:@"Okay!" otherButtonTitles: nil];

@@ -13,5 +13,6 @@
 
 @property (strong, nonatomic) UIPageViewController *pageViewController;
 @property (strong, nonatomic) NSArray *coachUsers;
+@property (strong, nonatomic) PFObject *chatroomObject;
 
 @end

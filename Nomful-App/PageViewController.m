@@ -73,10 +73,42 @@
 
 -(void)initializeChatView{
     
+    //OKAY so here we go.
+    //1. we check to see if the chatroom object is stored locally
+    //2. if it is...great, we can initialize the view controller
+    //3. If it isn't..no problem, we just query the network
+    //4. Once chatroom is found from Parse network query, we can initialize the chatroom
+    //5. Now that we have the chatroom. we can save it to the local datastore
     PFQuery *query = [PFQuery queryWithClassName:@"Chatrooms"];
     [query whereKey:@"clientUser" equalTo:[PFUser currentUser]];
+    [query fromLocalDatastore];
     [query getFirstObjectInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
-        self.chatVC = [[Chatview alloc] initWith:object.objectId];
+        
+        if (object) {
+            NSLog(@"SEAN: Yup, you got the chatroom in the local datastore");
+            self.chatVC = [[Chatview alloc] initWith:object.objectId];
+        }else{
+            NSLog(@"SEAN: we didnt' get the object from local...so do dat network stuff");
+            
+            
+            PFQuery *query = [PFQuery queryWithClassName:@"Chatrooms"];
+            [query whereKey:@"clientUser" equalTo:[PFUser currentUser]];
+            [query getFirstObjectInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+                
+                if (!error) {
+                    NSLog(@"SEAN: So now you've tried to get local...that didn't work and have got the object from network");
+                    self.chatVC = [[Chatview alloc] initWith:object.objectId];
+                    [object pinInBackground];
+                }else{
+                    NSLog(@"Parse ERROR: %@", error);
+                }
+                
+
+            }];
+            
+            
+        }
+        
     }];
 }
 

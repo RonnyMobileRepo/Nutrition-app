@@ -8,7 +8,11 @@
 
 #import "MandrilTestViewController.h"
 
-@interface MandrilTestViewController ()
+@interface MandrilTestViewController (){
+    
+    PFUser *currentUser;
+    
+}
 
 @end
 
@@ -16,26 +20,50 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    
+    currentUser = [PFUser currentUser];
+    //[self getChatroomFromNetwork];
+    [self getChatroomFromLocal];
+    
+    
+   // _chatroomObject = [self getChatroomFromNetwork].result;
+    
+   // NSLog(@"chatroom is: %@", [self getChatroomFromNetwork].result);
+    
+    
+  
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
     // Do any additional setup after loading the view.
-    
-    PFUser *currentUser = [PFUser currentUser];
-    [currentUser fetch];
-    NSLog(@"current user is: %@", currentUser);
-    
-    
-    //send first time login email
-    [PFCloud callFunctionInBackground:@"sendFirstTimeLoginEmail2"
-                       withParameters:@{@"toEmail": currentUser.email,
-                                        @"toName": currentUser[@"firstName"]
-                                        }
-                                block:^(NSString *result, NSError *error) {
-                                    if (!error) {
-                                        NSLog(@"RESULT IS: %@", result);
-                                    }
-                                    else{
-                                        NSLog(@"ERROR: %@", error);
-                                    }
-                                }];
+//    
+//    PFUser *currentUser = [PFUser currentUser];
+//    [currentUser fetch];
+//    NSLog(@"current user is: %@", currentUser);
+//    
+//    
+//    //send first time login email
+//    [PFCloud callFunctionInBackground:@"sendFirstTimeLoginEmail2"
+//                       withParameters:@{@"toEmail": currentUser.email,
+//                                        @"toName": currentUser[@"firstName"]
+//                                        }
+//                                block:^(NSString *result, NSError *error) {
+//                                    if (!error) {
+//                                        NSLog(@"RESULT IS: %@", result);
+//                                    }
+//                                    else{
+//                                        NSLog(@"ERROR: %@", error);
+//                                    }
+//                                }];
     
     
 
@@ -58,6 +86,40 @@
 
 }
 
+- (void)getChatroomFromLocal{
+    PFQuery *query = [PFQuery queryWithClassName:@"Chatrooms"];
+    [query whereKey:@"clientUser" equalTo:currentUser];
+    [query fromLocalDatastore];
+    [[query getFirstObjectInBackground] continueWithBlock:^id(BFTask *task) {
+        if (task.error) {
+            // Something went wrong.
+            return task;
+        }
+        
+        // task.result will be your game score
+        NSLog(@"task is: %@", task.result);
+        
+        return task;
+    }];
+}
+- (void)getChatroomFromNetwork{
+    
+    PFQuery *query = [PFQuery queryWithClassName:@"Chatrooms"];
+    [query whereKey:@"clientUser" equalTo:currentUser];
+    [query getFirstObjectInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+        //
+        
+        _chatroomObject = object;
+        [_chatroomObject pinInBackground];
+        NSLog(@"hey ey: %@", _chatroomObject);
+        
+    }];
+    
+    
+    
+    
+    
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
