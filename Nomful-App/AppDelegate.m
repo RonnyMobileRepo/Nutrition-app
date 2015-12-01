@@ -11,6 +11,8 @@
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
 #import "Branch.h"
+#import <Firebase/Firebase.h>
+
 
 @interface AppDelegate ()
 
@@ -34,6 +36,9 @@
         NSLog(@"deep link data: %@", [params description]);
     }];
     
+    [Firebase defaultConfig].persistenceEnabled = YES;
+    
+
 
     
     // ______________________________________________________________________________________________________________________________

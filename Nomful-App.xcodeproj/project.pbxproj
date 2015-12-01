@@ -11,6 +11,11 @@
 		210022571BE17E2E00838A5E /* Brittany-Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 210022561BE17E2E00838A5E /* Brittany-Icon.png */; };
 		2104F54B1C04032C0013911D /* logo-600.png in Resources */ = {isa = PBXBuildFile; fileRef = 2104F54A1C04032C0013911D /* logo-600.png */; };
 		2104F54D1C0405C50013911D /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2104F54C1C0405C50013911D /* Launch Screen.storyboard */; };
+		212DF5B81C0E3CEF009F6161 /* libc++.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 212DF5B61C0E3CEF009F6161 /* libc++.1.dylib */; };
+		212DF5B91C0E3CEF009F6161 /* libicucore.A.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 212DF5B71C0E3CEF009F6161 /* libicucore.A.dylib */; };
+		212DF5BB1C0E3CF4009F6161 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 212DF5BA1C0E3CF4009F6161 /* CFNetwork.framework */; };
+		212DF5BD1C0E3CFC009F6161 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 212DF5BC1C0E3CFC009F6161 /* Security.framework */; };
+		212DF5BF1C0E3D03009F6161 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 212DF5BE1C0E3D03009F6161 /* SystemConfiguration.framework */; };
 		2137D7E51BAC973000310545 /* AccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2137D7E41BAC973000310545 /* AccountViewController.m */; };
 		2137D7EB1BAC974200310545 /* AvailableClientsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2137D7E81BAC974200310545 /* AvailableClientsTableViewController.m */; };
 		2137D7EC1BAC974200310545 /* AvailableClientTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2137D7EA1BAC974200310545 /* AvailableClientTableViewCell.m */; };
@@ -101,6 +106,7 @@
 		21D4E2E21BC2F82800962C6B /* Incoming.m in Sources */ = {isa = PBXBuildFile; fileRef = 21D4E2DF1BC2F82800962C6B /* Incoming.m */; };
 		21D4E2E31BC2F82800962C6B /* Outgoing.m in Sources */ = {isa = PBXBuildFile; fileRef = 21D4E2E11BC2F82800962C6B /* Outgoing.m */; };
 		21D6C11B1BFB9308000BF35E /* CoachPageContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21D6C11A1BFB9308000BF35E /* CoachPageContentViewController.m */; };
+		21DB89E11C0E3DF200AEFF97 /* Firebase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21DB89E01C0E3DF200AEFF97 /* Firebase.framework */; };
 		21E9012F1BF2C5BF00DDEAFB /* Sean.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 21E9012E1BF2C5BF00DDEAFB /* Sean.jpeg */; };
 		21FECF141BC431E800C5FB8B /* PhotoMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 21FECF131BC431E800C5FB8B /* PhotoMediaItem.m */; };
 		5EDD67B4A8A9E0D710949A4F /* libPods-Nomful-App.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DE4DE3B1DF31D17CBF9E1A0C /* libPods-Nomful-App.a */; };
@@ -132,6 +138,11 @@
 		210022561BE17E2E00838A5E /* Brittany-Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Brittany-Icon.png"; sourceTree = "<group>"; };
 		2104F54A1C04032C0013911D /* logo-600.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-600.png"; sourceTree = "<group>"; };
 		2104F54C1C0405C50013911D /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		212DF5B61C0E3CEF009F6161 /* libc++.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.1.dylib"; path = "../../../../usr/lib/libc++.1.dylib"; sourceTree = "<group>"; };
+		212DF5B71C0E3CEF009F6161 /* libicucore.A.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.A.dylib; path = ../../../../usr/lib/libicucore.A.dylib; sourceTree = "<group>"; };
+		212DF5BA1C0E3CF4009F6161 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		212DF5BC1C0E3CFC009F6161 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		212DF5BE1C0E3D03009F6161 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		2137D7E41BAC973000310545 /* AccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountViewController.m; sourceTree = "<group>"; };
 		2137D7E61BAC973600310545 /* AccountViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AccountViewController.h; sourceTree = "<group>"; };
 		2137D7E71BAC974200310545 /* AvailableClientsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AvailableClientsTableViewController.h; sourceTree = "<group>"; };
@@ -291,6 +302,7 @@
 		21D4E2E11BC2F82800962C6B /* Outgoing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Outgoing.m; sourceTree = "<group>"; };
 		21D6C1191BFB9308000BF35E /* CoachPageContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoachPageContentViewController.h; sourceTree = "<group>"; };
 		21D6C11A1BFB9308000BF35E /* CoachPageContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoachPageContentViewController.m; sourceTree = "<group>"; };
+		21DB89E01C0E3DF200AEFF97 /* Firebase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Firebase.framework; sourceTree = "<group>"; };
 		21E9012E1BF2C5BF00DDEAFB /* Sean.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Sean.jpeg; sourceTree = "<group>"; };
 		21FECF121BC431E800C5FB8B /* PhotoMediaItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoMediaItem.h; sourceTree = "<group>"; };
 		21FECF131BC431E800C5FB8B /* PhotoMediaItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoMediaItem.m; sourceTree = "<group>"; };
@@ -310,6 +322,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				212DF5BF1C0E3D03009F6161 /* SystemConfiguration.framework in Frameworks */,
+				212DF5BD1C0E3CFC009F6161 /* Security.framework in Frameworks */,
+				212DF5BB1C0E3CF4009F6161 /* CFNetwork.framework in Frameworks */,
+				212DF5B81C0E3CEF009F6161 /* libc++.1.dylib in Frameworks */,
+				21DB89E11C0E3DF200AEFF97 /* Firebase.framework in Frameworks */,
+				212DF5B91C0E3CEF009F6161 /* libicucore.A.dylib in Frameworks */,
 				2180B4571C0CED7900722B1D /* libz.1.dylib in Frameworks */,
 				2180B4551C0CED5700722B1D /* libsqlite3.dylib in Frameworks */,
 				5EDD67B4A8A9E0D710949A4F /* libPods-Nomful-App.a in Frameworks */,
@@ -569,6 +587,7 @@
 		21C88A191BAC95CF00792E9C = {
 			isa = PBXGroup;
 			children = (
+				21DB89E01C0E3DF200AEFF97 /* Firebase.framework */,
 				21856A831BCAADFA00E217F7 /* Fabric.framework */,
 				21856A841BCAADFA00E217F7 /* Crashlytics.framework */,
 				21C88A241BAC95CF00792E9C /* Nomful-App */,
@@ -717,6 +736,11 @@
 		C9BBC740C3234417E779A178 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				212DF5BE1C0E3D03009F6161 /* SystemConfiguration.framework */,
+				212DF5BC1C0E3CFC009F6161 /* Security.framework */,
+				212DF5BA1C0E3CF4009F6161 /* CFNetwork.framework */,
+				212DF5B61C0E3CEF009F6161 /* libc++.1.dylib */,
+				212DF5B71C0E3CEF009F6161 /* libicucore.A.dylib */,
 				2180B4561C0CED7900722B1D /* libz.1.dylib */,
 				2180B4541C0CED5700722B1D /* libsqlite3.dylib */,
 				2180B4521C0CECFB00722B1D /* libsqlite3.0.tbd */,
