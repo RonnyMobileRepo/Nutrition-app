@@ -50,7 +50,7 @@
                     
                 }else{
                     //they have no plan type...get them ousta here!
-                    //[PFUser logOut];
+                    [PFUser logOut];
                     
                     [self performSegueWithIdentifier:@"isNotLoggedInSegue" sender:self];
 

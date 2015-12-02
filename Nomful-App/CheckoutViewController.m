@@ -296,7 +296,7 @@ NSString *const kBOOTCAMPAMOUNT = @"199.00";
                                                                       
                                                                       //mark trial start date
                                                                       [PFUser currentUser][@"trialEndDate"] = trialEndDate;
-                                                                      [[PFUser currentUser] saveEventually];
+                                                                      [[PFUser currentUser] saveInBackground];
                                                                       
                                                                       
                                                                   }];
@@ -401,7 +401,7 @@ NSString *const kBOOTCAMPAMOUNT = @"199.00";
             
             //mark trial start date
             [PFUser currentUser][@"trialEndDate"] = trialEndDate;
-            [[PFUser currentUser] saveEventually];
+            [[PFUser currentUser] saveInBackground];
 
             
             
@@ -426,7 +426,7 @@ NSString *const kBOOTCAMPAMOUNT = @"199.00";
     //gymMember[@"GymObjects"] = _gymObject;
     gymMember[@"clientObject"] = [PFUser currentUser];
     gymMember[@"userPhone"] = [PFUser currentUser][@"phoneNumber"];
-    [gymMember saveEventually];
+    [gymMember saveInBackground];
 
     //mark as verified and paid user
     if(_bootCampSelected) {
@@ -435,7 +435,7 @@ NSString *const kBOOTCAMPAMOUNT = @"199.00";
         [PFUser currentUser][@"planType"] = @"intro"; //this can be either 'trial' 'intro' or 'bootcamp'
     }
     
-    [[PFUser currentUser] saveEventually];
+    [[PFUser currentUser] saveInBackground];
 }
 
 #pragma mark - Pay With Card

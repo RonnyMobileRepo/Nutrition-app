@@ -43,7 +43,7 @@
     
     // ______________________________________________________________________________________________________________________________
     
-    ///*
+    /*
     
     [Parse setApplicationId:PARSE_APP_ID_DEV
                   clientKey:PARSE_CLIENT_ID_DEV];
@@ -53,13 +53,13 @@
     
     [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN_DEV];
     
-    //*/
+    */
     
     //______________________________________________________________________________________________________________________________
     
     //LIVE
     
-    /*
+    ///*
      
     [Parse setApplicationId:PARSE_APP_ID
                   clientKey:PARSE_CLIENT_ID];
@@ -71,7 +71,7 @@
     [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
      [Fabric with:@[[Crashlytics class]]];
 
-    */
+    //*/
     
     //______________________________________________________________________________________________________________________________
 

@@ -735,52 +735,71 @@
         [query fromLocalDatastore];
         [query getObjectInBackgroundWithId:groupId block:^(PFObject * _Nullable object, NSError * _Nullable error) {
 
-            //we now have the chatroom object!
-            //maybe later we do init with chatroomobject instead of object id
-            PFQuery *pushQuery = [PFInstallation query];
-            NSDictionary *data = [[NSDictionary alloc] init];
-            NSString *name = [[NSString alloc] init];
-            PFUser *sendPushToUser = [[PFUser alloc] init];
-            
-            //figure out who is sending tha push so we know who to send it  to.
-            if ([[PFUser currentUser][@"role"] isEqualToString:@"Client"]){
-                sendPushToUser = object[@"dietitianUser"];
-             }else if ([[PFUser currentUser][@"role"] isEqualToString:@"RD"]){
-                sendPushToUser = object[@"clientUser"];
-            }//end if coach
-            
-            //set data and variables for push...send away!!
-            [pushQuery whereKey:@"user" equalTo:sendPushToUser];
-            name = [NSString stringWithFormat:@"You have a new messages from %@", [PFUser currentUser][@"firstName"]];
-            
-            data = [NSDictionary dictionaryWithObjectsAndKeys:
-                    name, @"alert",
-                    @1, @"badge",
-                    @"default", @"sound",
-                    @"message", @"type",
-                    nil];
-            
-            PFPush *push = [[PFPush alloc] init];
-            [push setQuery:pushQuery];
-            [push setData:data];
-            [push sendPushInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-                //
-                if(succeeded){
-                    NSLog(@"push sent successfully!");
-                }
-            }];
-            
-            //save message in parse eventually
-            PFObject *message = [[PFObject alloc] initWithClassName:@"Messages"];
-            message[@"chatroom"] = object;
-            message[@"content"] = messageContent;
-            message[@"fromUser"] = [PFUser currentUser];
-            message[@"toUser"] = sendPushToUser;
-            [message saveEventually];
+            if (!object) {
+                //no local copy..so lets network then pin
+                PFQuery *query = [PFQuery queryWithClassName:@"Chatrooms"];
+                [query getObjectInBackgroundWithId:groupId block:^(PFObject * _Nullable object, NSError * _Nullable error) {
+                
+                    [self foundChatroomSendPush:object];
+                    [object pinInBackground];
+                    
+                }];
+
+                
+            }else{
+                //there is a local copy so send push
+                [self foundChatroomSendPush:object];
+                
+            }
 
         }];//end chatroom query
 }
 
+- (void)foundChatroomSendPush:(PFObject *)object{
+    //local chatroom found
+    //maybe later we do init with chatroomobject instead of object id
+    PFQuery *pushQuery = [PFInstallation query];
+    NSDictionary *data = [[NSDictionary alloc] init];
+    NSString *name = [[NSString alloc] init];
+    PFUser *sendPushToUser = [[PFUser alloc] init];
+    
+    //figure out who is sending tha push so we know who to send it  to.
+    if ([[PFUser currentUser][@"role"] isEqualToString:@"Client"]){
+        sendPushToUser = object[@"dietitianUser"];
+    }else if ([[PFUser currentUser][@"role"] isEqualToString:@"RD"]){
+        sendPushToUser = object[@"clientUser"];
+    }//end if coach
+    
+    //set data and variables for push...send away!!
+    [pushQuery whereKey:@"user" equalTo:sendPushToUser];
+    name = [NSString stringWithFormat:@"You have a new messages from %@", [PFUser currentUser][@"firstName"]];
+    
+    data = [NSDictionary dictionaryWithObjectsAndKeys:
+            name, @"alert",
+            @1, @"badge",
+            @"default", @"sound",
+            @"message", @"type",
+            nil];
+    
+    PFPush *push = [[PFPush alloc] init];
+    [push setQuery:pushQuery];
+    [push setData:data];
+    [push sendPushInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+        //
+        if(succeeded){
+            NSLog(@"push sent successfully!");
+        }
+    }];
+    
+    //save message in parse eventually
+    PFObject *message = [[PFObject alloc] initWithClassName:@"Messages"];
+    message[@"chatroom"] = object;
+    message[@"content"] = messageContent;
+    message[@"fromUser"] = [PFUser currentUser];
+    message[@"toUser"] = sendPushToUser;
+    [message saveEventually];
+
+}
 
 - (void)callClient{
     //only show if the user is an RD

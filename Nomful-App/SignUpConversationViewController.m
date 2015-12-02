@@ -774,7 +774,6 @@ CGFloat const ktypeInterval = 0.02;
                     
                 }];
                 
-
                 
             }
             
@@ -1624,10 +1623,11 @@ CGFloat const ktypeInterval = 0.02;
                                                     //user has already paid!
                                                     //send them to a page to set expectations
                                                     
-                                                    [self performSegueWithIdentifier:@"setExpectationsSegue" sender:self];
                                                     
                                                     [PFUser currentUser][@"planType"] = @"perry";
                                                     [[PFUser currentUser] saveEventually];
+                                                    
+                                                    [self performSegueWithIdentifier:@"setExpectationsSegue" sender:self];
                                                     
                                                     //check to see if there is a user associated with the device for Push Notifications
                                                     PFInstallation *currentInstallation = [PFInstallation currentInstallation];
