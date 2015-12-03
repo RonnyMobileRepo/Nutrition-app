@@ -34,16 +34,32 @@
     [branch initSessionWithLaunchOptions:launchOptions andRegisterDeepLinkHandler:^(NSDictionary *params, NSError *error) {
         // params are the deep linked params associated with the link that the user clicked before showing up.
         NSLog(@"deep link data: %@", [params description]);
+        
+//        // start setting up the view controller hierarchy
+//        UINavigationController *navC = (UINavigationController *)self.window.rootViewController;
+//        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+//        UIViewController *nextVC;
+//        // If the key 'userId' is present in the deep link dictionary
+//        // then load the picture screen with the appropriate picture
+//        NSString *userId = [params objectForKey:@"partnerID"];
+//        if (userId) {
+//            nextVC = [storyboard instantiateViewControllerWithIdentifier:@"userId"];
+//            //[nextVC setNextUserId:userId];
+//        } else {
+//            nextVC = [storyboard instantiateViewControllerWithIdentifier:@"MainVC"];
+//        }
+//        [navC setViewControllers:@[nextVC] animated:YES];
+        
+
     }];
     
     [Firebase defaultConfig].persistenceEnabled = YES;
     
-
-
+    
     
     // ______________________________________________________________________________________________________________________________
     
-    /*
+    ///*
     
     [Parse setApplicationId:PARSE_APP_ID_DEV
                   clientKey:PARSE_CLIENT_ID_DEV];
@@ -53,13 +69,13 @@
     
     [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN_DEV];
     
-    */
+    //*/
     
     //______________________________________________________________________________________________________________________________
     
     //LIVE
     
-    ///*
+    /*
      
     [Parse setApplicationId:PARSE_APP_ID
                   clientKey:PARSE_CLIENT_ID];
@@ -71,7 +87,7 @@
     [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
      [Fabric with:@[[Crashlytics class]]];
 
-    //*/
+    */
     
     //______________________________________________________________________________________________________________________________
 

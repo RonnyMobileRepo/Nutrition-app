@@ -102,6 +102,7 @@
 		21C88A351BAC95CF00792E9C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 21C88A341BAC95CF00792E9C /* Assets.xcassets */; };
 		21C88A431BAC95CF00792E9C /* Nomful_AppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 21C88A421BAC95CF00792E9C /* Nomful_AppTests.m */; };
 		21C88A4E1BAC95CF00792E9C /* Nomful_AppUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 21C88A4D1BAC95CF00792E9C /* Nomful_AppUITests.m */; };
+		21CC66551C10F4FB00A68E3B /* LandingPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21CC66541C10F4FB00A68E3B /* LandingPageViewController.m */; };
 		21D4E2DC1BC2F81D00962C6B /* Chatview.m in Sources */ = {isa = PBXBuildFile; fileRef = 21D4E2DB1BC2F81D00962C6B /* Chatview.m */; };
 		21D4E2E21BC2F82800962C6B /* Incoming.m in Sources */ = {isa = PBXBuildFile; fileRef = 21D4E2DF1BC2F82800962C6B /* Incoming.m */; };
 		21D4E2E31BC2F82800962C6B /* Outgoing.m in Sources */ = {isa = PBXBuildFile; fileRef = 21D4E2E11BC2F82800962C6B /* Outgoing.m */; };
@@ -294,6 +295,8 @@
 		21C88A491BAC95CF00792E9C /* Nomful-AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Nomful-AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		21C88A4D1BAC95CF00792E9C /* Nomful_AppUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Nomful_AppUITests.m; sourceTree = "<group>"; };
 		21C88A4F1BAC95CF00792E9C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		21CC66531C10F4FB00A68E3B /* LandingPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LandingPageViewController.h; sourceTree = "<group>"; };
+		21CC66541C10F4FB00A68E3B /* LandingPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LandingPageViewController.m; sourceTree = "<group>"; };
 		21D4E2DA1BC2F81D00962C6B /* Chatview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chatview.h; sourceTree = "<group>"; };
 		21D4E2DB1BC2F81D00962C6B /* Chatview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Chatview.m; sourceTree = "<group>"; };
 		21D4E2DE1BC2F82800962C6B /* Incoming.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Incoming.h; sourceTree = "<group>"; };
@@ -433,8 +436,6 @@
 				2137D8541BAC97E400310545 /* SlideAnimatedTransitioning.m */,
 				2137D8471BAC97DB00310545 /* SelectGoalsViewController.h */,
 				2137D8481BAC97DB00310545 /* SelectGoalsViewController.m */,
-				2137D8441BAC97D200310545 /* RootViewController.h */,
-				2137D8451BAC97D200310545 /* RootViewController.m */,
 				2137D83E1BAC97C000310545 /* ProgressViewController.h */,
 				2137D83F1BAC97C000310545 /* ProgressViewController.m */,
 				2137D8231BAC979700310545 /* MatchCoachViewController.h */,
@@ -510,6 +511,8 @@
 		21643A4C1BC4BA270099E6FB /* Sign Up */ = {
 			isa = PBXGroup;
 			children = (
+				2137D8441BAC97D200310545 /* RootViewController.h */,
+				2137D8451BAC97D200310545 /* RootViewController.m */,
 				2137D84D1BAC97E400310545 /* SignUpConversationViewController.h */,
 				2137D84E1BAC97E400310545 /* SignUpConversationViewController.m */,
 				2137D8601BAC980000310545 /* TrialViewController.h */,
@@ -519,6 +522,8 @@
 				21D6C11C1BFB930D000BF35E /* Coach Bio Cards */,
 				21B091AF1BFF74F800340CAD /* AddProfilePicViewController.h */,
 				21B091B01BFF74F800340CAD /* AddProfilePicViewController.m */,
+				21CC66531C10F4FB00A68E3B /* LandingPageViewController.h */,
+				21CC66541C10F4FB00A68E3B /* LandingPageViewController.m */,
 			);
 			name = "Sign Up";
 			sourceTree = "<group>";
@@ -1087,6 +1092,7 @@
 				2137D83D1BAC97AF00310545 /* phoneLoginViewController.m in Sources */,
 				2137D84B1BAC97DB00310545 /* SelectGoalsViewController.m in Sources */,
 				2137D8801BAC9B3400310545 /* Reachability.m in Sources */,
+				21CC66551C10F4FB00A68E3B /* LandingPageViewController.m in Sources */,
 				2137D8551BAC97E400310545 /* SignUpConversationViewController.m in Sources */,
 				21C88A2D1BAC95CF00792E9C /* ViewController.m in Sources */,
 				2137D7FE1BAC974E00310545 /* CheckoutViewController.m in Sources */,
@@ -1210,7 +1216,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "074de199-173d-4830-97d1-b21eb9a4d5a8";
+				PROVISIONING_PROFILE = "6c2c2ad3-225b-4a6b-9ee5-f62dc76cd8e1";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1249,7 +1255,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "074de199-173d-4830-97d1-b21eb9a4d5a8";
+				PROVISIONING_PROFILE = "6c2c2ad3-225b-4a6b-9ee5-f62dc76cd8e1";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -1276,7 +1282,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Nomful;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "074de199-173d-4830-97d1-b21eb9a4d5a8";
+				PROVISIONING_PROFILE = "6c2c2ad3-225b-4a6b-9ee5-f62dc76cd8e1";
 			};
 			name = Debug;
 		};
@@ -1300,7 +1306,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Nomful;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "074de199-173d-4830-97d1-b21eb9a4d5a8";
+				PROVISIONING_PROFILE = "6c2c2ad3-225b-4a6b-9ee5-f62dc76cd8e1";
 			};
 			name = Release;
 		};
