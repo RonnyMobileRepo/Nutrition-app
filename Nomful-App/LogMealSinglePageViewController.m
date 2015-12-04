@@ -35,8 +35,6 @@ bool keyboardIsShowing = false;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    //show loading view and track in mixpanel
-  
     [self checkTrialEnd];
     
     //main view background color
@@ -205,16 +203,7 @@ bool keyboardIsShowing = false;
             }];
        
         }
-            
-            
-            
-            
-            
-        //HIDE the progress HUD
-        //[hud hide:YES];
         
-        Mixpanel *mixpanel = [Mixpanel sharedInstance];
-        [mixpanel track:@"Loading Home"];
     }];
     
 }
@@ -1660,7 +1649,7 @@ bool keyboardIsShowing = false;
                     
                     //mixpanel tracking
                     Mixpanel *mixpanel = [Mixpanel sharedInstance];
-                    [mixpanel track:@"Meal Saved" properties:@{}];
+                    [mixpanel track:@"Meal Saved"];
 
                     
                 }

@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import <VPImageCropperViewController.h>
-#import "trainerCell.h"
 #import "CheckoutViewController.h"
 #import "TrialViewController.h"
 #import "CoachPageContentViewController.h"
@@ -55,7 +54,6 @@
 @property (strong, nonatomic) NSString *email;
 @property (strong, nonatomic) NSString *phone;
 @property (strong, nonatomic) NSString *city;
-@property (weak, nonatomic) IBOutlet UIButton *noTrainerButton;
 
 //image
 @property (nonatomic,strong) UIImagePickerController *imagePicker;
@@ -65,12 +63,10 @@
 @property (strong, nonatomic) NSArray *constraints2;
 
 
-@property bool hasTrainer;
 @property bool cancelButtonPressed;
-@property bool noTrainer;
-@property bool getGymInstead;
-@property bool isGymMember;
 @property bool findAnotherCoachSelected;
+@property bool isGymMember;
+
 
 @property int i;
 
@@ -86,9 +82,6 @@
 
 @property (strong, nonatomic) NSString *replacedString;
 
-@property (strong, nonatomic) UITableView *trainerTableView;
-@property (strong, nonatomic) NSArray *trainersArray;
-@property (strong, nonatomic) PFUser *trainerUser;
 
 typedef void(^findCoachCompleted)(BOOL);
 @property (strong, nonatomic) IBOutlet PFImageView *newestCoachImage;
@@ -101,7 +94,6 @@ typedef void(^findCoachCompleted)(BOOL);
 - (IBAction)inputButtonPressed:(UIButton *)sender;
 
 - (IBAction)cancelButtonPressed:(id)sender;
-- (IBAction)noTrainerButtonPressed:(id)sender;
 
 @property (strong, nonatomic) UIPageViewController *pageViewController;
 @property (strong, nonatomic) NSArray *coachUsers;

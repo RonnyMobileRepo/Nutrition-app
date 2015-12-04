@@ -13,7 +13,6 @@
 #import "Branch.h"
 #import <Firebase/Firebase.h>
 
-
 @interface AppDelegate ()
 
 @end
@@ -24,34 +23,13 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     NSLog(@"did finish launching");
     
+    
     //______________________________________________________________________________________________________________________________
     
     //BOTH
     [Parse enableLocalDatastore];
     
     [[ChimpKit sharedKit] setApiKey:MAILCHIMP_TOKEN];
-    Branch *branch = [Branch getInstance];
-    [branch initSessionWithLaunchOptions:launchOptions andRegisterDeepLinkHandler:^(NSDictionary *params, NSError *error) {
-        // params are the deep linked params associated with the link that the user clicked before showing up.
-        NSLog(@"deep link data: %@", [params description]);
-        
-//        // start setting up the view controller hierarchy
-//        UINavigationController *navC = (UINavigationController *)self.window.rootViewController;
-//        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-//        UIViewController *nextVC;
-//        // If the key 'userId' is present in the deep link dictionary
-//        // then load the picture screen with the appropriate picture
-//        NSString *userId = [params objectForKey:@"partnerID"];
-//        if (userId) {
-//            nextVC = [storyboard instantiateViewControllerWithIdentifier:@"userId"];
-//            //[nextVC setNextUserId:userId];
-//        } else {
-//            nextVC = [storyboard instantiateViewControllerWithIdentifier:@"MainVC"];
-//        }
-//        [navC setViewControllers:@[nextVC] animated:YES];
-        
-
-    }];
     
     [Firebase defaultConfig].persistenceEnabled = YES;
     
@@ -67,7 +45,7 @@
 
     [Stripe setDefaultPublishableKey:STRIPE_TOKEN_DEV];
     
-    [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN_DEV];
+    [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN_DEV]; //this actually creates a profile in mixpanel with an anonymous distinct ID
     
     //*/
     
@@ -91,22 +69,44 @@
     
     //______________________________________________________________________________________________________________________________
 
+    Branch *branch = [Branch getInstance];
+    [branch initSessionWithLaunchOptions:launchOptions andRegisterDeepLinkHandler:^(NSDictionary *params, NSError *error) {
+        // params are the deep linked params associated with the link that the user clicked before showing up.
+        //Mixpanel would then receive the Branch install event, and you would know Branch is responsible because referred would equal true inside the properties argument. https://dev.branch.io/recipes/analytics_mixpanel/ios/
+        NSLog(@"params are: %@", params);
+        NSLog(@"bool value is: %d", [params[@"+branch_link_clicked"] boolValue]);
+    
+        
+        if (!error) {
+            if ([params[@"+clicked_branch_link"] boolValue]) {
 
-    if ([PFUser currentUser]) {
-        //if there is an active user...mixpanel dat shit
-        Mixpanel *mixpanel = [Mixpanel sharedInstance];
-        [mixpanel identify:[PFUser currentUser].objectId];
-        //sets the Role property in mixpanel as
-        if([PFUser currentUser][@"planType"]){[mixpanel registerSuperProperties:@{@"Plan Type":[PFUser currentUser][@"planType"]}];}
-        if([PFUser currentUser][@"role"]){[mixpanel registerSuperProperties:@{@"Role":[PFUser currentUser][@"role"],
-                                                                              @"timestamp":[NSDate date]}];}
-        //set the timezone for the current user
-        if ([PFUser currentUser][@"timezone"] ) {
-        }else{
-            [PFUser currentUser][@"timezone"] = [NSTimeZone localTimeZone].name;
-            [[PFUser currentUser] saveEventually];
+            // Add call here to let MP know a Branch-driven install occurred
+            Mixpanel *mixpanel = [Mixpanel sharedInstance];
+            [mixpanel track:@"install" properties:params];
+            
+            }
         }
-    }
+        
+    
+    }];
+
+    //______________________________________________________________________________________________________________________________
+
+//    if ([PFUser currentUser]) {
+//        //if there is an active user...mixpanel dat shit
+//        Mixpanel *mixpanel = [Mixpanel sharedInstance];
+//        [mixpanel identify:[PFUser currentUser].objectId];
+//        //sets the Role property in mixpanel as
+//        if([PFUser currentUser][@"planType"]){[mixpanel registerSuperProperties:@{@"Plan Type":[PFUser currentUser][@"planType"]}];}
+//        if([PFUser currentUser][@"role"]){[mixpanel registerSuperProperties:@{@"Role":[PFUser currentUser][@"role"],
+//                                                                              @"timestamp":[NSDate date]}];}
+//        //set the timezone for the current user
+//        if ([PFUser currentUser][@"timezone"] ) {
+//        }else{
+//            [PFUser currentUser][@"timezone"] = [NSTimeZone localTimeZone].name;
+//            [[PFUser currentUser] saveEventually];
+//        }
+//    }
     
     
     UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
@@ -126,20 +126,7 @@
     pageControl.pageIndicatorTintColor = [UIColor lightGrayColor];
     pageControl.currentPageIndicatorTintColor = [UIColor blackColor];
     pageControl.backgroundColor = [UIColor whiteColor];
-    
-    
-    //testing!!
-//    NSMutableDictionary *params = [NSMutableDictionary dictionary];
-//    params[@"article_id"] = @"1234";
-//    params[@"$og_title"] = @"MyApp is disrupting apps";
-//    
-//    
-//    [[Branch getInstance] getShortURLWithParams:params andChannel:@"sms" andFeature:BRANCH_FEATURE_TAG_SHARE andCallback:^(NSString *url, NSError *error) {
-//        if (!error) NSLog(@"got my Branch link to share: %@", url);
-//    }];
-//    
-//    
-//    
+
     
         return YES;
 }
@@ -156,8 +143,8 @@
     [currentInstallation saveInBackground];
     
     //send device token to mixpanel
-    Mixpanel *mixpanel = [Mixpanel sharedInstance];
-    [mixpanel.people addPushDeviceToken:deviceToken];
+//    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+//    [mixpanel.people addPushDeviceToken:deviceToken];
 
 }
 
@@ -216,12 +203,12 @@
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     NSLog(@"app did enter background");
     
-    if ([PFUser currentUser]) {
-        //if there is an active user...mixpanel dat shit
-        Mixpanel *mixpanel = [Mixpanel sharedInstance];
-        [mixpanel track:@"Session"];
-        [mixpanel identify:[PFUser currentUser].objectId]; //this is what set the 'last seen' in mixpanel
-            }
+//    if ([PFUser currentUser]) {
+//        //if there is an active user...mixpanel dat shit
+//        Mixpanel *mixpanel = [Mixpanel sharedInstance];
+//        [mixpanel track:@"Session"];
+//        [mixpanel identify:[PFUser currentUser].objectId]; //this is what set the 'last seen' in mixpanel
+//            }
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -233,24 +220,24 @@
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     NSLog(@"App did become active");
     
-    Mixpanel *mixpanel = [Mixpanel sharedInstance];
-    
-    //event for app open
-    [mixpanel track:@"App Opened" properties:@{}];
-    // start the timer for the event session ("App Close")
-    [mixpanel timeEvent:@"Session"];
-    
-    if ([PFUser currentUser]) {
-        //if there is an active user...mixpanel dat shit
-        [mixpanel identify:[PFUser currentUser].objectId]; //this is what set the 'last seen' in mixpanel
-        NSLog(@"current token is: %@", [PFInstallation currentInstallation].deviceToken);
-        
-        NSString *originalString = [NSString stringWithFormat:@"%@", [PFInstallation currentInstallation].deviceToken];
-        NSData *data = [originalString dataUsingEncoding:NSUTF8StringEncoding];
-        [mixpanel.people addPushDeviceToken:data];
-
-        
-    }
+//    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+//    
+//    //event for app open
+//    [mixpanel track:@"App Opened" properties:@{}];
+//    // start the timer for the event session ("App Close")
+//    [mixpanel timeEvent:@"Session"];
+//    
+//    if ([PFUser currentUser]) {
+//        //if there is an active user...mixpanel dat shit
+//        [mixpanel identify:[PFUser currentUser].objectId]; //this is what set the 'last seen' in mixpanel
+//        NSLog(@"current token is: %@", [PFInstallation currentInstallation].deviceToken);
+//        
+//        NSString *originalString = [NSString stringWithFormat:@"%@", [PFInstallation currentInstallation].deviceToken];
+//        NSData *data = [originalString dataUsingEncoding:NSUTF8StringEncoding];
+//        [mixpanel.people addPushDeviceToken:data];
+//
+//        
+//    }
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {

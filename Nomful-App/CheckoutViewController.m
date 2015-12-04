@@ -436,6 +436,8 @@ NSString *const kBOOTCAMPAMOUNT = @"199.00";
     }
     
     [[PFUser currentUser] saveInBackground];
+
+    
 }
 
 #pragma mark - Pay With Card

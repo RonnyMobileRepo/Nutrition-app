@@ -54,8 +54,7 @@ CGFloat const ktypeInterval = 0.02;
                                                         @"placeholder 0",
                                                         @"Are you Male or Female?",
                                                         @"How old are you?",
-                                                        @"Do you have a personal trainer?",
-                                                        @"Placeholder 1",
+                                                        @"Do you have a personal trainer? - Get rid of me",
                                                         @"If I need to email you, what is the best way to reach you? Don’t worry you won’t be spammed...I would never do that to you!",
                                                         @"Awesome! Thanks for all the information. I'm going to find you the perfect coach for you to team up with :)",
                                                         @"placeholder 2",
@@ -74,10 +73,10 @@ CGFloat const ktypeInterval = 0.02;
                          @"Weight Loss",
                          @"Male",
                          @"",
-                         @"No, but I go to a gym!",
                          @"",
                          @"",
                          @"Can't Wait!",
+                         @"",
                          @"Let's Do This!",
                          @"Finish Creating Account",
                          @"Send Code",
@@ -89,9 +88,6 @@ CGFloat const ktypeInterval = 0.02;
     //set the counter to 0.
     _messageCount = 0;
     _buttonLabelCount = 0;
-    _hasTrainer = false;
-    _noTrainer = false;
-    _isGymMember = false;
     
     //button design
     CGFloat borderWidth = 4.0;
@@ -325,7 +321,12 @@ CGFloat const ktypeInterval = 0.02;
                     
                     //show message
                     _messageCount ++;
+                    _messageCount ++;
+
+
                     _buttonLabelCount ++;
+                    _buttonLabelCount ++;
+
                     
                     //clear textfield
                     _textfield1.text = @"";
@@ -362,44 +363,14 @@ CGFloat const ktypeInterval = 0.02;
                     
                 }else if(sender == _button1){
                     
-                    _messageCount ++;
-                    
-                    //no trainer yes gym = button1
-                    [_messagesArray replaceObjectAtIndex:_messageCount withObject:@"Great! Select your Gym below"];
-                    [_notlistedbutton setTitle:@"My Gym Isn't Listed!" forState:UIControlStateNormal];
-                    _getGymInstead = true;
-                    
-                    [self showNextMessage];
-
+                    //selected I go to a gym!!
                 }
                 
                 
                 }break;
                 
             case 7:{
-                
-                if(_noTrainer){
-                    //users trainer not listed...they entered their name
-                    NSLog(@"User's trainer's name is %@?", _textfield1.text);
-                    
-                    PFObject *collectName = [[PFObject alloc] initWithClassName:@"NameCollection"];
-                    collectName[@"name"]=_textfield1.text;
-                    [collectName saveEventually];
-                    
-                    //**do something here to capture trainer name!"//
-                    
-                    
-                    
-                    
-                    _messageCount ++;
-                    [self showNextMessage];
-                    
-                    _textfield1.text = @"";
-                }
-                
-                }break;
-                
-            case 8:{
+              
                 //EMAIL
                 
                 if([_textfield1.text isEqualToString:@""]){
@@ -436,7 +407,7 @@ CGFloat const ktypeInterval = 0.02;
                 }
                 }break;
             
-            case 9:{
+            case 8:{
                 //I'm going to find you the perfect coach
         
                 _messageCount++;
@@ -444,7 +415,7 @@ CGFloat const ktypeInterval = 0.02;
                 
                 }break;
             
-            case 11:{
+            case 10:{
                 NSLog(@"case 11");
                 //only called when the I LOOK GOOD button is pressed
                 //fade in coach view
@@ -466,7 +437,7 @@ CGFloat const ktypeInterval = 0.02;
                 
                 }break;
                 
-            case 12:{
+            case 11:{
                 //send code
                 NSLog(@"send sending code to: %@", _textfield1.text);
                 _coachMatchContainer.hidden = true;
@@ -548,7 +519,7 @@ CGFloat const ktypeInterval = 0.02;
                 
                 }break;
                 
-            case 13:{
+            case 12:{
                 //login with phone
                 NSLog(@"cloud code login called");
                 //call cloud funciton...checks code and saves password
@@ -625,31 +596,8 @@ CGFloat const ktypeInterval = 0.02;
             [_button2 setTitle:@"Nope!" forState:UIControlStateNormal];
             [_button3 setTitle:@"Yup!" forState:UIControlStateNormal];
         }
-        if(_messageCount == 7){
-            
-            //what did they choose?
-            
-            
-            if(sender == _button3){
-                
-                //add object to message array
-                [_messagesArray replaceObjectAtIndex:_messageCount withObject:@"Great! Select your trainer below"];
-                
-                
-            }else if(sender == _button2 && !_cancelButtonPressed){
-                //no trinter no gym = button2
-                //go to next message
-                
-                _messageCount ++; //message count is now 8
-                
-            }else if(sender == _button1){
-                //no trainer yes gym = button1
-                [_messagesArray replaceObjectAtIndex:_messageCount withObject:@"Great! Select your Gym below"];
-                
-            }
-            
-            
-        }if(_messageCount == 8){
+        if(_messageCount == 8){
+        
             //[_button2 setTitle:@"input button 8" forState:UIControlStateNormal];
         }
         if(_messageCount == 10){
@@ -1082,10 +1030,7 @@ CGFloat const ktypeInterval = 0.02;
         _button3.hidden = YES;
         _button4.hidden = YES;
         
-        if(_messageCount == 7){
-            [_trainerTableView removeFromSuperview];
-        }
-        
+
         [self animateInputIn:_button1];
         [self animateInputIn:_button2];
 
@@ -1132,37 +1077,24 @@ CGFloat const ktypeInterval = 0.02;
             [self animateInputIn:_button3];
             
         }else if(_messageCount == 7){
-            
-            if(!_noTrainer){
-                
-                _textfield1.hidden = true;
-                
-                //show list of trainers or gyms here
-                [self getAvailableTrainers];
-                
-                //add table view subview
-                [self addTrainerTable];
-            }
-            
-        }else if(_messageCount == 8){
-            
+    
             //age
             _textfield1.keyboardType = UIKeyboardTypeEmailAddress; //**for now leaving this out since we have ot add in a 'send' button that would normally be in the keyboard
             
             [_textfield1 becomeFirstResponder];
             _textfield1.hidden = false;
             
-        }else if(_messageCount == 9){
+        }else if(_messageCount == 8){
             _textfield1.hidden = true;
             
             [self animateInputIn:_button1];
             
-        }else if(_messageCount == 10){
+        }else if(_messageCount == 9){
 //            [self animateInputIn:_button2];
 //            [self animateInputIn:_button1];
             _coachMatchContainer.alpha = 0.0f;
             _dontShowProfileButton.hidden = false;
-        }else if (_messageCount == 11){
+        }else if (_messageCount == 10){
             //add profile pic
             //_textfield1.keyboardType = UIKeyboardTypeNumberPad;
             
@@ -1177,12 +1109,12 @@ CGFloat const ktypeInterval = 0.02;
             
 
             
-        }else if(_messageCount == 12 ){
+        }else if(_messageCount == 11 ){
             
             [_textfield1 becomeFirstResponder];
             _textfield1.hidden = false;
             
-        }else if(_messageCount == 13){
+        }else if(_messageCount == 12){
             [_textfield1 becomeFirstResponder];
             _textfield1.hidden = false;
             
@@ -1229,122 +1161,27 @@ CGFloat const ktypeInterval = 0.02;
     //do stuff
     NSLog(@"find coach started");
     
-    //when the trainer user is not set...go find a coach
-    if(!_trainerUser){
-        NSLog(@"trainer user not set");
+    //query for coaches based on goal selected
+    NSMutableArray *memberGoals = [[NSMutableArray alloc] init];
+    memberGoals = [[PFUser currentUser] objectForKey:@"goals"];
+    
+    PFQuery *query = [PFUser query];
+    [query whereKey:@"goals" containedIn:memberGoals];
+    [query whereKey:@"role" equalTo:@"RD"];
+    [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable coaches, NSError * _Nullable error) {
         
-        //query for coaches based on goal selected
-        NSMutableArray *memberGoals = [[NSMutableArray alloc] init];
-        memberGoals = [[PFUser currentUser] objectForKey:@"goals"];
+        //array 'coaches' contains all the coaches returned from our query
+        _coachUserArray = [coaches mutableCopy];
         
-        PFQuery *query = [PFUser query];
-        [query whereKey:@"goals" containedIn:memberGoals];
-        [query whereKey:@"role" equalTo:@"RD"];
-        [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable coaches, NSError * _Nullable error) {
-            
-            //array 'coaches' contains all the coaches returned from our query
-            _coachUserArray = [coaches mutableCopy];
-            
-            
-            if(coaches.count > 0){
-                NSLog(@"coach block completed");
-                compblock(YES);
-            }else{
-                compblock(NO);
-            }
-            
-            
-        }];
-        
-        
-        
-//        if(_findAnotherCoachSelected){
-//            NSLog(@"number of coaches is: %lu", (unsigned long)[coaches count]);
-//            NSLog(@"i is: %lu", (unsigned long)_i);
-//
-//            if (_i == [coaches count] - 1) {
-//                 _i--;
-//            }else{
-//                _i++;;
-//            }
-//        }
-        
-//        //validation check to see if the query returned anything!
-//        NSLog(@"coach i is: %d", _i);
-//        _coachUser = coaches[_i];
-//        
- 
-        
-    }
-    else{
-        NSLog(@"Trainer user set");
-        //trainer user is set...which means the user selected their trainer
-        //go see if the trainer has a preferred coach
-        
-        //query
-        PFQuery *query = [[PFQuery alloc] initWithClassName:@"TrainerDietitian"];
-        [query whereKey:@"Trainer" equalTo:_trainerUser];
-        NSArray *results = [query findObjects]; //***for whatever reason doing a background task here doesn't work....
-        
-        if([results count] > 0){
-            //trainer has preferred coach
-            
-            //get the first results...should only be one anyway
-            PFObject *trainerdiet = results[0];
-            
-            //get the user object from the table and fetch
-            PFUser *coachUsers =  trainerdiet[@"DietitianUser"];
-            [coachUsers fetch];
-            
-            //set the coachuser property to user!
-            _coachUser = coachUsers;
-            
-            _coachUserArray = [NSMutableArray arrayWithObject:coachUsers];
-            
-            //create message and add to message array!
-//            NSString *foundCoachString = [NSString stringWithFormat:@"Based on everything I know about you, I think %@ is giong to be an awesome fit :)", _coachUser[@"firstName"]];
-//            [_messagesArray replaceObjectAtIndex:_messageCount withObject:foundCoachString];
-//            
-            //complete the block
-            if(_coachUser){
-                NSLog(@"coach block completed");
-                compblock(YES);
-            }else{
-                compblock(NO);
-            }
-
+        if(coaches.count > 0){
+            NSLog(@"coach block completed");
+            compblock(YES);
         }else{
-            //trainer does not have prefereed coach
-            
-            NSMutableArray *memberGoals = [[NSMutableArray alloc] init];
-            memberGoals = [[PFUser currentUser] objectForKey:@"goals"];
-            
-            PFQuery *query = [PFUser query];
-            query.limit = 5;
-            [query whereKey:@"goals" containedIn:memberGoals];
-            [query whereKey:@"role" equalTo:@"RD"];
-            NSArray *coaches = [query findObjects]; //**make this a background task! aka go figure out how background task works on image capture food log thingy
-            
-            _coachUserArray = [coaches mutableCopy];
-        
-            if(_coachUserArray){
-                NSLog(@"coach block completed");
-                compblock(YES);
-            }else{
-                compblock(NO);
-            }
+            compblock(NO);
         }
         
-            }
+    }];
 }
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-
-
 
 #pragma mark - Navigation
 
@@ -1357,14 +1194,6 @@ CGFloat const ktypeInterval = 0.02;
     if([segue.identifier isEqualToString:@"showTrialView"]){
         //let's pass all the info needed
         TrialViewController *trialVC = [segue destinationViewController];
-
-        if(_hasTrainer){
-            trialVC.trainerUser = _trainerUser;
-        }
-        
-        if(_getGymInstead){
-            trialVC.gymObject = _gymObject;
-        }
         
         NSLog(@"coach user %@", _coachUser);
         trialVC.coachUser = _coachUser;
@@ -1383,187 +1212,11 @@ CGFloat const ktypeInterval = 0.02;
         trialVC.titleString = @"Next Steps";
         trialVC.buttonString = @"Let's Do This!";
         trialVC.stepOneString = @"Become Member - You've done this!!";
-        
-        
-        //**not sure about this...perry use case
-        if(_hasTrainer){
-            trialVC.trainerUser = _trainerUser;
-        }
-        
-        if(_getGymInstead){
-            trialVC.gymObject = _gymObject;
-        }
-        
-        NSLog(@"coach user %@", _coachUser);
         trialVC.coachUser = _coachUser;
         
     }
     
-    ///toher
-    if([segue.identifier isEqualToString:@"showCheckoutSegue"]){
-        CheckoutViewController *vc = [segue destinationViewController];
-        vc.coachUserFromSegue = _coachUser;
-        vc.profileImage = _coachProfileImage.image;
-        
-        if(_hasTrainer){
-            vc.trainerUser = _trainerUser;
-        }
-        
-        if(_getGymInstead){
-            vc.gymObject = _gymObject;
-        }
-    }
 }
-
-
-- (void)getAvailableTrainers{
-    
-    
-    
-    if(!_getGymInstead){
-        PFQuery *query = [PFUser query];
-        [query whereKey:@"role" equalTo:@"PT"];
-        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error){
-            
-            NSLog(@"all the coaches are: %@", objects);
-            
-            _trainersArray = objects;
-            [_trainerTableView reloadData];
-            
-            
-        }];
-    }else{
-        PFQuery *gymQuery = [PFQuery queryWithClassName:@"Gym"];
-        [gymQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error){
-            
-            NSLog(@"all the gyms are: %@", objects);
-            
-            _trainersArray = objects;
-            [_trainerTableView reloadData];
-            
-            
-        }];
-    }
-   
-    
-   
-}
-
-- (void)addTrainerTable{
-    
-    
-    if (_trainerTableView) {
-        [_trainerTableView removeFromSuperview];
-        _trainerTableView = nil;
-    }
-    
-    _trainerTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, (self.view.bounds.size.height / 2) - 50, self.view.bounds.size.width, self.view.bounds.size.height / 2)];
-    _trainerTableView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-    
-    _trainerTableView.backgroundColor = [UIColor whiteColor];
-    _trainerTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
-    // must set delegate & dataSource, otherwise the the table will be empty and not responsive
-    _trainerTableView.delegate = self;
-    _trainerTableView.dataSource = self;
-    
-    [self.view addSubview:_trainerTableView];
-    _noTrainerButton.hidden = false;
-}
-
-
-#pragma mark - TableView DataSource Implementation
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-   
-    return [_trainersArray count]; // or other number, that you want
-
-}
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    
-    static NSString *cellIdentifier = @"TrainerCell";
-    
-    // Similar to UITableViewCell, but
-    trainerCell *cell = (trainerCell *)[_trainerTableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    if (cell == nil) {
-        cell = [[trainerCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-    }
-    
-    
-    cell.backgroundView = [[UIView alloc] init];
-    [cell.backgroundView setBackgroundColor:[UIColor clearColor]];
-    [[[cell contentView] subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    
-    // Make sure the constraints have been set up for this cell, since it
-    // may have just been created from scratch. Use the following lines,
-    // assuming you are setting up constraints from within the cell's
-    // updateConstraints method: [cell setNeedsUpdateConstraints];
-    [cell updateConstraintsIfNeeded];
-    
-    //format after constraints set
-    cell.profileImage.layer.cornerRadius = cell.profileImage.frame.size.width / 2;
-    cell.profileImage.clipsToBounds = YES;
-    
-    
-    if(_getGymInstead){
-        NSLog(@"gym cell");
-        //show gym objects instead
-        PFObject *gym = [_trainersArray objectAtIndex:indexPath.row];
-        cell.nameLabel.text = gym[@"businessName"];
-    }else{
-        //trainers
-        //show gym objects instead
-        PFUser *trainer = [_trainersArray objectAtIndex:indexPath.row];
-        [trainer fetchIfNeeded];
-        NSString *fullName = [NSString stringWithFormat:@"%@%@",trainer[@"firstName"], trainer[@"lastName"]];
-        cell.nameLabel.text = fullName;
-        PFFile *imageFile = trainer[@"photo"];
-        cell.profileImage.file = imageFile;
-        [cell.profileImage loadInBackground];
-    }
-    
-    // cell.cityLabel.text =
-    
-    
-    
-    return cell;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-       return 60;
-}
-
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    if(_getGymInstead){
-        _gymObject = [_trainersArray objectAtIndex:indexPath.row];
-        NSLog(@"gym user is: %@", _gymObject);
-
-    }else{
-        //set the selected trainer to the traineruser property
-        _trainerUser = [_trainersArray objectAtIndex:indexPath.row];
-        NSLog(@"trainer user is: %@", _trainerUser);
-
-    }
-    
-    //hide the table
-    _trainerTableView.hidden = true;
-    
-    //set flag to true
-    _hasTrainer = true;
-    
-    //show next message
-    _messageCount ++;
-    
-    //start timer
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:ktypeInterval target:self selector:@selector(typeIt) userInfo:nil repeats:YES];
-
-    _noTrainerButton.hidden = true;
-}
-
 
 -(void)sendCode{
     
@@ -1600,6 +1253,11 @@ CGFloat const ktypeInterval = 0.02;
                                         NSLog(@"Login button pressed");
                                         [[PFUser currentUser]signUpInBackground];
                                         
+                                        //send event to mix panel that this user is verified
+                                        Mixpanel *mixpanel = [Mixpanel sharedInstance];
+                                        [mixpanel track:@"Phone Verified"];
+                                        
+                                        
                                         //no error...code is valid
                                         //the result from cloud code is a session token that we can now use to set the current user
                                         [PFUser becomeInBackground:token block:^(PFUser *user, NSError *error) {
@@ -1612,7 +1270,6 @@ CGFloat const ktypeInterval = 0.02;
                                                 // no longer anonymous user!
                                                 NSLog(@"Login Successful! %@", token);
                                                 [user signUpInBackground];
-                                                // your app's userId, 127 chars or less
                                                
                                                 
                                                 
@@ -1637,44 +1294,6 @@ CGFloat const ktypeInterval = 0.02;
                                                     [currentInstallation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                                                         NSLog(@"You just saved the client user on the installation in parse");
                                                     }];
-
-                                                    
-
-                                                }else{
-                                                    //basically what we're doing here is seeing if the user is supposed
-                                                    //to get a trial or not and how long the trial is
-                                                    
-                                                    //that information is stored on the Gym table so if we have a gym
-                                                    //object already, then we're good and can use that.
-                                                    //If we have a  trainer object we can get the gym object from them.
-                                                    [_gymObject fetchIfNeeded];
-                                                    
-                                                    if(!_trainerUser){
-                                                        if(_gymObject[@"numberOfTrialDays"]){
-                                                            [self performSegueWithIdentifier:@"showTrialView" sender:self];
-                                                        }else{
-                                                            [self performSegueWithIdentifier:@"showCheckoutSegue" sender:self];
-                                                        }
-                                                    }
-                                                    
-                                                    
-                                                    if(_trainerUser){
-                                                        
-                                                        if(!_gymObject){
-                                                            _gymObject = _trainerUser[@"employerObject"];
-                                                        }
-                                                        
-                                                        [_gymObject fetchIfNeeded];
-                                                        
-                                                        
-                                                        if(_gymObject[@"numberOfTrialDays"]){
-                                                            [self performSegueWithIdentifier:@"showTrialView" sender:self];
-                                                            
-                                                        }else{
-                                                            //no trial
-                                                            [self performSegueWithIdentifier:@"showCheckoutSegue" sender:self];
-                                                        }
-                                                    }
                                                 }
                                             }
                                         }];
@@ -1744,40 +1363,6 @@ CGFloat const ktypeInterval = 0.02;
     
 }
 
-- (IBAction)noTrainerButtonPressed:(id)sender {
-    NSLog(@"No Trainer Button Presed");
-    //the user is like....I don't see my trainer, but I have a trainer
-    //we're like...bro you aren't using one of our trainer partners...what's the deal with that?
-    //we're going to like, take the name of your trainer and your city and then reach out to them
-    
-    //the user will enter in trainer name and city they're in. Then will continue
-    _noTrainer = true;
-    
-    if(!_getGymInstead){
-        //change message
-        [_messagesArray replaceObjectAtIndex:_messageCount withObject:@"What's your trainers name?"];
-    }else {
-        [_messagesArray replaceObjectAtIndex:_messageCount withObject:@"What gym do you go to?"];
-
-    }
-    
-    
-    //go type the message YO
-    [self showNextMessage];
-    
-    //hide button
-    _noTrainerButton.hidden = true;
-    
-    //hide the trainer table
-    [_trainerTableView removeFromSuperview];
-    
-    //show textfield
-    _textfield1.hidden = false;
-    [_textfield1 becomeFirstResponder];
-    
-    
-    
-}
 - (IBAction)sendAnotherButtonPressed:(id)sender {
     
     //hide the button, then go back

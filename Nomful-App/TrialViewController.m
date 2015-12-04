@@ -46,6 +46,14 @@
         }];
     }
     
+    
+    //this is the point where the users is totally verified
+    //we can now tell mixpanel our unique identifier is what will be used from now on
+    //alias just says the objectid will associate the anonymous mixpanel user now :)
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel identify:mixpanel.distinctId];
+    [mixpanel track:@"Account Created"];
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -284,13 +292,6 @@
         NSLog(@"You just saved the client user on the installation in parse");
     }];
     
-
-    //register with Mixpanel
-    Mixpanel *mixpanel = [Mixpanel sharedInstance];
-    [mixpanel identify:[PFUser currentUser].objectId];
-    [mixpanel.people set:@{@"$first_name"    : [PFUser currentUser][@"firstName"],
-                           @"$email"         : [PFUser currentUser].email}];
-
 }
 - (IBAction)termsButtonPressed:(id)sender {
     

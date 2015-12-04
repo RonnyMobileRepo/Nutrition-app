@@ -7,6 +7,8 @@
 //
 
 #import "LandingPageViewController.h"
+#import "AppDelegate.h"
+
 
 @interface LandingPageViewController ()
 
@@ -29,6 +31,7 @@
     //button styling
     _getStartedButton.layer.cornerRadius = 4.0;
     
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -47,6 +50,13 @@
 */
 
 - (IBAction)getStartedButtonPressed:(id)sender {
+    
+    //send event to mixpanel that we've started the signup process
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel track:@"SignUp Started"];
+    
+    
+    
 }
 
 - (IBAction)memberLoginButtonPressed:(id)sender {
