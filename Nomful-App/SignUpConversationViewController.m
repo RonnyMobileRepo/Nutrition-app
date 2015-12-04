@@ -475,7 +475,7 @@ CGFloat const ktypeInterval = 0.02;
                                     //cloud code uses the phoneNumber so we need to do this in a block
                                     //send twilio text
                                     [self sendCode];
-                                    [self checkIfGymMember]; //this is for the perry's of the world
+                                    [self checkIfGymMember]; //check to see if user is pre-paid by gym
                                     
                                     
                                     //clear textfield
@@ -500,7 +500,7 @@ CGFloat const ktypeInterval = 0.02;
                                 //cloud code uses the phoneNumber so we need to do this in a block
                                 //send twilio text
                                 [self sendCode];
-                                [self checkIfGymMember]; //this is for the perry's of the world
+                                [self checkIfGymMember]; //check to see if user is prepaid by gym
                                 
                                 
                                 //clear textfield
@@ -535,95 +535,6 @@ CGFloat const ktypeInterval = 0.02;
         
     }
 }
-
-
-
-
-
-
-//old button shtufffffffffffff
-- (void)oldButtonPressed:(id)sender{
-    
-    
-    ///old stuff
-    if (_cancelButtonPressed) {
-        if(sender == _button1){
-            [self dismissViewControllerAnimated:YES completion:^{
-                //do somethign
-            }];
-        }else{
-            //continue with conversation
-            [_messagesArray replaceObjectAtIndex:_messageCount withObject:_replacedString];
-            _messageCount--;
-            _buttonLabelCount--;
-        }
-    }
-    
-    if(_messageCount != 12){
-        [self saveToAnonUser:sender];
-        
-        //incrememnt to next message
-        _messageCount ++;
-        _buttonLabelCount ++;
-        
-        //send button on keyboard pressed
-        //so hide the textfield instead of button
-        if(sender == _textfield1){
-            NSLog(@"keyboard return");
-            _textfield1.hidden = true;
-        }else{
-            //hide the button
-            _button1.hidden = true;
-            _button2.hidden = true;
-            _button3.hidden = true;
-            _button4.hidden = true;
-        }
-        
-        //i have this here so that the label is changed BEFORE it becomes visible
-        //we may have to differenciate this when more buttons are present
-        [_button1 setTitle:[_buttonLabelArray objectAtIndex:_messageCount] forState:UIControlStateNormal];
-        
-        if(_messageCount == 3){
-            //these titles must be the same name as what is in parse
-            [_button2 setTitle:@"Energy Levels" forState:UIControlStateNormal];
-            [_button3 setTitle:@"Marathon Training" forState:UIControlStateNormal];
-            [_button4 setTitle:@"Gain Weight" forState:UIControlStateNormal];
-        }
-        if(_messageCount == 4){
-            [_button2 setTitle:@"Female" forState:UIControlStateNormal];
-        }
-        if(_messageCount == 5){
-            [_button2 setTitle:@"Nope!" forState:UIControlStateNormal];
-            [_button3 setTitle:@"Yup!" forState:UIControlStateNormal];
-        }
-        if(_messageCount == 8){
-        
-            //[_button2 setTitle:@"input button 8" forState:UIControlStateNormal];
-        }
-        if(_messageCount == 10){
-            [_button2 setTitle:@"Pull The Other One" forState:UIControlStateNormal];
-        }
-        if(_messageCount == 11){
-        }
-        
-        //don't start the timeer again when we go find the coach
-        if(_messageCount != 10){
-            //start timer for typing label
-            self.timer = [NSTimer scheduledTimerWithTimeInterval:ktypeInterval target:self selector:@selector(typeIt) userInfo:nil repeats:YES];
-        }else if( _messageCount == 10){
-            [self animateNomberry];
-        }else if(_messageCount == 7){
-            NSLog(@"okay: ");
-        }
-    }else{
-        [self saveToAnonUser:sender];
-    }
-
-}
-
-
-
-
 
 
 
@@ -1197,7 +1108,7 @@ CGFloat const ktypeInterval = 0.02;
         
         NSLog(@"coach user %@", _coachUser);
         trialVC.coachUser = _coachUser;
-        trialVC.titleString = @"10 day FREE TRIAL";
+        trialVC.titleString = @"3 day FREE TRIAL";
         trialVC.buttonString = @"Activate Trial";
         trialVC.stepOneString = @"Activate Trial";
         trialVC.isTrial = true;
@@ -1255,7 +1166,11 @@ CGFloat const ktypeInterval = 0.02;
                                         
                                         //send event to mix panel that this user is verified
                                         Mixpanel *mixpanel = [Mixpanel sharedInstance];
-                                        [mixpanel track:@"Phone Verified"];
+                                        [mixpanel track:@"SignUp Finished"];
+                                        
+                                        //tell mixpanel to identify user
+                                        [mixpanel identify:mixpanel.distinctId];
+                                        
                                         
                                         
                                         //no error...code is valid
@@ -1272,29 +1187,34 @@ CGFloat const ktypeInterval = 0.02;
                                                 [user signUpInBackground];
                                                
                                                 
-                                                
                                                 if(_isGymMember){
-                                                    NSLog(@"is gym member. probably perry client %d", _isGymMember);
-                                                    
-                                                    
-                                                    //user has already paid!
+                                                
+                                                    //user has already paid for!
                                                     //send them to a page to set expectations
                                                     
-                                                    
-                                                    [PFUser currentUser][@"planType"] = @"perry";
+                                                    [PFUser currentUser][@"planType"] = @"prepaid";
                                                     [[PFUser currentUser] saveEventually];
                                                     
                                                     [self performSegueWithIdentifier:@"setExpectationsSegue" sender:self];
-                                                    
-                                                    //check to see if there is a user associated with the device for Push Notifications
-                                                    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
-                                                    //if(!currentInstallation[@"user"]){
-                                                    //no user associated so make it!
-                                                    currentInstallation[@"user"] = user;
-                                                    [currentInstallation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                                                        NSLog(@"You just saved the client user on the installation in parse");
-                                                    }];
                                                 }
+                                                else{
+                                                    //user is not paid for...give them a 3 day free trial
+                                                    //login was a success!
+                                                    [PFUser currentUser][@"planType"] = @"trial";
+                                                    [[PFUser currentUser] saveEventually];
+                                                    [self performSegueWithIdentifier:@"showTrialView" sender:self];
+
+                                                }
+                                                
+                                                //check to see if there is a user associated with the device for Push Notifications
+                                                PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+                                                //if(!currentInstallation[@"user"]){
+                                                //no user associated so make it!
+                                                currentInstallation[@"user"] = user;
+                                                [currentInstallation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                                                    NSLog(@"You just saved the client user on the installation in parse");
+                                                }];
+                                                
                                             }
                                         }];
                                         
@@ -1327,7 +1247,6 @@ CGFloat const ktypeInterval = 0.02;
         }
 
     }];
-    
 }
 
 -(void)makeProfiilePictureACircle{
