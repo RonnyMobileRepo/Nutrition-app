@@ -84,6 +84,11 @@
 
 - (JSQMessage *)createPhoneCallMessage:(NSDictionary *)item
 {
+    
+    //tell MP we had a phone call
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel track:@"Phone Call"];
+    
     NSString *name = item[@"name"];
     NSString *userId = item[@"userId"];
     NSDate *date = [self String2Date:item[@"date"]];

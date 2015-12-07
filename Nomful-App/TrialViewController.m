@@ -45,13 +45,7 @@
         }];
     }
     
-    
-    //this is the point where the users is totally verified
-    //we can now tell mixpanel our unique identifier is what will be used from now on
-    //alias just says the objectid will associate the anonymous mixpanel user now :)
-    Mixpanel *mixpanel = [Mixpanel sharedInstance];
-    
-    [mixpanel track:@"Membership Started"];
+
     
 }
 
@@ -98,6 +92,7 @@
             
             [mixpanel.people set:@{@"MemberhipEndDate": trialEndDate}];
             
+            
         }else if([[PFUser currentUser][@"planType"] isEqualToString:@"prepaid"]){
             //user has been prepaid for...we must go find out how many days
             //this can either be from the link clicked...or from GymMember table
@@ -124,6 +119,7 @@
             [PFUser currentUser][@"trialEndDate"] = trialEndDate;
             
             [mixpanel.people set:@{@"MemberhipEndDate": trialEndDate}];
+            
 
             
         }else if([[PFUser currentUser][@"planType"] isEqualToString:@"bootcamp"]){
@@ -134,6 +130,7 @@
             //mark trial start date
             [PFUser currentUser][@"trialEndDate"] = trialEndDate;
             [mixpanel.people set:@{@"MemberhipEndDate": trialEndDate}];
+          
 
         }else if([[PFUser currentUser][@"planType"] isEqualToString:@"intro"]){
             NSDate *now = [NSDate date];
@@ -143,10 +140,15 @@
             //mark trial start date
             [PFUser currentUser][@"trialEndDate"] = trialEndDate;
             [mixpanel.people set:@{@"MemberhipEndDate": trialEndDate}];
+            
 
         }
         
-        [[PFUser currentUser] saveEventually];
+        [[PFUser currentUser] saveInBackground];
+        
+        //tell MP that we started a membership and pass it the plan type
+        [mixpanel track:@"Membership Started" properties:@{@"plan" : [PFUser currentUser][@"planType"]
+                                                           }];
 
     }else{
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Terms and Conditions" message:@"Please agree to our terms and conditions before activiting!" delegate:self cancelButtonTitle:@"Okay" otherButtonTitles: nil];

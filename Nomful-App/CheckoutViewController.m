@@ -342,6 +342,9 @@ NSString *const kBOOTCAMPAMOUNT = @"199.00";
                                 block:^(NSString *result, NSError *error) {
                                     if (!error) {
                                         NSLog(@"RESULT IS: %@", result);
+                                        Mixpanel *mixpanel = [Mixpanel sharedInstance];
+                                        [mixpanel track:@"Purchase Made" properties:@{@"Plan" : plan}];
+                                    
                                         _paymentProcessed = YES;
                                         completion(PKPaymentAuthorizationStatusSuccess);
                                     }
@@ -381,17 +384,22 @@ NSString *const kBOOTCAMPAMOUNT = @"199.00";
             NSLog(@"you ar ehere");
             NSDate *now = [NSDate date];
             NSInteger daysInTrial;
-            
+             Mixpanel *mixpanel = [Mixpanel sharedInstance];
             
             //mark as verified and paid user
             if(_bootCampSelected) {
                 [PFUser currentUser][@"planType"] = @"bootcamp"; //this can be either 'trial' 'intro' or 'bootcamp'
+                [mixpanel.people set:@{@"Plan"    : @"bootcamp"}];
+
                 daysInTrial = 84; //12 weeks
             }else if(_healthyStartSelected){
                 [PFUser currentUser][@"planType"] = @"intro"; //this can be either 'trial' 'intro' or 'bootcamp'
+                [mixpanel.people set:@{@"Plan"    : @"intro"}];
+
                 daysInTrial = 21; //12 weeks
             }
             
+           
             
             NSDate *trialEndDate = [now dateByAddingTimeInterval:60*60*24*daysInTrial];
             
@@ -400,8 +408,6 @@ NSString *const kBOOTCAMPAMOUNT = @"199.00";
             [[PFUser currentUser] saveInBackground];
 
             
-            Mixpanel *mixpanel = [Mixpanel sharedInstance];
-            [mixpanel track:@"Purchase Made"];
             
             
         }];

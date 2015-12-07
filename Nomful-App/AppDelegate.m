@@ -76,19 +76,30 @@
         NSLog(@"dis params are: %@", params);
         NSLog(@"bool value is: %d", [params[@"+branch_link_clicked"] boolValue]);
     
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         Mixpanel *mixpanel = [Mixpanel sharedInstance];
         
         if (!error) {
                 if ([params[@"+clicked_branch_link"] boolValue]) {
+                    
+                    NSLog(@"BRANCH: Clicked Link sent INSTALL event");
+                    
+                    
                     //user either installs app from branch link or already had the app installed but came from branch
                     [mixpanel track:@"install" properties:params];
                     
                     if([params objectForKey:@"numberOfDaysPaid"]){
                         // if link contains data for number of days paid...they came from a partner that paid for
-                        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                        
                         [defaults setObject:[params objectForKey:@"numberOfDaysPaid"] forKey:@"numberOfDaysPaid"];
+                        [defaults setObject:@"prepaid" forKey:@"startingPlan"];
                         [defaults setObject:[params objectForKey:@"partnerID"] forKey:@"partnerID"];
+                        [defaults synchronize];
 
+                    }else{
+                        //clicked on a link and it will be trial
+                        //otherwise they are going to start a trial
+                        [defaults setObject:@"trial" forKey:@"startingPlan"];
                         [defaults synchronize];
                     }
                     
@@ -96,6 +107,8 @@
                     //if ([params[@"+is_first_session"] boolValue]) {
                         NSLog(@"install first time without branch click");
                         [mixpanel track:@"install" properties:params];
+                    
+                  
                     
                     
 

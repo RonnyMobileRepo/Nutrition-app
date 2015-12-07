@@ -1176,7 +1176,6 @@ CGFloat const ktypeInterval = 0.02;
                                         
                                         //send event to mix panel that this user is verified
                                         Mixpanel *mixpanel = [Mixpanel sharedInstance];
-                                        [mixpanel track:@"SignUp Finished"];
                                         
                                         //tell mixpanel to identify user
                                         [mixpanel identify:mixpanel.distinctId];
