@@ -87,6 +87,8 @@
                         // if link contains data for number of days paid...they came from a partner that paid for
                         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
                         [defaults setObject:[params objectForKey:@"numberOfDaysPaid"] forKey:@"numberOfDaysPaid"];
+                        [defaults setObject:[params objectForKey:@"partnerID"] forKey:@"partnerID"];
+
                         [defaults synchronize];
                     }
                     
@@ -94,6 +96,8 @@
                     //if ([params[@"+is_first_session"] boolValue]) {
                         NSLog(@"install first time without branch click");
                         [mixpanel track:@"install" properties:params];
+                    
+                    
 
                     ///}
                 }

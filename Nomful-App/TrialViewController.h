@@ -16,6 +16,7 @@
 @property (strong, nonatomic) NSString *buttonString;
 @property (strong, nonatomic) NSString *stepOneString;
 @property bool isTrial;
+@property NSNumber *daysPrepaid;
 
 @property (weak, nonatomic) IBOutlet UILabel *stepOneLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundImage;

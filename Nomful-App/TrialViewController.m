@@ -50,6 +50,7 @@
     //we can now tell mixpanel our unique identifier is what will be used from now on
     //alias just says the objectid will associate the anonymous mixpanel user now :)
     Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    
     [mixpanel track:@"Membership Started"];
     
 }
@@ -101,7 +102,6 @@
             //user has been prepaid for...we must go find out how many days
             //this can either be from the link clicked...or from GymMember table
             
-            
             NSDate *now = [NSDate date];
             NSInteger prepaidDays = 30; //30 days as default
 
@@ -112,6 +112,10 @@
                 int numberOfDaysPaid = [[defaults objectForKey:@"numberOfDaysPaid"] intValue];
                 prepaidDays = numberOfDaysPaid;
             
+            }else if(_daysPrepaid){
+                //we got this from the gymMembertable
+                prepaidDays = [_daysPrepaid integerValue];
+        
             }
             
             NSDate *trialEndDate = [now dateByAddingTimeInterval:60*60*24*prepaidDays];

@@ -12,6 +12,8 @@
     
     NSString *firstNameString;
     NSString *lastNameString;
+    NSNumber *numberOfDaysPrepaid;
+    
     
 }
 
@@ -1125,13 +1127,13 @@ CGFloat const ktypeInterval = 0.02;
     
     if([segue.identifier isEqualToString:@"setExpectationsSegue"]){
         
-        //prepaid users...aka perry
-        
+        //prepaid users
         TrialViewController *trialVC = [segue destinationViewController];
         trialVC.titleString = @"Next Steps";
         trialVC.buttonString = @"Let's Do This!";
         trialVC.stepOneString = @"Become Member - You've done this!!";
         trialVC.coachUser = _coachUser;
+        trialVC.daysPrepaid = numberOfDaysPrepaid;
         
     }
     
@@ -1199,7 +1201,10 @@ CGFloat const ktypeInterval = 0.02;
                                                                    }];
                                         }
                                         
-                                        
+                                        //if the user used a link
+                                        if ([[NSUserDefaults standardUserDefaults] dataForKey:@"partnerID"]) {
+                                            [mixpanel.people set:@{@"Referal Partner" : [[NSUserDefaults standardUserDefaults] dataForKey:@"partnerID"]}];
+                                        }
                                         
                                         
                                         //no error...code is valid
@@ -1234,7 +1239,7 @@ CGFloat const ktypeInterval = 0.02;
                                                 }
                                                 
                                                 [PFUser currentUser][@"planType"] = planType;
-                                                [[PFUser currentUser] saveEventually];
+                                                [[PFUser currentUser] saveInBackground];
                                                 
                                                 //tell MP they are prepaid
                                                 //send user info to mixpanel
@@ -1286,7 +1291,8 @@ CGFloat const ktypeInterval = 0.02;
                 _isGymMember = true;
                 
                 //set user default here for the number of days
-                
+                numberOfDaysPrepaid = objects[0][@"numberOfDaysPrepaid"];
+        
                 
             }else{
                 _isGymMember = false;

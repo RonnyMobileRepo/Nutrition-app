@@ -400,6 +400,8 @@ NSString *const kBOOTCAMPAMOUNT = @"199.00";
             [[PFUser currentUser] saveInBackground];
 
             
+            Mixpanel *mixpanel = [Mixpanel sharedInstance];
+            [mixpanel track:@"Purchase Made"];
             
             
         }];
@@ -432,8 +434,8 @@ NSString *const kBOOTCAMPAMOUNT = @"199.00";
     }
     
     [[PFUser currentUser] saveInBackground];
+   
 
-    
 }
 
 #pragma mark - Pay With Card
