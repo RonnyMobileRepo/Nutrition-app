@@ -8,7 +8,12 @@
 
 #import "SignUpConversationViewController.h"
 #import "MandrilTestViewController.h"
-@interface SignUpConversationViewController ()
+@interface SignUpConversationViewController (){
+    
+    NSString *firstNameString;
+    NSString *lastNameString;
+    
+}
 
 @end
 
@@ -231,6 +236,9 @@ CGFloat const ktypeInterval = 0.02;
                         //space found...so this menas that there is prolly a last name
                         NSString *fname = [fullName substringToIndex:range.location];
                         NSString *lname = [fullName substringFromIndex:range.location+1];
+                        lastNameString = lname;
+                        firstNameString = fname;
+                        
                         [PFUser currentUser][@"lastName"] = lname;
                         [PFUser currentUser][@"firstName"] = fname;
                     }else{
@@ -475,7 +483,7 @@ CGFloat const ktypeInterval = 0.02;
                                     //cloud code uses the phoneNumber so we need to do this in a block
                                     //send twilio text
                                     [self sendCode];
-                                    [self checkIfGymMember]; //check to see if user is pre-paid by gym
+                                    [self checkIfPrepaid]; //check to see if user is pre-paid by gym
                                     
                                     
                                     //clear textfield
@@ -500,7 +508,7 @@ CGFloat const ktypeInterval = 0.02;
                                 //cloud code uses the phoneNumber so we need to do this in a block
                                 //send twilio text
                                 [self sendCode];
-                                [self checkIfGymMember]; //check to see if user is prepaid by gym
+                                [self checkIfPrepaid]; //check to see if user is prepaid by gym
                                 
                                 
                                 //clear textfield
@@ -1171,6 +1179,27 @@ CGFloat const ktypeInterval = 0.02;
                                         //tell mixpanel to identify user
                                         [mixpanel identify:mixpanel.distinctId];
                                         
+                                        //set device token for push notification
+                                        
+                                        //send device token to mixpanel
+                                        if(  [[NSUserDefaults standardUserDefaults] dataForKey:@"deviceToken"]){
+                                            NSData *deviceToken = [[NSUserDefaults standardUserDefaults] dataForKey:@"deviceToken"];
+                                            [mixpanel.people addPushDeviceToken:deviceToken];
+                                        }
+                                       
+                                        
+                                        [mixpanel.people set:@{@"$first_name"    : [PFUser currentUser][@"firstName"],
+                                                               @"$email"         : [PFUser currentUser].email,
+                                                               @"Role"           : @"Client"
+                                                               }];
+                                        
+                                        //we're doing this b/c if one of the fields is empty it doesn't know what to do...so yea check dat shit
+                                        if ([PFUser currentUser][@"lastName"]) {
+                                            [mixpanel.people set:@{@"$last_name"    : [PFUser currentUser][@"lastName"]
+                                                                   }];
+                                        }
+                                        
+                                        
                                         
                                         
                                         //no error...code is valid
@@ -1184,6 +1213,9 @@ CGFloat const ktypeInterval = 0.02;
                                                 // The current user is now set to user.
                                                 // no longer anonymous user!
                                                 NSLog(@"Login Successful! %@", token);
+                                                
+                                                NSString *planType;
+                                                
                                                 [user signUpInBackground];
                                                
                                                 
@@ -1191,20 +1223,22 @@ CGFloat const ktypeInterval = 0.02;
                                                 
                                                     //user has already paid for!
                                                     //send them to a page to set expectations
-                                                    
-                                                    [PFUser currentUser][@"planType"] = @"prepaid";
-                                                    [[PFUser currentUser] saveEventually];
-                                                    
+                                                    planType = @"prepaid";
                                                     [self performSegueWithIdentifier:@"setExpectationsSegue" sender:self];
                                                 }
                                                 else{
                                                     //user is not paid for...give them a 3 day free trial
                                                     //login was a success!
-                                                    [PFUser currentUser][@"planType"] = @"trial";
-                                                    [[PFUser currentUser] saveEventually];
+                                                    planType = @"trial";
                                                     [self performSegueWithIdentifier:@"showTrialView" sender:self];
-
                                                 }
+                                                
+                                                [PFUser currentUser][@"planType"] = planType;
+                                                [[PFUser currentUser] saveEventually];
+                                                
+                                                //tell MP they are prepaid
+                                                //send user info to mixpanel
+                                                [mixpanel.people set:@{@"Plan"    : planType}];
                                                 
                                                 //check to see if there is a user associated with the device for Push Notifications
                                                 PFInstallation *currentInstallation = [PFInstallation currentInstallation];
@@ -1232,21 +1266,36 @@ CGFloat const ktypeInterval = 0.02;
     
 }
 
-- (void)checkIfGymMember{
-    PFQuery *query = [[PFQuery alloc] initWithClassName:@"GymMembers"];
-    [query whereKey:@"userPhone" equalTo:_phone];
-    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error){
-        if([objects count] > 0){
-            //results exist
-            //this mesans that the user's phone number is already in the gymmembers table
-            //which means THEY HAVE PAID...most likey a perry client
-            _isGymMember = true;
-            
-        }else{
-            _isGymMember = false;
-        }
+- (void)checkIfPrepaid{
+    
+    // Get the stored data before the view loads
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
-    }];
+    if([defaults objectForKey:@"numberOfDaysPaid"]){
+        //user used a brach link from a partner that paid for their membership
+        _isGymMember = true;
+    }else{
+        //nothing stored in user defaults so check gym table in case
+        PFQuery *query = [[PFQuery alloc] initWithClassName:@"GymMembers"];
+        [query whereKey:@"userPhone" equalTo:_phone];
+        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error){
+            if([objects count] > 0){
+                //results exist
+                //this mesans that the user's phone number is already in the gymmembers table
+                //which means THEY HAVE PAID...most likey a perry client
+                _isGymMember = true;
+                
+                //set user default here for the number of days
+                
+                
+            }else{
+                _isGymMember = false;
+            }
+            
+        }];
+
+    }
+    
 }
 
 -(void)makeProfiilePictureACircle{
@@ -1388,8 +1437,7 @@ CGFloat const ktypeInterval = 0.02;
     _messageCount++;
     [self showNextMessage];
     
-  
-    
+
     _coachMatchImageView.layer.cornerRadius = _coachMatchImageView.bounds.size.width/2;
     _coachMatchImageView.clipsToBounds = YES;
     
@@ -1417,8 +1465,12 @@ CGFloat const ktypeInterval = 0.02;
         
     }];
     
+    NSDictionary *coachInfo = @{@"ID" : _coachUser.objectId,
+                                @"Name" : _coachUser[@"firstName"]};
     
-
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel track:@"Coach Chosen" properties:coachInfo];
+    
 }
 
 #pragma mark - Image Picker

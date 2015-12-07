@@ -151,10 +151,6 @@ NSString *const kBOOTCAMPAMOUNT = @"199.00";
         vc.trainerUser = _trainerUser;
     }
     
-    if(_gymObject){
-        vc.gymObject = _gymObject;
-    }
-    
 }
 
 

@@ -25,7 +25,6 @@
     NSLog(@"current user is: %@", [PFUser currentUser]);
     NSLog(@"coach user is: %@", _coachUser);
     NSLog(@"trainer user is: %@", _trainerUser);
-    NSLog(@"gym user is: %@", _gymObject);
 
     _contentView.layer.cornerRadius = 4.0;
     _activateButton.layer.cornerRadius = 4.0;
@@ -51,8 +50,7 @@
     //we can now tell mixpanel our unique identifier is what will be used from now on
     //alias just says the objectid will associate the anonymous mixpanel user now :)
     Mixpanel *mixpanel = [Mixpanel sharedInstance];
-    [mixpanel identify:mixpanel.distinctId];
-    [mixpanel track:@"Account Created"];
+    [mixpanel track:@"Membership Started"];
     
 }
 
@@ -81,11 +79,15 @@
         
         [self activatePushNotification];
         
+        Mixpanel *mixpanel = [Mixpanel sharedInstance];
+
+        
         if(_isTrial){
-            NSLog(@"trainer user ttrial");
+            //isTrial is sent from the signup VC
+            NSLog(@"User is on trial. so we set end date for 3 days from now");
             
             NSDate *now = [NSDate date];
-            NSInteger daysInTrial = 10;
+            NSInteger daysInTrial = 3;
             NSDate *trialEndDate = [now dateByAddingTimeInterval:60*60*24*daysInTrial];
             
             //mark trial start date
@@ -93,13 +95,32 @@
             
             [PFUser currentUser][@"planType"] = @"trial"; //this can be either 'trial' 'intro' or 'bootcamp'
             
-        }else if([[PFUser currentUser][@"planType"] isEqualToString:@"intro"]){
+            [mixpanel.people set:@{@"MemberhipEndDate": trialEndDate}];
+            
+        }else if([[PFUser currentUser][@"planType"] isEqualToString:@"prepaid"]){
+            //user has been prepaid for...we must go find out how many days
+            //this can either be from the link clicked...or from GymMember table
+            
+            
             NSDate *now = [NSDate date];
-            NSInteger daysInTrial = 21; //30 days
-            NSDate *trialEndDate = [now dateByAddingTimeInterval:60*60*24*daysInTrial];
+            NSInteger prepaidDays = 30; //30 days as default
+
+            
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            if([defaults objectForKey:@"numberOfDaysPaid"]){
+                
+                int numberOfDaysPaid = [[defaults objectForKey:@"numberOfDaysPaid"] intValue];
+                prepaidDays = numberOfDaysPaid;
+            
+            }
+            
+            NSDate *trialEndDate = [now dateByAddingTimeInterval:60*60*24*prepaidDays];
             
             //mark trial start date
             [PFUser currentUser][@"trialEndDate"] = trialEndDate;
+            
+            [mixpanel.people set:@{@"MemberhipEndDate": trialEndDate}];
+
             
         }else if([[PFUser currentUser][@"planType"] isEqualToString:@"bootcamp"]){
             NSDate *now = [NSDate date];
@@ -108,13 +129,17 @@
             
             //mark trial start date
             [PFUser currentUser][@"trialEndDate"] = trialEndDate;
-        }else if([[PFUser currentUser][@"planType"] isEqualToString:@"perry"]){
+            [mixpanel.people set:@{@"MemberhipEndDate": trialEndDate}];
+
+        }else if([[PFUser currentUser][@"planType"] isEqualToString:@"intro"]){
             NSDate *now = [NSDate date];
-            NSInteger daysInTrial = 100; //30 days
+            NSInteger daysInTrial = 21; //12 weeks
             NSDate *trialEndDate = [now dateByAddingTimeInterval:60*60*24*daysInTrial];
             
             //mark trial start date
             [PFUser currentUser][@"trialEndDate"] = trialEndDate;
+            [mixpanel.people set:@{@"MemberhipEndDate": trialEndDate}];
+
         }
         
         [[PFUser currentUser] saveEventually];

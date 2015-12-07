@@ -11,6 +11,7 @@
 		210022571BE17E2E00838A5E /* Brittany-Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 210022561BE17E2E00838A5E /* Brittany-Icon.png */; };
 		2104F54B1C04032C0013911D /* logo-600.png in Resources */ = {isa = PBXBuildFile; fileRef = 2104F54A1C04032C0013911D /* logo-600.png */; };
 		2104F54D1C0405C50013911D /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2104F54C1C0405C50013911D /* Launch Screen.storyboard */; };
+		210C95C31C134466003E8DE3 /* MessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 210C95C21C134466003E8DE3 /* MessagesViewController.m */; };
 		212DF5B81C0E3CEF009F6161 /* libc++.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 212DF5B61C0E3CEF009F6161 /* libc++.1.dylib */; };
 		212DF5B91C0E3CEF009F6161 /* libicucore.A.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 212DF5B71C0E3CEF009F6161 /* libicucore.A.dylib */; };
 		212DF5BB1C0E3CF4009F6161 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 212DF5BA1C0E3CF4009F6161 /* CFNetwork.framework */; };
@@ -36,7 +37,6 @@
 		2137D8211BAC978F00310545 /* ManageSubscriptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2137D81E1BAC978F00310545 /* ManageSubscriptionViewController.m */; };
 		2137D8221BAC978F00310545 /* MarginLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2137D8201BAC978F00310545 /* MarginLabel.m */; };
 		2137D8271BAC979700310545 /* MatchCoachViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2137D8241BAC979700310545 /* MatchCoachViewController.m */; };
-		2137D8281BAC979700310545 /* MessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2137D8261BAC979700310545 /* MessagesViewController.m */; };
 		2137D8371BAC97AF00310545 /* pagecontentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2137D82A1BAC97AE00310545 /* pagecontentViewController.m */; };
 		2137D8381BAC97AF00310545 /* PageItemController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2137D82C1BAC97AE00310545 /* PageItemController.m */; };
 		2137D8391BAC97AF00310545 /* PageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2137D82E1BAC97AF00310545 /* PageViewController.m */; };
@@ -49,8 +49,6 @@
 		2137D84B1BAC97DB00310545 /* SelectGoalsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2137D8481BAC97DB00310545 /* SelectGoalsViewController.m */; };
 		2137D84C1BAC97DB00310545 /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2137D84A1BAC97DB00310545 /* SettingsTableViewController.m */; };
 		2137D8551BAC97E400310545 /* SignUpConversationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2137D84E1BAC97E400310545 /* SignUpConversationViewController.m */; };
-		2137D8561BAC97E400310545 /* SignUpLandingVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2137D8501BAC97E400310545 /* SignUpLandingVideoViewController.m */; };
-		2137D8571BAC97E400310545 /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2137D8521BAC97E400310545 /* SignUpViewController.m */; };
 		2137D8581BAC97E400310545 /* SlideAnimatedTransitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = 2137D8541BAC97E400310545 /* SlideAnimatedTransitioning.m */; };
 		2137D85B1BAC97F000310545 /* stripeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2137D85A1BAC97F000310545 /* stripeViewController.m */; };
 		2137D8701BAC980000310545 /* trainerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2137D85D1BAC980000310545 /* trainerCell.m */; };
@@ -62,7 +60,6 @@
 		2137D8761BAC980000310545 /* UIImage+RoundedCornerAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2137D8691BAC980000310545 /* UIImage+RoundedCornerAdditions.m */; };
 		2137D8771BAC980000310545 /* UpdateProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2137D86B1BAC980000310545 /* UpdateProfileViewController.m */; };
 		2137D8781BAC980000310545 /* UserAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2137D86D1BAC980000310545 /* UserAccountViewController.m */; };
-		2137D8791BAC980000310545 /* VerificationCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2137D86F1BAC980000310545 /* VerificationCodeViewController.m */; };
 		2137D87C1BAC980D00310545 /* WebViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2137D87B1BAC980D00310545 /* WebViewViewController.m */; };
 		2137D8801BAC9B3400310545 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 2137D87F1BAC9B3400310545 /* Reachability.m */; };
 		2137D8841BAC9E8D00310545 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2137D8821BAC9E8D00310545 /* Main.storyboard */; };
@@ -139,6 +136,8 @@
 		210022561BE17E2E00838A5E /* Brittany-Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Brittany-Icon.png"; sourceTree = "<group>"; };
 		2104F54A1C04032C0013911D /* logo-600.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-600.png"; sourceTree = "<group>"; };
 		2104F54C1C0405C50013911D /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		210C95C11C134466003E8DE3 /* MessagesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessagesViewController.h; sourceTree = "<group>"; };
+		210C95C21C134466003E8DE3 /* MessagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessagesViewController.m; sourceTree = "<group>"; };
 		212DF5B61C0E3CEF009F6161 /* libc++.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.1.dylib"; path = "../../../../usr/lib/libc++.1.dylib"; sourceTree = "<group>"; };
 		212DF5B71C0E3CEF009F6161 /* libicucore.A.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.A.dylib; path = ../../../../usr/lib/libicucore.A.dylib; sourceTree = "<group>"; };
 		212DF5BA1C0E3CF4009F6161 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -184,8 +183,6 @@
 		2137D8201BAC978F00310545 /* MarginLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MarginLabel.m; sourceTree = "<group>"; };
 		2137D8231BAC979700310545 /* MatchCoachViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchCoachViewController.h; sourceTree = "<group>"; };
 		2137D8241BAC979700310545 /* MatchCoachViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatchCoachViewController.m; sourceTree = "<group>"; };
-		2137D8251BAC979700310545 /* MessagesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessagesViewController.h; sourceTree = "<group>"; };
-		2137D8261BAC979700310545 /* MessagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessagesViewController.m; sourceTree = "<group>"; };
 		2137D8291BAC97AE00310545 /* pagecontentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pagecontentViewController.h; sourceTree = "<group>"; };
 		2137D82A1BAC97AE00310545 /* pagecontentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = pagecontentViewController.m; sourceTree = "<group>"; };
 		2137D82B1BAC97AE00310545 /* PageItemController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageItemController.h; sourceTree = "<group>"; };
@@ -210,10 +207,6 @@
 		2137D84A1BAC97DB00310545 /* SettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsTableViewController.m; sourceTree = "<group>"; };
 		2137D84D1BAC97E400310545 /* SignUpConversationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignUpConversationViewController.h; sourceTree = "<group>"; };
 		2137D84E1BAC97E400310545 /* SignUpConversationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignUpConversationViewController.m; sourceTree = "<group>"; };
-		2137D84F1BAC97E400310545 /* SignUpLandingVideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignUpLandingVideoViewController.h; sourceTree = "<group>"; };
-		2137D8501BAC97E400310545 /* SignUpLandingVideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignUpLandingVideoViewController.m; sourceTree = "<group>"; };
-		2137D8511BAC97E400310545 /* SignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignUpViewController.h; sourceTree = "<group>"; };
-		2137D8521BAC97E400310545 /* SignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignUpViewController.m; sourceTree = "<group>"; };
 		2137D8531BAC97E400310545 /* SlideAnimatedTransitioning.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideAnimatedTransitioning.h; sourceTree = "<group>"; };
 		2137D8541BAC97E400310545 /* SlideAnimatedTransitioning.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlideAnimatedTransitioning.m; sourceTree = "<group>"; };
 		2137D8591BAC97F000310545 /* stripeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stripeViewController.h; sourceTree = "<group>"; };
@@ -236,8 +229,6 @@
 		2137D86B1BAC980000310545 /* UpdateProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateProfileViewController.m; sourceTree = "<group>"; };
 		2137D86C1BAC980000310545 /* UserAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserAccountViewController.h; sourceTree = "<group>"; };
 		2137D86D1BAC980000310545 /* UserAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserAccountViewController.m; sourceTree = "<group>"; };
-		2137D86E1BAC980000310545 /* VerificationCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerificationCodeViewController.h; sourceTree = "<group>"; };
-		2137D86F1BAC980000310545 /* VerificationCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerificationCodeViewController.m; sourceTree = "<group>"; };
 		2137D87A1BAC980D00310545 /* WebViewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewViewController.h; sourceTree = "<group>"; };
 		2137D87B1BAC980D00310545 /* WebViewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewViewController.m; sourceTree = "<group>"; };
 		2137D87D1BAC986C00310545 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
@@ -411,6 +402,8 @@
 				2137D87A1BAC980D00310545 /* WebViewViewController.h */,
 				2137D87B1BAC980D00310545 /* WebViewViewController.m */,
 				2137D85C1BAC980000310545 /* trainerCell.h */,
+				210C95C11C134466003E8DE3 /* MessagesViewController.h */,
+				210C95C21C134466003E8DE3 /* MessagesViewController.m */,
 				2137D85D1BAC980000310545 /* trainerCell.m */,
 				2137D85E1BAC980000310545 /* TrialEndedViewController.h */,
 				2137D85F1BAC980000310545 /* TrialEndedViewController.m */,
@@ -424,14 +417,8 @@
 				2137D8691BAC980000310545 /* UIImage+RoundedCornerAdditions.m */,
 				2137D86A1BAC980000310545 /* UpdateProfileViewController.h */,
 				2137D86B1BAC980000310545 /* UpdateProfileViewController.m */,
-				2137D86E1BAC980000310545 /* VerificationCodeViewController.h */,
-				2137D86F1BAC980000310545 /* VerificationCodeViewController.m */,
 				2137D8591BAC97F000310545 /* stripeViewController.h */,
 				2137D85A1BAC97F000310545 /* stripeViewController.m */,
-				2137D84F1BAC97E400310545 /* SignUpLandingVideoViewController.h */,
-				2137D8501BAC97E400310545 /* SignUpLandingVideoViewController.m */,
-				2137D8511BAC97E400310545 /* SignUpViewController.h */,
-				2137D8521BAC97E400310545 /* SignUpViewController.m */,
 				2137D8531BAC97E400310545 /* SlideAnimatedTransitioning.h */,
 				2137D8541BAC97E400310545 /* SlideAnimatedTransitioning.m */,
 				2137D8471BAC97DB00310545 /* SelectGoalsViewController.h */,
@@ -440,8 +427,6 @@
 				2137D83F1BAC97C000310545 /* ProgressViewController.m */,
 				2137D8231BAC979700310545 /* MatchCoachViewController.h */,
 				2137D8241BAC979700310545 /* MatchCoachViewController.m */,
-				2137D8251BAC979700310545 /* MessagesViewController.h */,
-				2137D8261BAC979700310545 /* MessagesViewController.m */,
 				2137D81D1BAC978F00310545 /* ManageSubscriptionViewController.h */,
 				2137D8291BAC97AE00310545 /* pagecontentViewController.h */,
 				2137D82A1BAC97AE00310545 /* pagecontentViewController.m */,
@@ -1110,15 +1095,13 @@
 				2137D84C1BAC97DB00310545 /* SettingsTableViewController.m in Sources */,
 				2137D8381BAC97AF00310545 /* PageItemController.m in Sources */,
 				21643A4F1BC56D470099E6FB /* ConvertToFirebaseViewController.m in Sources */,
+				210C95C31C134466003E8DE3 /* MessagesViewController.m in Sources */,
 				2137D8041BAC974E00310545 /* editImageViewController.m in Sources */,
-				2137D8571BAC97E400310545 /* SignUpViewController.m in Sources */,
 				2137D8271BAC979700310545 /* MatchCoachViewController.m in Sources */,
 				2137D8721BAC980000310545 /* TrialViewController.m in Sources */,
 				21C88A2A1BAC95CF00792E9C /* AppDelegate.m in Sources */,
 				21C88A271BAC95CF00792E9C /* main.m in Sources */,
 				2137D8751BAC980000310545 /* UIImage+ResizeAdditions.m in Sources */,
-				2137D8281BAC979700310545 /* MessagesViewController.m in Sources */,
-				2137D8791BAC980000310545 /* VerificationCodeViewController.m in Sources */,
 				2137D7E51BAC973000310545 /* AccountViewController.m in Sources */,
 				215654BB1BFCFBB100FD917D /* CoachCardParentViewController.m in Sources */,
 				2137D8461BAC97D200310545 /* RootViewController.m in Sources */,
@@ -1127,7 +1110,6 @@
 				2137D8391BAC97AF00310545 /* PageViewController.m in Sources */,
 				2137D8761BAC980000310545 /* UIImage+RoundedCornerAdditions.m in Sources */,
 				2137D8101BAC976000310545 /* imageDetailViewController.m in Sources */,
-				2137D8561BAC97E400310545 /* SignUpLandingVideoViewController.m in Sources */,
 				2137D8711BAC980000310545 /* TrialEndedViewController.m in Sources */,
 				210022551BE013B600838A5E /* CoachBioViewController.m in Sources */,
 				21D4E2DC1BC2F81D00962C6B /* Chatview.m in Sources */,

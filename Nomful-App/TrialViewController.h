@@ -12,7 +12,6 @@
 
 @property (strong, nonatomic) PFUser *coachUser;
 @property (strong, nonatomic) PFUser *trainerUser;
-@property (strong, nonatomic) PFObject *gymObject;
 @property (strong, nonatomic) NSString *titleString;
 @property (strong, nonatomic) NSString *buttonString;
 @property (strong, nonatomic) NSString *stepOneString;

@@ -73,21 +73,32 @@
     [branch initSessionWithLaunchOptions:launchOptions andRegisterDeepLinkHandler:^(NSDictionary *params, NSError *error) {
         // params are the deep linked params associated with the link that the user clicked before showing up.
         //Mixpanel would then receive the Branch install event, and you would know Branch is responsible because referred would equal true inside the properties argument. https://dev.branch.io/recipes/analytics_mixpanel/ios/
-        NSLog(@"params are: %@", params);
+        NSLog(@"dis params are: %@", params);
         NSLog(@"bool value is: %d", [params[@"+branch_link_clicked"] boolValue]);
     
+        Mixpanel *mixpanel = [Mixpanel sharedInstance];
         
         if (!error) {
-            if ([params[@"+clicked_branch_link"] boolValue]) {
+                if ([params[@"+clicked_branch_link"] boolValue]) {
+                    //user either installs app from branch link or already had the app installed but came from branch
+                    [mixpanel track:@"install" properties:params];
+                    
+                    if([params objectForKey:@"numberOfDaysPaid"]){
+                        // if link contains data for number of days paid...they came from a partner that paid for
+                        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                        [defaults setObject:[params objectForKey:@"numberOfDaysPaid"] forKey:@"numberOfDaysPaid"];
+                        [defaults synchronize];
+                    }
+                    
+                }else{
+                    //if ([params[@"+is_first_session"] boolValue]) {
+                        NSLog(@"install first time without branch click");
+                        [mixpanel track:@"install" properties:params];
 
-            // Add call here to let MP know a Branch-driven install occurred
-            Mixpanel *mixpanel = [Mixpanel sharedInstance];
-            [mixpanel track:@"install" properties:params];
-            
-            }
-        }
+                    ///}
+                }
+        }//end error
         
-    
     }];
 
     //______________________________________________________________________________________________________________________________
@@ -142,9 +153,10 @@
     currentInstallation.channels = @[ @"global" ];
     [currentInstallation saveInBackground];
     
-    //send device token to mixpanel
-//    Mixpanel *mixpanel = [Mixpanel sharedInstance];
-//    [mixpanel.people addPushDeviceToken:deviceToken];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:deviceToken forKey:@"deviceToken"];
+    [defaults synchronize];
+
 
 }
 
@@ -203,12 +215,12 @@
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     NSLog(@"app did enter background");
     
-//    if ([PFUser currentUser]) {
-//        //if there is an active user...mixpanel dat shit
-//        Mixpanel *mixpanel = [Mixpanel sharedInstance];
-//        [mixpanel track:@"Session"];
-//        [mixpanel identify:[PFUser currentUser].objectId]; //this is what set the 'last seen' in mixpanel
-//            }
+   
+    //if there is an active user...mixpanel dat shit
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel track:@"Session"];
+    [mixpanel identify:mixpanel.distinctId]; //this is what set the 'last seen' in mixpanel
+    
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -220,24 +232,22 @@
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     NSLog(@"App did become active");
     
-//    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    
+    //event for app open
+    [mixpanel track:@"App Opened" properties:@{}];
+    // start the timer for the event session ("App Close")
+    [mixpanel timeEvent:@"Session"];
+    
+    [mixpanel identify:mixpanel.distinctId]; //this is what set the 'last seen' in mixpanel
+    
 //    
-//    //event for app open
-//    [mixpanel track:@"App Opened" properties:@{}];
-//    // start the timer for the event session ("App Close")
-//    [mixpanel timeEvent:@"Session"];
-//    
-//    if ([PFUser currentUser]) {
-//        //if there is an active user...mixpanel dat shit
-//        [mixpanel identify:[PFUser currentUser].objectId]; //this is what set the 'last seen' in mixpanel
-//        NSLog(@"current token is: %@", [PFInstallation currentInstallation].deviceToken);
-//        
-//        NSString *originalString = [NSString stringWithFormat:@"%@", [PFInstallation currentInstallation].deviceToken];
-//        NSData *data = [originalString dataUsingEncoding:NSUTF8StringEncoding];
-//        [mixpanel.people addPushDeviceToken:data];
-//
-//        
-//    }
+//    NSString *originalString = [NSString stringWithFormat:@"%@", [PFInstallation currentInstallation].deviceToken];
+//    NSData *data = [originalString dataUsingEncoding:NSUTF8StringEncoding];
+//    [mixpanel.people addPushDeviceToken:data];
+
+        
+    
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
