@@ -1087,18 +1087,42 @@ CGFloat const ktypeInterval = 0.02;
     memberGoals = [[PFUser currentUser] objectForKey:@"goals"];
     
     PFQuery *query = [PFUser query];
-    [query whereKey:@"goals" containedIn:memberGoals];
+    [query whereKey:@"showInSearch" equalTo:[NSNumber numberWithBool:YES]];
     [query whereKey:@"role" equalTo:@"RD"];
     [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable coaches, NSError * _Nullable error) {
         
-        //array 'coaches' contains all the coaches returned from our query
-        _coachUserArray = [coaches mutableCopy];
+        NSMutableArray *coachesMutable = [coaches mutableCopy];
+        NSMutableArray *finalCoaches = [[NSMutableArray alloc] init];
         
-        if(coaches.count > 0){
-            NSLog(@"coach block completed");
-            compblock(YES);
+        if(coaches.count > 4){
+            
+            NSMutableIndexSet *picks = [NSMutableIndexSet indexSet];
+            do {
+                [picks addIndex:arc4random() % coachesMutable.count];
+            } while (picks.count != 5);
+            
+            [picks enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+                NSLog(@"Element at index %lu: %@", (unsigned long)idx, [coachesMutable objectAtIndex:idx]);
+                
+                PFUser *coachUser = [coachesMutable objectAtIndex:idx];
+                [finalCoaches addObject:coachUser];
+                
+                NSLog(@"Coach user count is: %lu", (unsigned long)_coachUserArray.count);
+                NSLog(@"Pick count is: %lu", (unsigned long)picks.count);
+                
+                if (finalCoaches.count == picks.count) {
+                    _coachUserArray = finalCoaches;
+                    compblock(YES);
+                }
+            
+            }];
+ 
         }else{
-            compblock(NO);
+            
+            //users returned with less than 5
+            //let's just show all coaches
+            _coachUserArray = [coaches mutableCopy];
+            compblock(YES);
         }
         
     }];
@@ -1201,8 +1225,14 @@ CGFloat const ktypeInterval = 0.02;
                                         }
                                         
                                         //if the user used a link
-                                        if ([[NSUserDefaults standardUserDefaults] dataForKey:@"partnerID"]) {
-                                            [mixpanel.people set:@{@"Referal Partner" : [[NSUserDefaults standardUserDefaults] dataForKey:@"partnerID"]}];
+                                        if ([[NSUserDefaults standardUserDefaults] stringForKey:@"partnerID"]) {
+                                            
+                                            
+                                            NSString *referrer = [[NSUserDefaults standardUserDefaults]stringForKey:@"partnerID"];
+                    
+                                            
+                                            [mixpanel.people set:@{@"Referal Partner" : referrer
+                                                                       }];
                                         }
                                         
                                         //tell crashlytics the user

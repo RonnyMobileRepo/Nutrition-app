@@ -37,7 +37,7 @@ CGFloat const kInbetweenMartin1 = 5.0;
         NSString *aboutMeString = coachUser[@"aboutMe"];
         NSString *myPhilString = coachUser[@"myPhilosophy"];
         NSString *cityString = coachUser[@"city"];
-        _coachSpecialitesArray = [[NSMutableArray alloc] initWithArray:coachUser[@"goals"]];
+        _coachSpecialitesArray = [[NSMutableArray alloc] initWithArray:coachUser[@"specialties"]];
         NSLog(@"coach goals ar %@", _coachSpecialitesArray);
         PFFile *imageFile = coachUser[@"photo"];
 
