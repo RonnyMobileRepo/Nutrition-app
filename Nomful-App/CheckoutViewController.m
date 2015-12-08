@@ -343,40 +343,10 @@ NSString *const kBOOTCAMPAMOUNT = @"199.00";
                                     if (!error) {
                                         NSLog(@"RESULT IS: %@", result);
                                         _paymentProcessed = YES;
-//                                        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//                                            [self sendRevenueInfoToMP:plan];
-//                                        });
-                                        //get amount from string
-                                        NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
-                                        f.numberStyle = NSNumberFormatterDecimalStyle;
-                                        NSNumber *amount = [f numberFromString:plan];
-                                        
-                                        //get plan string
-                                        NSString *planString = @"";
-                                        if (_bootCampSelected) {
-                                            planString = @"bootcamp";
-                                        }else if (_healthyStartSelected) {
-                                            planString = @"healthy start";
-                                        }
-                                        
-                                        Mixpanel *mixpanel = [Mixpanel sharedInstance];
-                                        [mixpanel identify:mixpanel.distinctId];
-                                        
-                                        //track purchase item event with plan name and amount
-                                        [mixpanel track:@"Purchase item" properties:@{@"Plan Type" : planString,
-                                                                                      @"Price" : amount
-                                                                                      }];
-                                        
-                                        
-                                        // Tracks amount in revenue for user
-                                        [mixpanel.people trackCharge:amount withProperties:@{
-                                                                                             @"$time": [NSDate date],
-                                                                                             @"plan" : planString
-                                                                                             }];
-                                        
-                                        // To send notifications to your users based on revenue
-                                        [mixpanel.people increment:@{@"Lifetime Value" : amount}];
-                                        [mixpanel.people set:@{@"Last Item Purchase": [NSDate date]}];
+                                        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                                            [self sendRevenueInfoToMP:plan];
+                                        });
+        
                                         completion(PKPaymentAuthorizationStatusSuccess);
                                         
                                         
@@ -390,9 +360,6 @@ NSString *const kBOOTCAMPAMOUNT = @"199.00";
     
 }
 - (void)sendRevenueInfoToMP:(NSString *)plan{
-    
-    
-    //get amount from string
     NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
     f.numberStyle = NSNumberFormatterDecimalStyle;
     NSNumber *amount = [f numberFromString:plan];
@@ -406,6 +373,7 @@ NSString *const kBOOTCAMPAMOUNT = @"199.00";
     }
     
     Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel identify:mixpanel.distinctId];
     
     //track purchase item event with plan name and amount
     [mixpanel track:@"Purchase item" properties:@{@"Plan Type" : planString,

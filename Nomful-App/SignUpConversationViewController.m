@@ -59,7 +59,7 @@ CGFloat const ktypeInterval = 0.02;
                                                         @"I’ll help you find the perfect coach. Together, you’ll work towards achieving your health goals.",
                                                         @"Before we begin, I’ll need to know your full name.",
                                                         @"placeholder 0",
-                                                        @"Are you female or male?",
+                                                        @"Are you male or female?",
                                                         @"How old are you?",
                                                         @"Do you have a personal trainer? - Get rid of me",
                                                         @"Just in case, what is your email? Don’t worry; you won’t be spammed. I would never do that to you!",
@@ -1118,9 +1118,9 @@ CGFloat const ktypeInterval = 0.02;
         
         NSLog(@"coach user %@", _coachUser);
         trialVC.coachUser = _coachUser;
-        trialVC.titleString = @"3 day FREE TRIAL";
+        trialVC.titleString = @"3-Day FREE Trial";
         trialVC.buttonString = @"Activate Trial";
-        trialVC.stepOneString = @"Activate Trial";
+        trialVC.stepOneString = @"Activate trial";
         trialVC.isTrial = true;
     
     }
@@ -1131,7 +1131,7 @@ CGFloat const ktypeInterval = 0.02;
         TrialViewController *trialVC = [segue destinationViewController];
         trialVC.titleString = @"Next Steps";
         trialVC.buttonString = @"Let's Do This!";
-        trialVC.stepOneString = @"Become Member - You've done this!!";
+        trialVC.stepOneString = @"Activate membership";
         trialVC.coachUser = _coachUser;
         trialVC.daysPrepaid = numberOfDaysPrepaid;
         
