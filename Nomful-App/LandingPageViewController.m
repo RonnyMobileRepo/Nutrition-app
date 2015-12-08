@@ -53,9 +53,19 @@
     
     //send event to mixpanel that we've started the signup process
     Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    NSString *plan;
+    
+    if ([[NSUserDefaults standardUserDefaults] stringForKey:@"startingPlan"]) {
+        plan = [[NSUserDefaults standardUserDefaults] stringForKey:@"startingPlan"];
+    }else{
+        plan = @"trial";
+    }
+    
     [mixpanel track:@"SignUp Started" properties:@{
-                                    @"Starting Plan" : [[NSUserDefaults standardUserDefaults] stringForKey:@"startingPlan"]
-                                                   }];
+                                                   @"Starting Plan" : plan
+                                                }];
+
+    
     
     
     

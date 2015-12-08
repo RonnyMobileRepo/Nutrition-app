@@ -71,49 +71,49 @@
 
     Branch *branch = [Branch getInstance];
     [branch initSessionWithLaunchOptions:launchOptions andRegisterDeepLinkHandler:^(NSDictionary *params, NSError *error) {
-        // params are the deep linked params associated with the link that the user clicked before showing up.
-        //Mixpanel would then receive the Branch install event, and you would know Branch is responsible because referred would equal true inside the properties argument. https://dev.branch.io/recipes/analytics_mixpanel/ios/
-        NSLog(@"dis params are: %@", params);
-        NSLog(@"bool value is: %d", [params[@"+branch_link_clicked"] boolValue]);
-    
+        
+        
+        //USER DEFAULT DECLARATION DESCRIPTIONS
+        
+        /////////////////////////////////////////
+        
+        //NumberOfDaysPaid -> if user is prepaid...then store this for use on the TrialViewController and SignupConvoVC
+        //startingPlan -> if user comes from branch link...we need to store if they are prepaid or NOT. Not means Trial. This helps our mixpanel tracking (landingpageVC)
+        //partnerID -> if user comes from branch link...we store the partnerID from the link so we can save it in MP later when user is .identified
+        
+        /////////////////////////////////////////
+        
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        
         Mixpanel *mixpanel = [Mixpanel sharedInstance];
         
         if (!error) {
-                if ([params[@"+clicked_branch_link"] boolValue]) {
+            if ([params[@"+clicked_branch_link"] boolValue]) {
+                //user either installs app from branch link or already had the app installed but came from branch
+                
+                //SEND Mixpanel Event
+                [mixpanel track:@"install" properties:params];
+                
+                //CHECK if link has value for numberOfDaysPaid. Indicates preapaid user
+                if([params objectForKey:@"numberOfDaysPaid"]){
                     
-                    NSLog(@"BRANCH: Clicked Link sent INSTALL event");
-                    
-                    
-                    //user either installs app from branch link or already had the app installed but came from branch
-                    [mixpanel track:@"install" properties:params];
-                    
-                    if([params objectForKey:@"numberOfDaysPaid"]){
-                        // if link contains data for number of days paid...they came from a partner that paid for
-                        
-                        [defaults setObject:[params objectForKey:@"numberOfDaysPaid"] forKey:@"numberOfDaysPaid"];
-                        [defaults setObject:@"prepaid" forKey:@"startingPlan"];
-                        [defaults setObject:[params objectForKey:@"partnerID"] forKey:@"partnerID"];
-                        [defaults synchronize];
+                    [defaults setObject:[params objectForKey:@"numberOfDaysPaid"] forKey:@"numberOfDaysPaid"];
+                    [defaults setObject:@"prepaid" forKey:@"startingPlan"];
+                    [defaults setObject:[params objectForKey:@"partnerID"] forKey:@"partnerID"];
+                    [defaults synchronize];
 
-                    }else{
-                        //clicked on a link and it will be trial
-                        //otherwise they are going to start a trial
-                        [defaults setObject:@"trial" forKey:@"startingPlan"];
-                        [defaults synchronize];
-                    }
-                    
-                }else{
-                    //if ([params[@"+is_first_session"] boolValue]) {
-                        NSLog(@"install first time without branch click");
-                        [mixpanel track:@"install" properties:params];
-                    
-                  
-                    
-                    
-
-                    ///}
                 }
+                    
+            }else{
+               
+                //you are here b/c ths user installed the app without clicking a branch link
+                //this means that an intall event is sent to MP
+                //HOWEVER...if the user then clicks a branch link after install A SECOND install event is fired from the above code
+                //DATA WILL BE SKEWED ONLY IF THERE ARE USERS THAT INSTALL FIRST AND THEN CLICK LINK
+                //THERE WILL BE MORE INSTALL W/O BRANCH CLICKS THAN NECESARY. this makes the converstion from install to signup inaccurate
+                [mixpanel track:@"install" properties:params];
+            
+            }
         }//end error
         
     }];
