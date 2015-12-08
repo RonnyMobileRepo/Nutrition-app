@@ -342,9 +342,38 @@ NSString *const kBOOTCAMPAMOUNT = @"199.00";
                                 block:^(NSString *result, NSError *error) {
                                     if (!error) {
                                         NSLog(@"RESULT IS: %@", result);
+                                        
+                                        //get amount from string
+                                        NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
+                                        f.numberStyle = NSNumberFormatterDecimalStyle;
+                                        NSNumber *amount = [f numberFromString:plan];
+                                        
+                                        //get plan string
+                                        NSString *planString = @"";
+                                        if (_bootCampSelected) {
+                                            planString = @"bootcamp";
+                                        }else if (_healthyStartSelected) {
+                                            planString = @"healthy start";
+                                        }
+                                        
                                         Mixpanel *mixpanel = [Mixpanel sharedInstance];
-                                        [mixpanel track:@"Purchase Made" properties:@{@"Plan" : plan}];
-                                    
+                                        
+                                        //track purchase item event with plan name and amount
+                                        [mixpanel track:@"Purchase item" properties:@{@"Plan Type" : planString,
+                                                                                      @"Price" : amount
+                                                                                      }];
+
+
+                                        // Tracks amount in revenue for user
+                                        [mixpanel.people trackCharge:amount withProperties:@{
+                                                                                          @"$time": [NSDate date],
+                                                                                          @"plan" : planString
+                                                                                          }];
+                                        
+                                        // To send notifications to your users based on revenue
+                                        [mixpanel.people increment:@{@"Lifetime Value" : amount}];
+                                        [mixpanel.people setValue:[NSDate date] forKey:@"Last Item Purchase"];
+                                        
                                         _paymentProcessed = YES;
                                         completion(PKPaymentAuthorizationStatusSuccess);
                                     }

@@ -8,8 +8,6 @@
 
 #import "AppDelegate.h"
 #import <Stripe/Stripe.h>
-#import <Fabric/Fabric.h>
-#import <Crashlytics/Crashlytics.h>
 #import "Branch.h"
 #import <Firebase/Firebase.h>
 
@@ -234,9 +232,9 @@
     
    
     //if there is an active user...mixpanel dat shit
-    Mixpanel *mixpanel = [Mixpanel sharedInstance];
-    [mixpanel track:@"Session"];
-    [mixpanel identify:mixpanel.distinctId]; //this is what set the 'last seen' in mixpanel
+//    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+//    [mixpanel track:@"Session"];
+//    [mixpanel identify:mixpanel.distinctId]; //this is what set the 'last seen' in mixpanel
     
 }
 
@@ -249,14 +247,14 @@
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     NSLog(@"App did become active");
     
-    Mixpanel *mixpanel = [Mixpanel sharedInstance];
-    
-    //event for app open
-    [mixpanel track:@"App Opened" properties:@{}];
-    // start the timer for the event session ("App Close")
-    [mixpanel timeEvent:@"Session"];
-    
-    [mixpanel identify:mixpanel.distinctId]; //this is what set the 'last seen' in mixpanel
+//    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+//    
+//    //event for app open
+//    [mixpanel track:@"App Opened" properties:@{}];
+//    // start the timer for the event session ("App Close")
+//    [mixpanel timeEvent:@"Session"];
+//    
+//    [mixpanel identify:mixpanel.distinctId]; //this is what set the 'last seen' in mixpanel
     
 //    
 //    NSString *originalString = [NSString stringWithFormat:@"%@", [PFInstallation currentInstallation].deviceToken];

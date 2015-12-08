@@ -23,6 +23,10 @@
 #import <Firebase/Firebase.h>
 #import <Stripe/Stripe.h>
 #import <Bolts.h>
+#import <Crashlytics/Crashlytics.h>
+#import <Fabric/Fabric.h>
+
+
 
 
 //mixpanel

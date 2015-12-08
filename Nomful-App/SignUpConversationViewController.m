@@ -1205,6 +1205,9 @@ CGFloat const ktypeInterval = 0.02;
                                             [mixpanel.people set:@{@"Referal Partner" : [[NSUserDefaults standardUserDefaults] dataForKey:@"partnerID"]}];
                                         }
                                         
+                                        //tell crashlytics the user
+                                        [CrashlyticsKit setUserIdentifier:[PFUser currentUser].objectId];
+                                        
                                         
                                         //no error...code is valid
                                         //the result from cloud code is a session token that we can now use to set the current user
