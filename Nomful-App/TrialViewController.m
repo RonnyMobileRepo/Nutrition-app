@@ -358,7 +358,8 @@
     }
     //set the text we want it to be
  
-    NSString *text = [[NSString alloc] initWithFormat:@"Welcome to Nomful! This is where you will communicate with your coach, %@ :) I let %@ know that you're all signed up and ready to go! %@ will reach out to you today and set up a phone call so you can get to know eachother. In the meantime you can start taking photos of your foods for %@ to review!",firstName, gender1, gender2, firstName];
+    
+    NSString *text = [[NSString alloc] initWithFormat:@"Welcome to Nomful! This is where you will communicate with your coach, %@ :) I’ll let %@ know you’re all signed up and ready to go! %@ will reach out to you today and set up a phone call so you can get to know each other. In the meantime, you can start taking photos of your food for %@ to review!",firstName,gender1,gender2, firstName];
     
     //build firebase json? object
     NSMutableDictionary *item = [[NSMutableDictionary alloc] init];

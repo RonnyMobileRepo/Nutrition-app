@@ -56,17 +56,17 @@ CGFloat const ktypeInterval = 0.02;
     
     _messagesArray = [[NSMutableArray alloc] initWithObjects:
                                                         @"Hi! Welcome to Nomful. My name is Nomberry.",
-                                                        @"I'll help you get matched up with the perfect coach and together you'll work towards achieving your health goals.",
-                                                        @"First, I'll need a little more info from you. Let's start with your full name.",
+                                                        @"I’ll help you find the perfect coach. Together, you’ll work towards achieving your health goals.",
+                                                        @"Before we begin, I’ll need to know your full name.",
                                                         @"placeholder 0",
-                                                        @"Are you Male or Female?",
+                                                        @"Are you female or male?",
                                                         @"How old are you?",
                                                         @"Do you have a personal trainer? - Get rid of me",
-                                                        @"If I need to email you, what is the best way to reach you? Don’t worry you won’t be spammed...I would never do that to you!",
-                                                        @"Awesome! Thanks for all the information. I'm going to find you the perfect coach for you to team up with :)",
+                                                        @"Just in case, what is your email? Don’t worry; you won’t be spammed. I would never do that to you!",
+                                                        @"Awesome! Thanks for the information. Now we can work on finding your coach :)",
                                                         @"placeholder 2",
-                                                        @"Congrats! I'm excited for you to start working toward a happier, healthier life! Why don't you add a profile picture?",
-                                                        @"Just to make sure you are human, enter your phone number and I'll text you a secret code.",
+                                                        @"Congratulations! I’m excited for you to work towards a happier, healthier life! Why don’t you add a profile picture?",
+                                                        @"To make sure you’re not a robot, please enter your phone number and I’ll text you a secret code.",
                                                         @"Check your phone and tell me the secret password! :) ",
                                                         @"",
                                                         nil];
@@ -179,7 +179,7 @@ CGFloat const ktypeInterval = 0.02;
             
             //cleanup on the button labels
             if(_messageCount == 3){
-                [_button2 setTitle:@"Energy Levels" forState:UIControlStateNormal];
+                [_button2 setTitle:@"Boost Energy" forState:UIControlStateNormal];
             }
             if(_messageCount == 4){
                 [_button2 setTitle:@"Female" forState:UIControlStateNormal];
@@ -214,7 +214,7 @@ CGFloat const ktypeInterval = 0.02;
                 
             case 2:{
                 //NAME
-                NSString *meetYouString = [NSString stringWithFormat:@"Great to meet you %@! Tell me, which of the options below best describes your health goals?", _textfield1.text];
+                NSString *meetYouString = [NSString stringWithFormat:@"Great to meet you %@! Which one of these options best describes your health goals?", _textfield1.text];
                 [_messagesArray replaceObjectAtIndex:_messageCount+1 withObject:meetYouString];
 
                 //nothing was entered show warning message
@@ -253,9 +253,9 @@ CGFloat const ktypeInterval = 0.02;
                     
                     //set the button labels for the next message
                     //these titles must be the same name as what is in parse
-                    [_button2 setTitle:@"Energy Levels" forState:UIControlStateNormal];
+                    [_button2 setTitle:@"Boost Energy" forState:UIControlStateNormal];
                     [_button3 setTitle:@"Marathon Training" forState:UIControlStateNormal];
-                    [_button4 setTitle:@"Gain Weight" forState:UIControlStateNormal];
+                    [_button4 setTitle:@"Weight Gain" forState:UIControlStateNormal];
 
                     //clear textfield
                     _textfield1.text = @"";
