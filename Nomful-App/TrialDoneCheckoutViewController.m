@@ -44,19 +44,9 @@
 }
 
 
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+#pragma mark - User Interface Changes
 
 - (IBAction)planViewPressed:(UIButton *)button{
-    NSLog(@"Plan: %@ selected!", button);
     //1 = healthy start
     //2 = bootcamp
     //3 = lifestyle
@@ -80,6 +70,9 @@
         _planViewRight.backgroundColor = _planColor;
     }
     
+}
+
+- (IBAction)purchaseButtonPressed:(id)sender {
 }
 
 -(void)updatePlanDescription:(UIButton *)planSelected{
@@ -115,14 +108,14 @@
         bullet1String4 = @"BULLET 4";
     }
 
-    
+    //set texts
     _planDescriptionTitle.text = planTitleString;
     _planBullet1.text = bullet1String1;
     _planBullet2.text = bullet1String2;
     _planBullet3.text = bullet1String3;
     _planBullet4.text = bullet1String4;
 
-    
 }
+
 
 @end

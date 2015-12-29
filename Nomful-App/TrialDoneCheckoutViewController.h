@@ -12,6 +12,7 @@
 
 //actions
 - (IBAction)planViewPressed:(UIButton *)button;
+- (IBAction)purchaseButtonPressed:(id)sender;
 
 
 //props
