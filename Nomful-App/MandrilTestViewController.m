@@ -21,10 +21,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
-    currentUser = [PFUser currentUser];
-    //[self getChatroomFromNetwork];
-    [self getChatroomFromLocal];
+//    
+//    currentUser = [PFUser currentUser];
+//    //[self getChatroomFromNetwork];
+//    [self getChatroomFromLocal];
     
     
    // _chatroomObject = [self getChatroomFromNetwork].result;
@@ -51,19 +51,13 @@
 //    NSLog(@"current user is: %@", currentUser);
 //    
 //    
-//    //send first time login email
-//    [PFCloud callFunctionInBackground:@"sendFirstTimeLoginEmail2"
-//                       withParameters:@{@"toEmail": currentUser.email,
-//                                        @"toName": currentUser[@"firstName"]
-//                                        }
-//                                block:^(NSString *result, NSError *error) {
-//                                    if (!error) {
-//                                        NSLog(@"RESULT IS: %@", result);
-//                                    }
-//                                    else{
-//                                        NSLog(@"ERROR: %@", error);
-//                                    }
-//                                }];
+    //send first time login email
+    [PFCloud callFunctionInBackground:@"trialending"
+                       withParameters:@{}
+                                block:^(NSString *result, NSError *error) {
+                                    
+                                
+                                }];
     
     
 

@@ -254,7 +254,7 @@ CGFloat const ktypeInterval = 0.02;
                     //set the button labels for the next message
                     //these titles must be the same name as what is in parse
                     [_button2 setTitle:@"Boost Energy" forState:UIControlStateNormal];
-                    [_button3 setTitle:@"Marathon Training" forState:UIControlStateNormal];
+                    [_button3 setTitle:@"Eating Clean" forState:UIControlStateNormal];
                     [_button4 setTitle:@"Weight Gain" forState:UIControlStateNormal];
 
                     //clear textfield
@@ -1143,7 +1143,7 @@ CGFloat const ktypeInterval = 0.02;
         NSLog(@"coach user %@", _coachUser);
         trialVC.coachUser = _coachUser;
         trialVC.titleString = @"3-Day FREE Trial";
-        trialVC.buttonString = @"Activate Trial";
+        trialVC.buttonString = @"ACTIVATE TRIAL";
         trialVC.stepOneString = @"Activate trial";
         trialVC.isTrial = true;
     
@@ -1154,7 +1154,7 @@ CGFloat const ktypeInterval = 0.02;
         //prepaid users
         TrialViewController *trialVC = [segue destinationViewController];
         trialVC.titleString = @"Next Steps";
-        trialVC.buttonString = @"Let's Do This!";
+        trialVC.buttonString = @"LET'S DO THIS!";
         trialVC.stepOneString = @"Activate membership";
         trialVC.coachUser = _coachUser;
         trialVC.daysPrepaid = numberOfDaysPrepaid;

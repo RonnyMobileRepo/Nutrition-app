@@ -816,10 +816,7 @@
         NSString *phoneNumbers = [@"tel://" stringByAppendingString:cleanedPhone];
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumbers]];
         
-        //mixpanel tracking
         
-        Mixpanel *mixpanel = [Mixpanel sharedInstance];
-        [mixpanel timeEvent:@"Phone Call"];
     }];
     
     

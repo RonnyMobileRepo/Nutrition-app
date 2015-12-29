@@ -60,7 +60,7 @@
     
     [Stripe setDefaultPublishableKey:STRIPE_TOKEN];
     
-    [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
+    //[Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
      [Fabric with:@[[Crashlytics class]]];
 
     */
@@ -86,22 +86,26 @@
         Mixpanel *mixpanel = [Mixpanel sharedInstance];
         
         if (!error) {
+            NSLog(@"branch initialization");
+            
             if ([params[@"+clicked_branch_link"] boolValue]) {
                 //user either installs app from branch link or already had the app installed but came from branch
+                NSLog(@"branch link used install MP: %@", params);
                 
                 //SEND Mixpanel Event
                 [mixpanel track:@"install" properties:params];
+
+                if([params objectForKey:@"partnerID"]){
+                    [defaults setObject:[params objectForKey:@"partnerID"] forKey:@"partnerID"];
+                }
                 
                 //CHECK if link has value for numberOfDaysPaid. Indicates preapaid user
                 if([params objectForKey:@"numberOfDaysPaid"]){
-                    
                     [defaults setObject:[params objectForKey:@"numberOfDaysPaid"] forKey:@"numberOfDaysPaid"];
                     [defaults setObject:@"prepaid" forKey:@"startingPlan"];
-                    [defaults setObject:[params objectForKey:@"partnerID"] forKey:@"partnerID"];
-                    [defaults synchronize];
-
                 }
-                    
+                
+                [defaults synchronize];
             }else{
                
                 //you are here b/c ths user installed the app without clicking a branch link
@@ -109,7 +113,7 @@
                 //HOWEVER...if the user then clicks a branch link after install A SECOND install event is fired from the above code
                 //DATA WILL BE SKEWED ONLY IF THERE ARE USERS THAT INSTALL FIRST AND THEN CLICK LINK
                 //THERE WILL BE MORE INSTALL W/O BRANCH CLICKS THAN NECESARY. this makes the converstion from install to signup inaccurate
-                [mixpanel track:@"install" properties:params];
+//                [mixpanel track:@"install" properties:params];
             
             }
         }//end error
@@ -156,6 +160,12 @@
     
         return YES;
 }
+
+//- (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray *restorableObjects))restorationHandler {
+//    BOOL handledByBranch = [[Branch getInstance] continueUserActivity:userActivity];
+//    
+//    return handledByBranch;
+//}
 
 #pragma mark - Push
 
@@ -232,9 +242,12 @@
     
    
     //if there is an active user...mixpanel dat shit
-//    Mixpanel *mixpanel = [Mixpanel sharedInstance];
-//    [mixpanel track:@"Session"];
-//    [mixpanel identify:mixpanel.distinctId]; //this is what set the 'last seen' in mixpanel
+    if ([PFUser currentUser]) {
+        Mixpanel *mixpanel = [Mixpanel sharedInstance];
+        [mixpanel track:@"Session"];
+        [mixpanel identify:mixpanel.distinctId]; //this is what set the 'last seen' in mixpanel
+    }
+    
     
 }
 
@@ -247,19 +260,17 @@
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     NSLog(@"App did become active");
     
-//    Mixpanel *mixpanel = [Mixpanel sharedInstance];
-//    
-//    //event for app open
-//    [mixpanel track:@"App Opened" properties:@{}];
-//    // start the timer for the event session ("App Close")
-//    [mixpanel timeEvent:@"Session"];
-//    
-//    [mixpanel identify:mixpanel.distinctId]; //this is what set the 'last seen' in mixpanel
-    
-//    
-//    NSString *originalString = [NSString stringWithFormat:@"%@", [PFInstallation currentInstallation].deviceToken];
-//    NSData *data = [originalString dataUsingEncoding:NSUTF8StringEncoding];
-//    [mixpanel.people addPushDeviceToken:data];
+
+    if ([PFUser currentUser]) {
+        Mixpanel *mixpanel = [Mixpanel sharedInstance];
+        [mixpanel identify:mixpanel.distinctId]; //this is what set the 'last seen' in mixpanel
+        
+        //event for app open
+        [mixpanel track:@"App Opened"];
+        // start the timer for the event session
+        [mixpanel timeEvent:@"Session"];
+
+    }
 
         
     
