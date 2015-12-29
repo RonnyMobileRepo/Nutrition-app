@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 
-@interface CheckoutViewController : UIViewController <PKPaymentAuthorizationViewControllerDelegate, PTKViewDelegate>
+@interface CheckoutViewController : UIViewController <PKPaymentAuthorizationViewControllerDelegate>
 
 @property (strong, nonatomic) PKPaymentAuthorizationViewController *paymentController;
 

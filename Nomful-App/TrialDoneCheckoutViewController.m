@@ -17,15 +17,26 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-
     //vars
     _planColor = [UIColor colorWithRed:126.0/255.0 green:202/255.0 blue:175/255.0 alpha:1.0];
+    _planSelected = @"2"; //default this so that there is alwasy a 'plan selected' on load
+
+    [self loadUX];
+    [self loadPaymentOptionsView];
+    
+}
+
+
+#pragma mark - User Interface Changes
+
+- (void)loadUX{
+    //load some styling shtuff0
     
     //rounded corners
     _planViewLeft.layer.cornerRadius = 4.0;
     _planViewMiddle.layer.cornerRadius = 4.0;
     _planViewRight.layer.cornerRadius = 4.0;
-
+    
     //borders
     _planViewLeft.layer.borderColor = [[UIColor blackColor] CGColor];
     _planViewLeft.layer.borderWidth = 1.0;
@@ -33,7 +44,7 @@
     _planViewRight.layer.borderWidth = 1.0;
     
     _purchaseButton.layer.cornerRadius = 8.0;
-
+    
     //showdow
     UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:_planViewMiddle.bounds];
     _planViewMiddle.layer.masksToBounds = NO;
@@ -41,11 +52,75 @@
     _planViewMiddle.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
     _planViewMiddle.layer.shadowOpacity = 0.7f;
     _planViewMiddle.layer.shadowPath = shadowPath.CGPath;
+    
+    
+}
+
+- (void)loadPaymentOptionsView{
+    
+    if ([PKPaymentAuthorizationViewController canMakePayments] && [PKPaymentAuthorizationViewController canMakePaymentsUsingNetworks:@[PKPaymentNetworkVisa, PKPaymentNetworkMasterCard, PKPaymentNetworkAmex, PKPaymentNetworkDiscover]]) {
+        
+        //make a button that will be the branded apple pay button
+        _applePaybutton = [[UIButton alloc] init];
+        _applePaybutton = [self makeApplePayButton];
+        
+        //add apple pay button to view at bottom of screen
+        [self.paymentButtonsView addSubview:_applePaybutton];
+        
+        
+        //constrainstss
+        
+        NSDictionary *views = @{@"applePay": _applePaybutton};
+        
+        
+        //apple pay button 30 pts from left edge
+        [self.paymentButtonsView addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(30)-[applePay]"
+                                                                                         options:0
+                                                                                         metrics:nil
+                                                                                           views:views]];
+        
+        //apple pay button 50 pts tall (auto calcs the width since apple button)
+        [self.paymentButtonsView addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"V:[applePay(50)]"
+                                                                                         options:0
+                                                                                         metrics:nil
+                                                                                           views:views]];
+        
+        //vertically center the apple pay button in the view
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.paymentButtonsView
+                                                              attribute:NSLayoutAttributeCenterY
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:_applePaybutton
+                                                              attribute:NSLayoutAttributeCenterY
+                                                             multiplier:1.0f constant:0.0f]];
+        
+        
+    }else{
+        
+        NSDictionary *views = @{@"payWithCard": _payWithCardButton};
+         
+         
+         //profile image is 8 pts from top and 100 pts tall
+         [self.paymentButtonsView addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(30)-[payWithCard]-(30)-|"
+         options:0
+         metrics:nil
+         views:views]];
+         
+         [self.paymentButtonsView addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"V:[payWithCard(50)]"
+         options:0
+         metrics:nil
+         views:views]];
+         [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.paymentButtonsView
+         attribute:NSLayoutAttributeCenterY
+         relatedBy:NSLayoutRelationEqual
+         toItem:_payWithCardButton
+         attribute:NSLayoutAttributeCenterY
+         multiplier:1.0f constant:0.0f]];
+    }
+    
 }
 
 
-#pragma mark - User Interface Changes
-
+#pragma mark - Actions
 - (IBAction)planViewPressed:(UIButton *)button{
     //1 = healthy start
     //2 = bootcamp
@@ -58,16 +133,19 @@
         _planViewLeft.backgroundColor = _planColor;
         _planViewMiddle.backgroundColor = [UIColor whiteColor];
         _planViewRight.backgroundColor = [UIColor whiteColor];
+        _planSelected = @"1";
         
     }else if(button.tag == 2){
         _planViewLeft.backgroundColor = [UIColor whiteColor];
         _planViewMiddle.backgroundColor = _planColor;
         _planViewRight.backgroundColor = [UIColor whiteColor];
+        _planSelected = @"2";
         
     }else if(button.tag == 3){
         _planViewLeft.backgroundColor = [UIColor whiteColor];
         _planViewMiddle.backgroundColor = [UIColor whiteColor];
         _planViewRight.backgroundColor = _planColor;
+        _planSelected = @"3";
     }
     
 }
@@ -75,8 +153,14 @@
 - (IBAction)purchaseButtonPressed:(id)sender {
     //show payment options at bottom (credit card + Apple Pay)
     
+    _paymentButtonsView.hidden = false;
+    
 }
 
+- (IBAction)payWithCardPressed:(id)sender {
+}
+
+#pragma mark - Helper Methods
 -(void)updatePlanDescription:(UIButton *)planSelected{
     
     //string vars
@@ -117,6 +201,146 @@
     _planBullet3.text = bullet1String3;
     _planBullet4.text = bullet1String4;
 
+}
+
+- (IBAction)applePayButtonPressed:(id)sender {
+    //declare new request to be sent to apple
+    PKPaymentRequest *request = [Stripe
+                                 paymentRequestWithMerchantIdentifier:@"merchant.nomful"];
+    
+    // Configure your request here
+    NSString *label = @"";
+    NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"0.00"];
+    
+    if ([_planSelected isEqualToString: @"1"]) {
+        label   = @"Healthy Start - 21 Day Coaching";
+        amount  = [NSDecimalNumber decimalNumberWithString:@"49.00"];
+        
+    }else if([_planSelected isEqualToString: @"2"]){
+        label   = @"Boot Camp - 12-week Coaching";
+        amount  = [NSDecimalNumber decimalNumberWithString:@"199.00"];
+        
+    }else if([_planSelected isEqualToString: @"3"]){
+        label   = @"Lifestyle - 4-week Coaching";
+        amount  = [NSDecimalNumber decimalNumberWithString:@"69.00"];
+    }
+    
+    //build request object
+    request.paymentSummaryItems = @[
+                                    [PKPaymentSummaryItem summaryItemWithLabel:label
+                                                                        amount:amount]
+                                    ];
+    //send request
+    if ([Stripe canSubmitPaymentRequest:request]) {
+        
+        //declare applepay sheet
+        //initialize it with the request sent and approved by apple
+        _paymentController = [[PKPaymentAuthorizationViewController alloc]
+                              initWithPaymentRequest:request];
+        
+        //this should probably work
+        _paymentController.delegate = self;
+        
+        //display apple pay sheet
+        [self presentViewController:_paymentController animated:YES completion:nil];
+        NSLog(@"1. Start here");
+        
+    } else {
+        //***  Apple pay not on device. Show the user your own credit card form (see options 2 or 3)
+        NSLog(@"No Apple Pay on Device");
+        //[self noApplePay];
+        
+        //TODO: Build the stripe form
+    }
+    
+}
+
+#pragma mark - Apple Pay
+
+- (UIButton *)makeApplePayButton {
+    UIButton *button;
+    
+    if ([PKPaymentButton class]) { // Available in iOS 8.3+
+        button = [PKPaymentButton buttonWithType:PKPaymentButtonTypeBuy style:PKPaymentButtonStyleWhiteOutline];
+    } else {
+        // TODO: Create and return your own apple pay button
+        [button setBackgroundImage:[UIImage imageNamed:@"ApplePayBTN_64pt__whiteLine_textLogo_"] forState:UIControlStateNormal];
+    }
+    
+    [button addTarget:self action:@selector(applePayButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    button.translatesAutoresizingMaskIntoConstraints = false;
+    return button;
+}
+
+- (void)paymentAuthorizationViewController:(PKPaymentAuthorizationViewController *)controller
+                       didAuthorizePayment:(PKPayment *)payment
+                                completion:(void (^)(PKPaymentAuthorizationStatus))completion {
+    NSLog(@"2. Authorize Payment");
+
+    [self handlePaymentAuthorizationWithPayment:payment completion:completion];
+}
+
+- (void)paymentAuthorizationViewControllerDidFinish:(PKPaymentAuthorizationViewController *)controller {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)handlePaymentAuthorizationWithPayment:(PKPayment *)payment
+                                   completion:(void (^)(PKPaymentAuthorizationStatus))completion {
+    
+    NSLog(@"3. Create Token");
+    
+    [[STPAPIClient sharedClient] createTokenWithPayment:payment
+                                             completion:^(STPToken *token, NSError *error) {
+                                                 if (error) {
+                                                     completion(PKPaymentAuthorizationStatusFailure);
+                                                     NSLog(@"create token failure: %@", error);
+                                                     return;
+                                                 }
+                                                
+                                                 [self createBackendChargeWithToken:token completion:completion];
+                                             }];
+}
+
+- (void)createBackendChargeWithToken:(STPToken *)token
+                          completion:(void (^)(PKPaymentAuthorizationStatus))completion {
+    
+    NSLog(@"4. Send token to backend %@", token.tokenId);
+    
+    NSString *plan = @"";
+    
+    
+    if([_planSelected isEqualToString:@"1"]){
+        plan = @"49.00";
+    }else if([_planSelected isEqualToString:@"2"]){
+        plan = @"199.00";
+    }else if([_planSelected isEqualToString:@"3"]){
+        plan = @"69.00";
+    }
+    
+    //call cloud code function chargeCard in main.js and pass is the credit card token
+    [PFCloud callFunctionInBackground:@"chargeCard"
+                       withParameters:@{@"token": token.tokenId,
+                                        @"plan": plan
+                                        }
+                                block:^(NSString *result, NSError *error) {
+                                    if (!error) {
+                                        NSLog(@"RESULT IS: %@", result);
+                                        _paymentProcessed = YES;
+                                        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                                            //TODO: UNCOMMENT[self sendRevenueInfoToMP:plan];
+                                        });
+                                        
+                                        completion(PKPaymentAuthorizationStatusSuccess);
+                                        
+                                        
+                                    }
+                                    else{
+                                        NSLog(@"ERROR: %@", error);
+                                        completion(PKPaymentAuthorizationStatusFailure);
+                                    }
+                                }];
+    
+    
 }
 
 

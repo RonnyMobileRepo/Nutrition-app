@@ -40,9 +40,10 @@
                   clientKey:PARSE_CLIENT_ID_DEV];
     [PFUser enableRevocableSessionInBackground];
 
+    [Fabric with:@[[Crashlytics class], [STPAPIClient class]]];
     // TODO: DEBUG ONLY! Remove / conditionalize before launch
     [Stripe setDefaultPublishableKey:STRIPE_TOKEN_DEV];
-    [Fabric with:@[[Crashlytics class], [STPAPIClient class]]];
+
 
     [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN_DEV]; //this actually creates a profile in mixpanel with an anonymous distinct ID
     

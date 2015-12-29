@@ -29,7 +29,6 @@ NSString *const kBOOTCAMPAMOUNT = @"199.00";
     
     // Conditionally show Apple Pay button based on device availability
     
-
     
     if ([PKPaymentAuthorizationViewController canMakePayments] && [PKPaymentAuthorizationViewController canMakePaymentsUsingNetworks:@[PKPaymentNetworkVisa, PKPaymentNetworkMasterCard, PKPaymentNetworkAmex, PKPaymentNetworkDiscover]]) {
         NSLog(@"apple pay is set up");
@@ -122,7 +121,6 @@ NSString *const kBOOTCAMPAMOUNT = @"199.00";
     // add effect to an effect view
     UIVisualEffectView *effectView = [[UIVisualEffectView alloc]initWithEffect:blur];
     effectView.frame = CGRectMake(0, 0, self.view.bounds.size.width*2, self.view.bounds.size.height);
-    
     
     // add the effect view to the image view
     [self.backgroundImage addSubview:effectView];
