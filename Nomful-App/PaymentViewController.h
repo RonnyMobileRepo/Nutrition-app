@@ -7,9 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <Stripe.h>
 #import "PaymentViewController.h"
-#import "PTKView.h"
+//#import "PTKView.h"
 
 @interface PaymentViewController : UIViewController <PTKViewDelegate>
 

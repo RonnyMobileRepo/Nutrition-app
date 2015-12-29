@@ -7,8 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <Stripe.h>
-#import "PTKView.h"
 
 
 @interface CheckoutViewController : UIViewController <PKPaymentAuthorizationViewControllerDelegate, PTKViewDelegate>

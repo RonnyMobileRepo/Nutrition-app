@@ -105,6 +105,7 @@
 		21D4E2E31BC2F82800962C6B /* Outgoing.m in Sources */ = {isa = PBXBuildFile; fileRef = 21D4E2E11BC2F82800962C6B /* Outgoing.m */; };
 		21D6C11B1BFB9308000BF35E /* CoachPageContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21D6C11A1BFB9308000BF35E /* CoachPageContentViewController.m */; };
 		21DA05B41C31A93200F1C0D5 /* TrialDoneCheckoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21DA05B31C31A93200F1C0D5 /* TrialDoneCheckoutViewController.m */; };
+		21DA05B61C32E2ED00F1C0D5 /* Stripe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21DA05B51C32E2ED00F1C0D5 /* Stripe.framework */; };
 		21DB89E11C0E3DF200AEFF97 /* Firebase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21DB89E01C0E3DF200AEFF97 /* Firebase.framework */; };
 		21E9012F1BF2C5BF00DDEAFB /* Sean.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 21E9012E1BF2C5BF00DDEAFB /* Sean.jpeg */; };
 		21FECF141BC431E800C5FB8B /* PhotoMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 21FECF131BC431E800C5FB8B /* PhotoMediaItem.m */; };
@@ -299,6 +300,7 @@
 		21D6C11A1BFB9308000BF35E /* CoachPageContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoachPageContentViewController.m; sourceTree = "<group>"; };
 		21DA05B21C31A93200F1C0D5 /* TrialDoneCheckoutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrialDoneCheckoutViewController.h; sourceTree = "<group>"; };
 		21DA05B31C31A93200F1C0D5 /* TrialDoneCheckoutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrialDoneCheckoutViewController.m; sourceTree = "<group>"; };
+		21DA05B51C32E2ED00F1C0D5 /* Stripe.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Stripe.framework; sourceTree = "<group>"; };
 		21DB89E01C0E3DF200AEFF97 /* Firebase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Firebase.framework; sourceTree = "<group>"; };
 		21E9012E1BF2C5BF00DDEAFB /* Sean.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Sean.jpeg; sourceTree = "<group>"; };
 		21FECF121BC431E800C5FB8B /* PhotoMediaItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoMediaItem.h; sourceTree = "<group>"; };
@@ -330,6 +332,7 @@
 				5EDD67B4A8A9E0D710949A4F /* libPods-Nomful-App.a in Frameworks */,
 				21856A861BCAADFA00E217F7 /* Crashlytics.framework in Frameworks */,
 				21856A851BCAADFA00E217F7 /* Fabric.framework in Frameworks */,
+				21DA05B61C32E2ED00F1C0D5 /* Stripe.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -581,6 +584,7 @@
 		21C88A191BAC95CF00792E9C = {
 			isa = PBXGroup;
 			children = (
+				21DA05B51C32E2ED00F1C0D5 /* Stripe.framework */,
 				21DB89E01C0E3DF200AEFF97 /* Firebase.framework */,
 				21856A831BCAADFA00E217F7 /* Fabric.framework */,
 				21856A841BCAADFA00E217F7 /* Crashlytics.framework */,

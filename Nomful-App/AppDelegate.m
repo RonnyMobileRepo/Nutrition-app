@@ -7,7 +7,6 @@
 //
 
 #import "AppDelegate.h"
-#import <Stripe/Stripe.h>
 #import "Branch.h"
 #import <Firebase/Firebase.h>
 
@@ -41,8 +40,10 @@
                   clientKey:PARSE_CLIENT_ID_DEV];
     [PFUser enableRevocableSessionInBackground];
 
+    // TODO: DEBUG ONLY! Remove / conditionalize before launch
     [Stripe setDefaultPublishableKey:STRIPE_TOKEN_DEV];
-    
+    [Fabric with:@[[Crashlytics class], [STPAPIClient class]]];
+
     [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN_DEV]; //this actually creates a profile in mixpanel with an anonymous distinct ID
     
     //*/

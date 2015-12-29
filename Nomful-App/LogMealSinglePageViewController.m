@@ -1106,9 +1106,9 @@ bool keyboardIsShowing = false;
         vc.youAreDietitian = NO;
     }else if( [segue.identifier isEqualToString:@"trialEnded"]){
         //trial is up!
-        CheckoutViewController *vc = [segue destinationViewController];
-        vc.trialDidEnd = true;
-        vc.coachUserFromSegue = _chatroom[@"dietitianUser"];
+//        CheckoutViewController *vc = [segue destinationViewController];
+//        vc.trialDidEnd = true;
+//        vc.coachUserFromSegue = _chatroom[@"dietitianUser"];
     }
 }
 - (IBAction)captureButtonPressed:(id)sender {

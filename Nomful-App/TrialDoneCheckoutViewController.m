@@ -73,6 +73,8 @@
 }
 
 - (IBAction)purchaseButtonPressed:(id)sender {
+    //show payment options at bottom (credit card + Apple Pay)
+    
 }
 
 -(void)updatePlanDescription:(UIButton *)planSelected{

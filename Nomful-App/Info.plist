@@ -34,7 +34,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1745</string>
+	<string>1748</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
@@ -46,6 +46,15 @@
 				<dict/>
 				<key>KitName</key>
 				<string>Crashlytics</string>
+			</dict>
+			<dict>
+				<key>KitInfo</key>
+				<dict>
+					<key>publishable</key>
+					<string>pk_live_a7plqC3BMb74TAFBiefltyaf</string>
+				</dict>
+				<key>KitName</key>
+				<string>STPAPIClient</string>
 			</dict>
 		</array>
 	</dict>

@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <Stripe.h>
+//#import <Stripe.h>
 
 @interface stripeViewController : UIViewController <PKPaymentAuthorizationViewControllerDelegate>
 - (IBAction)buttonPressed:(id)sender;
