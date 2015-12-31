@@ -41,6 +41,9 @@
 @property (strong, nonatomic) UIColor *planColor;
 @property bool paymentProcessed;
 @property (strong, nonatomic) NSString *planSelected;
+@property (nonatomic, strong) NSArray *bottomConstraint;
+@property (nonatomic, strong) NSLayoutConstraint *topConstraint;
+
 
 
 //apple pay

@@ -148,6 +148,12 @@
     //2 = bootcamp
     //3 = lifestyle
     
+    _paymentButtonsView.hidden = true;
+    //update the ui
+    [UIView animateWithDuration:0.3 animations:^{
+        _purchaseButton.alpha = 1.0;
+    }];
+    
     //update the plan description
     [self updatePlanDescription:button];
     
