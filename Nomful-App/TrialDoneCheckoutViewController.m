@@ -26,6 +26,10 @@
     
 }
 
+- (BOOL) prefersStatusBarHidden
+{
+    return YES;
+}
 
 #pragma mark - User Interface Changes
 
@@ -43,7 +47,7 @@
     _planViewRight.layer.borderColor = [[UIColor blackColor] CGColor];
     _planViewRight.layer.borderWidth = 1.0;
     
-    _purchaseButton.layer.cornerRadius = 8.0;
+    _purchaseButton.layer.cornerRadius =4.0;
     
     //showdow
     UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:_planViewMiddle.bounds];
@@ -53,6 +57,24 @@
     _planViewMiddle.layer.shadowOpacity = 0.7f;
     _planViewMiddle.layer.shadowPath = shadowPath.CGPath;
     
+    // create effect
+    UIBlurEffect *blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+    UIVisualEffectView *effectView = [[UIVisualEffectView alloc]initWithEffect:blur];
+    effectView.frame = self.view.frame;
+    [_backgroundImage addSubview:effectView];
+    
+    _testimonialContainer.layer.masksToBounds = NO;
+    _testimonialPicture.layer.masksToBounds = YES; //*keep this sean. fixes the weird transparency thing
+    _testimonialContainer.layer.cornerRadius = 4.0;
+    _testimonialPicture.layer.cornerRadius = _testimonialPicture.bounds.size.width /2;
+    
+    //showdow
+    _testimonialContainer.layer.shadowColor = [UIColor blackColor].CGColor;
+    _testimonialContainer.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
+    _testimonialContainer.layer.shadowOpacity = 0.7f;
+    
+    
+  
     
 }
 
@@ -153,7 +175,38 @@
 - (IBAction)purchaseButtonPressed:(id)sender {
     //show payment options at bottom (credit card + Apple Pay)
     
+    CGRect frame = _testimonialContainer.frame;
+    NSLog(@"frame is: %@", NSStringFromCGRect(frame));
+    NSLog(@"x is: %f", frame.origin.x);
+    NSLog(@"y is: %f", frame.origin.y+77);
+
+    
+    
+    //animate button out
+    [UIView animateWithDuration:0.15
+                     animations:^{
+                         
+                         //change alpha of button
+                         _purchaseButton.alpha = 0;
+
+                     }];
+    
+    
+    //animate testimonial up 77pts
+    [UIView animateWithDuration:0.3
+                     animations:^{
+                         
+                         float x = frame.origin.x;
+                         float y = frame.origin.y - 77;
+                         _testimonialContainer.frame = CGRectMake(x, y, _testimonialContainer.frame.size.width, _testimonialContainer.frame.size.height );
+                     }];
+
+    
+    
+    //animate payment options up
     _paymentButtonsView.hidden = false;
+    [_paymentButtonsView startCanvasAnimation];
+
     
 }
 

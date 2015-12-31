@@ -41,7 +41,6 @@
     [PFUser enableRevocableSessionInBackground];
 
     [Fabric with:@[[Crashlytics class], [STPAPIClient class]]];
-    // TODO: DEBUG ONLY! Remove / conditionalize before launch
     [Stripe setDefaultPublishableKey:STRIPE_TOKEN_DEV];
 
 
@@ -60,7 +59,7 @@
     [PFUser enableRevocableSessionInBackground];
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     
-    [Stripe setDefaultPublishableKey:STRIPE_TOKEN];
+     [Fabric with:@[[Crashlytics class], [STPAPIClient class]]];
     
     //[Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
      [Fabric with:@[[Crashlytics class]]];

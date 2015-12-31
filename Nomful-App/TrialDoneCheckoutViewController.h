@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Canvas.h"
+
 
 @interface TrialDoneCheckoutViewController : UIViewController <PKPaymentAuthorizationViewControllerDelegate>
 //actions
@@ -25,8 +27,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *planBullet2;
 @property (weak, nonatomic) IBOutlet UILabel *planBullet3;
 @property (weak, nonatomic) IBOutlet UILabel *planBullet4;
-@property (weak, nonatomic) IBOutlet UIView *paymentButtonsView;
+@property (weak, nonatomic) IBOutlet CSAnimationView *paymentButtonsView;
 @property (weak, nonatomic) IBOutlet UIButton *payWithCardButton;
+@property (weak, nonatomic) IBOutlet UIImageView *backgroundImage;
+@property (weak, nonatomic) IBOutlet UIView *testimonialContainer;
+@property (weak, nonatomic) IBOutlet UIImageView *testimonialPicture;
 
 //views made programatically
 @property (strong, nonatomic) UIButton *applePaybutton;
