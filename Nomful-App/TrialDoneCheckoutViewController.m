@@ -84,7 +84,8 @@
     NSNumber *height = [NSNumber numberWithFloat:testimonialHeight];
     
     //define the views and metrics for autolayout
-    NSDictionary *views = @{@"testimonia": _testimonialContainer};
+    NSDictionary *views = @{@"testimonia": _testimonialContainer,
+                            @"button": _purchaseButton};
     
     NSDictionary *metrics = @{@"height": height};
     
@@ -93,6 +94,10 @@
                                                                                      metrics:metrics
                                                                                        views:views]];
 
+    [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"V:[testimonia(height)]-(15)-|"
+                                                                       options:0
+                                                                       metrics:metrics
+                                                                         views:views]];
   
     
 }
@@ -240,6 +245,7 @@
                          //change alpha of button
                          _purchaseButton.alpha = 0;
                          _paymentButtonsView.alpha = 1;
+                         _buttonContainer.hidden = true;
                      }];
     
     
@@ -262,11 +268,9 @@
 }
 
 - (IBAction)payWithCardPressed:(id)sender {
-    //the first time this button is pressed the title is "pay with card"
-    //the second time this button is pressed the title is "Complete Payment"
-    //we must differentiate from them
     
     NSString *buttonTitle = _payWithCardButton.titleLabel.text;
+    
     
     if ([buttonTitle isEqualToString:@"Pay with Card"]) {
         NSLog(@"Button said pay with card.");
@@ -286,18 +290,28 @@
             _planBullet3.alpha = 0;
             _planBullet4.alpha = 0;
             _titleBar.alpha = 0;
-            
+
             _middlePlanButton.enabled = NO;
             _rightPlanButton.enabled = NO;
             _leftPlanButton.enabled = NO;
             
             _payWithCardButton.enabled = false;
-            
             _closeButton.hidden = false;
-                
+            
         
         } completion:^(BOOL finished) {
             
+            //the first time this button is pressed the title is "pay with card"
+            //the second time this button is pressed the title is "Complete Payment"
+            //we must differentiate from them
+            _enterCCLabel = [[UILabel alloc] init];
+            _enterCCLabel.translatesAutoresizingMaskIntoConstraints = NO;
+            _enterCCLabel.text = @"Enter Credit Card Info:";
+            [_enterCCLabel setFont:[UIFont fontWithName:kFontFamilyName size:17.0]];
+            _enterCCLabel.alpha = 0;
+
+            [self.view addSubview:_enterCCLabel];
+
             //change button title to 'complete payment'
             [_payWithCardButton setTitle:@"Complete Payment" forState:UIControlStateNormal];
             
@@ -307,18 +321,26 @@
             self.paymentTextField.delegate = self;
             [self.view addSubview:self.paymentTextField];
             _paymentTextField.translatesAutoresizingMaskIntoConstraints = NO;
+            _paymentTextField.alpha = 0;
             
             _applePaybutton.hidden = true;
             
             //define the views and metrics for autolayout
             NSDictionary *views = @{@"ccField": _paymentTextField,
-                                    @"payButton": _payWithCardButton};
+                                    @"payButton": _payWithCardButton,
+                                    @"label": _enterCCLabel};
             
             
-            [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"V:[ccField(44)]-(10)-[payButton]"
+            [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"V:[label]-(5)-[ccField(44)]-(10)-[payButton]"
                                                                                              options:0
                                                                                              metrics:nil
                                                                                                views:views]];
+            
+            [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(20)-[label]-|"
+                                                                               options:0
+                                                                               metrics:nil
+                                                                                 views:views]];
+
             
             _payWithCardConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(10)-[payButton]-(10)-|"
                                                                              options:0
@@ -332,6 +354,13 @@
                                                                                            views:views]];
             
             [_paymentTextField becomeFirstResponder];
+            
+            //animate them in now that they're laid
+            [UIView animateWithDuration:.5 animations:^{
+                //
+                _enterCCLabel.alpha = 1;
+                _paymentTextField.alpha = 1;
+            }];
             
             
             
@@ -453,6 +482,9 @@
     //change button title
     [_payWithCardButton setTitle:@"Pay with Card" forState:UIControlStateNormal];
     
+    //hide enter credit
+    [_enterCCLabel removeFromSuperview];
+    
     //animate in the plan title and bullets
     
     [UIView animateWithDuration:0.5 animations:^{
@@ -471,6 +503,8 @@
         _titleBar.alpha = 1;
         _purchaseButton.alpha = 1;
         _paymentButtonsView.hidden = true;
+        _buttonContainer.hidden = false;
+
 
         [self loadPaymentOptionsView];
         
