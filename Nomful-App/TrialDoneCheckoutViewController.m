@@ -23,6 +23,7 @@
 
     [self loadUX];
     [self loadPaymentOptionsView];
+    [self stickyViewToKeyboard];
     
 }
 
@@ -46,6 +47,9 @@
     _planViewLeft.layer.borderWidth = 1.0;
     _planViewRight.layer.borderColor = [[UIColor blackColor] CGColor];
     _planViewRight.layer.borderWidth = 1.0;
+    _payWithCardButton.layer.borderColor = [[UIColor blackColor] CGColor];
+    _payWithCardButton.layer.borderWidth = 1.0;
+    _payWithCardButton.layer.cornerRadius = 4.0;
     
     _purchaseButton.layer.cornerRadius =4.0;
     
@@ -82,6 +86,7 @@
     
     if ([PKPaymentAuthorizationViewController canMakePayments] && [PKPaymentAuthorizationViewController canMakePaymentsUsingNetworks:@[PKPaymentNetworkVisa, PKPaymentNetworkMasterCard, PKPaymentNetworkAmex, PKPaymentNetworkDiscover]]) {
         
+        _applePayEnabled = true;
         //make a button that will be the branded apple pay button
         _applePaybutton = [[UIButton alloc] init];
         _applePaybutton = [self makeApplePayButton];
@@ -89,16 +94,24 @@
         //add apple pay button to view at bottom of screen
         [self.paymentButtonsView addSubview:_applePaybutton];
         
+        //remove the contraint that we added when we removed the appy pay button
+        [_paymentButtonsView removeConstraints:_payWithCardConstraint];
         
-        //constrainstss
+        //calculate the width of the apple pay button
+        float screenWidth = self.view.bounds.size.width;
+        float buttonWidth = (screenWidth/2) - (10*2); //TODO: This is hard coded margins for calc
+        NSNumber *width = [NSNumber numberWithFloat:buttonWidth];
+
+        //define the views and metrics for autolayout
+        NSDictionary *views = @{@"applePay": _applePaybutton,
+                                @"payCard" : _payWithCardButton};
         
-        NSDictionary *views = @{@"applePay": _applePaybutton};
-        
+        NSDictionary *metrics = @{@"appleButtonWidth": width};
         
         //apple pay button 30 pts from left edge
-        [self.paymentButtonsView addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(30)-[applePay]"
+        [self.paymentButtonsView addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(10)-[applePay(appleButtonWidth)]-(5)-[payCard]"
                                                                                          options:0
-                                                                                         metrics:nil
+                                                                                         metrics:metrics
                                                                                            views:views]];
         
         //apple pay button 50 pts tall (auto calcs the width since apple button)
@@ -115,6 +128,8 @@
                                                               attribute:NSLayoutAttributeCenterY
                                                              multiplier:1.0f constant:0.0f]];
         
+        [_paymentButtonsView layoutIfNeeded];
+        
         
     }else{
         
@@ -122,7 +137,7 @@
          
          
          //profile image is 8 pts from top and 100 pts tall
-         [self.paymentButtonsView addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(30)-[payWithCard]-(30)-|"
+         [self.paymentButtonsView addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(10)-[payWithCard]-(30)-|"
          options:0
          metrics:nil
          views:views]];
@@ -148,53 +163,68 @@
     //2 = bootcamp
     //3 = lifestyle
     
-    _paymentButtonsView.hidden = true;
+    UIView *planSelected;
+    
     //update the ui
-    [UIView animateWithDuration:0.3 animations:^{
-        _purchaseButton.alpha = 1.0;
+    [UIView animateWithDuration:0.15 animations:^{
+        _paymentButtonsView.alpha = 0;
+
     }];
+
+    //update the ui
+    [UIView animateWithDuration:0.50 animations:^{
+            _purchaseButton.alpha =   1.0;
+        
+    }];
+    
     
     //update the plan description
     [self updatePlanDescription:button];
     
     if (button.tag == 1) {
+        planSelected = _planViewLeft;
         _planViewLeft.backgroundColor = _planColor;
         _planViewMiddle.backgroundColor = [UIColor whiteColor];
         _planViewRight.backgroundColor = [UIColor whiteColor];
         _planSelected = @"1";
         
     }else if(button.tag == 2){
+        planSelected = _planViewMiddle;
         _planViewLeft.backgroundColor = [UIColor whiteColor];
         _planViewMiddle.backgroundColor = _planColor;
         _planViewRight.backgroundColor = [UIColor whiteColor];
         _planSelected = @"2";
         
     }else if(button.tag == 3){
+        planSelected = _planViewRight;
         _planViewLeft.backgroundColor = [UIColor whiteColor];
         _planViewMiddle.backgroundColor = [UIColor whiteColor];
         _planViewRight.backgroundColor = _planColor;
         _planSelected = @"3";
     }
     
+    
+    //update the ui
+    [UIView animateWithDuration:0.50 animations:^{
+        planSelected.alpha =   1.0;
+        
+    }];
+    
+    
 }
 
 - (IBAction)purchaseButtonPressed:(id)sender {
     //show payment options at bottom (credit card + Apple Pay)
-    
-    CGRect frame = _testimonialContainer.frame;
-    NSLog(@"frame is: %@", NSStringFromCGRect(frame));
-    NSLog(@"x is: %f", frame.origin.x);
-    NSLog(@"y is: %f", frame.origin.y+77);
 
-    
-    
-    //animate button out
+    CGRect frame = _testimonialContainer.frame;
+
+    //animate orange button out and make sure the payment container alpha is 1
     [UIView animateWithDuration:0.15
                      animations:^{
                          
                          //change alpha of button
                          _purchaseButton.alpha = 0;
-
+                         _paymentButtonsView.alpha = 1;
                      }];
     
     
@@ -203,7 +233,7 @@
                      animations:^{
                          
                          float x = frame.origin.x;
-                         float y = frame.origin.y - 77;
+                         float y = frame.origin.y - _paymentButtonsView.frame.size.height;
                          _testimonialContainer.frame = CGRectMake(x, y, _testimonialContainer.frame.size.width, _testimonialContainer.frame.size.height );
                      }];
 
@@ -217,9 +247,225 @@
 }
 
 - (IBAction)payWithCardPressed:(id)sender {
-}
+    //the first time this button is pressed the title is "pay with card"
+    //the second time this button is pressed the title is "Complete Payment"
+    //we must differentiate from them
+    
+    NSString *buttonTitle = _payWithCardButton.titleLabel.text;
+    
+    if ([buttonTitle isEqualToString:@"Pay with Card"]) {
+        NSLog(@"Button said pay with card.");
+        
+        //hide views so we can add in the credit card form
+        [UIView animateWithDuration:0.5 animations:^{
+            
+            //fade out everythang
+            _testimonialContainer.alpha = 0;
+            _check1.alpha = 0;
+            _check2.alpha = 0;
+            _check3.alpha = 0;
+            _check4.alpha = 0;
+            _planDescriptionTitle.alpha = 0;
+            _planBullet1.alpha = 0;
+            _planBullet2.alpha = 0;
+            _planBullet3.alpha = 0;
+            _planBullet4.alpha = 0;
+            _titleBar.alpha = 0;
+            
+            _middlePlanButton.enabled = NO;
+            _rightPlanButton.enabled = NO;
+            _leftPlanButton.enabled = NO;
+            
+            _payWithCardButton.enabled = false;
+            
+            _closeButton.hidden = false;
+                
+        
+        } completion:^(BOOL finished) {
+            
+            //change button title to 'complete payment'
+            [_payWithCardButton setTitle:@"Complete Payment" forState:UIControlStateNormal];
+            
+            //build stripe form for CC info
+            self.paymentTextField = [[STPPaymentCardTextField alloc]
+                                     initWithFrame:CGRectMake(15, 30, CGRectGetWidth(self.view.frame) - 20, 44)];; //20 = 10+10 margins
+            self.paymentTextField.delegate = self;
+            [self.view addSubview:self.paymentTextField];
+            _paymentTextField.translatesAutoresizingMaskIntoConstraints = NO;
+            
+            _applePaybutton.hidden = true;
+            
+            //define the views and metrics for autolayout
+            NSDictionary *views = @{@"ccField": _paymentTextField,
+                                    @"titleBar" : _titleBar,
+                                    @"payButton": _payWithCardButton};
+            
+            
+            [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"V:[titleBar]-(10)-[ccField(44)]"
+                                                                                             options:0
+                                                                                             metrics:nil
+                                                                                               views:views]];
+            
+            _payWithCardConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(10)-[payButton]-(10)-|"
+                                                                             options:0
+                                                                             metrics:nil
+                                                                               views:views];
+            [_paymentButtonsView addConstraints:_payWithCardConstraint];
+            
+            [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(20)-[ccField]-(20)-|"
+                                                                                         options:0
+                                                                                         metrics:nil
+                                                                                           views:views]];
+            
+            [_paymentTextField becomeFirstResponder];
+            
+            
+            
+        }];
+        
+    }else if([buttonTitle isEqualToString:@"Complete Payment"]){
+        NSLog(@"start payment procesing");
+
+        STPCardParams* card = [self.paymentTextField card];
+        [[STPAPIClient sharedClient]
+         createTokenWithCard:card
+         completion:^(STPToken *token, NSError *error) {
+             if (token) {
+                 
+                 NSLog(@"4. Send token to backend %@", token.tokenId);
+                 
+                 NSString *plan = @"";
+                 
+                 
+                 if([_planSelected isEqualToString:@"1"]){
+                     plan = @"49.00";
+                 }else if([_planSelected isEqualToString:@"2"]){
+                     plan = @"199.00";
+                 }else if([_planSelected isEqualToString:@"3"]){
+                     plan = @"69.00";
+                 }
+                 
+                 //call cloud code function chargeCard in main.js and pass is the credit card token
+                 [PFCloud callFunctionInBackground:@"chargeCard"
+                                    withParameters:@{@"token": token.tokenId,
+                                                     @"plan": plan
+                                                     }
+                                             block:^(NSString *result, NSError *error) {
+                                                 if (!error) {
+                                                     NSLog(@"SUCCESS IS: %@", result);
+                                                     _paymentProcessed = YES;
+                                                     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                                                         //TODO: UNCOMMENT[self sendRevenueInfoToMP:plan];
+                                                     });
+
+                                                 }
+                                                 else{
+                                                     NSLog(@"ERROR: %@", error);
+                                                 }
+                                             }];
+                 
+                 
+             } else {
+                 NSLog(@"Error creating token: %@", error.localizedDescription);
+             }
+         }];
+
+    }
+
+    
+   }
 
 #pragma mark - Helper Methods
+
+- (void)stickyViewToKeyboard{
+    
+        
+    //listen for keyboard events
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    
+    //view is the thing we want to move around based on keyboard showing or not showing
+    NSDictionary *views = @{@"view": _paymentButtonsView,
+                            @"top": self.topLayoutGuide};
+    
+
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[top][view]" options:0 metrics:nil views:views]];
+    
+    self.bottomConstraints = [NSLayoutConstraint constraintWithItem:_paymentButtonsView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.bottomLayoutGuide attribute:NSLayoutAttributeTop multiplier:1 constant:0];
+    
+    [self.view addConstraint:self.bottomConstraints];
+    
+}
+
+-(void)keyboardDidShow:(NSNotification *)sender
+{
+    //https://gist.github.com/dlo/8572874
+    
+    CGRect frame = [sender.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    
+    CGRect newFrame = [self.view convertRect:frame fromView:[[UIApplication sharedApplication] delegate].window];
+    
+    self.bottomConstraints.constant = newFrame.origin.y - CGRectGetHeight(self.view.frame);
+    
+    //this re-layouts our view
+    [self.view layoutIfNeeded];
+}
+
+- (void)keyboardWillHide:(NSNotification *)sender {
+    self.bottomConstraints.constant = 0;
+    [self.view layoutIfNeeded];
+}
+
+
+- (IBAction)closeButtonPressd:(id)sender {
+    
+    //hide close button
+    _closeButton.hidden = true;
+    
+    //dismiss keypad
+    [_paymentTextField resignFirstResponder];
+    
+    //make button enabled
+    _payWithCardButton.enabled = true;
+    
+    //make buttons selectable again
+    _leftPlanButton.enabled = YES;
+    _middlePlanButton.enabled = YES;
+    _rightPlanButton.enabled = YES;
+    
+    //take away cc form
+    [_paymentTextField removeFromSuperview];
+    
+    //change button title
+    [_payWithCardButton setTitle:@"Pay with Card" forState:UIControlStateNormal];
+    
+    //animate in the plan title and bullets
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        
+        //fade out everythang
+        _testimonialContainer.alpha = 1;
+        _check1.alpha = 1;
+        _check2.alpha = 1;
+        _check3.alpha = 1;
+        _check4.alpha = 1;
+        _planDescriptionTitle.alpha = 1;
+        _planBullet1.alpha = 1;
+        _planBullet2.alpha = 1;
+        _planBullet3.alpha = 1;
+        _planBullet4.alpha = 1;
+        _titleBar.alpha = 1;
+        _purchaseButton.alpha = 1;
+        _paymentButtonsView.hidden = true;
+
+        [self loadPaymentOptionsView];
+        
+    } completion:^(BOOL finished) {}];
+    
+    
+    
+}
+
 -(void)updatePlanDescription:(UIButton *)planSelected{
     
     //string vars
@@ -401,6 +647,12 @@
     
     
 }
+
+#pragma mark - Stripe CC Field
+- (void)paymentCardTextFieldDidChange:(STPPaymentCardTextField *)textField {
+    _payWithCardButton.enabled = textField.isValid;
+}
+
 
 
 @end
