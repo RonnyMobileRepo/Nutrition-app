@@ -78,6 +78,21 @@
     _testimonialContainer.layer.shadowOpacity = 0.7f;
     
     
+    //calculate the width of the apple pay button
+    float screenHeight = self.view.bounds.size.height;
+    float testimonialHeight = (screenHeight/5); //TODO: This is hard coded margins for calc
+    NSNumber *height = [NSNumber numberWithFloat:testimonialHeight];
+    
+    //define the views and metrics for autolayout
+    NSDictionary *views = @{@"testimonia": _testimonialContainer};
+    
+    NSDictionary *metrics = @{@"height": height};
+    
+    [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"V:[testimonia(height)]-(15)-|"
+                                                                                     options:0
+                                                                                     metrics:metrics
+                                                                                       views:views]];
+
   
     
 }
@@ -297,11 +312,10 @@
             
             //define the views and metrics for autolayout
             NSDictionary *views = @{@"ccField": _paymentTextField,
-                                    @"titleBar" : _titleBar,
                                     @"payButton": _payWithCardButton};
             
             
-            [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"V:[titleBar]-(10)-[ccField(44)]"
+            [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"V:[ccField(44)]-(10)-[payButton]"
                                                                                              options:0
                                                                                              metrics:nil
                                                                                                views:views]];

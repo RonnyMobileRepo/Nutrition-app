@@ -42,6 +42,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *middlePlanButton;
 @property (weak, nonatomic) IBOutlet UIButton *rightPlanButton;
 @property (weak, nonatomic) IBOutlet UIButton *closeButton;
+@property (weak, nonatomic) IBOutlet UILabel *testimonialTextView;
 
 //views made programatically
 @property (strong, nonatomic) UIButton *applePaybutton;
