@@ -1105,8 +1105,7 @@ bool keyboardIsShowing = false;
         MessagesViewController *vc = [segue destinationViewController];
         vc.youAreDietitian = NO;
     }else if( [segue.identifier isEqualToString:@"trialEnded"]){
-        //trial is up!
-        TrialDoneCheckoutViewController *vc = [segue destinationViewController];
+        
     
     }
 }

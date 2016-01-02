@@ -211,6 +211,12 @@
     //2 = bootcamp
     //3 = lifestyle
     
+    //re-enable all buttons
+    _leftPlanButton.enabled = YES;
+    _middlePlanButton.enabled = YES;
+    _rightPlanButton.enabled = YES;
+    
+    
     UIView *planSelected;
     
     //update the ui
@@ -309,6 +315,14 @@
     //animate payment options up
     _paymentButtonsView.hidden = false;
     [_paymentButtonsView startCanvasAnimation];
+    
+    if ([_planSelected isEqualToString:@"1"]) {
+        _leftPlanButton.enabled = NO;
+    }else if ([_planSelected isEqualToString:@"2"]) {
+        _middlePlanButton.enabled = NO;
+    }if ([_planSelected isEqualToString:@"3"]) {
+        _rightPlanButton.enabled = NO;
+    }
 
     
 }
