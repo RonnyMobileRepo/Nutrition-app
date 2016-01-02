@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "Canvas.h"
-
+#import "LogMealSinglePageViewController.h"
 
 @interface TrialDoneCheckoutViewController : UIViewController <PKPaymentAuthorizationViewControllerDelegate, STPPaymentCardTextFieldDelegate>
 //actions

@@ -80,7 +80,7 @@
     
     //calculate the width of the apple pay button
     float screenHeight = self.view.bounds.size.height;
-    float testimonialHeight = (screenHeight/5); //TODO: This is hard coded margins for calc
+    float testimonialHeight = (screenHeight/5); 
     NSNumber *height = [NSNumber numberWithFloat:testimonialHeight];
     
     //define the views and metrics for autolayout
@@ -119,7 +119,7 @@
         
         //calculate the width of the apple pay button
         float screenWidth = self.view.bounds.size.width;
-        float buttonWidth = (screenWidth/2) - (10*2); //TODO: This is hard coded margins for calc
+        float buttonWidth = (screenWidth/2) - (10*2);
         NSNumber *width = [NSNumber numberWithFloat:buttonWidth];
 
         //define the views and metrics for autolayout
@@ -193,7 +193,9 @@
 
     //update the ui
     [UIView animateWithDuration:0.50 animations:^{
-            _purchaseButton.alpha =   1.0;
+        _buttonContainer.hidden = false;
+
+        _purchaseButton.alpha =   1.0;
         
     }];
     
@@ -370,59 +372,78 @@
         NSLog(@"start payment procesing");
 
         STPCardParams* card = [self.paymentTextField card];
-        [[STPAPIClient sharedClient]
-         createTokenWithCard:card
-         completion:^(STPToken *token, NSError *error) {
+        [[STPAPIClient sharedClient] createTokenWithCard:card completion:^(STPToken *token, NSError *error) {
              if (token) {
                  
-                 NSLog(@"4. Send token to backend %@", token.tokenId);
+                 if (error) {
+                     //[self handleError:error];
+                 } else {
+                     
+                     
+                     [self createBackendChargeWithToken:token completion:^(PKPaymentAuthorizationStatus status) {
+                         
+                         NSLog(@"token created: %@ %ld", token, (long)status);
+                         
+                         if (status == PKPaymentAuthorizationStatusSuccess) {
+                             
+                             if(_paymentProcessed){
+                                 
+                                 
+                                        
+                                         NSLog(@"you ar ehere");
+                                         NSDate *now = [NSDate date];
+                                         NSInteger daysInTrial;
+                                         Mixpanel *mixpanel = [Mixpanel sharedInstance];
+                                         NSString *plantype;
+                                         
+                                         //mark as verified and paid user
+                                         if([_planSelected isEqualToString:  @"1"]) {
+                                             
+                                             plantype = @"healthystart";
+                                             daysInTrial = 21; //21 days
+                                             
+                                         }else if([_planSelected isEqualToString:  @"2"]){
+                                             
+                                             plantype = @"bootcamp";
+                                             daysInTrial = 84;
+                                         }else if([_planSelected isEqualToString:  @"3"]){
+                                             
+                                             plantype = @"monthly";
+                                             daysInTrial = 30;
+                                         }
+                                         
+                                         
+                                         [PFUser currentUser][@"planType"] = plantype; //this can be either 'trial' 'intro' or 'bootcamp'
+                                         [mixpanel.people set:@{@"Plan"    : plantype}];
+                                         
+                                         
+                                         NSDate *trialEndDate = [now dateByAddingTimeInterval:60*60*24*daysInTrial];
+                                         
+                                         //mark trial start date
+                                         [PFUser currentUser][@"trialEndDate"] = trialEndDate;
+                                         [[PFUser currentUser] saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                                             [self dismissViewControllerAnimated:true completion:^{}];
+                                             
+                                         }];
+                                 
+                             }
+                             
+                         }
+                     }];//end createbacked charge
+                 }//else error else
                  
-                 NSString *plan = @"";
-                 
-                 
-                 if([_planSelected isEqualToString:@"1"]){
-                     plan = @"49.00";
-                 }else if([_planSelected isEqualToString:@"2"]){
-                     plan = @"199.00";
-                 }else if([_planSelected isEqualToString:@"3"]){
-                     plan = @"69.00";
-                 }
-                 
-                 //call cloud code function chargeCard in main.js and pass is the credit card token
-                 [PFCloud callFunctionInBackground:@"chargeCard"
-                                    withParameters:@{@"token": token.tokenId,
-                                                     @"plan": plan
-                                                     }
-                                             block:^(NSString *result, NSError *error) {
-                                                 if (!error) {
-                                                     NSLog(@"SUCCESS IS: %@", result);
-                                                     _paymentProcessed = YES;
-                                                     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                                                         //TODO: UNCOMMENT[self sendRevenueInfoToMP:plan];
-                                                     });
+             }//end if token
+         }];//end create token with card
 
-                                                 }
-                                                 else{
-                                                     NSLog(@"ERROR: %@", error);
-                                                 }
-                                             }];
-                 
-                 
-             } else {
-                 NSLog(@"Error creating token: %@", error.localizedDescription);
-             }
-         }];
+    }//end else if button title
 
-    }
-
-    
-   }
+}//end method
 
 #pragma mark - Helper Methods
 
 - (void)stickyViewToKeyboard{
     
-        
+    
     //listen for keyboard events
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
@@ -608,6 +629,43 @@
     
 }
 
+- (void)sendRevenueInfoToMP:(NSString *)plan{
+    NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
+    f.numberStyle = NSNumberFormatterDecimalStyle;
+    NSNumber *amount = [f numberFromString:plan];
+    
+    //get plan string
+    NSString *planString = @"";
+    if ([_planSelected isEqualToString:@"2"]) {
+        planString = @"bootcamp";
+    }else if ([_planSelected isEqualToString:@"1"]) {
+        planString = @"healthy start";
+    }else if ([_planSelected isEqualToString:@"3"]) {
+        planString = @"monthly";
+    }
+    
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel identify:mixpanel.distinctId];
+    
+    //track purchase item event with plan name and amount
+    [mixpanel track:@"Purchase item" properties:@{@"Plan Type" : planString,
+                                                  @"Price" : amount
+                                                  }];
+    
+    
+    // Tracks amount in revenue for user
+    [mixpanel.people trackCharge:amount withProperties:@{
+                                                         @"$time": [NSDate date],
+                                                         @"plan" : planString
+                                                         }];
+    
+    // To send notifications to your users based on revenue
+    [mixpanel.people increment:@{@"Lifetime Value" : amount}];
+    [mixpanel.people set:@{@"Last Item Purchase": [NSDate date]}];
+    
+}
+
+
 #pragma mark - Apple Pay
 
 - (UIButton *)makeApplePayButton {
@@ -616,7 +674,6 @@
     if ([PKPaymentButton class]) { // Available in iOS 8.3+
         button = [PKPaymentButton buttonWithType:PKPaymentButtonTypeBuy style:PKPaymentButtonStyleWhiteOutline];
     } else {
-        // TODO: Create and return your own apple pay button
         [button setBackgroundImage:[UIImage imageNamed:@"ApplePayBTN_64pt__whiteLine_textLogo_"] forState:UIControlStateNormal];
     }
     
@@ -634,7 +691,51 @@
 }
 
 - (void)paymentAuthorizationViewControllerDidFinish:(PKPaymentAuthorizationViewController *)controller {
+    
+    //dismisses the apple pay sheet
     [self dismissViewControllerAnimated:YES completion:nil];
+    
+    if(_paymentProcessed){
+        
+        
+        NSLog(@"you ar ehere");
+        NSDate *now = [NSDate date];
+        NSInteger daysInTrial;
+        Mixpanel *mixpanel = [Mixpanel sharedInstance];
+        NSString *plantype;
+        
+        //mark as verified and paid user
+        if([_planSelected isEqualToString:  @"1"]) {
+            
+            plantype = @"healthystart";
+            daysInTrial = 21; //21 days
+            
+        }else if([_planSelected isEqualToString:  @"2"]){
+            
+            plantype = @"bootcamp";
+            daysInTrial = 84;
+        }else if([_planSelected isEqualToString:  @"3"]){
+            
+            plantype = @"monthly";
+            daysInTrial = 30;
+        }
+        
+        
+        
+        [PFUser currentUser][@"planType"] = plantype;
+        [mixpanel.people set:@{@"Plan"    : plantype}];
+
+        
+        NSDate *trialEndDate = [now dateByAddingTimeInterval:60*60*24*daysInTrial];
+        
+        //mark trial start date
+        [PFUser currentUser][@"trialEndDate"] = trialEndDate;
+        [[PFUser currentUser] saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+            [self dismissViewControllerAnimated:true completion:^{}];
+
+        }];
+        
+    }
 }
 
 - (void)handlePaymentAuthorizationWithPayment:(PKPayment *)payment
@@ -680,7 +781,7 @@
                                         NSLog(@"RESULT IS: %@", result);
                                         _paymentProcessed = YES;
                                         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                                            //TODO: UNCOMMENT[self sendRevenueInfoToMP:plan];
+                                            [self sendRevenueInfoToMP:plan];
                                         });
                                         
                                         completion(PKPaymentAuthorizationStatusSuccess);
