@@ -1802,10 +1802,6 @@ bool keyboardIsShowing = false;
                        
                     }];
                     
-                    UIAlertView *trialAlert = [[UIAlertView alloc] initWithTitle:@"Membership Renewal" message:@"Your membership period has ended, please complete payment to continue workign with your coach" delegate:self cancelButtonTitle:@"Okay!" otherButtonTitles: nil];
-                    
-                    [trialAlert show];
-                    
                 }else{
                     
                 }

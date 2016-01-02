@@ -32,7 +32,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *payWithCardButton;
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundImage;
 @property (weak, nonatomic) IBOutlet UIView *testimonialContainer;
-@property (weak, nonatomic) IBOutlet UIImageView *testimonialPicture;
+@property (weak, nonatomic) IBOutlet PFImageView *testimonialPicture;
+@property (weak, nonatomic) IBOutlet UILabel *testimonialNameAge;
 @property (weak, nonatomic) IBOutlet UIImageView *check1;
 @property (weak, nonatomic) IBOutlet UIImageView *check2;
 @property (weak, nonatomic) IBOutlet UIImageView *check3;
@@ -60,6 +61,7 @@
 @property (nonatomic, strong) NSLayoutConstraint *topConstraint;
 @property (nonatomic, strong) NSLayoutConstraint *bottomConstraints;
 @property (nonatomic, strong) NSArray *payWithCardConstraint;
+@property (strong, nonatomic) NSMutableArray *testimonialsArray;
 
 
 

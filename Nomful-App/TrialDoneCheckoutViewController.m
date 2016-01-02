@@ -24,6 +24,7 @@
     [self loadUX];
     [self loadPaymentOptionsView];
     [self stickyViewToKeyboard];
+    [self loadTestimonials];
     
 }
 
@@ -80,7 +81,7 @@
     
     //calculate the width of the apple pay button
     float screenHeight = self.view.bounds.size.height;
-    float testimonialHeight = (screenHeight/5); 
+    float testimonialHeight = (screenHeight/5);
     NSNumber *height = [NSNumber numberWithFloat:testimonialHeight];
     
     //define the views and metrics for autolayout
@@ -176,6 +177,38 @@
     
 }
 
+- (void)loadTestimonials{
+    
+    //go get three testimonials from parse
+    
+    PFQuery *query = [PFQuery queryWithClassName:@"Testimonial"];
+    query.limit = 3;
+    [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+        
+        if (objects.count == 3) {
+            //yay we got something
+            _testimonialsArray = [objects mutableCopy];
+            
+            //since we're already onthe bootcamp, lets set the testimonial for [1] index
+            //get testimonial information
+            NSString *testimonialString = _testimonialsArray[1][@"text"];
+            NSString *testimonialName = _testimonialsArray[1][@"name"];
+            NSString *testimonialAge = _testimonialsArray[1][@"age"];
+            NSString *testimonialNameAge = [[NSString alloc] initWithFormat:@"%@, %@",testimonialName,testimonialAge];
+            PFFile *testimonialImage = _testimonialsArray[1][@"photo"];
+
+            //set the strings to the UI
+            [_testimonialTextView setText: testimonialString];
+            [_testimonialNameAge setText:testimonialNameAge];
+            _testimonialPicture.file = testimonialImage;
+            [_testimonialPicture loadInBackground];
+        
+            
+        }
+    }];
+    
+    
+}
 
 #pragma mark - Actions
 - (IBAction)planViewPressed:(UIButton *)button{
@@ -225,7 +258,23 @@
         _planSelected = @"3";
     }
     
+    int i = (int)button.tag - 1;
     
+    //since we're already onthe bootcamp, lets set the testimonial for [1] index
+    //get testimonial information
+    NSString *testimonialString = _testimonialsArray[i][@"text"];
+    NSString *testimonialName = _testimonialsArray[i][@"name"];
+    NSString *testimonialAge = _testimonialsArray[i][@"age"];
+    NSString *testimonialNameAge = [[NSString alloc] initWithFormat:@"%@, %@",testimonialName,testimonialAge];
+    PFFile *testimonialImage = _testimonialsArray[i][@"photo"];
+    
+    //set the strings to the UI
+    [_testimonialTextView setText: testimonialString];
+    [_testimonialNameAge setText:testimonialNameAge];
+    _testimonialPicture.file = testimonialImage;
+    [_testimonialPicture loadInBackground];
+    
+
     //update the ui
     [UIView animateWithDuration:0.50 animations:^{
         planSelected.alpha =   1.0;
