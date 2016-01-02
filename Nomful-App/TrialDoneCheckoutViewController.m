@@ -78,7 +78,6 @@
     _testimonialContainer.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
     _testimonialContainer.layer.shadowOpacity = 0.7f;
     
-    
     //calculate the width of the apple pay button
     float screenHeight = self.view.bounds.size.height;
     float testimonialHeight = (screenHeight/5);
@@ -202,12 +201,8 @@
             [_testimonialNameAge setText:testimonialNameAge];
             _testimonialPicture.file = testimonialImage;
             [_testimonialPicture loadInBackground];
-        
-            
         }
     }];
-    
-    
 }
 
 #pragma mark - Actions
@@ -360,8 +355,15 @@
             _enterCCLabel.text = @"Enter Credit Card Info:";
             [_enterCCLabel setFont:[UIFont fontWithName:kFontFamilyName size:17.0]];
             _enterCCLabel.alpha = 0;
-
             [self.view addSubview:_enterCCLabel];
+            
+            //activity indicator
+            //activity indicator
+            _ccActivityIndicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
+            _ccActivityIndicator.translatesAutoresizingMaskIntoConstraints = NO;
+            _ccActivityIndicator.hidesWhenStopped = YES;
+            _ccActivityIndicator.color = [UIColor grayColor];
+            [_paymentButtonsView addSubview:_ccActivityIndicator];
 
             //change button title to 'complete payment'
             [_payWithCardButton setTitle:@"Complete Payment" forState:UIControlStateNormal];
@@ -379,7 +381,8 @@
             //define the views and metrics for autolayout
             NSDictionary *views = @{@"ccField": _paymentTextField,
                                     @"payButton": _payWithCardButton,
-                                    @"label": _enterCCLabel};
+                                    @"label": _enterCCLabel,
+                                    @"activiy": _ccActivityIndicator};
             
             
             [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"V:[label]-(5)-[ccField(44)]-(10)-[payButton]"
@@ -391,6 +394,18 @@
                                                                                options:0
                                                                                metrics:nil
                                                                                  views:views]];
+            
+            [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"H:[activiy]-(25)-|"
+                                                                               options:0
+                                                                               metrics:nil
+                                                                                 views:views]];
+
+            [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_paymentButtonsView
+                                                                  attribute:NSLayoutAttributeCenterY
+                                                                  relatedBy:NSLayoutRelationEqual
+                                                                     toItem:_ccActivityIndicator
+                                                                  attribute:NSLayoutAttributeCenterY
+                                                                 multiplier:1.0f constant:0.0f]];
 
             
             _payWithCardConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(10)-[payButton]-(10)-|"
@@ -420,6 +435,8 @@
     }else if([buttonTitle isEqualToString:@"Complete Payment"]){
         NSLog(@"start payment procesing");
 
+        [_ccActivityIndicator startAnimating];
+
         STPCardParams* card = [self.paymentTextField card];
         [[STPAPIClient sharedClient] createTokenWithCard:card completion:^(STPToken *token, NSError *error) {
              if (token) {
@@ -436,9 +453,10 @@
                          if (status == PKPaymentAuthorizationStatusSuccess) {
                              
                              if(_paymentProcessed){
+                                 [_ccActivityIndicator stopAnimating];
+
                                  
                                  
-                                        
                                          NSLog(@"you ar ehere");
                                          NSDate *now = [NSDate date];
                                          NSInteger daysInTrial;

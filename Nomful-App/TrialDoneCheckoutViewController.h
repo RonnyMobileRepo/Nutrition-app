@@ -49,6 +49,7 @@
 //views made programatically
 @property (strong, nonatomic) UIButton *applePaybutton;
 @property (strong, nonatomic) UILabel *enterCCLabel;
+@property (strong, nonatomic) UIActivityIndicatorView *ccActivityIndicator;
 
 
 
