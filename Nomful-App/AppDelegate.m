@@ -43,7 +43,6 @@
     [Fabric with:@[[Crashlytics class], [STPAPIClient class]]];
     [Stripe setDefaultPublishableKey:STRIPE_TOKEN_DEV];
 
-
     [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN_DEV]; //this actually creates a profile in mixpanel with an anonymous distinct ID
     
     //*/
