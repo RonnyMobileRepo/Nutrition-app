@@ -31,6 +31,13 @@
     //button styling
     _getStartedButton.layer.cornerRadius = 4.0;
     
+    if ([[NSUserDefaults standardUserDefaults] stringForKey:@"startingPlan"]) {
+        
+        //set button label to GET STARTED
+        [_getStartedButton setTitle:@"GET STARTED" forState:UIControlStateNormal];
+        
+    }
+    
     
 }
 
@@ -56,9 +63,13 @@
     NSString *plan;
     
     if ([[NSUserDefaults standardUserDefaults] stringForKey:@"startingPlan"]) {
+        //this means it is a prepaid user
+        //set plan to plan
         plan = [[NSUserDefaults standardUserDefaults] stringForKey:@"startingPlan"];
+                
     }else{
         plan = @"trial";
+
     }
     
     [mixpanel track:@"SignUp Started" properties:@{

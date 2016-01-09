@@ -629,24 +629,24 @@
     if (planSelected.tag == 1) {
 
         planTitleString = @"HEALTHY START";
-        bullet1String1 = @"Initial phone assesment";
-        bullet1String2 = @"Daily feedback and support";
-        bullet1String3 = @"Quick meal sharing";
-        bullet1String4 = @"Help with recipes, questions, etc";
+        bullet1String1 = @"Learn a few of the basics to get you started";
+        bullet1String2 = @"Daily feedback and on-demand support";
+        bullet1String3 = @"Quick meal tracking";
+        bullet1String4 = @"Help with recipes, questions, etc.";
         
     }else if(planSelected.tag == 2){
-        planTitleString = @"BOOTCAMP";
+        planTitleString = @"BOOT CAMP";
         bullet1String1 = @"12-week immersive program";
         bullet1String2 = @"Complete personalized evaluation";
-        bullet1String3 = @"Weekly progress tracking";
-        bullet1String4 = @"Regular phone assesments";
+        bullet1String3 = @"Regular phone assessments";
+        bullet1String4 = @"Transform bad habits, build new healthy ones";
         
     }else if(planSelected.tag == 3){
         planTitleString = @"LIFESTYLE";
-        bullet1String1 = @"BULLET 1";
-        bullet1String2 = @"BULLET 2";
-        bullet1String3 = @"BULLET 3";
-        bullet1String4 = @"BULLET 4";
+        bullet1String1 = @"A nutrition coach in your pocket";
+        bullet1String2 = @"Build healthy lifestyle that fits you";
+        bullet1String3 = @"Daily accountability and feedback";
+        bullet1String4 = @"Quick meal tracking";
     }
 
     //set texts

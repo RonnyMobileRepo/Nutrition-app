@@ -71,6 +71,25 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+
+    if ([defaults objectForKey:@"saveMessages"]) {
+        //if saved messages exist on the device, let's get the current array
+        NSMutableArray *savedMessageArray = [defaults objectForKey:@"saveMessages"];
+        
+        //loop through array of dictionaries + check if each one is the current chatroom id
+        for (NSDictionary *dictionary in savedMessageArray) {
+            if ([dictionary objectForKey:groupId]) {
+                //set the textview.text to that content!
+                self.inputToolbar.contentView.textView.text = [dictionary objectForKey:groupId];
+                
+            }
+            
+        }
+    }
+    
+    
     PFUser *current = [PFUser currentUser];
     
     if ([current[@"role"] isEqualToString:@"Client"]) {
@@ -226,6 +245,46 @@
         //**ClearRecentCounter(groupId);
         //[firebase1 removeAllObservers];
     }
+    
+    
+    NSMutableArray *savedMessageArray = [[NSMutableArray alloc] init];
+
+    //save chatroomid and message in toolbar to dictionary
+    NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:self.inputToolbar.contentView.textView.text, groupId, nil];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    if ([defaults objectForKey:@"saveMessages"]) {
+        //if saved messages exist on the device, let's get the current array
+        savedMessageArray = [[defaults objectForKey:@"saveMessages"] mutableCopy];
+        
+        //loop through array of dictionaries + check if each one is the current chatroom id
+        for (NSDictionary *dictionary in savedMessageArray) {
+            if ([dictionary objectForKey:groupId]) {
+                //there is an object already saved for the current chatroom
+                //remove it and create new one
+                
+                [savedMessageArray removeObject:dictionary];
+                [savedMessageArray addObject:dict];
+                break; //prevents 'mutating while enumerating' error i know not best solution
+                
+            }else{
+                //anothe chatroom has a saved message but this one not in it
+                [savedMessageArray addObject:dict];
+                break;
+            }
+
+        }
+    }else{
+        //no saved messages on device
+        [savedMessageArray addObject:dict];
+    }
+    
+ 
+
+    [defaults setObject:savedMessageArray forKey:@"saveMessages"];
+    [defaults synchronize];
+
+    
 }
 
 

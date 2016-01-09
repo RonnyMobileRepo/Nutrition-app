@@ -60,7 +60,7 @@
     
      [Fabric with:@[[Crashlytics class], [STPAPIClient class]]];
     
-    //[Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
+    [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
      [Fabric with:@[[Crashlytics class]]];
 
     */
@@ -161,11 +161,12 @@
         return YES;
 }
 
-//- (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray *restorableObjects))restorationHandler {
-//    BOOL handledByBranch = [[Branch getInstance] continueUserActivity:userActivity];
-//    
-//    return handledByBranch;
-//}
+- (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray *restorableObjects))restorationHandler {
+    BOOL handledByBranch = [[Branch getInstance] continueUserActivity:userActivity];
+    
+    return handledByBranch;
+}
+
 
 #pragma mark - Push
 
