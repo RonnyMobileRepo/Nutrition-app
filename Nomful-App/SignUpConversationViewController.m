@@ -257,6 +257,10 @@ CGFloat const ktypeInterval = 0.02;
                     [_button3 setTitle:@"Eating Clean" forState:UIControlStateNormal];
                     [_button4 setTitle:@"Weight Gain" forState:UIControlStateNormal];
 
+                    //save event to MP
+                    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+                    [mixpanel track:@"Name Entered"];
+                    
                     //clear textfield
                     _textfield1.text = @"";
                     
@@ -279,6 +283,10 @@ CGFloat const ktypeInterval = 0.02;
                 [PFUser currentUser][@"goals"] = goalArray;
                 [[PFUser currentUser] saveInBackground];
                 
+                //save event to MP
+                Mixpanel *mixpanel = [Mixpanel sharedInstance];
+                [mixpanel track:@"Goal Selected"];
+                
                 //prepare button label
                 [_button2 setTitle:@"Female" forState:UIControlStateNormal];
                 
@@ -300,6 +308,10 @@ CGFloat const ktypeInterval = 0.02;
                 }
                 
                 [[PFUser currentUser] saveInBackground];
+                
+                //save event to MP
+                Mixpanel *mixpanel = [Mixpanel sharedInstance];
+                [mixpanel track:@"Gender Selected"];
                 
                 _messageCount ++;
                 _buttonLabelCount ++;
@@ -324,6 +336,10 @@ CGFloat const ktypeInterval = 0.02;
                     //name entered save
                     [PFUser currentUser][@"age"] = [_textfield1.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
                     [[PFUser currentUser] saveInBackground];
+                    
+                    //save event to MP
+                    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+                    [mixpanel track:@"Age Entered"];
                     
                     //prepare labels
                     [_button2 setTitle:@"Nope!" forState:UIControlStateNormal];
@@ -402,6 +418,10 @@ CGFloat const ktypeInterval = 0.02;
                             [self showNextMessage];
                         }else{
                             //no error
+                            
+                            //save event to MP
+                            Mixpanel *mixpanel = [Mixpanel sharedInstance];
+                            [mixpanel track:@"Email Entered"];
                             
                             //prep label
                             [_button2 setTitle:@"Find Another Coach!" forState:UIControlStateNormal];
@@ -508,6 +528,11 @@ CGFloat const ktypeInterval = 0.02;
                             [PFUser currentUser][@"phoneNumber"] = _phone; //*we can put this in cloud code eventually
                             [[PFUser currentUser] saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                                 //cloud code uses the phoneNumber so we need to do this in a block
+                                
+                                //save event to MP
+                                Mixpanel *mixpanel = [Mixpanel sharedInstance];
+                                [mixpanel track:@"Phone Entered"];
+                                
                                 //send twilio text
                                 [self sendCode];
                                 [self checkIfPrepaid]; //check to see if user is prepaid by gym
@@ -1255,6 +1280,10 @@ CGFloat const ktypeInterval = 0.02;
                                                 
                                                 [user signUpInBackground];
                                                
+                                                //save event to MP
+                                                Mixpanel *mixpanel = [Mixpanel sharedInstance];
+                                                [mixpanel track:@"Phone Verified"];
+                                                
                                                 
                                                 if(_isGymMember){
                                                 
@@ -1681,6 +1710,10 @@ CGFloat const ktypeInterval = 0.02;
                     //success
                     //[self reset];
                     //NSLog(@"hey");
+                    
+                    //save event to MP
+                    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+                    [mixpanel track:@"Photo Saved"];
                     
                 }
                 

@@ -58,10 +58,10 @@
     [PFUser enableRevocableSessionInBackground];
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     
-     [Fabric with:@[[Crashlytics class], [STPAPIClient class]]];
+    [Fabric with:@[[Crashlytics class], [STPAPIClient class]]];
     
     [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
-     [Fabric with:@[[Crashlytics class]]];
+    [Fabric with:@[[Crashlytics class]]];
 
     */
     

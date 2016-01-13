@@ -90,6 +90,7 @@
         [query orderByDescending:@"updatedAt"];
     }else if([currentUser[@"role"] isEqualToString:@"RD"]){
         [query whereKey:@"dietitianUser" equalTo:currentUser];
+        [query whereKey:@"active" notEqualTo:[NSNumber numberWithBool:false]];
         [query includeKey:@"clientUser"];
         [query orderByDescending:@"isUnread"];
         [query orderByDescending:@"updatedAt"];

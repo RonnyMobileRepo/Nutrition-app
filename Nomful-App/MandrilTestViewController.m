@@ -50,12 +50,14 @@
 //    [currentUser fetch];
 //    NSLog(@"current user is: %@", currentUser);
 //    
-//    
+//
+    
+    
     //send first time login email
-    [PFCloud callFunctionInBackground:@"trialending"
+    [PFCloud callFunctionInBackground:@"mailchimpAuto"
                        withParameters:@{}
                                 block:^(NSString *result, NSError *error) {
-                                    
+                                    NSLog(@"result is %@", result);
                                 
                                 }];
     
