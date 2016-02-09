@@ -520,6 +520,10 @@
 {
     UIColor *color = [self outgoing:messages[indexPath.item]] ? [UIColor whiteColor] : [UIColor blackColor];
     
+    if([[PFUser currentUser][@"role"] isEqualToString:@"RD"]){
+        color = [self outgoing:messages[indexPath.item]] ? [UIColor blackColor] : [UIColor blackColor];
+    }
+    
     JSQMessagesCollectionViewCell *cell = (JSQMessagesCollectionViewCell *)[super collectionView:collectionView cellForItemAtIndexPath:indexPath];
     cell.textView.textColor = color;
     cell.textView.linkTextAttributes = @{NSForegroundColorAttributeName:color};

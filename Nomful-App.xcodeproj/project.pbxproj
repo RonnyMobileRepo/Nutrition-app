@@ -83,6 +83,9 @@
 		2137D8AB1BACA04600310545 /* straws.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2137D8971BACA04600310545 /* straws.jpg */; };
 		2137D8AC1BACA04600310545 /* thomas.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 2137D8981BACA04600310545 /* thomas.JPG */; };
 		2137D8AD1BACA04600310545 /* white-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 2137D8991BACA04600310545 /* white-button.png */; };
+		2138AF551C65542200A626EF /* NomberrySignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2138AF541C65542200A626EF /* NomberrySignupViewController.m */; };
+		2138AF5A1C65576700A626EF /* MotivationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2138AF591C65576700A626EF /* MotivationView.m */; };
+		213F1E8B1C69160700AF1B6D /* nomberrylabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 213F1E8A1C69160700AF1B6D /* nomberrylabel.m */; };
 		215654BB1BFCFBB100FD917D /* CoachCardParentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 215654BA1BFCFBB100FD917D /* CoachCardParentViewController.m */; };
 		21643A4F1BC56D470099E6FB /* ConvertToFirebaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21643A4E1BC56D470099E6FB /* ConvertToFirebaseViewController.m */; };
 		21646F811BFA2D2E00235D51 /* MandrilTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21646F801BFA2D2E00235D51 /* MandrilTestViewController.m */; };
@@ -91,6 +94,7 @@
 		21856A851BCAADFA00E217F7 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21856A831BCAADFA00E217F7 /* Fabric.framework */; };
 		21856A861BCAADFA00E217F7 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21856A841BCAADFA00E217F7 /* Crashlytics.framework */; };
 		2187BD291BD7DFE40058A7C3 /* MealDetailCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2187BD281BD7DFE40058A7C3 /* MealDetailCardViewController.m */; };
+		219D578B1C68EF2F00E47614 /* NomberryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 219D578A1C68EF2F00E47614 /* NomberryTableViewCell.m */; };
 		21B091B11BFF74F800340CAD /* AddProfilePicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21B091B01BFF74F800340CAD /* AddProfilePicViewController.m */; };
 		21C88A271BAC95CF00792E9C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 21C88A261BAC95CF00792E9C /* main.m */; };
 		21C88A2A1BAC95CF00792E9C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 21C88A291BAC95CF00792E9C /* AppDelegate.m */; };
@@ -257,6 +261,12 @@
 		2137D8971BACA04600310545 /* straws.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = straws.jpg; sourceTree = "<group>"; };
 		2137D8981BACA04600310545 /* thomas.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = thomas.JPG; sourceTree = "<group>"; };
 		2137D8991BACA04600310545 /* white-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "white-button.png"; sourceTree = "<group>"; };
+		2138AF531C65542200A626EF /* NomberrySignupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NomberrySignupViewController.h; sourceTree = "<group>"; };
+		2138AF541C65542200A626EF /* NomberrySignupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NomberrySignupViewController.m; sourceTree = "<group>"; };
+		2138AF581C65576700A626EF /* MotivationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MotivationView.h; sourceTree = "<group>"; };
+		2138AF591C65576700A626EF /* MotivationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MotivationView.m; sourceTree = "<group>"; };
+		213F1E891C69160700AF1B6D /* nomberrylabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nomberrylabel.h; sourceTree = "<group>"; };
+		213F1E8A1C69160700AF1B6D /* nomberrylabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = nomberrylabel.m; sourceTree = "<group>"; };
 		215654B91BFCFBB100FD917D /* CoachCardParentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoachCardParentViewController.h; sourceTree = "<group>"; };
 		215654BA1BFCFBB100FD917D /* CoachCardParentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoachCardParentViewController.m; sourceTree = "<group>"; };
 		21643A4D1BC56D470099E6FB /* ConvertToFirebaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConvertToFirebaseViewController.h; sourceTree = "<group>"; };
@@ -270,6 +280,8 @@
 		21856A841BCAADFA00E217F7 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		2187BD271BD7DFE40058A7C3 /* MealDetailCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MealDetailCardViewController.h; sourceTree = "<group>"; };
 		2187BD281BD7DFE40058A7C3 /* MealDetailCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MealDetailCardViewController.m; sourceTree = "<group>"; };
+		219D57891C68EF2F00E47614 /* NomberryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NomberryTableViewCell.h; sourceTree = "<group>"; };
+		219D578A1C68EF2F00E47614 /* NomberryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NomberryTableViewCell.m; sourceTree = "<group>"; };
 		21B091AF1BFF74F800340CAD /* AddProfilePicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddProfilePicViewController.h; sourceTree = "<group>"; };
 		21B091B01BFF74F800340CAD /* AddProfilePicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddProfilePicViewController.m; sourceTree = "<group>"; };
 		21C6FC4F1BAF20EE004599E8 /* Nomful-App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Nomful-App.entitlements"; sourceTree = "<group>"; };
@@ -499,6 +511,37 @@
 			name = images;
 			sourceTree = "<group>";
 		};
+		2138AF521C65540700A626EF /* New Signup */ = {
+			isa = PBXGroup;
+			children = (
+				2138AF571C65544600A626EF /* Response Views */,
+				2138AF561C65543900A626EF /* Nomberry Table View */,
+				2138AF531C65542200A626EF /* NomberrySignupViewController.h */,
+				2138AF541C65542200A626EF /* NomberrySignupViewController.m */,
+			);
+			name = "New Signup";
+			sourceTree = "<group>";
+		};
+		2138AF561C65543900A626EF /* Nomberry Table View */ = {
+			isa = PBXGroup;
+			children = (
+				219D57891C68EF2F00E47614 /* NomberryTableViewCell.h */,
+				219D578A1C68EF2F00E47614 /* NomberryTableViewCell.m */,
+				213F1E891C69160700AF1B6D /* nomberrylabel.h */,
+				213F1E8A1C69160700AF1B6D /* nomberrylabel.m */,
+			);
+			name = "Nomberry Table View";
+			sourceTree = "<group>";
+		};
+		2138AF571C65544600A626EF /* Response Views */ = {
+			isa = PBXGroup;
+			children = (
+				2138AF581C65576700A626EF /* MotivationView.h */,
+				2138AF591C65576700A626EF /* MotivationView.m */,
+			);
+			name = "Response Views";
+			sourceTree = "<group>";
+		};
 		21643A4C1BC4BA270099E6FB /* Sign Up */ = {
 			isa = PBXGroup;
 			children = (
@@ -610,6 +653,7 @@
 		21C88A241BAC95CF00792E9C /* Nomful-App */ = {
 			isa = PBXGroup;
 			children = (
+				2138AF521C65540700A626EF /* New Signup */,
 				21C88A281BAC95CF00792E9C /* AppDelegate.h */,
 				21C88A291BAC95CF00792E9C /* AppDelegate.m */,
 				2137D8821BAC9E8D00310545 /* Main.storyboard */,
@@ -1097,6 +1141,8 @@
 				2137D83D1BAC97AF00310545 /* phoneLoginViewController.m in Sources */,
 				2137D84B1BAC97DB00310545 /* SelectGoalsViewController.m in Sources */,
 				2137D8801BAC9B3400310545 /* Reachability.m in Sources */,
+				2138AF5A1C65576700A626EF /* MotivationView.m in Sources */,
+				219D578B1C68EF2F00E47614 /* NomberryTableViewCell.m in Sources */,
 				21CC66551C10F4FB00A68E3B /* LandingPageViewController.m in Sources */,
 				2137D8551BAC97E400310545 /* SignUpConversationViewController.m in Sources */,
 				21C88A2D1BAC95CF00792E9C /* ViewController.m in Sources */,
@@ -1118,6 +1164,7 @@
 				21643A4F1BC56D470099E6FB /* ConvertToFirebaseViewController.m in Sources */,
 				210C95C31C134466003E8DE3 /* MessagesViewController.m in Sources */,
 				2137D8041BAC974E00310545 /* editImageViewController.m in Sources */,
+				213F1E8B1C69160700AF1B6D /* nomberrylabel.m in Sources */,
 				2137D8271BAC979700310545 /* MatchCoachViewController.m in Sources */,
 				2137D8721BAC980000310545 /* TrialViewController.m in Sources */,
 				21C88A2A1BAC95CF00792E9C /* AppDelegate.m in Sources */,
@@ -1141,6 +1188,7 @@
 				2137D83B1BAC97AF00310545 /* pastMealsViewController.m in Sources */,
 				2137D8731BAC980000310545 /* TwilioTestViewController.m in Sources */,
 				2137D8581BAC97E400310545 /* SlideAnimatedTransitioning.m in Sources */,
+				2138AF551C65542200A626EF /* NomberrySignupViewController.m in Sources */,
 				21646F811BFA2D2E00235D51 /* MandrilTestViewController.m in Sources */,
 				2137D81B1BAC978600310545 /* LoginViewController.m in Sources */,
 				2137D7EC1BAC974200310545 /* AvailableClientTableViewCell.m in Sources */,

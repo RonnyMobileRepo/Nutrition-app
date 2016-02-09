@@ -21,20 +21,49 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-//    
-//    currentUser = [PFUser currentUser];
-//    //[self getChatroomFromNetwork];
-//    [self getChatroomFromLocal];
-    
-    
-   // _chatroomObject = [self getChatroomFromNetwork].result;
-    
-   // NSLog(@"chatroom is: %@", [self getChatroomFromNetwork].result);
-    
-    
-  
-    
 
+    //account with 3306714458 - user: NG5H9p9EzM ch:qA3pTCUFiG
+    //firebase with - 9BPlqvNCST
+    
+    //GO GET THE MEALS FOR S5aTk6Y90v
+    //CREATE NEW MEALS WITH USEROBJECT NG5H9p9EzM
+    
+    
+    ////demo -> GxX0VRJsNC
+    ////sean -> xnk8YsLZqA
+    
+    
+///go get meals and transfer over to demo account////
+    
+//    PFQuery * query = [PFUser query];
+//    [query whereKey:@"objectId" equalTo:@"xnk8YsLZqA"];
+//    [query getFirstObjectInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+//        //
+//        PFQuery *query = [[PFQuery alloc] initWithClassName:@"Meals"];
+//        [query whereKey:@"userObject" equalTo:object];
+//        [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+//            
+//            PFQuery *queries = [PFUser query];
+//            [queries whereKey:@"objectId" equalTo:@"GxX0VRJsNC"];
+//            [queries getFirstObjectInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+//                
+//                for (PFObject *meal in objects) {
+//                    
+//                    PFUser *userobject = object;
+//                    
+//                    PFObject *newMeal = [[PFObject alloc] initWithClassName:@"Meals"];
+//                    newMeal[@"description"] = meal[@"description"];
+//                    newMeal[@"hashtagsArrays"] = meal[@"hashtagsArrays"];
+//                    newMeal[@"mealPhoto"] = meal[@"mealPhoto"];
+//                    newMeal[@"userObject"] = userobject;
+//                    [newMeal saveInBackground];
+//                }
+//            }];
+//        }];
+//    }];
+//    
+    
+    
     
     
     
@@ -52,15 +81,16 @@
 //    
 //
     
-    
-    //send first time login email
-    [PFCloud callFunctionInBackground:@"mailchimpAuto"
-                       withParameters:@{}
-                                block:^(NSString *result, NSError *error) {
-                                    NSLog(@"result is %@", result);
-                                
-                                }];
-    
+//    
+//    //send first time login email
+//    [PFCloud callFunctionInBackground:@"sendFirstTimeLoginEmail"
+//                       withParameters:@{@"toEmail" : @"crowesp2@miamioh.edu",
+//                                        @"toName" : @"this is my name"}
+//                                block:^(NSString *result, NSError *error) {
+//                                    NSLog(@"result is %@", result);
+//                                
+//                                }];
+//    
     
 
 //    _coachUsers = @[[PFUser currentUser]];
